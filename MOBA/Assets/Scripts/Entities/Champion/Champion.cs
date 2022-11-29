@@ -78,6 +78,9 @@ namespace Entities.Champion
         {
         }
 
+
+  
+
         public void ApplyChampionSO(byte championSoIndex, Enums.Team newTeam)
         {
             var so = GameStateMachine.Instance.allChampionsSo[championSoIndex];

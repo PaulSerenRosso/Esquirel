@@ -86,6 +86,34 @@ namespace Entities
             
      
         }
+        
+        public virtual void TriggerEnter(Collider other)
+        {
+            if (other.tag == "Bush")
+            {
+                currentBush = other.GetComponent<Bush>();
+            }
+     
+        }
+        
+        public virtual void TriggerExit(Collider other)
+        {
+            if (other.tag == "Bush")
+            {
+                currentBush = null;
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            TriggerEnter(other);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            TriggerExit(other);
+        }
+
 
         [PunRPC]
         public void SyncInstantiateRPC(Vector3 position, Quaternion rotation)

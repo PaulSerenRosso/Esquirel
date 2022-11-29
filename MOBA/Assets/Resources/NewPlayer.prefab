@@ -249,6 +249,7 @@ MonoBehaviour:
   canShow: 0
   canHide: 0
   elementsToShow: []
+  currentBush: {fileID: 0}
   canChangeTeam: 0
   team: 0
   baseViewRange: 5
