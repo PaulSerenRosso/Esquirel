@@ -71,8 +71,10 @@ namespace Entities.FogOfWar
         public event GlobalDelegates.FloatDelegate OnSetBaseViewRangeFeedback;
 
         public void AddShowable(int showableIndex);
-        public void AddShowable(IFOWShowable showable);
+        public void AddShowable(Entity showable);
         public void SyncAddShowableRPC(int showableIndex);
+
+        public bool CheckBushCondition(Entity showable);
         public event GlobalDelegates.IntDelegate OnAddShowable;
         public event GlobalDelegates.IntDelegate OnAddShowableFeedback;
         

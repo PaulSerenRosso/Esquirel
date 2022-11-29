@@ -11,6 +11,7 @@ namespace  Entities
         public bool canShow;
         public bool canHide;
         public List<GameObject> elementsToShow = new List<GameObject>();
+        public Bush currentBush;
         public bool CanShow() 
         {
             return canShow;
@@ -77,7 +78,7 @@ namespace  Entities
 
         public void TryAddFOWViewable(Entity viewable)
         {
-            if (!GetEnemyTeams().Contains(viewable.GetTeam()) || enemiesThatCanSeeMe.Contains(viewable)) return;
+            if (!GetEnemyTeams().Contains(viewable.GetTeam()) || enemiesThatCanSeeMe.Contains(viewable) ) return;
 
             var show = enemiesThatCanSeeMe.Count == 0;
             

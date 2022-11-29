@@ -157,18 +157,17 @@ namespace Entities
         {
             var entity = EntityCollectionManager.GetEntityByIndex(seenEntityIndex);
             if (entity == null) return;
+         
 
-            var showable = entity.GetComponent<IFOWShowable>();
-            if (showable == null) return;
-
-            AddShowable(showable);
+            AddShowable(entity);
         }
 
-        public void AddShowable(IFOWShowable showable)
+        
+        public void AddShowable(Entity showable)
         {
             if (seenShowables.Contains(showable)) return;
-
-            seenShowables.Add(showable);
+            if(!CheckBushCondition(showable)) return;
+                seenShowables.Add(showable);
             //Debug.Log("seen Showable Add");
             showable.TryAddFOWViewable(this);
             //Debug.Log("Try add This FowViewable");
@@ -195,6 +194,17 @@ namespace Entities
             seenShowables.Add(showable);
             OnAddShowableFeedback?.Invoke(seenEntityIndex);
          //    if (!PhotonNetwork.IsMasterClient) showable.TryAddFOWViewable(this);
+        }
+
+        public bool CheckBushCondition(Entity showable)
+        {
+            if (showable.currentBush != null)
+            {
+            if(this.currentBush == null) return false;
+            if(currentBush != showable.currentBush) return false;
+            return true;
+            }
+            return true;
         }
 
         public event GlobalDelegates.IntDelegate OnAddShowable;

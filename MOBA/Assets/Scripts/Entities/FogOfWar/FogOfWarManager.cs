@@ -253,7 +253,7 @@ namespace Entities.FogOfWar
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
             RaycastHit[] hits = Physics.RaycastAll(entity.fogOfWarStartDetection.position, dir, entity.viewRange,
                 layerTargetFogOfWar);
-            
+
             fieldOfViewObstacles.Clear();
 
             if (hits.Length != 0)
@@ -265,14 +265,17 @@ namespace Entities.FogOfWar
                     if (candidateEntity != null)
                     {
                         entity.AddShowable(candidateEntity);
+                        if(entity.CheckBushCondition(candidateEntity)) 
                         currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
+                        
                     }
+
                     if (IsInLayerMask(hits[i].collider.gameObject, layerObstacleFogOfWar))
                     {
                         fieldOfViewObstacles.Add(hits[i]);
                     }
-                
                 }
+
                 for (int i = 1; i < fieldOfViewObstacles.Count; i++)
                 {
                     if (hits[i].distance < closerHit.distance)
@@ -288,8 +291,7 @@ namespace Entities.FogOfWar
                 }
                 else
                 {
-                    
-                return new ViewCastInfo(true, closerHit.point, closerHit.distance, globalAngle);
+                    return new ViewCastInfo(true, closerHit.point, closerHit.distance, globalAngle);
                 }
             }
             else
