@@ -11,11 +11,15 @@ namespace Entities
     [RequireComponent(typeof(PhotonView)), RequireComponent(typeof(PhotonTransformView))]
     public abstract partial class Entity : MonoBehaviourPun, ITeamable
     {
+        [Header("Entity")]
+        
+        [Header("Base")]
         /// <summary>
         /// The viewID of the photonView of the entity.
         /// </summary>
         public int entityIndex;
 
+        [Header("Passives Capacity")]
         /// <summary>
         /// True if passiveCapacities can be added to the entity's passiveCapacitiesList. False if not.
         /// </summary>
@@ -31,6 +35,7 @@ namespace Entities
         /// </summary>
         public readonly List<PassiveCapacity> passiveCapacitiesList = new List<PassiveCapacity>();
 
+        [Header("UI")]
         /// <summary>
         /// The transform of the UI of the entity.
         /// </summary>
@@ -199,8 +204,8 @@ namespace Entities
             capacity.OnAddedFeedback(this);
             OnPassiveCapacityAddedFeedback?.Invoke(capacityIndex);
         }
-        public event GlobalDelegates.ByteDelegate OnPassiveCapacityAdded;
-        public event GlobalDelegates.ByteDelegate OnPassiveCapacityAddedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnPassiveCapacityAdded;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnPassiveCapacityAddedFeedback;
         
         /// <summary>
         /// Removes a PassiveCapacity from the passiveCapacityList.
@@ -231,8 +236,8 @@ namespace Entities
             OnPassiveCapacityRemovedFeedback?.Invoke(index);
         }
         
-        public event GlobalDelegates.ByteDelegate OnPassiveCapacityRemoved;
-        public event GlobalDelegates.ByteDelegate OnPassiveCapacityRemovedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnPassiveCapacityRemoved;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnPassiveCapacityRemovedFeedback;
 
         #endregion
         

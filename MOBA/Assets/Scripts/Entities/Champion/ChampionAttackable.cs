@@ -29,8 +29,8 @@ namespace Entities.Champion
         [PunRPC]
         public void SetCanAttackRPC(bool value) { }
 
-        public event GlobalDelegates.BoolDelegate OnSetCanAttack;
-        public event GlobalDelegates.BoolDelegate OnSetCanAttackFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanAttack;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanAttackFeedback;
         public float GetAttackDamage() => attackDamage;
 
         public void RequestSetAttackDamage(float value)
@@ -51,8 +51,8 @@ namespace Entities.Champion
             OnSetAttackDamageFeedback?.Invoke(value);
         }
         
-        public event GlobalDelegates.FloatDelegate OnSetAttackDamage;
-        public event GlobalDelegates.FloatDelegate OnSetAttackDamageFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetAttackDamage;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetAttackDamageFeedback;
         
         
 
@@ -125,7 +125,7 @@ namespace Entities.Champion
             OnAttackFeedback?.Invoke(capacityIndex,targetedEntities,targetedPositions);
         }
 
-        public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttack;
-        public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttackFeedback;
+        public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnAttack;
+        public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnAttackFeedback;
     }
 }

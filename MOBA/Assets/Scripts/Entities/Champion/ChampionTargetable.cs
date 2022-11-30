@@ -20,8 +20,8 @@ namespace Entities.Champion
         [PunRPC]
         public void SetCanBeTargetedRPC(bool value) { }
 
-        public event GlobalDelegates.BoolDelegate OnSetCanBeTargeted;
-        public event GlobalDelegates.BoolDelegate OnSetCanBeTargetedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanBeTargeted;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanBeTargetedFeedback;
 
         public void RequestOnTargeted() { }
 

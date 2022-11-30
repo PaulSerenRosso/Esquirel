@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Entities.Capacities;
+using UnityEngine;
 
 namespace Entities
 {
@@ -19,8 +20,8 @@ namespace Entities
         /// </summary>
         public void SyncSetCanCastRPC(bool value);
 
-        public event GlobalDelegates.BoolDelegate OnSetCanCast;
-        public event GlobalDelegates.BoolDelegate OnSetCanCastFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanCast;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanCastFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to cast an ActiveCapacity.
@@ -43,7 +44,7 @@ namespace Entities
         /// <param name="targetedEntities">the entities targeted by the activeCapacity</param>
         /// <param name="targetedPositions">the positions targeted by  the activeCapacities</param>
         public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions);
-        public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
-        public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
+        public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnCast;
+        public event GlobalDelegates.FourthParameterDelegate<byte , int[], Vector3[],ActiveCapacity> OnCastFeedback;
     }
 }

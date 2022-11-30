@@ -8,12 +8,14 @@ using UnityEngine.Rendering;
 
 namespace Entities
 {
+    
     public abstract partial class Entity : IFOWViewable
     {
+        [Header("FOW Viewable")]
         public bool canChangeTeam;
         public Enums.Team team;
 
-        [Header("Field Of View Settings")] public float baseViewRange;
+        public float baseViewRange;
         public float viewRange;
         [Range(0, 360)] public float viewAngle;
         public bool canView;
@@ -54,8 +56,8 @@ namespace Entities
             photonView.RPC("SyncChangeTeamRPC", RpcTarget.All, team);
         }
 
-        public event GlobalDelegates.BoolDelegate OnChangeTeam;
-        public event GlobalDelegates.BoolDelegate OnChangeTeamFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnChangeTeam;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnChangeTeamFeedback;
 
         public bool CanView() => canView;
         public float GetFOWViewRange() => viewRange;
@@ -83,8 +85,8 @@ namespace Entities
             photonView.RPC("SetCanViewRPC", RpcTarget.All, value);
         }
 
-        public event GlobalDelegates.BoolDelegate OnSetCanView;
-        public event GlobalDelegates.BoolDelegate OnSetCanViewFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanView;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanViewFeedback;
 
         public void RequestSetViewRange(float value)
         {
@@ -106,8 +108,8 @@ namespace Entities
             photonView.RPC("SyncSetViewRangeRPC", RpcTarget.All, value);
         }
 
-        public event GlobalDelegates.FloatDelegate OnSetViewRange;
-        public event GlobalDelegates.FloatDelegate OnSetViewRangeFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetViewRange;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetViewRangeFeedback;
 
         public void RequestSetViewAngle(float value)
         {
@@ -127,8 +129,8 @@ namespace Entities
             photonView.RPC("SyncSetViewAngleRPC", RpcTarget.All, value);
         }
 
-        public event GlobalDelegates.FloatDelegate OnSetViewAngle;
-        public event GlobalDelegates.FloatDelegate OnSetViewAngleFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetViewAngle;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetViewAngleFeedback;
 
         public void RequestSetBaseViewRange(float value)
         {
@@ -150,8 +152,8 @@ namespace Entities
             photonView.RPC("SyncSetBaseViewRangeRPC", RpcTarget.All, value);
         }
 
-        public event GlobalDelegates.FloatDelegate OnSetBaseViewRange;
-        public event GlobalDelegates.FloatDelegate OnSetBaseViewRangeFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetBaseViewRange;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetBaseViewRangeFeedback;
 
         public void AddShowable(int seenEntityIndex)
         {
@@ -207,8 +209,8 @@ namespace Entities
             return true;
         }
 
-        public event GlobalDelegates.IntDelegate OnAddShowable;
-        public event GlobalDelegates.IntDelegate OnAddShowableFeedback;
+        public event GlobalDelegates.OneParameterDelegate<int> OnAddShowable;
+        public event GlobalDelegates.OneParameterDelegate<int> OnAddShowableFeedback;
 
         public void RemoveShowable(int seenEntityIndex)
         {
@@ -254,8 +256,8 @@ namespace Entities
             //     if (!PhotonNetwork.IsMasterClient) showable.TryRemoveFOWViewable(this);
         }
 
-        public event GlobalDelegates.IntDelegate OnRemoveShowable;
-        public event GlobalDelegates.IntDelegate OnRemoveShowableFeedback;
+        public event GlobalDelegates.OneParameterDelegate<int> OnRemoveShowable;
+        public event GlobalDelegates.OneParameterDelegate<int> OnRemoveShowableFeedback;
 
   
     }

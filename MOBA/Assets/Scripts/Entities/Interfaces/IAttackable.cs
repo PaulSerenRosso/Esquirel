@@ -20,8 +20,8 @@ namespace Entities
         /// </summary>
         public void SyncSetCanAttackRPC(bool value);
 
-        public event GlobalDelegates.BoolDelegate OnSetCanAttack;
-        public event GlobalDelegates.BoolDelegate OnSetCanAttackFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanAttack;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanAttackFeedback;
         
         /// <returns>the entity's attack damage</returns>
         public float GetAttackDamage();
@@ -38,8 +38,8 @@ namespace Entities
         /// </summary>
         public void SetAttackDamageRPC(float value);
 
-        public event GlobalDelegates.FloatDelegate OnSetAttackDamage;
-        public event GlobalDelegates.FloatDelegate OnSetAttackDamageFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetAttackDamage;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetAttackDamageFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to Attack.
@@ -63,7 +63,7 @@ namespace Entities
         /// <param name="targetedPositions">the positions targeted by  the activeCapacities</param>
         public void AttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions);
 
-        public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttack;
-        public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttackFeedback;
+        public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnAttack;
+        public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnAttackFeedback;
     }
 }

@@ -26,8 +26,8 @@ namespace Entities.Inventory
         /// <param name="index">the index of the item on the ItemCollectionManager</param>
         public void SyncAddItemRPC(byte index);
 
-        public event GlobalDelegates.ByteDelegate OnAddItem;
-        public event GlobalDelegates.ByteDelegate OnAddItemFeedback;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnAddItem;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnAddItemFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to remove an item from the entity's inventory.
@@ -50,8 +50,8 @@ namespace Entities.Inventory
         /// </summary>
         /// <param name="index">the index of the item on the entity's item list</param>
         public void SyncRemoveItemRPC(byte index);
-        public event GlobalDelegates.ByteDelegate OnRemoveItem;
-        public event GlobalDelegates.ByteDelegate OnRemoveItemFeedback;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnRemoveItem;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnRemoveItemFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to activate an item in the entity's inventory.
@@ -68,8 +68,8 @@ namespace Entities.Inventory
         /// </summary>
         /// <param name="index">the index of the item on the ItemCollectionManager</param>
         public void SyncActivateItemRPC(byte itemIndexInInventory,int[] selectedEntities,Vector3[] positions,bool[] successes);
-        public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnActivateItem;
-        public event GlobalDelegates.ByteIntArrayVector3ArrayBoolArrayDelegate OnActivateItemFeedback;
+        public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnActivateItem;
+        public event GlobalDelegates.FourthParameterDelegate<byte , int[], Vector3[], bool[]> OnActivateItemFeedback;
         
 
     }
