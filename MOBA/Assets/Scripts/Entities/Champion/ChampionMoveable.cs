@@ -10,7 +10,6 @@ namespace Entities.Champion
     [RequireComponent(typeof(NavMeshAgent))]
     public partial class Champion : IMoveable
     {
-        [Header("Movement")] public bool isBattlerite = true;
         public float referenceMoveSpeed;
         public float currentMoveSpeed;
         public float currentRotateSpeed;
@@ -28,7 +27,7 @@ namespace Entities.Champion
 
         private NavMeshAgent agent;
 
-        private Vector3 rotateDirection;
+     
 
         public bool CanMove()
         {
@@ -62,8 +61,8 @@ namespace Entities.Champion
         [PunRPC]
         public void SetCanMoveRPC(bool value) { }
 
-        public event GlobalDelegates.BoolDelegate OnSetCanMove;
-        public event GlobalDelegates.BoolDelegate OnSetCanMoveFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanMove;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanMoveFeedback;
 
         public void RequestSetReferenceMoveSpeed(float value) { }
 
@@ -73,8 +72,8 @@ namespace Entities.Champion
         [PunRPC]
         public void SetReferenceMoveSpeedRPC(float value) { }
 
-        public event GlobalDelegates.FloatDelegate OnSetReferenceMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnSetReferenceMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetReferenceMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetReferenceMoveSpeedFeedback;
 
         public void RequestIncreaseReferenceMoveSpeed(float amount) { }
 
@@ -84,8 +83,8 @@ namespace Entities.Champion
         [PunRPC]
         public void IncreaseReferenceMoveSpeedRPC(float amount) { }
 
-        public event GlobalDelegates.FloatDelegate OnIncreaseReferenceMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnIncreaseReferenceMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseReferenceMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseReferenceMoveSpeedFeedback;
 
         public void RequestDecreaseReferenceMoveSpeed(float amount) { }
 
@@ -95,8 +94,8 @@ namespace Entities.Champion
         [PunRPC]
         public void DecreaseReferenceMoveSpeedRPC(float amount) { }
 
-        public event GlobalDelegates.FloatDelegate OnDecreaseReferenceMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnDecreaseReferenceMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseReferenceMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseReferenceMoveSpeedFeedback;
 
         public void RequestSetCurrentMoveSpeed(float value) { }
 
@@ -106,8 +105,8 @@ namespace Entities.Champion
         [PunRPC]
         public void SetCurrentMoveSpeedRPC(float value) { }
 
-        public event GlobalDelegates.FloatDelegate OnSetCurrentMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnSetCurrentMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentMoveSpeedFeedback;
 
         public void RequestIncreaseCurrentMoveSpeed(float amount) { }
 
@@ -117,8 +116,8 @@ namespace Entities.Champion
         [PunRPC]
         public void IncreaseCurrentMoveSpeedRPC(float amount) { }
 
-        public event GlobalDelegates.FloatDelegate OnIncreaseCurrentMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnIncreaseCurrentMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentMoveSpeedFeedback;
 
         public void RequestDecreaseCurrentMoveSpeed(float amount) { }
 
@@ -128,36 +127,14 @@ namespace Entities.Champion
         [PunRPC]
         public void DecreaseCurrentMoveSpeedRPC(float amount) { }
 
-        public event GlobalDelegates.FloatDelegate OnDecreaseCurrentMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnDecreaseCurrentMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentMoveSpeedFeedback;
 
         #region Battlerite
 
-        private void Move()
-        {
-       
-            rb.velocity = moveDirection * currentMoveSpeed;
-        }
-
-        private void RotateMath()
-        {
-            if (!photonView.IsMine) return;
     
-            var ray = camera.ScreenPointToRay(Input.mousePosition);
 
-            if (!Physics.Raycast(ray, out var hit, float.PositiveInfinity)) return;
 
-            rotateDirection = -(transform.position - hit.point);
-            rotateDirection.y = 0;
-        }
-
-        private void Rotate()
-        {
-    
-            rotateParent.transform.rotation = Quaternion.Lerp(rotateParent.transform.rotation,
-                Quaternion.LookRotation(rotateDirection),
-                Time.deltaTime * currentRotateSpeed);
-        }
 
         public void SetMoveDirection(Vector3 direction)
         {
@@ -192,7 +169,7 @@ namespace Entities.Champion
 
         private void FollowEntity()
         {
-            if (isBattlerite || !isFollowing) return;
+            if (!isFollowing) return;
             agent.SetDestination(entityFollow.transform.position);
             if (lastCapacity.isInRange(entityIndex, entityFollow.transform.position))
             {
@@ -204,7 +181,7 @@ namespace Entities.Champion
 
         private void CheckMoveDistance()
         {
-            if (isBattlerite || agent == null) return;
+            if (agent == null) return;
           
             if (Vector3.Distance(transform.position, movePosition) < 0.5 )
             {
@@ -218,7 +195,7 @@ namespace Entities.Champion
 
         #endregion
 
-        public event GlobalDelegates.Vector3Delegate OnMove;
-        public event GlobalDelegates.Vector3Delegate OnMoveFeedback;
+        public event GlobalDelegates.OneParameterDelegate<Vector3> OnMove;
+        public event GlobalDelegates.OneParameterDelegate<Vector3> OnMoveFeedback;
     }
 }

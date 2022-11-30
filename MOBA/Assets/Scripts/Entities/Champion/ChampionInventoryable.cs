@@ -68,8 +68,8 @@ namespace Entities.Champion
             OnAddItemFeedback?.Invoke(index);
         }
         
-        public event GlobalDelegates.ByteDelegate OnAddItem;
-        public event GlobalDelegates.ByteDelegate OnAddItemFeedback;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnAddItem;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnAddItemFeedback;
         
         /// <param name="index">index of Item in this entity's inventory (not in item Collection)</param>
         public void RequestRemoveItem(byte index)
@@ -112,8 +112,8 @@ namespace Entities.Champion
             item.OnItemRemovedFromInventoryFeedback(this);
             OnRemoveItemFeedback?.Invoke(index);
         }
-        public event GlobalDelegates.ByteDelegate OnRemoveItem;
-        public event GlobalDelegates.ByteDelegate OnRemoveItemFeedback;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnRemoveItem;
+        public event GlobalDelegates.OneParameterDelegate<byte> OnRemoveItemFeedback;
         
         public void RequestActivateItem(byte itemIndexInInventory,int[] selectedEntities,Vector3[] positions)
         {
@@ -160,7 +160,7 @@ namespace Entities.Champion
             OnActivateItemFeedback?.Invoke(itemIndexInInventory,selectedEntities,positions,castSuccess);
         }
 
-        public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnActivateItem;
-        public event GlobalDelegates.ByteIntArrayVector3ArrayBoolArrayDelegate OnActivateItemFeedback;
+        public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnActivateItem;
+        public event GlobalDelegates.FourthParameterDelegate<byte , int[], Vector3[], bool[]> OnActivateItemFeedback;
     }
 }

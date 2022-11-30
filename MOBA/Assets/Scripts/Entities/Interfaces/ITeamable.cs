@@ -24,7 +24,7 @@ namespace Entities
         /// </summary>
         public void ChangeTeamRPC(byte team);
 
-        public event GlobalDelegates.BoolDelegate OnChangeTeam;
-        public event GlobalDelegates.BoolDelegate OnChangeTeamFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnChangeTeam;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnChangeTeamFeedback;
     }
 }

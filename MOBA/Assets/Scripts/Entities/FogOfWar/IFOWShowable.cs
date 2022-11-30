@@ -12,13 +12,13 @@ namespace Entities.FogOfWar
         public void RequestSetCanShow(bool value);
         public void SyncSetCanShowRPC(bool value);
         public void SetCanShowRPC(bool value);
-        public event GlobalDelegates.BoolDelegate OnSetCanShow;
-        public event GlobalDelegates.BoolDelegate OnSetCanShowFeedback;
+        public event  GlobalDelegates.OneParameterDelegate<bool> OnSetCanShow;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanShowFeedback;
         public void RequestSetCanHide(bool value);
         public void SyncSetCanHideRPC(bool value);
         public void SetCanHideRPC(bool value);
-        public event GlobalDelegates.BoolDelegate OnSetCanHide;
-        public event GlobalDelegates.BoolDelegate OnSetCanHideFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanHide;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanHideFeedback;
         public void TryAddFOWViewable(int viewableIndex);
         public void TryAddFOWViewable(Entity viewable);
         public void SyncTryAddViewableRPC(int viewableIndex,bool show);

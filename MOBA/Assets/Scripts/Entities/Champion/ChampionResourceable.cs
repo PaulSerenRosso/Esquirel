@@ -42,8 +42,8 @@ namespace Entities.Champion
             photonView.RPC("SyncSetMaxResourceRPC", RpcTarget.All, value);
         }
 
-        public event GlobalDelegates.FloatDelegate OnSetMaxResource;
-        public event GlobalDelegates.FloatDelegate OnSetMaxResourceFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetMaxResource;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetMaxResourceFeedback;
 
         public void RequestIncreaseMaxResource(float amount)
         {
@@ -65,8 +65,8 @@ namespace Entities.Champion
             photonView.RPC("SyncIncreaseMaxResourceRPC", RpcTarget.All, amount);
         }
 
-        public event GlobalDelegates.FloatDelegate OnIncreaseMaxResource;
-        public event GlobalDelegates.FloatDelegate OnIncreaseMaxResourceFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseMaxResource;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseMaxResourceFeedback;
 
         public void RequestDecreaseMaxResource(float amount)
         {
@@ -88,8 +88,8 @@ namespace Entities.Champion
             photonView.RPC("SyncDecreaseMaxResourceRPC", RpcTarget.All, amount);
         }
 
-        public event GlobalDelegates.FloatDelegate OnDecreaseMaxResource;
-        public event GlobalDelegates.FloatDelegate OnDecreaseMaxResourceFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseMaxResource;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseMaxResourceFeedback;
 
         public void RequestSetCurrentResource(float value)
         {
@@ -111,8 +111,8 @@ namespace Entities.Champion
             photonView.RPC("SyncSetCurrentResourceRPC", RpcTarget.All, value);
         }
 
-        public event GlobalDelegates.FloatDelegate OnSetCurrentResource;
-        public event GlobalDelegates.FloatDelegate OnSetCurrentResourceFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentResource;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentResourceFeedback;
 
         public void RequestSetCurrentResourcePercent(float value)
         {
@@ -134,8 +134,8 @@ namespace Entities.Champion
             photonView.RPC("SyncSetCurrentResourcePercentRPC", RpcTarget.All, value);
         }
 
-        public event GlobalDelegates.FloatDelegate OnSetCurrentResourcePercent;
-        public event GlobalDelegates.FloatDelegate OnSetCurrentResourcePercentFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentResourcePercent;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentResourcePercentFeedback;
 
         public void RequestIncreaseCurrentResource(float amount)
         {
@@ -157,8 +157,8 @@ namespace Entities.Champion
             photonView.RPC("SyncIncreaseCurrentResourceRPC", RpcTarget.All, amount);
         }
 
-        public event GlobalDelegates.FloatDelegate OnIncreaseCurrentResource;
-        public event GlobalDelegates.FloatDelegate OnIncreaseCurrentResourceFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentResource;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentResourceFeedback;
 
         public void RequestDecreaseCurrentResource(float amount)
         {
@@ -180,7 +180,7 @@ namespace Entities.Champion
             photonView.RPC("SyncDecreaseCurrentResourceRPC", RpcTarget.All, amount);
         }
 
-        public event GlobalDelegates.FloatDelegate OnDecreaseCurrentResource;
-        public event GlobalDelegates.FloatDelegate OnDecreaseCurrentResourceFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentResource;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentResourceFeedback;
     }
 }

@@ -20,8 +20,8 @@
         /// </summary>
         public void SetCanDieRPC(bool value);
 
-        public event GlobalDelegates.BoolDelegate OnSetCanDie;
-        public event GlobalDelegates.BoolDelegate OnSetCanDieFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanDie;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanDieFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to kill the entity.

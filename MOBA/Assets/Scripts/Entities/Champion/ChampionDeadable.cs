@@ -44,8 +44,8 @@ namespace Entities.Champion
             photonView.RPC("SyncSetCanDieRPC", RpcTarget.All, value);
         }
 
-        public event GlobalDelegates.BoolDelegate OnSetCanDie;
-        public event GlobalDelegates.BoolDelegate OnSetCanDieFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanDie;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanDieFeedback;
 
         public void RequestDie()
         {

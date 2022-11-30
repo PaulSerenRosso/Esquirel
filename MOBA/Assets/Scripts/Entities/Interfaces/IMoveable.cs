@@ -24,8 +24,8 @@ namespace Entities
         /// </summary>
         public void SetCanMoveRPC(bool value);
 
-        public event GlobalDelegates.BoolDelegate OnSetCanMove;
-        public event GlobalDelegates.BoolDelegate OnSetCanMoveFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanMove;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanMoveFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to set the entity's reference move speed.
@@ -43,8 +43,8 @@ namespace Entities
         /// <param name="value">the value to set it to</param>
         public void SetReferenceMoveSpeedRPC(float value);
 
-        public event GlobalDelegates.FloatDelegate OnSetReferenceMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnSetReferenceMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetReferenceMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetReferenceMoveSpeedFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to increase the entity's reference move speed.
@@ -62,8 +62,8 @@ namespace Entities
         /// <param name="amount">the increase amount</param>
         public void IncreaseReferenceMoveSpeedRPC(float amount);
 
-        public event GlobalDelegates.FloatDelegate OnIncreaseReferenceMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnIncreaseReferenceMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseReferenceMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseReferenceMoveSpeedFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to decrease the entity's reference move speed.
@@ -81,8 +81,8 @@ namespace Entities
         /// <param name="amount">the increase amount</param>
         public void DecreaseReferenceMoveSpeedRPC(float amount);
 
-        public event GlobalDelegates.FloatDelegate OnDecreaseReferenceMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnDecreaseReferenceMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseReferenceMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseReferenceMoveSpeedFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to set the entity's current move speed.
@@ -100,8 +100,8 @@ namespace Entities
         /// <param name="value">the value to set it to</param>
         public void SetCurrentMoveSpeedRPC(float value);
 
-        public event GlobalDelegates.FloatDelegate OnSetCurrentMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnSetCurrentMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentMoveSpeedFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to increase the entity's current move speed.
@@ -119,8 +119,8 @@ namespace Entities
         /// <param name="amount">the increase amount</param>
         public void IncreaseCurrentMoveSpeedRPC(float amount);
 
-        public event GlobalDelegates.FloatDelegate OnIncreaseCurrentMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnIncreaseCurrentMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentMoveSpeedFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to decrease the entity's current move speed.
@@ -138,10 +138,10 @@ namespace Entities
         /// <param name="amount">the increase amount</param>
         public void DecreaseCurrentMoveSpeedRPC(float amount);
 
-        public event GlobalDelegates.FloatDelegate OnDecreaseCurrentMoveSpeed;
-        public event GlobalDelegates.FloatDelegate OnDecreaseCurrentMoveSpeedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentMoveSpeed;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentMoveSpeedFeedback;
 
-        public event GlobalDelegates.Vector3Delegate OnMove;
-        public event GlobalDelegates.Vector3Delegate OnMoveFeedback;
+        public event GlobalDelegates.OneParameterDelegate<Vector3> OnMove;
+        public event GlobalDelegates.OneParameterDelegate<Vector3> OnMoveFeedback;
     }
 }

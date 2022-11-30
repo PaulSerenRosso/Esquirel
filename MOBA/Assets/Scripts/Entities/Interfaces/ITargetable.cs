@@ -17,9 +17,10 @@ namespace Entities
         /// Sets if the entity can be targeted.
         /// </summary>
         public void SetCanBeTargetedRPC(bool value);
+ 
 
-        public event GlobalDelegates.BoolDelegate OnSetCanBeTargeted;
-        public event GlobalDelegates.BoolDelegate OnSetCanBeTargetedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanBeTargeted;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanBeTargetedFeedback;
         
         /// <summary>
         /// Sends an RPC to the master that the entity has been targeted.

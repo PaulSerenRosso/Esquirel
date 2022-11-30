@@ -17,8 +17,8 @@
         /// </summary>
         public void SetCanBeDisplacedRPC(bool value);
 
-        public event GlobalDelegates.BoolDelegate OnSetCanBeDisplaced;
-        public event GlobalDelegates.BoolDelegate OnSetCanBeDisplacedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanBeDisplaced;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanBeDisplacedFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to displace the entity.

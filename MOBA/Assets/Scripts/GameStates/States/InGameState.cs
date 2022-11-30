@@ -24,6 +24,7 @@ namespace GameStates.States
                 return;
             }
 
+            
             if (timer >= 1.0 / sm.tickRate)
             {
                 timer -= 1.0 / sm.tickRate;

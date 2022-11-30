@@ -44,8 +44,8 @@ namespace Entities.Champion
             photonView.RPC("SyncSetMaxHpRPC", RpcTarget.All, maxHp);
         }
 
-        public event GlobalDelegates.FloatDelegate OnSetMaxHp;
-        public event GlobalDelegates.FloatDelegate OnSetMaxHpFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetMaxHp;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetMaxHpFeedback;
 
         public void RequestIncreaseMaxHp(float amount)
         {
@@ -71,8 +71,8 @@ namespace Entities.Champion
             photonView.RPC("SyncIncreaseMaxHpRPC", RpcTarget.All, maxHp);
         }
 
-        public event GlobalDelegates.FloatDelegate OnIncreaseMaxHp;
-        public event GlobalDelegates.FloatDelegate OnIncreaseMaxHpFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseMaxHp;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseMaxHpFeedback;
 
         public void RequestDecreaseMaxHp(float amount)
         {
@@ -99,8 +99,8 @@ namespace Entities.Champion
             photonView.RPC("SyncDecreaseMaxHpRPC", RpcTarget.All, maxHp);
         }
 
-        public event GlobalDelegates.FloatDelegate OnDecreaseMaxHp;
-        public event GlobalDelegates.FloatDelegate OnDecreaseMaxHpFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseMaxHp;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseMaxHpFeedback;
 
         public void RequestSetCurrentHp(float value)
         {
@@ -122,8 +122,8 @@ namespace Entities.Champion
             photonView.RPC("SyncSetCurrentHpRPC", RpcTarget.All, value);
         }
 
-        public event GlobalDelegates.FloatDelegate OnSetCurrentHp;
-        public event GlobalDelegates.FloatDelegate OnSetCurrentHpFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentHp;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentHpFeedback;
 
         public void RequestSetCurrentHpPercent(float value)
         {
@@ -145,8 +145,8 @@ namespace Entities.Champion
             photonView.RPC("SyncSetCurrentHpPercentRPC", RpcTarget.All, value);
         }
 
-        public event GlobalDelegates.FloatDelegate OnSetCurrentHpPercent;
-        public event GlobalDelegates.FloatDelegate OnSetCurrentHpPercentFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentHpPercent;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentHpPercentFeedback;
 
         public void RequestIncreaseCurrentHp(float amount)
         {
@@ -170,8 +170,8 @@ namespace Entities.Champion
             photonView.RPC("SyncIncreaseCurrentHpRPC",RpcTarget.All,currentHp);
         }
 
-        public event GlobalDelegates.FloatDelegate OnIncreaseCurrentHp;
-        public event GlobalDelegates.FloatDelegate OnIncreaseCurrentHpFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentHp;
+        public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentHpFeedback;
 
         public void RequestDecreaseCurrentHp(float amount)
         {
@@ -198,7 +198,7 @@ namespace Entities.Champion
             photonView.RPC("SyncDecreaseCurrentHpRPC",RpcTarget.All,currentHp);
         }
 
-        public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHp;
-        public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHpFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentHp;
+        public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentHpFeedback;
     }
 }

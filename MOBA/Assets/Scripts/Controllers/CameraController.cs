@@ -13,8 +13,7 @@ namespace Controllers
 
         private bool cameraLock = true;
         public static CameraController Instance;
-
-        public bool isBattlerite = true; 
+        
         [SerializeField] private Vector3 offset;
         [SerializeField] private float lerpSpeed;
         [SerializeField] private float rotationY;
@@ -54,15 +53,10 @@ namespace Controllers
 
         private void LateUpdate()
         {
-            if(!isBattlerite)
             UpdateCamera(Time.deltaTime);
         }
 
-        private void FixedUpdate()
-        {
-            if(isBattlerite)
-            UpdateCamera(Time.fixedTime);
-        }
+    
 
         private void UpdateCamera(float deltaTime)
         {

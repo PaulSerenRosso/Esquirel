@@ -19,8 +19,8 @@ namespace Entities.Champion
         [PunRPC]
         public void SetCanBeDisplacedRPC(bool value) { }
 
-        public event GlobalDelegates.BoolDelegate OnSetCanBeDisplaced;
-        public event GlobalDelegates.BoolDelegate OnSetCanBeDisplacedFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanBeDisplaced;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanBeDisplacedFeedback;
 
         public void RequestDisplace() { }
 

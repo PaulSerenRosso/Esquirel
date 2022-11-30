@@ -98,8 +98,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         throw new System.NotImplementedException();
     }
 
-    public event GlobalDelegates.BoolDelegate OnSetCanAttack;
-    public event GlobalDelegates.BoolDelegate OnSetCanAttackFeedback;
+    public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanAttack;
+    public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanAttackFeedback;
     public float GetAttackDamage()
     {
         throw new System.NotImplementedException();
@@ -120,8 +120,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         throw new System.NotImplementedException();
     }
 
-    public event GlobalDelegates.FloatDelegate OnSetAttackDamage;
-    public event GlobalDelegates.FloatDelegate OnSetAttackDamageFeedback;
+    public event GlobalDelegates.OneParameterDelegate<float> OnSetAttackDamage;
+    public event GlobalDelegates.OneParameterDelegate<float> OnSetAttackDamageFeedback;
     public void RequestAttack(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         throw new System.NotImplementedException();
@@ -146,8 +146,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         photonView.RPC("SyncAttackRPC",RpcTarget.All,capacityIndex,targetedEntities,targetedPositions);
     }
 
-    public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttack;
-    public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttackFeedback;
+    public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnAttack;
+    public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnAttackFeedback;
     public float GetMaxHp()
     {
         throw new NotImplementedException();
@@ -178,8 +178,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         throw new NotImplementedException();
     }
 
-    public event GlobalDelegates.FloatDelegate OnSetMaxHp;
-    public event GlobalDelegates.FloatDelegate OnSetMaxHpFeedback;
+    public event GlobalDelegates.OneParameterDelegate<float> OnSetMaxHp;
+    public event GlobalDelegates.OneParameterDelegate<float> OnSetMaxHpFeedback;
     public void RequestIncreaseMaxHp(float amount)
     {
         throw new NotImplementedException();
@@ -195,8 +195,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         throw new NotImplementedException();
     }
 
-    public event GlobalDelegates.FloatDelegate OnIncreaseMaxHp;
-    public event GlobalDelegates.FloatDelegate OnIncreaseMaxHpFeedback;
+    public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseMaxHp;
+    public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseMaxHpFeedback;
     public void RequestDecreaseMaxHp(float amount)
     {
         throw new NotImplementedException();
@@ -212,8 +212,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         throw new NotImplementedException();
     }
 
-    public event GlobalDelegates.FloatDelegate OnDecreaseMaxHp;
-    public event GlobalDelegates.FloatDelegate OnDecreaseMaxHpFeedback;
+    public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseMaxHp;
+    public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseMaxHpFeedback;
     public void RequestSetCurrentHp(float value)
     {
         throw new NotImplementedException();
@@ -229,8 +229,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         throw new NotImplementedException();
     }
 
-    public event GlobalDelegates.FloatDelegate OnSetCurrentHp;
-    public event GlobalDelegates.FloatDelegate OnSetCurrentHpFeedback;
+    public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentHp;
+    public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentHpFeedback;
     public void RequestSetCurrentHpPercent(float value)
     {
         throw new NotImplementedException();
@@ -246,8 +246,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         throw new NotImplementedException();
     }
 
-    public event GlobalDelegates.FloatDelegate OnSetCurrentHpPercent;
-    public event GlobalDelegates.FloatDelegate OnSetCurrentHpPercentFeedback;
+    public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentHpPercent;
+    public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentHpPercentFeedback;
     public void RequestIncreaseCurrentHp(float amount)
     {
         throw new NotImplementedException();
@@ -263,8 +263,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         throw new NotImplementedException();
     }
 
-    public event GlobalDelegates.FloatDelegate OnIncreaseCurrentHp;
-    public event GlobalDelegates.FloatDelegate OnIncreaseCurrentHpFeedback;
+    public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentHp;
+    public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentHpFeedback;
     
     public void RequestDecreaseCurrentHp(float amount)
     {
@@ -292,8 +292,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         }
     }
 
-    public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHp;
-    public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHpFeedback;
+    public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentHp;
+    public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentHpFeedback;
     public bool IsAlive()
     {
         throw new NotImplementedException();
@@ -319,8 +319,8 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         throw new NotImplementedException();
     }
 
-    public event GlobalDelegates.BoolDelegate OnSetCanDie;
-    public event GlobalDelegates.BoolDelegate OnSetCanDieFeedback;
+    public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanDie;
+    public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanDieFeedback;
     
     
     public void RequestDie()

@@ -38,8 +38,8 @@ namespace Entities.Champion
             OnSetCanCastFeedback?.Invoke(value);
         }
         
-        public event GlobalDelegates.BoolDelegate OnSetCanCast;
-        public event GlobalDelegates.BoolDelegate OnSetCanCastFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanCast;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanCastFeedback;
 
         public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
@@ -66,7 +66,7 @@ namespace Entities.Champion
             OnCastFeedback?.Invoke(capacityIndex,targetedEntities,targetedPositions,activeCapacity);
         }
         
-        public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
-        public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
+        public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnCast;
+        public event GlobalDelegates.FourthParameterDelegate<byte , int[], Vector3[], ActiveCapacity> OnCastFeedback;
     }
 }

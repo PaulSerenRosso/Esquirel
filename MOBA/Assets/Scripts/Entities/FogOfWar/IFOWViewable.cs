@@ -17,8 +17,8 @@ namespace Entities.FogOfWar
         public void RequestSetCanView(bool value);
         public void SyncSetCanViewRPC(bool value);
         public void SetCanViewRPC(bool value);
-        public event GlobalDelegates.BoolDelegate OnSetCanView;
-        public event GlobalDelegates.BoolDelegate OnSetCanViewFeedback;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanView;
+        public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanViewFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to set the entity's view range.
@@ -38,8 +38,8 @@ namespace Entities.FogOfWar
         /// <param name="value">the value to set it to</param>
         public void SetViewRangeRPC(float value);
 
-        public event GlobalDelegates.FloatDelegate OnSetViewRange;
-        public event GlobalDelegates.FloatDelegate OnSetViewRangeFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetViewRange;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetViewRangeFeedback;
         
         /// <summary>
         /// Sends an RPC to the master to set the entity's view range.
@@ -59,29 +59,29 @@ namespace Entities.FogOfWar
         /// <param name="value">the value to set it to</param>
         public void SetViewAngleRPC(float value);
 
-        public event GlobalDelegates.FloatDelegate OnSetViewAngle;
-        public event GlobalDelegates.FloatDelegate OnSetViewAngleFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetViewAngle;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetViewAngleFeedback;
 
         
         //Demander à Gauthier et Hubert 
         public void RequestSetBaseViewRange(float value);
         public void SyncSetBaseViewRangeRPC(float value);
         public void SetBaseViewRangeRPC(float value);
-        public event GlobalDelegates.FloatDelegate OnSetBaseViewRange;
-        public event GlobalDelegates.FloatDelegate OnSetBaseViewRangeFeedback;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetBaseViewRange;
+        public event GlobalDelegates.OneParameterDelegate<float> OnSetBaseViewRangeFeedback;
 
         public void AddShowable(int showableIndex);
         public void AddShowable(Entity showable);
         public void SyncAddShowableRPC(int showableIndex);
 
         public bool CheckBushCondition(Entity showable);
-        public event GlobalDelegates.IntDelegate OnAddShowable;
-        public event GlobalDelegates.IntDelegate OnAddShowableFeedback;
+        public event GlobalDelegates.OneParameterDelegate<int> OnAddShowable;
+        public event GlobalDelegates.OneParameterDelegate<int> OnAddShowableFeedback;
         
         public void RemoveShowable(int showableIndex);
         public void RemoveShowable(IFOWShowable showable);
         public void SyncRemoveShowableRPC(int showableIndex);
-        public event GlobalDelegates.IntDelegate OnRemoveShowable;
-        public event GlobalDelegates.IntDelegate OnRemoveShowableFeedback;
+        public event GlobalDelegates.OneParameterDelegate<int> OnRemoveShowable;
+        public event GlobalDelegates.OneParameterDelegate<int> OnRemoveShowableFeedback;
     }
 }

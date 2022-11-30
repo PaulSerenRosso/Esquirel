@@ -23,6 +23,8 @@ namespace Entities.Champion
         public Rigidbody rb;
 
         public CollisionBlocker blocker;
+        [SerializeField] private NavMeshObstacle obstacle;
+
         protected override void OnStart()
         {
             base.OnStart();
@@ -32,42 +34,17 @@ namespace Entities.Champion
             camera = Camera.main;
             uiManager = UIManager.Instance;
             agent = GetComponent<NavMeshAgent>();
-            NavMeshObstacle obstacle = GetComponent<NavMeshObstacle>();
-            if (isBattlerite)
-            {
-                obstacle.enabled = false;
-                blocker.characterColliderBlocker.enabled = true;
-                blocker.SetUpBlocker();
-                agent.enabled = false;
-            }
-            else
-            {
-                blocker.characterColliderBlocker.enabled = false;
-                obstacle.enabled = true;
-                rb.isKinematic = true;
-                agent.enabled = true;
-            }
-          
+            obstacle = GetComponent<NavMeshObstacle>();
+            blocker.SetUpBlocker();
         }
 
         protected override void OnUpdate()
         {
-            if(isBattlerite && GameStateMachine.Instance.GetPlayerChampion() == this)
-            RotateMath();
-            else
-            {
             if (isFollowing) FollowEntity(); // Lol
             if (!photonView.IsMine) return;
             CheckMoveDistance();
-            }
         }
 
-        protected override void OnFixedUpdate()
-        {
-            if (!isBattlerite || GameStateMachine.Instance.GetPlayerChampion() != this) return;
-            Move();
-            Rotate();
-        }
 
         public override void OnInstantiated()
         {
@@ -78,8 +55,6 @@ namespace Entities.Champion
         {
         }
 
-
-  
 
         public void ApplyChampionSO(byte championSoIndex, Enums.Team newTeam)
         {
@@ -145,10 +120,9 @@ namespace Entities.Champion
             }
 
             respawnPos = transform.position = pos.position;
-            if (!isBattlerite)
-            {
-                SetupNavMesh();
-            }
+            SetupNavMesh();
+
+
             championMesh.GetComponent<ChampionMeshLinker>().LinkTeamColor(this.team);
             elementsToShow.Add(championMesh);
 
@@ -165,6 +139,7 @@ namespace Entities.Champion
             {
                 AddPassiveCapacityRPC(so.passiveCapacitiesIndexes[i]);
             }
+
             rb.velocity = Vector3.zero;
             RequestSetCanDie(true);
         }
