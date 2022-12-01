@@ -13,7 +13,7 @@ namespace Entities.Capacities
         public override bool TryCast(int casterIndex, int[] targets, Vector3[] pos)
         {
             so = (ActiveTormentedShadowSO)AssociatedActiveCapacitySO();
-            if (Vector3.Distance(pos[0], caster.transform.position) > so.maxRange) return false;
+          //  if (Vector3.Distance(pos[0], caster.transform.position) > so.maxRange) return false;
 
             ApplyDamage();
 

@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Controllers;
 using Entities.Capacities;
 using Entities.FogOfWar;
 using GameStates;
 using Photon.Pun;
+
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,6 +27,11 @@ namespace Entities.Champion
         public CollisionBlocker blocker;
         [SerializeField] private NavMeshObstacle obstacle;
 
+        public ActiveCapacity attackBase;
+        public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
+        
+        public IAimable autoAttack;
+
         protected override void OnStart()
         {
             base.OnStart();
@@ -36,6 +43,7 @@ namespace Entities.Champion
             agent = GetComponent<NavMeshAgent>();
             obstacle = GetComponent<NavMeshObstacle>();
             blocker.SetUpBlocker();
+            
         }
 
         protected override void OnUpdate()
@@ -53,6 +61,7 @@ namespace Entities.Champion
 
         public override void OnInstantiatedFeedback()
         {
+            
         }
 
 
@@ -74,6 +83,7 @@ namespace Entities.Champion
             var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position,
                 Quaternion.identity, rotateParent);
             championMesh.transform.localEulerAngles = Vector3.zero;
+          
 
             team = newTeam;
 
@@ -121,8 +131,8 @@ namespace Entities.Champion
 
             respawnPos = transform.position = pos.position;
             SetupNavMesh();
-
-
+          
+            
             championMesh.GetComponent<ChampionMeshLinker>().LinkTeamColor(this.team);
             elementsToShow.Add(championMesh);
 
@@ -135,6 +145,16 @@ namespace Entities.Champion
             }
 
             so.SetIndexes();
+          
+            for (int i = 0; i < so.activeCapacities.Length; i++)
+            {
+                activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.activeCapacities[i].indexInCollection,this));
+                activeCapacities[i].SetUpActiveCapacity(so.activeCapacities[i].indexInCollection, this);
+            }
+            attackBase =
+                CapacitySOCollectionManager.CreateActiveCapacity(so.attackAbility.indexInCollection, this);
+            autoAttack =(IAimable) attackBase;
+            attackBase.SetUpActiveCapacity(so.attackAbility.indexInCollection, this);
             for (int i = 0; i < so.passiveCapacitiesIndexes.Length; i++)
             {
                 AddPassiveCapacityRPC(so.passiveCapacitiesIndexes[i]);

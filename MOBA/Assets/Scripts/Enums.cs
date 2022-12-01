@@ -15,9 +15,5 @@ public class Enums
     {
         Kit, Item, Positive, Negative, BasicAttack 
     }
-
-    public enum CapacityShootType
-    {
-        Skillshot, targetPosition, targetEntity
-    } 
+    
 }

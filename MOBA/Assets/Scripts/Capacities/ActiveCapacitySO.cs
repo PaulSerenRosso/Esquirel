@@ -20,14 +20,8 @@ namespace Entities.Capacities
 
         [Tooltip("Cooldown in second")] public float cooldown;
 
-        [Tooltip("Is capacity auto-target")]public bool isTargeting;
-        
-        [Tooltip("Maximum range")] public float maxRange;
-        
         [Tooltip("All types of the capacity")] public List<Enums.CapacityType> types;
-        
-        public Enums.CapacityShootType shootType;
-        
+
         /// <summary>
         /// return typeof(ActiveCapacity);
         /// </summary>

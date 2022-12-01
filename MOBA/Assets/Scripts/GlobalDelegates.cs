@@ -13,12 +13,5 @@ public class GlobalDelegates : MonoBehaviour
 
     public  delegate void FourthParameterDelegate<P1, P2, P3, P4>(P1 firstParameter, P2 secondParameter,
         P3 thirdParameter, P4 fourthParameter);
-
-   // public delegate void ByteIntArrayVector3ArrayDelegate(byte b, int[] uintArray, Vector3[] vector3s);
-
-  //  public delegate void ByteIntArrayVector3ArrayCapacityDelegate(byte b, int[] uintArray, Vector3[] vector3s,
-    //    ActiveCapacity capacity);
-
- // public delegate void ByteIntArrayVector3ArrayBoolArrayDelegate(byte b, int[] uintArray, Vector3[] vector3s,
-   //   bool[] bools);
+    
 }
