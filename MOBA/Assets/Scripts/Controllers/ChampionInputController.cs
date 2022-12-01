@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Entities;
 using Entities.Capacities;
 using Entities.Champion;
+using Entities.FogOfWar;
 using UnityEngine.AI;
 
 namespace Controllers.Inputs
@@ -18,7 +20,9 @@ namespace Controllers.Inputs
         private Vector3 moveVector;
         private Camera cam;
         private bool isActivebuttonPress;
+        [SerializeField] private LayerMask layerForDetectMovePosition;
 
+        [SerializeField] private float movePositionDetectionDistance;
         /// <summary>
         /// Actions Performed on Attack Activation
         /// </summary>
@@ -98,61 +102,103 @@ namespace Controllers.Inputs
         {
             mousePos = ctx.ReadValue<Vector2>();
             var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(mouseRay, out var hit)) return;
+            if (!Physics.Raycast(mouseRay, out var hit, movePositionDetectionDistance,layerForDetectMovePosition)) return;
             cursorWorldPos[0] = hit.point;
             selectedEntity[0] = -1;
+            //Debug.Log("hit"+hit.collider.gameObject.name);
             var ent = hit.transform.GetComponent<Entity>();
-            if (ent == null && hit.transform.parent != null) hit.transform.parent.GetComponent<Entity>();
+            //    if (ent == null && hit.transform.parent != null) hit.transform.parent.GetComponent<Entity>();
             if (ent != null)
             {
-                selectedEntity[0] = ent.entityIndex;
-                cursorWorldPos[0] = ent.transform.position;
+               // Debug.Log("hitentity");
+                ITargetable entTarget = (ITargetable)ent;
+                if (entTarget != null)
+                {
+                    //Debug.Log("hit targetable");
+                    if (entTarget.CanBeTargeted())
+                    {
+                       // Debug.Log("set list input");
+                        selectedEntity[0] = ent.entityIndex;
+                        cursorWorldPos[0] = ent.transform.position;
+                    }
+                }
+            }
+            else
+            {
+                selectedEntity[0] = -1;
             }
 
             if (isActivebuttonPress)
             {
-                champion.MoveToPosition(GetMouseOverWorldPos());
+                SelectMoveTarget();
             }
         }
 
         void OnMouseClick(InputAction.CallbackContext ctx)
         {
-            champion.MoveToPosition(cursorWorldPos[0]);
+            SelectMoveTarget();
+        }
+
+        public void SelectMoveTarget()
+        {
             if (selectedEntity[0] != -1)
             {
-                champion.RequestAttack(champion.attackAbilityIndex, selectedEntity, cursorWorldPos);
+             //   Debug.Log(selectedEntity[0] != -1);
+                Entity targetEntity = EntityCollectionManager.GetEntityByIndex(selectedEntity[0]);
+                if (FogOfWarManager.Instance.CheckEntityIsVisibleForPlayer(targetEntity))
+                {
+                   // Debug.Log(FogOfWarManager.Instance.CheckEntityIsVisibleForPlayer(targetEntity));
+                    if (champion.autoAttack.TryAim(champion.entityIndex, selectedEntity[0], cursorWorldPos[0]))
+                    {
+                     //   Debug.Log(champion.autoAttack.TryAim(champion.entityIndex, selectedEntity[0], cursorWorldPos[0]));
+                        champion.StartMoveToTarget(EntityCollectionManager.GetEntityByIndex(selectedEntity[0]),
+                            champion.attackBase, champion.RequestAttack);
+                    }
+                    else
+                    {
+                        champion.MoveToPosition(cursorWorldPos[0]);
+                    }
+                }
+                else
+                {
+                    champion.MoveToPosition(cursorWorldPos[0]);
+                }
             }
-        }
-
-
-        /// <summary>
-        /// Get World Position of mouse
-        /// </summary>
-        /// <param name="mousePos"></param>
-        /// <returns></returns>
-        public Vector3 GetMouseOverWorldPos()
-        {
-            Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(mouseRay, out RaycastHit hit))
+            else
             {
-                return hit.point;
+                champion.MoveToPosition(cursorWorldPos[0]);
             }
-
-            return Vector3.zero;
         }
+
 
         /// <summary>
-        /// Actions Performed on Move inputs direction Change
-        /// </summary>
-        /// <param name="ctx"></param>
-        void OnMoveChange(InputAction.CallbackContext ctx)
-        {
-            moveInput = ctx.ReadValue<Vector2>();
-            moveVector = new Vector3(moveInput.x, 0, moveInput.y);
-            champion.SetMoveDirection(moveVector);
-            NavMeshAgent agent;
-        }
+            /// Get World Position of mouse
+            /// </summary>
+            /// <param name="mousePos"></param>
+            /// <returns></returns>
+            public Vector3 GetMouseOverWorldPos()
+            {
+                Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(mouseRay, out RaycastHit hit))
+                {
+                    return hit.point;
+                }
+
+                return Vector3.zero;
+            }
+
+            /// <summary>
+            /// Actions Performed on Move inputs direction Change
+            /// </summary>
+            /// <param name="ctx"></param>
+            void OnMoveChange(InputAction.CallbackContext ctx)
+            {
+                moveInput = ctx.ReadValue<Vector2>();
+                moveVector = new Vector3(moveInput.x, 0, moveInput.y);
+                champion.SetMoveDirection(moveVector);
+                NavMeshAgent agent;
+            }
 
 
         protected override void Link(Entity entity)
@@ -194,7 +240,7 @@ namespace Controllers.Inputs
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed -= OnActivateUltimateAbility;
             inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
-            
+
             inputs.MoveMouse.ActiveButton.performed -= OnMouseClick;
 
             inputs.MoveMouse.MousePos.performed -= OnMouseMove;

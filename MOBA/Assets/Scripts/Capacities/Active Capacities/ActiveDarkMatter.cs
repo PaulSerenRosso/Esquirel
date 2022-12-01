@@ -11,7 +11,7 @@ public class ActiveDarkMatter : ActiveCapacity,IPrevisualisable
 
     public override bool TryCast(int casterIndex, int[] targets, Vector3[] position)
     {
-        base.TryCast(casterIndex, targets, position);
+        //base.TryCast(casterIndex, targets, position);
         
         Debug.Log("Performed dark matter at " + Time.time);
         activeCapacitySo = (ActiveDarkMatterSO)AssociatedActiveCapacitySO();

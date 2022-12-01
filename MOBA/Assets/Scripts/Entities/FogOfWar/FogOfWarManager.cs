@@ -70,6 +70,24 @@ namespace Entities.FogOfWar
             }
         }
 
+        public bool CheckEntityIsVisibleForPlayer(Entity entity)
+        {
+            foreach (var viewable in currentViewablesWithEntitiesShowables)
+            {
+                var seenShowables = viewable.Key.seenShowables;
+                for (int i = seenShowables.Count - 1; i >= 0; i--)
+                {
+                    if (seenShowables.Contains(entity))
+                    {
+                        return true;
+                        
+                        //Debug.Log("Remove Elements from list");
+                    }
+                }
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Add Entity To the Fog Of War render

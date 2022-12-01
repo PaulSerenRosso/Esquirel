@@ -10,7 +10,7 @@ namespace Entities.Capacities
 
         public override bool TryCast(int casterIndex, int[] targets, Vector3[] position)
         {
-            if (!base.TryCast(casterIndex, targets, position)) return false;
+          //  if (!base.TryCast(casterIndex, targets, position)) return false;
 
             so = (ActiveZappieSO)AssociatedActiveCapacitySO();
             

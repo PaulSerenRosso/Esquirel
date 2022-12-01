@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSceneName: InGameScene
-  tickRate: 10
+  tickRate: 1
   winner: 0
   allPlayersIDs: 
   debugList: []

@@ -4,9 +4,10 @@ namespace Entities.Champion
 {
     public partial class Champion : ITargetable
     {
+        public bool canBeTargeted = false;
         public bool CanBeTargeted()
         {
-            throw new System.NotImplementedException();
+            return canBeTargeted;
         }
 
         public void RequestSetCanBeTargeted(bool value)
