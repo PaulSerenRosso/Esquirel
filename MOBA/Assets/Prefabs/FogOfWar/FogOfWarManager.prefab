@@ -171,6 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b495c58f8f430d458287b1f7b8a437b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hiddenLayer:
+    serializedVersion: 2
+    m_Bits: 524288
+  visibleLayer:
+    serializedVersion: 2
+    m_Bits: 536870912
   cameraFog: {fileID: 1126480335}
   sceneToRenderFog:
   - InGameScene

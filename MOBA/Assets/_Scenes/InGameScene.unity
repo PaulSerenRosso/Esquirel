@@ -2132,22 +2132,6 @@ PrefabInstance:
       propertyPath: poolElements.Array.size
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 263129556076279182, guid: 80fefcb4f83a0b14db760960cf24ee68, type: 3}
-      propertyPath: poolElements.Array.data[0].amount
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 263129556076279182, guid: 80fefcb4f83a0b14db760960cf24ee68, type: 3}
-      propertyPath: poolElements.Array.data[1].amount
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 263129556076279182, guid: 80fefcb4f83a0b14db760960cf24ee68, type: 3}
-      propertyPath: poolElements.Array.data[0].Element
-      value: 
-      objectReference: {fileID: 3248323131726062708, guid: 1e116510708295e4fa641f6ab0c260c1, type: 3}
-    - target: {fileID: 263129556076279182, guid: 80fefcb4f83a0b14db760960cf24ee68, type: 3}
-      propertyPath: poolElements.Array.data[1].Element
-      value: 
-      objectReference: {fileID: 3248323131726062708, guid: 9365fdce127720748a1a73011482ddeb, type: 3}
     - target: {fileID: 835053568365048107, guid: 80fefcb4f83a0b14db760960cf24ee68, type: 3}
       propertyPath: sceneViewId
       value: 1

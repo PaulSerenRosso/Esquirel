@@ -9,7 +9,7 @@ public class ActiveMinionAuto : ActiveCapacity
     private MinionTest _minion;
     private double timer;
     
-    public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast( int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         _minion = caster.GetComponent<MinionTest>();
         _target = _minion.currentAttackTarget.GetComponent<Entity>();
@@ -21,10 +21,15 @@ public class ActiveMinionAuto : ActiveCapacity
         return true;
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override void PlayFeedback( int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
     }
-    
+
+    public override void CancelCapacity()
+    {
+        throw new System.NotImplementedException();
+    }
+
     private void DelayWaitingTick()
     {
         timer += 1 / GameStateMachine.Instance.tickRate;

@@ -24,6 +24,7 @@ namespace Entities.Champion
         public Camera camera;
         public Rigidbody rb;
 
+        public Animator animator;
         public CollisionBlocker blocker;
         [SerializeField] private NavMeshObstacle obstacle;
 
@@ -42,6 +43,7 @@ namespace Entities.Champion
             uiManager = UIManager.Instance;
             agent = GetComponent<NavMeshAgent>();
             obstacle = GetComponent<NavMeshObstacle>();
+            fowm.AddFOWViewable(this );
             blocker.SetUpBlocker();
             
         }
@@ -124,17 +126,16 @@ namespace Entities.Champion
                     break;
             }
 
-            if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
-            {
-                championMesh.SetActive(false);
-            }
-
+        
             respawnPos = transform.position = pos.position;
             SetupNavMesh();
-          
+
+
+            var championMeshLinker = championMesh.GetComponent<ChampionMeshLinker>();
+            championMeshLinker.LinkTeamColor(this.team);
+            animator = championMeshLinker.animator; 
             
-            championMesh.GetComponent<ChampionMeshLinker>().LinkTeamColor(this.team);
-            elementsToShow.Add(championMesh);
+     
 
             uiManager = UIManager.Instance;
 
@@ -143,7 +144,6 @@ namespace Entities.Champion
                 uiManager.InstantiateHealthBarForEntity(entityIndex);
                 uiManager.InstantiateResourceBarForEntity(entityIndex);
             }
-
             so.SetIndexes();
           
             for (int i = 0; i < so.activeCapacities.Length; i++)
@@ -159,7 +159,11 @@ namespace Entities.Champion
             {
                 AddPassiveCapacityRPC(so.passiveCapacitiesIndexes[i]);
             }
-
+            championMesh.GetComponent<EntityFOWShowableLinker>().LinkEntity(this);
+            if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
+            {
+                HideElements();
+            }
             rb.velocity = Vector3.zero;
             RequestSetCanDie(true);
         }

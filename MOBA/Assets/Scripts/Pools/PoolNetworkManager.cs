@@ -82,18 +82,16 @@ public class PoolNetworkManager : MonoBehaviour
         {
             //Debug.Log("New pool of " + entityRef.gameObject.name);
             queuesDictionary.Add(entityRef, new Queue<Entity>());
-            
             entity = PhotonNetwork.Instantiate(entityRef.gameObject.name, position, rotation).GetComponent<Entity>();
             //entity.OnInstantiated();
             //entity.OnInstantiatedFeedback();
-            
         }
-
         return entity;
     }
 
-    public void PoolRequeue(Entity entity)
+    public void PoolRequeue(Entity refEntity, Entity  entity)
     {
-        
+        queuesDictionary[refEntity].Enqueue(entity);
+        entity.SendSyncDeainstantiate();
     }
 }

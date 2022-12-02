@@ -34,11 +34,9 @@ namespace Entities.FogOfWar
         /// </summary>
         /// <param name="IFogOfWarViewable"> Interface for Entity </param>
         private List<Entity> allViewables = new List<Entity>();
-
+        
         private Dictionary<Entity, List<Entity>> currentViewablesWithEntitiesShowables =
             new Dictionary<Entity, List<Entity>>();
-
-
         [Header("Camera and Scene Setup")] public Camera cameraFog;
         public List<string> sceneToRenderFog;
 

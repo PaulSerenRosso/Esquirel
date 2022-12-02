@@ -10,7 +10,7 @@ namespace Entities.Capacities
         public double tickDamageTimer;
         public float durationTimer;
         
-        public override bool TryCast(int casterIndex, int[] targets, Vector3[] pos)
+        public override bool TryCast( int[] targets, Vector3[] pos)
         {
             so = (ActiveTormentedShadowSO)AssociatedActiveCapacitySO();
           //  if (Vector3.Distance(pos[0], caster.transform.position) > so.maxRange) return false;
@@ -64,10 +64,15 @@ namespace Entities.Capacities
             }
         }
 
-        public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+        public override void PlayFeedback( int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
             Debug.Log("Cast tormented shadow");
             
+        }
+
+        public override void CancelCapacity()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

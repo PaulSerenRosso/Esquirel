@@ -9,7 +9,7 @@ public class ActiveTowerAuto : ActiveCapacity
     private Tower _tower;
     private double timer;
     
-    public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast( int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         _tower = caster.GetComponent<Tower>();
         _target = _tower.enemiesInRange[0].GetComponent<Entity>();
@@ -21,10 +21,15 @@ public class ActiveTowerAuto : ActiveCapacity
         return true;
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override void PlayFeedback( int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
     }
-    
+
+    public override void CancelCapacity()
+    {
+        throw new System.NotImplementedException();
+    }
+
     private void DelayWaitingTick()
     {
         timer += 1 / GameStateMachine.Instance.tickRate;

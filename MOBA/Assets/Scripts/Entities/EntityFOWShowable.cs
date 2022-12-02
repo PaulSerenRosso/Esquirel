@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Entities.FogOfWar;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace  Entities
 {
@@ -11,8 +13,34 @@ namespace  Entities
         public List<IFOWViewable> enemiesThatCanSeeMe = new List<IFOWViewable>();
         public bool canShow;
         public bool canHide;
-        public List<GameObject> elementsToShow = new List<GameObject>();
+        public List<MeshRenderer> meshRenderersToShow;
+        public List<float> meshRenderersToShowAlpha;
+        public List<ParticleSystem> particleSystemsToShow;
+        public List<float> particleSystemsToShowAlpha;
+        public List<Image> imagesToShow;
+        public List<float> imagesToShowAlpha;
         public Bush currentBush;
+
+        private void OnValidate()
+        {
+            meshRenderersToShowAlpha.Clear();
+            imagesToShowAlpha.Clear();
+            particleSystemsToShowAlpha.Clear();
+            for (int i = 0; i <meshRenderersToShow.Count ; i++)
+            {
+                meshRenderersToShowAlpha.Add(1);
+            }
+            for (int i = 0; i <particleSystemsToShow.Count ; i++)
+            {
+                particleSystemsToShowAlpha.Add(1);
+            }
+            for (int i = 0; i <imagesToShow.Count ; i++)
+            {
+               imagesToShowAlpha.Add(1);
+            }
+
+        }
+
         public bool CanShow() 
         {
             return canShow;
@@ -105,9 +133,25 @@ namespace  Entities
 
         public void ShowElements()
         {
-            for (int i = 0; i < elementsToShow.Count; i++)
+            for (int i = 0; i < meshRenderersToShow.Count; i++)
             {
-                elementsToShow[i].SetActive(true);
+                var materialColor = meshRenderersToShow[i].material.color;
+                materialColor.a = meshRenderersToShowAlpha[i];
+                meshRenderersToShow[i].material.color = materialColor;
+            }
+            
+            for (int i = 0; i < particleSystemsToShow.Count; i++)
+            {
+                var materialColor = particleSystemsToShow[i].startColor;
+                materialColor.a = meshRenderersToShowAlpha[i];
+                particleSystemsToShow[i].startColor = materialColor;
+            }
+            
+            for (int i = 0; i < imagesToShow.Count; i++)
+            {
+                var materialColor = imagesToShow[i].color;
+                materialColor.a =  imagesToShowAlpha[i];
+                imagesToShow[i].color = materialColor;
             }
            // Debug.Log("showelement" + this.gameObject.name);
             OnShowElementFeedback?.Invoke();
@@ -154,10 +198,28 @@ namespace  Entities
 
         public void HideElements()
         {
-            Debug.Log("hidelement" + this.gameObject.name);
-            for (int i = 0; i < elementsToShow.Count; i++)
+            for (int i = 0; i < meshRenderersToShow.Count; i++)
             {
-                elementsToShow[i].SetActive(false);
+                var materialColor = meshRenderersToShow[i].material.color;
+                meshRenderersToShowAlpha[i] = meshRenderersToShow[i].material.color.a;
+                materialColor.a = 0;
+                meshRenderersToShow[i].material.color = materialColor;
+            }
+            
+            for (int i = 0; i < particleSystemsToShow.Count; i++)
+            {
+                var materialColor = particleSystemsToShow[i].startColor;
+                particleSystemsToShowAlpha[i] = particleSystemsToShow[i].startColor.a;
+                materialColor.a = 0;
+                particleSystemsToShow[i].startColor = materialColor;
+            }
+            
+            for (int i = 0; i < imagesToShow.Count; i++)
+            {
+                var materialColor = imagesToShow[i].color;
+                imagesToShowAlpha[i] = imagesToShow[i].color.a;
+                materialColor.a = 0;
+                imagesToShow[i].color = materialColor;
             }
             OnHideElementFeedback?.Invoke();
         }

@@ -69,7 +69,7 @@ namespace Entities.Champion
         [PunRPC]
         public void AttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
-            if ( attackBase.TryCast(entityIndex, targetedEntities, targetedPositions))
+            if ( attackBase.TryCast( targetedEntities, targetedPositions))
             {
                 OnAttack?.Invoke(capacityIndex, targetedEntities, targetedPositions);
                     photonView.RPC("SyncAttackRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
@@ -85,7 +85,7 @@ namespace Entities.Champion
         public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
             var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
-            attackCapacity.PlayFeedback(capacityIndex,targetedEntities,targetedPositions);
+            attackCapacity.PlayFeedback(targetedEntities,targetedPositions);
             OnAttackFeedback?.Invoke(capacityIndex,targetedEntities,targetedPositions);
         }
 

@@ -67,7 +67,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d33c13896b757a4c84337b7219d2733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolElements: []
+  poolElements:
+  - Element: {fileID: 5454432412817579492, guid: ac8cee8679279af4785446d42c8f12d5, type: 3}
+    amount: 5
 --- !u!114 &4154794844745012401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,4 +86,6 @@ MonoBehaviour:
   - Element: {fileID: 6728838932469448538, guid: df01a65ac2f8e8c4ab5cd0491623b280, type: 3}
     amount: 0
   - Element: {fileID: 2912676939555132704, guid: bc1557f7ee8b65c498d852b2c077861d, type: 3}
+    amount: 5
+  - Element: {fileID: 782873847134293652, guid: a635c22fc9b904143bdd6b16713d8896, type: 3}
     amount: 5

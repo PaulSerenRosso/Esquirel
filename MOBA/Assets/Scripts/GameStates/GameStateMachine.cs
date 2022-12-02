@@ -164,11 +164,12 @@ namespace GameStates
         public void Tick()
         {
             OnTick?.Invoke();
+            /*
             Debug.Log(OnTick.GetInvocationList().Length);
             for (int i = 0; i < OnTick.GetInvocationList().Length; i++)
             {
                 Debug.Log(i+OnTick.GetInvocationList()[i].Method.Name);
-            }
+            }*/
             photonView.RPC("TickRPC", RpcTarget.All);
         }
 

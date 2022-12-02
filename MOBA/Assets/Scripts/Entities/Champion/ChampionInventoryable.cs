@@ -120,7 +120,7 @@ namespace Entities.Champion
             if(itemIndexInInventory >= items.Count) return;
             photonView.RPC("ActivateItemRPC",RpcTarget.MasterClient,itemIndexInInventory,selectedEntities,positions);
         }
-
+// ajouter le fait que les capacity se setup
         [PunRPC]
         public void ActivateItemRPC(byte itemIndexInInventory,int[] selectedEntities,Vector3[] positions)
         {
@@ -134,7 +134,7 @@ namespace Entities.Champion
             {
                 var capacityIndex = bytes[i];
                 var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-                successesActives[i] = activeCapacity.TryCast(entityIndex, selectedEntities, positions);
+                successesActives[i] = activeCapacity.TryCast( selectedEntities, positions);
             }
             items[itemIndexInInventory].OnItemActivated(selectedEntities,positions);
             OnActivateItem?.Invoke(itemIndexInInventory,selectedEntities,positions);
@@ -154,7 +154,7 @@ namespace Entities.Champion
             {
                 var capacityIndex = bytes[index];
                 var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-                if(castSuccess[index]) activeCapacity.PlayFeedback(entityIndex,selectedEntities,positions);
+                if(castSuccess[index]) activeCapacity.PlayFeedback(selectedEntities,positions);
             }
             items[itemIndexInInventory].OnItemActivatedFeedback(selectedEntities,positions);
             OnActivateItemFeedback?.Invoke(itemIndexInInventory,selectedEntities,positions,castSuccess);

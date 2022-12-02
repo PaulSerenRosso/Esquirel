@@ -9,11 +9,32 @@ namespace Entities.Capacities
         public Entity caster;
         public double cooldownTimer;
         public bool onCooldown;
-        private double feedbackTimer;
+
+        
+        private double fxTimer;
+       public Entity fxObject;
         public event GlobalDelegates.TwoParameterDelegate<byte, bool> cooldownIsReadyEvent;
         public GameObject instantiateFeedbackObj;
 
         protected int target;
+        
+       protected virtual void InitiateFXTimer()
+        {
+            
+            fxTimer = 0;
+            GameStateMachine.Instance.OnTick += TickFxTimer;
+        }
+       protected void TickFxTimer()
+        {
+            fxTimer -= 1.0 / GameStateMachine.Instance.tickRate;
+            if (fxTimer <= 0)
+            {
+                // fx timer 
+            
+                GameStateMachine.Instance.OnTick -= TickFxTimer;
+            }
+        }
+
 
         protected ActiveCapacitySO AssociatedActiveCapacitySO()
         {
@@ -58,6 +79,7 @@ namespace Entities.Capacities
                 GameStateMachine.Instance.OnTick -= CooldownTimer;
             }
         }
+        
 
 
         /// <summary>
@@ -67,35 +89,20 @@ namespace Entities.Capacities
         /// <param name="targetsEntityIndexes"></param>
         /// <param name="targetPositions"></param>
         /// <returns></returns>
-        public abstract bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions);
+        public abstract bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions);
 
         #endregion
 
         #region Feedback
 
-        public abstract void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions);
+        public abstract void PlayFeedback(int[] targetsEntityIndexes, Vector3[] targetPositions);
 
-        protected virtual void InitializeFeedbackCountdown()
-        {
-            feedbackTimer = AssociatedActiveCapacitySO().feedbackDuration;
-            GameStateMachine.Instance.OnTick += FeedbackCountdown;
-        }
 
-        protected virtual void FeedbackCountdown()
-        {
-            feedbackTimer -= GameStateMachine.Instance.tickRate;
 
-            if (feedbackTimer <= 0)
-            {
-                DisableFeedback();
-            }
-        }
+        public abstract void CancelCapacity();
+        
 
-        protected virtual void DisableFeedback()
-        {
-            PoolLocalManager.Instance.EnqueuePool(AssociatedActiveCapacitySO().feedbackPrefab, instantiateFeedbackObj);
-            GameStateMachine.Instance.OnTick -= FeedbackCountdown;
-        }
+    
 
         #endregion
     }

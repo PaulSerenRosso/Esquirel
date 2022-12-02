@@ -8,6 +8,7 @@ TagManager:
   - BlueUnit
   - RedUnit
   - Bush
+  - CapacityCollider
   layers:
   - Default
   - TransparentFX
@@ -23,12 +24,12 @@ TagManager:
   - 
   - 
   - Bush
+  - CapacityCollider
   - 
   - 
   - 
   - 
-  - 
-  - 
+  - InvisibleToCamera
   - 
   - 
   - CollisionBlocker

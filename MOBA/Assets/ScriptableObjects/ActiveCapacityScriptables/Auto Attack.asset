@@ -17,13 +17,13 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 80765a06dc799714bbe0733e2152d564, type: 3}
   description: 
   cooldown: 5
-  isTargeting: 0
-  maxRange: 5
   types: 
-  shootType: 2
+  fxPrefab: {fileID: 782873847134293652, guid: a635c22fc9b904143bdd6b16713d8896, type: 3}
+  fxTime: 5
   indexInCollection: 2
-  feedbackDuration: 0
-  feedbackPrefab: {fileID: 0}
-  range: 5
+  maxRange: 5
+  animationTime: 5
+  damageBeginTime: 3
+  damageTime: 2
+  damagePrefab: {fileID: 5454432412817579492, guid: ac8cee8679279af4785446d42c8f12d5, type: 3}
   damage: 2
-  attackSpeed: 3
