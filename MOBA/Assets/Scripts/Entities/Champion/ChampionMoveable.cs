@@ -13,6 +13,7 @@ namespace Entities.Champion
     public partial class Champion : IMoveable
     {
         public float referenceMoveSpeed;
+        public float referenceRotateSpeed;
         public float currentMoveSpeed;
         public float currentRotateSpeed;
         public bool canMove;
@@ -22,15 +23,19 @@ namespace Entities.Champion
         private int mouseTargetIndex;
         private bool isFollowing;
         private Entity entityFollow;
+               private Vector3 moveDestination;
 
+               private Vector3 oldMoveDestination;
         private IAimable currentIAimable;
         private ActiveCapacity currentCapacityAimed;
         private ITargetable targetEntity;
         public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent;
-
-        private Vector3 movePosition;
+        [SerializeField]
+        private float rotateSpeed;
+  
         //NavMesh
 
+        [SerializeField]
         private NavMeshAgent agent;
 
 
@@ -41,9 +46,14 @@ namespace Entities.Champion
 
         void SetupNavMesh()
         {
-            agent = GetComponent<NavMeshAgent>();
-            agent.SetDestination(transform.position);
+        
             if (!photonView.IsMine) agent.enabled = false;
+            else{ obstacle.enabled = false;
+                agent.enabled = true;
+            moveDestination = transform.position;
+            agent.speed = currentMoveSpeed;
+            agent.SetDestination(transform.position);
+            }
             //NavMeshBuilder.ClearAllNavMeshes();
             //NavMeshBuilder.BuildNavMesh();
         }
@@ -191,9 +201,9 @@ namespace Entities.Champion
         public void MoveToPosition(Vector3 position)
         {
             isFollowing = false;
-            movePosition = position;
-            movePosition.y = transform.position.y;
-            agent.SetDestination(position);
+            moveDestination = position;
+            moveDestination.y = transform.position.y;
+            Debug.Log(moveDestination);
         }
 
         public void StartMoveToTarget(Entity _entity, ActiveCapacity capacityWhichAimed,
@@ -230,9 +240,9 @@ namespace Entities.Champion
                             currentIAimable.GetSqrtMaxRange())
                         {
                             //Debug.Log("not distance");
-                            movePosition = entityFollow.transform.position;
-                            movePosition.y = transform.position.y;
-                            agent.SetDestination(movePosition);
+                            moveDestination= entityFollow.transform.position;
+                            moveDestination.y = entityFollow.transform.position.y;
+                            Debug.Log(moveDestination);
                         }
                         else
                         {
@@ -244,7 +254,8 @@ namespace Entities.Champion
                             {
                                 entityFollow.transform.position
                             });
-                            agent.SetDestination(transform.position);
+                          moveDestination = transform.position;
+                          Debug.Log(moveDestination);
                         }
                     }
                 }
@@ -265,17 +276,23 @@ namespace Entities.Champion
 
         private void CheckMoveDistance()
         {
-            if (agent == null) return;
+            if (agent == null ||!agent.isOnNavMesh) return;
 
-            if (Vector3.Distance(transform.position, movePosition) < 0.5)
-            {
-                agent.SetDestination(transform.position);
-                isFollowing = false;
-            }
-            else if (agent.velocity != Vector3.zero)
-            {
-                rotateParent.forward = agent.velocity.normalized;
-            }
+          
+            
+                if (agent.velocity.magnitude > 0.3f)
+                    rotateParent.forward = Vector3.MoveTowards(rotateParent.forward, agent.velocity.normalized,
+                        rotateSpeed * Time.deltaTime);
+                agent.velocity = agent.desiredVelocity;
+                if (moveDestination != oldMoveDestination)
+                {
+                agent.SetDestination(moveDestination);
+             
+                oldMoveDestination = moveDestination;
+                }  
+                moveDestination = agent.destination;
+
+            
         }
 
         #endregion

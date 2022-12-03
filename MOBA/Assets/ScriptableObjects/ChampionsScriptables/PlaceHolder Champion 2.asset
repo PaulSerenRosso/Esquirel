@@ -17,9 +17,10 @@ MonoBehaviour:
   maxHp: 10
   maxRessource: 10
   viewRange: 10
-  referenceMoveSpeed: 10
+  referenceMoveSpeed: 15
+  referenceMoveRotation: 20
   attackAbility: {fileID: 11400000, guid: 21c7c14e005d4cc4f8470bf9a61776e2, type: 2}
-  attackAbilityIndex: 3
+  attackAbilityIndex: 2
   attackDamage: 0
   passiveCapacities:
   - {fileID: 11400000, guid: 4892e9fd3d893d04b8b520812f3c9710, type: 2}
