@@ -293,7 +293,6 @@ MonoBehaviour:
   currentMoveSpeed: 10
   currentRotateSpeed: 10
   canMove: 0
-  rotateSpeed: 10
   agent: {fileID: 3480681341667345173}
   maxResource: 0
   currentResource: 0
