@@ -15,7 +15,8 @@ namespace Entities.Champion
         public float maxRessource;
         public float viewRange;
         public float referenceMoveSpeed;
-        
+        public float referenceMoveRotation;
+
         [Header("Attack")]
         public ActiveCapacitySO attackAbility;
         [HideInInspector] public byte attackAbilityIndex;

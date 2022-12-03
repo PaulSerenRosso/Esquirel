@@ -33,6 +33,8 @@ namespace Entities.Champion
         
         public IAimable autoAttack;
 
+ 
+
         protected override void OnStart()
         {
             base.OnStart();
@@ -77,6 +79,8 @@ namespace Entities.Champion
             currentResource = championSo.maxRessource;
             viewRange = championSo.viewRange;
             referenceMoveSpeed = championSo.referenceMoveSpeed;
+            referenceRotateSpeed = championSo.referenceMoveRotation;
+            currentRotateSpeed = championSo.referenceMoveRotation;
             currentMoveSpeed = referenceMoveSpeed;
             attackDamage = championSo.attackDamage;
             attackAbilityIndex = championSo.attackAbilityIndex;
