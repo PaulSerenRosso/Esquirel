@@ -50,7 +50,7 @@ namespace Entities.Champion
         public void RequestDie()
         {
             photonView.RPC("DieRPC", RpcTarget.MasterClient);
-            Debug.Log("Request to die");
+       
         }
 
         [PunRPC]
@@ -64,7 +64,8 @@ namespace Entities.Champion
                 InputManager.PlayerMap.Inventory.Disable();
             agent.isStopped = true;
             }
-
+            isAlive = false;
+            canBeTargeted = false;
             rotateParent.gameObject.SetActive(false); 
             uiTransform.gameObject.SetActive(false);
             FogOfWarManager.Instance.RemoveFOWViewable(this);
@@ -102,6 +103,7 @@ namespace Entities.Champion
         public void SyncReviveRPC()
         {
             transform.position = respawnPos;
+            isAlive = true;
             if (photonView.IsMine)
             {
                 InputManager.PlayerMap.Movement.Enable();
@@ -111,6 +113,7 @@ namespace Entities.Champion
             agent.isStopped = false;
             agent.destination = transform.position;
             }
+            canBeTargeted = true;
             FogOfWarManager.Instance.AddFOWViewable(this);
             rotateParent.gameObject.SetActive(true);
             uiTransform.gameObject.SetActive(true);
@@ -136,6 +139,7 @@ namespace Entities.Champion
             if (!(respawnTimer >= respawnDuration)) return;
             GameStateMachine.Instance.OnTick -= Revive;
             respawnTimer = 0f;
+            isAlive = true;
             RequestRevive();
         }
 

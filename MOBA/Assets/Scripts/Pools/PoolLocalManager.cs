@@ -60,7 +60,6 @@ public class PoolLocalManager : MonoBehaviour
     {
         GameObject returnGO;
         if (parent == null) parent = transform;
-        Debug.Log(queuesDictionary.ContainsKey(GORef));
         if (queuesDictionary.ContainsKey(GORef))
         {
             var queue = queuesDictionary[GORef];

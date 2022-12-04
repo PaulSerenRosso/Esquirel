@@ -278,20 +278,18 @@ MonoBehaviour:
   maxHp: 0
   currentHp: 0
   attackAbilityIndex: 0
-  canAttack: 0
+  canAttack: 1
   attackDamage: 0
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
-  canCast: 0
-  isAlive: 0
-  canDie: 0
+  canCast: 1
+  isAlive: 1
+  canDie: 1
   respawnDuration: 3
   canBeDisplaced: 0
   items: []
   referenceMoveSpeed: 10
-  referenceRotateSpeed: 0
   currentMoveSpeed: 10
-  currentRotateSpeed: 10
   canMove: 0
   agent: {fileID: 3480681341667345173}
   maxResource: 0

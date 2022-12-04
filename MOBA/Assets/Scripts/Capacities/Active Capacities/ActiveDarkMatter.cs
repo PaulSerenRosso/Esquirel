@@ -64,10 +64,7 @@ public class ActiveDarkMatter : ActiveCapacity,IPrevisualisable
         }
     }
     
-    public override void PlayFeedback( int[] targets, Vector3[] position)
-    {
-        Debug.Log("Test");
-    }
+   
 
     public override void CancelCapacity()
     {

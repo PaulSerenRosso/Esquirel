@@ -21,9 +21,7 @@ public class ActiveTowerAuto : ActiveCapacity
         return true;
     }
 
-    public override void PlayFeedback( int[] targetsEntityIndexes, Vector3[] targetPositions)
-    {
-    }
+  
 
     public override void CancelCapacity()
     {

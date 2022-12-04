@@ -131,7 +131,7 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
     public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
-        attackCapacity.PlayFeedback(targetedEntities,targetedPositions);
+        
         OnAttackFeedback?.Invoke(capacityIndex,targetedEntities,targetedPositions);
     }
 

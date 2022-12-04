@@ -71,21 +71,18 @@ namespace Entities.Champion
         {
             if ( attackBase.TryCast( targetedEntities, targetedPositions))
             {
+                CancelCurrentCapacity();
+             
+               RequestSetCurrentCapacityUsedEqualToAttackBase();
                 OnAttack?.Invoke(capacityIndex, targetedEntities, targetedPositions);
-                    photonView.RPC("SyncAttackRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
+      
             }
-        }
-
-        void LaunchAttack()
-        {
-            
         }
         
         [PunRPC]
         public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
-            var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
-            attackCapacity.PlayFeedback(targetedEntities,targetedPositions);
+            
             OnAttackFeedback?.Invoke(capacityIndex,targetedEntities,targetedPositions);
         }
 

@@ -30,6 +30,7 @@ public class PoolNetworkManager : MonoBehaviour
             return;
         }
         Instance = this;
+        if(PhotonNetwork.IsMasterClient)
         SetupDictionary();
     }
 
@@ -42,7 +43,7 @@ public class PoolNetworkManager : MonoBehaviour
             for (int i = 0; i < elementData.amount; i++)
             {
                 Entity entity = PhotonNetwork.Instantiate(elementData.Element.gameObject.name, transform.position, Quaternion.identity).GetComponent<Entity>();
-                entity.gameObject.SetActive(false);
+                entity.SendSyncDeainstantiate();
                 newQueue.Enqueue(entity);
             }
             queuesDictionary.Add(elementData.Element, newQueue);
@@ -58,7 +59,6 @@ public class PoolNetworkManager : MonoBehaviour
 
     public Entity PoolInstantiate(Entity entityRef, Vector3 position, Quaternion rotation, Transform parent = null)
     {
-        if(!isSetup)SetupDictionary();
         //Debug.Log(entityRef);
         Entity entity;
         if (parent == null) parent = transform;
@@ -69,12 +69,13 @@ public class PoolNetworkManager : MonoBehaviour
             {
                 entity = PhotonNetwork.Instantiate(entityRef.gameObject.name, position, rotation).GetComponent<Entity>();
                 entity.OnInstantiated();
+                Debug.Log(entity);
                 entity.OnInstantiatedFeedback();
             }
             else
             {
+                Debug.Log(entityRef);
                 entity = queue.Dequeue();
-                entity.OnInstantiated();
                 entity.SendSyncInstantiate(position,rotation);
             }
         }

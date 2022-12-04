@@ -95,7 +95,6 @@ namespace Entities.FogOfWar
         {
             allViewables.Add(viewable);
             currentViewablesWithEntitiesShowables.Add(viewable, new List<Entity>());
-            Debug.Log(viewable.name);
             viewable.meshFilterFoV.gameObject.SetActive(true);
         }
 

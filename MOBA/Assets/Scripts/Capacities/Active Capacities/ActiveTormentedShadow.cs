@@ -64,11 +64,7 @@ namespace Entities.Capacities
             }
         }
 
-        public override void PlayFeedback( int[] targetsEntityIndexes, Vector3[] targetPositions)
-        {
-            Debug.Log("Cast tormented shadow");
-            
-        }
+
 
         public override void CancelCapacity()
         {

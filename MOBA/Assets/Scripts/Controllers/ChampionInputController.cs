@@ -15,10 +15,11 @@ namespace Controllers.Inputs
         private int[] selectedEntity;
         private Vector3[] cursorWorldPos;
         private bool isMoving;
-        private Vector2 mousePos;
+
+        private bool inputsAreLinked = false;
         private Vector2 moveInput;
         private Vector3 moveVector;
-        private Camera cam;
+        private Camera cam ;
         private bool isActivebuttonPress;
         [SerializeField] private LayerMask layerForDetectMovePosition;
 
@@ -98,10 +99,10 @@ namespace Controllers.Inputs
             champion.RequestActivateItem(2, selectedEntity, cursorWorldPos);
         }
 
-        private void OnMouseMove(InputAction.CallbackContext ctx)
+        private void Update()
         {
-            mousePos = ctx.ReadValue<Vector2>();
-            var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
+            if(!inputsAreLinked) return;
+                var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(mouseRay, out var hit, movePositionDetectionDistance,layerForDetectMovePosition)) return;
             cursorWorldPos[0] = hit.point;
             selectedEntity[0] = -1;
@@ -111,17 +112,16 @@ namespace Controllers.Inputs
             if (ent != null)
             {
                // Debug.Log("hitentity");
+               if (ent is ITargetable)
+               {
                 ITargetable entTarget = (ITargetable)ent;
-                if (entTarget != null)
-                {
-                    //Debug.Log("hit targetable");
-                    if (entTarget.CanBeTargeted())
+                if (entTarget.CanBeTargeted())
                     {
                        // Debug.Log("set list input");
                         selectedEntity[0] = ent.entityIndex;
                         cursorWorldPos[0] = ent.transform.position;
                     }
-                }
+               }
             }
             else
             {
@@ -221,8 +221,8 @@ namespace Controllers.Inputs
             inputs.MoveMouse.ActiveButton.started += context => isActivebuttonPress = true;
             inputs.MoveMouse.ActiveButton.canceled += context => isActivebuttonPress = false;
 
+            inputsAreLinked = true;
 
-            inputs.MoveMouse.MousePos.performed += OnMouseMove;
 
             inputs.Inventory.ActivateItem0.performed += OnActivateItem0;
             inputs.Inventory.ActivateItem1.performed += OnActivateItem1;
@@ -235,7 +235,7 @@ namespace Controllers.Inputs
         protected override void Unlink()
         {
             inputs.Attack.Attack.performed -= OnAttack;
-
+            inputsAreLinked = false; 
             inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed -= OnActivateUltimateAbility;
@@ -243,7 +243,6 @@ namespace Controllers.Inputs
 
             inputs.MoveMouse.ActiveButton.performed -= OnMouseClick;
 
-            inputs.MoveMouse.MousePos.performed -= OnMouseMove;
 
             CameraController.Instance.UnLinkCamera();
         }

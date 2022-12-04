@@ -21,7 +21,7 @@ namespace Entities.Capacities
        protected virtual void InitiateFXTimer()
         {
             
-            fxTimer = 0;
+            fxTimer = AssociatedActiveCapacitySO().fxTime;
             GameStateMachine.Instance.OnTick += TickFxTimer;
         }
        protected void TickFxTimer()
@@ -30,13 +30,23 @@ namespace Entities.Capacities
             if (fxTimer <= 0)
             {
                 // fx timer 
-            
-                GameStateMachine.Instance.OnTick -= TickFxTimer;
+
+                CancelFXTimer();
             }
         }
 
+       protected virtual void CancelFXTimer()
+       {
+           if (fxObject != null)
+           {
+           PoolNetworkManager.Instance.PoolRequeue(AssociatedActiveCapacitySO().fxPrefab, fxObject);
+           fxObject = null;
+           }
+           GameStateMachine.Instance.OnTick -= TickFxTimer;
+       }
 
-        protected ActiveCapacitySO AssociatedActiveCapacitySO()
+
+       protected ActiveCapacitySO AssociatedActiveCapacitySO()
         {
             return CapacitySOCollectionManager.GetActiveCapacitySOByIndex(indexOfSOInCollection);
         }
@@ -94,8 +104,7 @@ namespace Entities.Capacities
         #endregion
 
         #region Feedback
-
-        public abstract void PlayFeedback(int[] targetsEntityIndexes, Vector3[] targetPositions);
+        
 
 
 

@@ -15,7 +15,7 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
     public float timeFactor = 1;
     private double animationTimer;
     private double damageTimer;
-    
+
     private GameObject DamageObject;
     private double beginDamageTimer;
 
@@ -25,27 +25,27 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
 
     void InitiateAnimationTimer()
     {
-        animationTimer = 0;
+        animationTimer = activeAutoAttackSO.animationTime;
+        caster.RequestChangeBoolParameterAnimator("autoAttack", true);
         GameStateMachine.Instance.OnTick += TickAnimationTimer;
     }
 
 
-
     void InitiateBeginDamageTimer()
     {
-        beginDamageTimer = 0;
+        beginDamageTimer = activeAutoAttackSO.damageBeginTime;
         GameStateMachine.Instance.OnTick += TickBeginDamageTimer;
     }
 
 
     void InitiateDamageTimer()
     {
-        damageTimer = 0;
+        damageTimer = activeAutoAttackSO.damageTime;
         DamageObject = PoolLocalManager.Instance.PoolInstantiate(activeAutoAttackSO.damagePrefab,
-            caster.transform.position, caster.transform.rotation, caster.transform);
+            caster.transform.position, caster.rotateParent.rotation);
         var activeCapacityCollider = DamageObject.transform.GetChild(0).GetComponent<ActiveCapacityCollider>();
         activeCapacityCollider.InitCapacityCollider(this);
-        
+
         GameStateMachine.Instance.OnTick += TickDamageTimer;
     }
 
@@ -55,9 +55,14 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
 
         if (animationTimer <= 0)
         {
-            caster.animator.SetBool("AutoAttack", false);
-            GameStateMachine.Instance.OnTick -= TickAnimationTimer;
+            CancelAnimationTimer();
         }
+    }
+
+    private void CancelAnimationTimer()
+    {
+        caster.RequestChangeBoolParameterAnimator("autoAttack", false);
+        GameStateMachine.Instance.OnTick -= TickAnimationTimer;
     }
 
 
@@ -67,9 +72,14 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
 
         if (beginDamageTimer <= 0)
         {
-            InitiateDamageTimer();
-            GameStateMachine.Instance.OnTick -= TickBeginDamageTimer;
+            CancelBeginDamageTimer();
         }
+    }
+
+    private void CancelBeginDamageTimer()
+    {
+        InitiateDamageTimer();
+        GameStateMachine.Instance.OnTick -= TickBeginDamageTimer;
     }
 
     void TickDamageTimer()
@@ -78,9 +88,19 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
 
         if (damageTimer <= 0)
         {
-            PoolLocalManager.Instance.EnqueuePool(activeAutoAttackSO.damagePrefab, DamageObject);
-            GameStateMachine.Instance.OnTick -= TickDamageTimer;
+            CancelDamageTimer();
         }
+    }
+
+    private void CancelDamageTimer()
+    {
+        if (DamageObject != null)
+        {
+            PoolLocalManager.Instance.EnqueuePool(activeAutoAttackSO.damagePrefab, DamageObject);
+            DamageObject = null;
+        }
+        GameStateMachine.Instance.OnTick -= TickDamageTimer;
+        caster.RequestCurrentResetCapacityUsed();
     }
 
 
@@ -88,51 +108,49 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
     {
         base.InitiateFXTimer();
         fxObject = PoolNetworkManager.Instance.PoolInstantiate(activeAutoAttackSO.fxPrefab, caster.transform.position,
-            caster.transform.rotation, caster.transform);
+            caster.rotateParent.rotation);
+        fxObject.team = caster.team;
+       
     }
 
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if (!onCooldown)
         {
+            caster.rotateParent.forward = (
+                EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]).transform
+                                               .position-caster.transform.position).normalized;
             InitiateCooldown();
             InitiateAnimationTimer();
             InitiateBeginDamageTimer();
             InitiateFXTimer();
-            caster.animator.SetBool("AutoAttack", true);
-           
             return true;
         }
 
         return false;
     }
 
-    public override void PlayFeedback(int[] targets, Vector3[] position)
-    {
-        Debug.Log(activeAutoAttackSO.fxPrefab);
-        Debug.Log(caster);
-      
-      
-    }
+
 
 
     public override void CancelCapacity()
     {
-    GameStateMachine.Instance.OnTick -= TickDamageTimer;
-    GameStateMachine.Instance.OnTick -= TickAnimationTimer;
-    GameStateMachine.Instance.OnTick -= TickFxTimer;
-    GameStateMachine.Instance.OnTick -= TickBeginDamageTimer;
+        GameStateMachine.Instance.OnTick -= TickBeginDamageTimer;
+        CancelAnimationTimer();
+        CancelDamageTimer();
+        CancelFXTimer();
+        caster.RequestCurrentResetCapacityUsed();
     }
+    
 
     public override void SetUpActiveCapacity(byte soIndex, Entity caster)
     {
         base.SetUpActiveCapacity(soIndex, caster);
 
-        activeAutoAttackSO = (ActiveAutoAttackSO)AssociatedActiveCapacitySO();
-        Debug.Log(activeAutoAttackSO);
+        activeAutoAttackSO = (ActiveAutoAttackSO) AssociatedActiveCapacitySO();
         range = activeAutoAttackSO.maxRange;
         rangeSqrt = range * range;
-        this.caster = (Champion)caster;
+        this.caster = (Champion) caster;
 
         //   cooldownIsReadyEvent += champion.RequestToChangeCooldownIsReady;
     }
@@ -147,16 +165,10 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
         return rangeSqrt;
     }
 
-    protected virtual void InitiateCooldown()
-    {
-        GameStateMachine.Instance.OnTick += CooldownTimer;
-    }
 
     /// <summary>
     /// Method which update the timer.
     /// </summary>
- 
-
     public bool TryAim(int casterIndex, int targetsEntityIndex, Vector3 targetPosition)
     {
         if (EntityCollectionManager.GetEntityByIndex(casterIndex).team !=

@@ -11,9 +11,11 @@ namespace Entities.Capacities
 
         void OnTriggerEnter(Collider other)
         {
+            Debug.Log("bonsoir je suis lufdsfdsf");
             Entity entity = other.GetComponent<Entity>();
             if (entity != null)
             {
+                Debug.Log("bonsoir je suis lu");
             CollideWithEntity(entity);
             }
         }

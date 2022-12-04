@@ -16,14 +16,14 @@ MonoBehaviour:
   descriptionName: Auto attack
   icon: {fileID: 21300000, guid: 80765a06dc799714bbe0733e2152d564, type: 3}
   description: 
-  cooldown: 5
+  cooldown: 3
   types: 
   fxPrefab: {fileID: 782873847134293652, guid: a635c22fc9b904143bdd6b16713d8896, type: 3}
-  fxTime: 5
+  fxTime: 2
   indexInCollection: 2
   maxRange: 5
-  animationTime: 5
-  damageBeginTime: 3
-  damageTime: 2
+  animationTime: 1
+  damageBeginTime: 1
+  damageTime: 1
   damagePrefab: {fileID: 5454432412817579492, guid: ac8cee8679279af4785446d42c8f12d5, type: 3}
   damage: 2

@@ -18,15 +18,7 @@ namespace Entities.Capacities
             return true;
         }
 
-        public override void PlayFeedback( int[] targets, Vector3[] position)
-        {
-            
-      //      so = (ActiveHealPotionSO)AssociatedActiveCapacitySO();
-        //    instantiateFeedbackObj = PoolLocalManager.Instance.PoolInstantiate(so.feedbackPrefab, caster.transform.position, Quaternion.identity,
-          //      caster.transform);
-            
-     
-        }
+ 
 
      
         public override void CancelCapacity()

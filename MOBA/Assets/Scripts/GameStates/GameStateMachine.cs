@@ -18,6 +18,7 @@ namespace GameStates
         public static GameStateMachine Instance;
         public bool IsMaster => PhotonNetwork.IsMasterClient;
 
+        [SerializeField] private GameObject championPrefab;
         [SerializeField] private string gameSceneName;
 
         private GameState currentState;
@@ -439,7 +440,7 @@ namespace GameStates
 
         private void InstantiateChampion()
         {
-            var champion = (Champion)PoolNetworkManager.Instance.PoolInstantiate(0, Vector3.up, Quaternion.identity);
+            var champion = PhotonNetwork.Instantiate(championPrefab.name, Vector3.up, Quaternion.identity).GetComponent<Champion>();
             
             photonView.RPC("SyncChampionPhotonId", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, champion.photonView.ViewID);
 

@@ -50,6 +50,7 @@ namespace Entities
         {
             entityIndex = photonView.ViewID;
             EntityCollectionManager.AddEntity(this);
+            Debug.Log("bonsoir je start");
             OnStart();
         }
 
@@ -99,6 +100,7 @@ namespace Entities
 
         public virtual void OnDeainstantiated()
         {
+            
         }
         public virtual void OnDeainstantiatedFeedback()
         {

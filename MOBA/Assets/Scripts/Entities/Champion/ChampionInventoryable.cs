@@ -154,7 +154,7 @@ namespace Entities.Champion
             {
                 var capacityIndex = bytes[index];
                 var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-                if(castSuccess[index]) activeCapacity.PlayFeedback(selectedEntities,positions);
+            //    if(castSuccess[index]) activeCapacity.PlayFeedback(selectedEntities,positions);
             }
             items[itemIndexInInventory].OnItemActivatedFeedback(selectedEntities,positions);
             OnActivateItemFeedback?.Invoke(itemIndexInInventory,selectedEntities,positions,castSuccess);

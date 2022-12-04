@@ -10,9 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3287898995453118186}
   - component: {fileID: 8553051767259953399}
-  - component: {fileID: 4193012174740930558}
   - component: {fileID: 6188168574629846839}
-  - component: {fileID: 5722105172957783073}
   - component: {fileID: 1462076197913721084}
   m_Layer: 0
   m_Name: ChampionMeshPrefab_1
@@ -52,29 +50,6 @@ MonoBehaviour:
   teamColorfulParts:
   - {fileID: 3228344997276158110}
   animator: {fileID: 6188168574629846839}
---- !u!114 &4193012174740930558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939176126738527526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 5722105172957783073}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!95 &6188168574629846839
 Animator:
   serializedVersion: 3
@@ -94,27 +69,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5722105172957783073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939176126738527526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 0
-    Name: AutoAttack
-  m_SynchronizeLayers:
-  - SynchronizeType: 1
-    LayerIndex: 0
 --- !u!114 &1462076197913721084
 MonoBehaviour:
   m_ObjectHideFlags: 0

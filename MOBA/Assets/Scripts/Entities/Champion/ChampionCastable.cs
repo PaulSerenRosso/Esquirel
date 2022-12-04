@@ -18,6 +18,22 @@ namespace Entities.Champion
             return canCast;
         }
 
+        public void RequestCancelCurrentCapacity()
+        {
+            if (currentCapacityUsed != null)
+            {
+               photonView.RPC("CancelCurrentCapacity", RpcTarget.MasterClient);
+              
+            }
+        }
+        
+        [PunRPC]
+        public void CancelCurrentCapacity()
+        {
+           
+            if(currentCapacityUsed!= null)
+            currentCapacityUsed.CancelCapacity();
+        }
         public void RequestSetCanCast(bool value)
         {
             photonView.RPC("CastRPC", RpcTarget.MasterClient, value);
@@ -61,7 +77,6 @@ namespace Entities.Champion
         public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
             var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-            activeCapacity.PlayFeedback(targetedEntities, targetedPositions);
             OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
         }
 

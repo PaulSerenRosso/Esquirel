@@ -31,10 +31,7 @@ namespace Entities.Capacities
             return true;
         }
 
-        public override void PlayFeedback( int[] targetsEntityIndexes, Vector3[] targetPositions)
-        {
-            so = (ActiveZappieSO)AssociatedActiveCapacitySO();
-        }
+     
 
         public override void CancelCapacity()
         {
