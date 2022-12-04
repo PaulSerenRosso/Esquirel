@@ -210,6 +210,13 @@ MonoBehaviour:
   - SyncRemovePassiveCapacityRPC
   - CooldownIsReady
   - CooldownIsReadyRPC
+  - EnqueueCapacityFX
+  - SyncDeainstantiateRPC
+  - ChangeBoolParameterAnimator
+  - ResetCurrentCapacityUsed
+  - SetCurrentCapacityUsed
+  - CancelCurrentCapacity
+  - SetCurrentCapacityUsedEqualToAttackBase
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

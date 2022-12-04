@@ -150,7 +150,7 @@ public partial class MinionTest : Entity, IMoveable, IAttackable, IActiveLifeabl
     {
         var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
 
-        if (!attackCapacity.TryCast(entityIndex, targetedEntities, targetedPositions)) return;
+        if (!attackCapacity.TryCast( targetedEntities, targetedPositions)) return;
             
         OnAttack?.Invoke(capacityIndex,targetedEntities,targetedPositions);
         photonView.RPC("SyncAttackRPC",RpcTarget.All,capacityIndex,targetedEntities,targetedPositions);
@@ -216,7 +216,6 @@ public partial class MinionTest : IDeadable
     public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
-        attackCapacity.PlayFeedback(capacityIndex,targetedEntities,targetedPositions);
         OnAttackFeedback?.Invoke(capacityIndex,targetedEntities,targetedPositions);
     }
     
@@ -570,7 +569,7 @@ public partial class MinionTest : IDeadable
     [PunRPC]
     public void SyncDieRPC()
     {
-        PoolNetworkManager.Instance.PoolRequeue(this);
+      //  PoolNetworkManager.Instance.PoolRequeue(this);
         FogOfWarManager.Instance.RemoveFOWViewable(this);
         gameObject.SetActive(false);
     }

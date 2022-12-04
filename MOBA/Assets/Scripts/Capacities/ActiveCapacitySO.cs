@@ -27,10 +27,9 @@ namespace Entities.Capacities
         /// </summary>
         /// <returns>the type of ActiveCapacity associated with this ActiveCapacitySO</returns>
         public abstract Type AssociatedType();
-
+        public Entity fxPrefab;
+        public float fxTime;
         [HideInInspector] public byte indexInCollection;
 
-        public float feedbackDuration;
-        public GameObject feedbackPrefab;
     }
 }

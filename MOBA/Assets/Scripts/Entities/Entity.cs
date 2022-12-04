@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Entities
 {
-    [RequireComponent(typeof(PhotonView)), RequireComponent(typeof(PhotonTransformView))]
+    [RequireComponent(typeof(PhotonView))]
     public abstract partial class Entity : MonoBehaviourPun, ITeamable
     {
         [Header("Entity")]
@@ -50,6 +50,7 @@ namespace Entities
         {
             entityIndex = photonView.ViewID;
             EntityCollectionManager.AddEntity(this);
+            Debug.Log("bonsoir je start");
             OnStart();
         }
 
@@ -58,7 +59,7 @@ namespace Entities
         /// </summary>
         protected virtual void OnStart()
         {
-            FogOfWarManager.Instance.AddFOWViewable(this);
+          
         }
 
         private void Update()
@@ -85,13 +86,42 @@ namespace Entities
             photonView.RPC("SyncInstantiateRPC", RpcTarget.All, position, rotation);
             OnInstantiated();
         }
+        
+        public void SendSyncDeainstantiate()
+        {
+            photonView.RPC("SyncDeainstantiateRPC", RpcTarget.All);
+            OnDeainstantiated();
+        }
 
         public virtual void OnInstantiated()
         {
+          
+        }
+
+        public virtual void OnDeainstantiated()
+        {
             
-     
+        }
+        public virtual void OnDeainstantiatedFeedback()
+        {
+        }
+
+        [PunRPC]
+        public void SyncDeainstantiateRPC()
+        {
+            gameObject.SetActive(false);
+            OnDeainstantiatedFeedback();
         }
         
+        [PunRPC]
+        public void SyncInstantiateRPC(Vector3 position, Quaternion rotation)
+        {
+            transform.position = position;
+            transform.rotation = rotation;
+            gameObject.SetActive(true);
+            OnInstantiatedFeedback();
+        }
+
         public virtual void TriggerEnter(Collider other)
         {
             if (other.tag == "Bush")
@@ -120,13 +150,7 @@ namespace Entities
         }
 
 
-        [PunRPC]
-        public void SyncInstantiateRPC(Vector3 position, Quaternion rotation)
-        {
-            transform.position = position;
-            transform.rotation = rotation;
-            OnInstantiatedFeedback();
-        }
+
 
         public PassiveCapacity GetPassiveCapacityBySOIndex(byte soIndex)
         {

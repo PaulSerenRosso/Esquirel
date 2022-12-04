@@ -7,7 +7,7 @@ namespace Entities.Capacities
         private ActiveHealPotionSO so;
         private IActiveLifeable lifeable;
 
-        public override bool TryCast(int casterIndex, int[] targets, Vector3[] position)
+        public override bool TryCast( int[] targets, Vector3[] position)
         {
             so = (ActiveHealPotionSO)AssociatedActiveCapacitySO();
             
@@ -18,30 +18,16 @@ namespace Entities.Capacities
             return true;
         }
 
-        public override void PlayFeedback(int entityIndex, int[] targets, Vector3[] position)
+ 
+
+     
+        public override void CancelCapacity()
         {
-            
-            so = (ActiveHealPotionSO)AssociatedActiveCapacitySO();
-            instantiateFeedbackObj = PoolLocalManager.Instance.PoolInstantiate(so.feedbackPrefab, caster.transform.position, Quaternion.identity,
-                caster.transform);
-            
-            InitializeFeedbackCountdown();
+            throw new System.NotImplementedException();
         }
 
-        protected override void InitializeFeedbackCountdown()
-        {
-            base.InitializeFeedbackCountdown();
-        }
-
-        protected override void FeedbackCountdown()
-        {
-            base.FeedbackCountdown();
-        }
-
-        protected override void DisableFeedback()
-        {
-            base.DisableFeedback();
-        }
+       
+    
     }
 }
 

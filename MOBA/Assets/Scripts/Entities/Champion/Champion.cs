@@ -24,11 +24,13 @@ namespace Entities.Champion
         public Camera camera;
         public Rigidbody rb;
 
+        public Animator animator;
         public CollisionBlocker blocker;
         [SerializeField] private NavMeshObstacle obstacle;
 
         public ActiveCapacity attackBase;
         public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
+        public ActiveCapacity currentCapacityUsed;
         
         public IAimable autoAttack;
 
@@ -44,7 +46,7 @@ namespace Entities.Champion
             uiManager = UIManager.Instance;
             agent = GetComponent<NavMeshAgent>();
             obstacle = GetComponent<NavMeshObstacle>();
-    
+            fowm.AddFOWViewable(this );
             blocker.SetUpBlocker();
             
         }
@@ -78,8 +80,6 @@ namespace Entities.Champion
             currentResource = championSo.maxRessource;
             viewRange = championSo.viewRange;
             referenceMoveSpeed = championSo.referenceMoveSpeed;
-            referenceRotateSpeed = championSo.referenceMoveRotation;
-            currentRotateSpeed = championSo.referenceMoveRotation;
             currentMoveSpeed = referenceMoveSpeed;
             attackDamage = championSo.attackDamage;
             attackAbilityIndex = championSo.attackAbilityIndex;
@@ -129,17 +129,16 @@ namespace Entities.Champion
                     break;
             }
 
-            if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
-            {
-                championMesh.SetActive(false);
-            }
-
+        
             respawnPos = transform.position = pos.position;
             SetupNavMesh();
-          
+
+
+            var championMeshLinker = championMesh.GetComponent<ChampionMeshLinker>();
+            championMeshLinker.LinkTeamColor(this.team);
+            animator = championMeshLinker.animator; 
             
-            championMesh.GetComponent<ChampionMeshLinker>().LinkTeamColor(this.team);
-            elementsToShow.Add(championMesh);
+     
 
             uiManager = UIManager.Instance;
 
@@ -148,7 +147,6 @@ namespace Entities.Champion
                 uiManager.InstantiateHealthBarForEntity(entityIndex);
                 uiManager.InstantiateResourceBarForEntity(entityIndex);
             }
-
             so.SetIndexes();
           
             for (int i = 0; i < so.activeCapacities.Length; i++)
@@ -164,9 +162,56 @@ namespace Entities.Champion
             {
                 AddPassiveCapacityRPC(so.passiveCapacitiesIndexes[i]);
             }
-
+            championMesh.GetComponent<EntityFOWShowableLinker>().LinkEntity(this);
+            if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
+            {
+                HideElements();
+            }
             rb.velocity = Vector3.zero;
             RequestSetCanDie(true);
+        }
+
+        public void RequestChangeBoolParameterAnimator(string parameterName, bool value)
+        {
+            photonView.RPC("ChangeBoolParameterAnimator", RpcTarget.All, parameterName, value);
+        }
+
+        [PunRPC]
+        void ChangeBoolParameterAnimator(string parameterName, bool value)
+        {
+            animator.SetBool(parameterName, value);
+        }
+        
+        
+        public void RequestSetCurrentCapacityUsed(byte index)
+        {
+            photonView.RPC("SetCurrentCapacityUsed", RpcTarget.All, index);
+        }
+
+        [PunRPC]
+        void SetCurrentCapacityUsed(byte index)
+        {
+            currentCapacityUsed = activeCapacities[index];
+        }
+        
+        public void RequestSetCurrentCapacityUsedEqualToAttackBase()
+        {
+            photonView.RPC("SetCurrentCapacityUsedEqualToAttackBase", RpcTarget.All);
+        }
+        [PunRPC]
+        void SetCurrentCapacityUsedEqualToAttackBase()
+        {
+            currentCapacityUsed = attackBase;
+        }
+        public void RequestCurrentResetCapacityUsed()
+        {
+            photonView.RPC("ResetCurrentCapacityUsed", RpcTarget.All);
+        }
+
+        [PunRPC]
+        void ResetCurrentCapacityUsed()
+        {
+            currentCapacityUsed = null;
         }
     }
 }

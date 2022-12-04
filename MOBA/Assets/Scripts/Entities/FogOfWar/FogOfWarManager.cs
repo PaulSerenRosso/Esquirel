@@ -34,11 +34,9 @@ namespace Entities.FogOfWar
         /// </summary>
         /// <param name="IFogOfWarViewable"> Interface for Entity </param>
         private List<Entity> allViewables = new List<Entity>();
-
+        
         private Dictionary<Entity, List<Entity>> currentViewablesWithEntitiesShowables =
             new Dictionary<Entity, List<Entity>>();
-
-
         [Header("Camera and Scene Setup")] public Camera cameraFog;
         public List<string> sceneToRenderFog;
 
@@ -97,7 +95,6 @@ namespace Entities.FogOfWar
         {
             allViewables.Add(viewable);
             currentViewablesWithEntitiesShowables.Add(viewable, new List<Entity>());
-            Debug.Log(viewable.name);
             viewable.meshFilterFoV.gameObject.SetActive(true);
         }
 

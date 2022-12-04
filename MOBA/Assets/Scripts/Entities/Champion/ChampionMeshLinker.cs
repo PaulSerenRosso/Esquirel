@@ -8,6 +8,7 @@ namespace Entities.Champion
     public class ChampionMeshLinker : MonoBehaviourPun
     {
         [SerializeField] private MeshRenderer[] teamColorfulParts;
+        public Animator animator;
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
 
         public void LinkTeamColor(Enums.Team team)

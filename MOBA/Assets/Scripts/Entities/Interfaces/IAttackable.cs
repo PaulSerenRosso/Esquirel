@@ -64,6 +64,6 @@ namespace Entities
         public void AttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions);
 
         public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnAttack;
-        public event GlobalDelegates.ThirdParameterDelegate<byte , int[] , Vector3[]> OnAttackFeedback;
+       
     }
 }

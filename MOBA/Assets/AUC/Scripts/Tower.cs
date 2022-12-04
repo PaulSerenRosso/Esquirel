@@ -131,7 +131,7 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
     public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
-        attackCapacity.PlayFeedback(capacityIndex,targetedEntities,targetedPositions);
+        
         OnAttackFeedback?.Invoke(capacityIndex,targetedEntities,targetedPositions);
     }
 
@@ -140,7 +140,7 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
     {
         var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
 
-        if (!attackCapacity.TryCast(entityIndex, targetedEntities, targetedPositions)) return;
+        if (!attackCapacity.TryCast( targetedEntities, targetedPositions)) return;
             
         OnAttack?.Invoke(capacityIndex,targetedEntities,targetedPositions);
         photonView.RPC("SyncAttackRPC",RpcTarget.All,capacityIndex,targetedEntities,targetedPositions);

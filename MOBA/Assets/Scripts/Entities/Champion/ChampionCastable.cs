@@ -18,6 +18,22 @@ namespace Entities.Champion
             return canCast;
         }
 
+        public void RequestCancelCurrentCapacity()
+        {
+            if (currentCapacityUsed != null)
+            {
+               photonView.RPC("CancelCurrentCapacity", RpcTarget.MasterClient);
+              
+            }
+        }
+        
+        [PunRPC]
+        public void CancelCurrentCapacity()
+        {
+           
+            if(currentCapacityUsed!= null)
+            currentCapacityUsed.CancelCapacity();
+        }
         public void RequestSetCanCast(bool value)
         {
             photonView.RPC("CastRPC", RpcTarget.MasterClient, value);
@@ -51,7 +67,7 @@ namespace Entities.Champion
         {
             var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
 
-            if (!activeCapacity.TryCast(entityIndex, targetedEntities, targetedPositions)) return;
+            if (!activeCapacity.TryCast(targetedEntities, targetedPositions)) return;
 
             OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
             photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
@@ -61,7 +77,6 @@ namespace Entities.Champion
         public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
             var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-            activeCapacity.PlayFeedback(capacityIndex, targetedEntities, targetedPositions);
             OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
         }
 
@@ -78,6 +93,27 @@ namespace Entities.Champion
                 if (activeCapacities[i].indexOfSOInCollection == capacityIndex)
                 {
                     activeCapacities[i].onCooldown = value;
+                    return;
+                }
+            }
+        }
+
+        public void RequestToEnqueueCapacityFX(byte capacityIndex)
+        {
+            photonView.RPC("EnqueueCapacityFX", RpcTarget.All, capacityIndex);
+        }
+
+        [PunRPC]
+        void EnqueueCapacityFX(byte capacityIndex)
+        {
+            for (int i = 0; i < activeCapacities.Count; i++)
+            {
+                if (activeCapacities[i].indexOfSOInCollection == capacityIndex)
+                {
+                    PoolNetworkManager.Instance.PoolRequeue(
+                        CapacitySOCollectionManager
+                            .GetActiveCapacitySOByIndex(activeCapacities[i].indexOfSOInCollection).fxPrefab,
+                        activeCapacities[i].fxObject);
                     return;
                 }
             }

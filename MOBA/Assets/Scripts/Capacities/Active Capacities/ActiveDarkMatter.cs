@@ -9,7 +9,7 @@ public class ActiveDarkMatter : ActiveCapacity,IPrevisualisable
     private ActiveDarkMatterSO activeCapacitySo;
     private Vector3[] dir;
 
-    public override bool TryCast(int casterIndex, int[] targets, Vector3[] position)
+    public override bool TryCast( int[] targets, Vector3[] position)
     {
         //base.TryCast(casterIndex, targets, position);
         
@@ -64,9 +64,11 @@ public class ActiveDarkMatter : ActiveCapacity,IPrevisualisable
         }
     }
     
-    public override void PlayFeedback(int entityIndex, int[] targets, Vector3[] position)
+   
+
+    public override void CancelCapacity()
     {
-        Debug.Log("Test");
+        throw new System.NotImplementedException();
     }
 
     public void EnableDrawing()

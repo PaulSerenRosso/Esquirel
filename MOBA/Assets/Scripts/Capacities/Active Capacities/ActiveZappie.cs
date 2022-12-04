@@ -8,7 +8,7 @@ namespace Entities.Capacities
         private ActiveZappieSO so;
         private Vector3 dir;
 
-        public override bool TryCast(int casterIndex, int[] targets, Vector3[] position)
+        public override bool TryCast( int[] targets, Vector3[] position)
         {
           //  if (!base.TryCast(casterIndex, targets, position)) return false;
 
@@ -31,9 +31,11 @@ namespace Entities.Capacities
             return true;
         }
 
-        public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+     
+
+        public override void CancelCapacity()
         {
-            so = (ActiveZappieSO)AssociatedActiveCapacitySO();
+            throw new System.NotImplementedException();
         }
     }
 }

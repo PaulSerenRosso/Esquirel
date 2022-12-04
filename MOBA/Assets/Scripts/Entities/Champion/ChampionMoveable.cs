@@ -13,9 +13,8 @@ namespace Entities.Champion
     public partial class Champion : IMoveable
     {
         public float referenceMoveSpeed;
-        public float referenceRotateSpeed;
         public float currentMoveSpeed;
-        public float currentRotateSpeed;
+    
         public bool canMove;
         private Vector3 moveDirection;
 
@@ -30,9 +29,7 @@ namespace Entities.Champion
         private ActiveCapacity currentCapacityAimed;
         private ITargetable targetEntity;
         public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent;
-        [SerializeField]
-        private float rotateSpeed;
-  
+
         //NavMesh
 
         [SerializeField]
@@ -47,7 +44,9 @@ namespace Entities.Champion
         void SetupNavMesh()
         {
         
-            if (!photonView.IsMine) agent.enabled = false;
+            if (!photonView.IsMine) { agent.enabled = false;
+                obstacle.enabled = true;
+            }
             else{ obstacle.enabled = false;
                 agent.enabled = true;
             moveDestination = transform.position;
@@ -200,23 +199,25 @@ namespace Entities.Champion
 
         public void MoveToPosition(Vector3 position)
         {
+            RequestCancelCurrentCapacity();
             isFollowing = false;
             moveDestination = position;
             moveDestination.y = transform.position.y;
-            Debug.Log(moveDestination);
         }
 
         public void StartMoveToTarget(Entity _entity, ActiveCapacity capacityWhichAimed,
             GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent)
         {
-            if (!isFollowing)
+            if (!isFollowing|| (isFollowing && (entityFollow != _entity || currentCapacityAimed != capacityWhichAimed)))
             {
-                entityFollow = _entity;
+               RequestCancelCurrentCapacity();
+            entityFollow = _entity;
                 isFollowing = true;
                 targetEntity = (ITargetable)entityFollow;
                 currentIAimable = (IAimable)capacityWhichAimed;
                 currentCapacityAimed = capacityWhichAimed;
-                this.currentTargetCapacityAtRangeEvent += currentTargetCapacityAtRangeEvent;
+                this.currentTargetCapacityAtRangeEvent = currentTargetCapacityAtRangeEvent;
+                
             }
         }
 
@@ -236,53 +237,61 @@ namespace Entities.Champion
                             entityFollow.transform.position))
                     {
                         //Debug.Log("tryaim");
+                        if (currentCapacityUsed == null)
+                        {
                         if ((this.transform.position - entityFollow.transform.position).sqrMagnitude >
                             currentIAimable.GetSqrtMaxRange())
                         {
                             //Debug.Log("not distance");
                             moveDestination= entityFollow.transform.position;
                             moveDestination.y = entityFollow.transform.position.y;
-                            Debug.Log(moveDestination);
                         }
                         else
                         {
-                            //Debug.Log("to distance");
-                            currentTargetCapacityAtRangeEvent.Invoke(currentCapacityAimed.indexOfSOInCollection, new[]
-                            {
-                                entityFollow.entityIndex
-                            }, new[]
-                            {
-                                entityFollow.transform.position
-                            });
-                          moveDestination = transform.position;
-                          Debug.Log(moveDestination);
+                            LaunchAimedCapacity();
+                        }
+                        }
+                        else
+                        {
+                            LaunchAimedCapacity();
                         }
                     }
                 }
                 else
                 {
-                    Debug.Log("not visible");
+                   RequestCancelCurrentCapacity();
+                   isFollowing = false;
                     currentTargetCapacityAtRangeEvent = null;
                 }
             }
             else
             {
-                Debug.Log("can'be target");
+                moveDestination = transform.position;
+               RequestCancelCurrentCapacity();
                 currentTargetCapacityAtRangeEvent = null;
                 isFollowing = false;
             }
+        }
+
+        private void LaunchAimedCapacity()
+        {
+            //Debug.Log("to distance");
+            currentTargetCapacityAtRangeEvent.Invoke(currentCapacityAimed.indexOfSOInCollection, new[]
+            {
+                entityFollow.entityIndex
+            }, new[]
+            {
+                entityFollow.transform.position
+            });
+            moveDestination = transform.position;
         }
 
 
         private void CheckMoveDistance()
         {
             if (agent == null ||!agent.isOnNavMesh) return;
-
-          
-            
-                if (agent.velocity.magnitude > 0.3f)
-                    rotateParent.forward = Vector3.MoveTowards(rotateParent.forward, agent.velocity.normalized,
-                        rotateSpeed * Time.deltaTime);
+            if (agent.velocity.magnitude > 0.3f)
+                    rotateParent.forward = agent.velocity.normalized;
                 agent.velocity = agent.desiredVelocity;
                 if (moveDestination != oldMoveDestination)
                 {

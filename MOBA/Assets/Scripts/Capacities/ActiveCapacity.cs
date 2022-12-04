@@ -9,13 +9,44 @@ namespace Entities.Capacities
         public Entity caster;
         public double cooldownTimer;
         public bool onCooldown;
-        private double feedbackTimer;
+
+        
+        private double fxTimer;
+       public Entity fxObject;
         public event GlobalDelegates.TwoParameterDelegate<byte, bool> cooldownIsReadyEvent;
         public GameObject instantiateFeedbackObj;
 
         protected int target;
+        
+       protected virtual void InitiateFXTimer()
+        {
+            
+            fxTimer = AssociatedActiveCapacitySO().fxTime;
+            GameStateMachine.Instance.OnTick += TickFxTimer;
+        }
+       protected void TickFxTimer()
+        {
+            fxTimer -= 1.0 / GameStateMachine.Instance.tickRate;
+            if (fxTimer <= 0)
+            {
+                // fx timer 
 
-        protected ActiveCapacitySO AssociatedActiveCapacitySO()
+                CancelFXTimer();
+            }
+        }
+
+       protected virtual void CancelFXTimer()
+       {
+           if (fxObject != null)
+           {
+           PoolNetworkManager.Instance.PoolRequeue(AssociatedActiveCapacitySO().fxPrefab, fxObject);
+           fxObject = null;
+           }
+           GameStateMachine.Instance.OnTick -= TickFxTimer;
+       }
+
+
+       protected ActiveCapacitySO AssociatedActiveCapacitySO()
         {
             return CapacitySOCollectionManager.GetActiveCapacitySOByIndex(indexOfSOInCollection);
         }
@@ -58,6 +89,7 @@ namespace Entities.Capacities
                 GameStateMachine.Instance.OnTick -= CooldownTimer;
             }
         }
+        
 
 
         /// <summary>
@@ -67,35 +99,19 @@ namespace Entities.Capacities
         /// <param name="targetsEntityIndexes"></param>
         /// <param name="targetPositions"></param>
         /// <returns></returns>
-        public abstract bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions);
+        public abstract bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions);
 
         #endregion
 
         #region Feedback
+        
 
-        public abstract void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions);
 
-        protected virtual void InitializeFeedbackCountdown()
-        {
-            feedbackTimer = AssociatedActiveCapacitySO().feedbackDuration;
-            GameStateMachine.Instance.OnTick += FeedbackCountdown;
-        }
 
-        protected virtual void FeedbackCountdown()
-        {
-            feedbackTimer -= GameStateMachine.Instance.tickRate;
+        public abstract void CancelCapacity();
+        
 
-            if (feedbackTimer <= 0)
-            {
-                DisableFeedback();
-            }
-        }
-
-        protected virtual void DisableFeedback()
-        {
-            PoolLocalManager.Instance.EnqueuePool(AssociatedActiveCapacitySO().feedbackPrefab, instantiateFeedbackObj);
-            GameStateMachine.Instance.OnTick -= FeedbackCountdown;
-        }
+    
 
         #endregion
     }

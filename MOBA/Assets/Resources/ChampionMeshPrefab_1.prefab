@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3287898995453118186}
   - component: {fileID: 8553051767259953399}
-  - component: {fileID: 4193012174740930558}
+  - component: {fileID: 6188168574629846839}
+  - component: {fileID: 1462076197913721084}
   m_Layer: 0
   m_Name: ChampionMeshPrefab_1
   m_TagString: Untagged
@@ -48,7 +49,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamColorfulParts:
   - {fileID: 3228344997276158110}
---- !u!114 &4193012174740930558
+  animator: {fileID: 6188168574629846839}
+--- !u!95 &6188168574629846839
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939176126738527526}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e7401a3a2385c944bf9c45edbfd2688, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1462076197913721084
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,19 +78,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 939176126738527526}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: 11500000, guid: b1bbb1ac8b6182240a7735bd36b82f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
+  particleSystems: []
+  meshRenderers:
+  - {fileID: 9212084562662402645}
+  - {fileID: 2831836322831186442}
+  - {fileID: 7926753470362656032}
+  - {fileID: 2123149387067899052}
+  - {fileID: 1791096314571408377}
+  - {fileID: 3730395576312433071}
+  - {fileID: 3228344997276158110}
+  images: []
 --- !u!1 &3214166450026565372
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +265,7 @@ GameObject:
   - component: {fileID: 168246364567465900}
   - component: {fileID: 9212084562662402645}
   m_Layer: 0
-  m_Name: BodyPart
+  m_Name: BodyPartMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,7 +360,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7129214598228525991}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: -0.95, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2350656130062493478}
@@ -420,7 +441,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7450062158813148008}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0.839, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2350656130062493478}
@@ -578,6 +599,11 @@ PrefabInstance:
 --- !u!4 &7922927499263263079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8389195880482926592, guid: e48c549873c8ee643a74b6459a7c3ba2, type: 3}
+  m_PrefabInstance: {fileID: 1846350098390856039}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3730395576312433071 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3051904129314240712, guid: e48c549873c8ee643a74b6459a7c3ba2, type: 3}
   m_PrefabInstance: {fileID: 1846350098390856039}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &3228344997276158110 stripped
