@@ -109,7 +109,7 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
         base.InitiateFXTimer();
         fxObject = PoolNetworkManager.Instance.PoolInstantiate(activeAutoAttackSO.fxPrefab, caster.transform.position,
             caster.rotateParent.rotation);
-        fxObject.team = caster.team;
+        fxObject.RequestChangeTeam(caster.team);
        
     }
 

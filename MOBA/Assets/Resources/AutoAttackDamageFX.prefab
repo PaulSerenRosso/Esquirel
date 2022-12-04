@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2779714049642991589}
   - component: {fileID: 2779714049642991591}
   - component: {fileID: 2779714049642991590}
-  m_Layer: 29
+  m_Layer: 16
   m_Name: FX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4874,7 +4874,7 @@ GameObject:
   - component: {fileID: 5131993104318608311}
   - component: {fileID: 782873847134293652}
   - component: {fileID: 7451711762720744311}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: AutoAttackDamageFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}

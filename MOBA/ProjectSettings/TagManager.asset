@@ -25,8 +25,8 @@ TagManager:
   - 
   - Bush
   - CapacityCollider
-  - 
-  - 
+  - CapturePoint
+  - CapacityFX
   - 
   - 
   - InvisibleToCamera
