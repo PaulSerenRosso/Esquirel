@@ -15,5 +15,9 @@ public class Enums
     {
         Kit, Item, Positive, Negative, BasicAttack 
     }
-    
+
+    public enum CapturePointResolveType
+    {
+        None, Team1, Team2, Conflict
+    }
 }
