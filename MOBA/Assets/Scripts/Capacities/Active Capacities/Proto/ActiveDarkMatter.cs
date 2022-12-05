@@ -3,7 +3,7 @@ using Entities.Capacities;
 using GameStates;
 using UnityEngine;
 
-public class ActiveDarkMatter : ActiveCapacity,IPrevisualisable
+public class ActiveDarkMatter : ActiveCapacity
 {
     private double timer;
     private ActiveDarkMatterSO activeCapacitySo;
