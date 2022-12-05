@@ -176,6 +176,7 @@ MonoBehaviour:
   - InGameScene
   - _FogOfWarDebugTest
   - FOG_InGameScene
+  - Tempo_In Game Scene
   fogColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   layerTargetFogOfWar:
     serializedVersion: 2
