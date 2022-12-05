@@ -15,14 +15,14 @@ namespace Entities.Champion
         public float referenceMoveSpeed;
         public float currentMoveSpeed;
     
-        public bool canMove;
+        public bool canMove = true;
         private Vector3 moveDirection;
 
         // === League Of Legends
         private int mouseTargetIndex;
         private bool isFollowing;
         private Entity entityFollow;
-               private Vector3 moveDestination;
+              public Vector3 moveDestination;
 
                private Vector3 oldMoveDestination;
         private IAimable currentIAimable;
@@ -74,11 +74,15 @@ namespace Entities.Champion
         [PunRPC]
         public void SyncSetCanMoveRPC(bool value)
         {
+            if(photonView.IsMine && !value)
+            agent.SetDestination(transform.position);
+            canMove = value;
         }
 
         [PunRPC]
         public void SetCanMoveRPC(bool value)
         {
+            photonView.RPC("SyncSetCanMoveRPC", RpcTarget.All, value);
         }
 
         public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanMove;
@@ -225,6 +229,7 @@ namespace Entities.Champion
         {
             if (!photonView.IsMine) return;
             if (!isFollowing) return;
+            if(!canMove) return;
 
             //Debug.Log("follow");
             if (targetEntity.CanBeTargeted())
@@ -249,6 +254,7 @@ namespace Entities.Champion
                         else
                         {
                             LaunchAimedCapacity();
+                            
                         }
                         }
                         else
@@ -276,6 +282,8 @@ namespace Entities.Champion
         private void LaunchAimedCapacity()
         {
             //Debug.Log("to distance");
+          
+            moveDestination = transform.position;
             currentTargetCapacityAtRangeEvent.Invoke(currentCapacityAimed.indexOfSOInCollection, new[]
             {
                 entityFollow.entityIndex
@@ -283,13 +291,23 @@ namespace Entities.Champion
             {
                 entityFollow.transform.position
             });
-            moveDestination = transform.position;
         }
 
 
+        public void RequestRotateMeshChampion(Vector3 direction)
+        {
+            photonView.RPC("RotateMeshChampionRPC", RpcTarget.All, direction);
+        }
+
+        [PunRPC]
+        public void RotateMeshChampionRPC(Vector3 direction)
+        {
+            rotateParent.forward = direction;
+        }
+
         private void CheckMoveDistance()
         {
-            if (agent == null ||!agent.isOnNavMesh) return;
+            if (agent == null ||!agent.isOnNavMesh || !canMove) return;
             if (agent.velocity.magnitude > 0.3f)
                     rotateParent.forward = agent.velocity.normalized;
                 agent.velocity = agent.desiredVelocity;

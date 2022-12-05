@@ -290,7 +290,8 @@ MonoBehaviour:
   items: []
   referenceMoveSpeed: 10
   currentMoveSpeed: 10
-  canMove: 0
+  canMove: 1
+  moveDestination: {x: 0, y: 0, z: 0}
   agent: {fileID: 3480681341667345173}
   maxResource: 0
   currentResource: 0

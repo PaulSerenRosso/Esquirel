@@ -13,7 +13,7 @@ namespace Entities.Capacities
         
         private double fxTimer;
        public Entity fxObject;
-        public event GlobalDelegates.TwoParameterDelegate<byte, bool> cooldownIsReadyEvent;
+        
         public GameObject instantiateFeedbackObj;
 
         protected int target;
@@ -59,9 +59,7 @@ namespace Entities.Capacities
 
         #region Cast
 
-        /// <summary>
-        /// Check if the target is in range.
-        /// </summary>
+    
         /// <returns></returns>
         /// <summary>
         /// Initialize the cooldown of the capacity when used.
@@ -70,7 +68,6 @@ namespace Entities.Capacities
         {
             onCooldown = true;
             cooldownTimer = AssociatedActiveCapacitySO().cooldown;
-            cooldownIsReadyEvent?.Invoke(indexOfSOInCollection, true);
             GameStateMachine.Instance.OnTick += CooldownTimer;
         }
 
@@ -84,12 +81,15 @@ namespace Entities.Capacities
             if (cooldownTimer <= 0)
             {
                 onCooldown = false;
-
-                cooldownIsReadyEvent?.Invoke(indexOfSOInCollection, false);
+                EndCooldown();
                 GameStateMachine.Instance.OnTick -= CooldownTimer;
             }
         }
-        
+
+        public virtual void EndCooldown()
+        {
+            
+        }
 
 
         /// <summary>

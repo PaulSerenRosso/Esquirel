@@ -302,6 +302,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8293423625793494617}
     m_Modifications:
+    - target: {fileID: 1186330093670666441, guid: 131e222720f94e248aad475bb29d0bbb, type: 3}
+      propertyPath: allActiveCapacities.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1186330093670666441, guid: 131e222720f94e248aad475bb29d0bbb, type: 3}
+      propertyPath: allActiveCapacities.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 558a7149786ab434c8b4a989c808974e, type: 2}
     - target: {fileID: 3955543217048252941, guid: 131e222720f94e248aad475bb29d0bbb, type: 3}
       propertyPath: m_RootOrder
       value: 0

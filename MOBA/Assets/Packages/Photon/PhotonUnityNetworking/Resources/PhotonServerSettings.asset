@@ -218,6 +218,10 @@ MonoBehaviour:
   - CancelCurrentCapacity
   - SetCurrentCapacityUsedEqualToAttackBase
   - UpdateCapturePointVisual
+  - SetOnCooldownAttackRPC
+  - SetOnCooldownCapacityRPC
+  - RotateMeshChampion
+  - RotateMeshChampionRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

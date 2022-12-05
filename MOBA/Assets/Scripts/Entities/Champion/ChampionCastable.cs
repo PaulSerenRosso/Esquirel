@@ -59,7 +59,30 @@ namespace Entities.Champion
 
         public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
-            photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities, targetedPositions);
+            
+            if (!activeCapacities[capacityIndex].onCooldown)
+            {
+                    Debug.Log(activeCapacities[capacityIndex].GetType());
+                if (activeCapacities[capacityIndex] is IPrevisualisable)
+                {
+                    IPrevisualisable previsualisable = (IPrevisualisable) activeCapacities[capacityIndex];
+                    if (!previsualisable.GetIsDrawing())
+                    {
+                    previsualisable.EnableDrawing();
+                    }
+                    else
+                    {
+                        photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
+                            targetedPositions);
+                    }
+                }
+                else
+                {
+                    photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
+                        targetedPositions);
+                }
+            }
+            
         }
 
         [PunRPC]
@@ -80,17 +103,17 @@ namespace Entities.Champion
             OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
         }
 
-        public void RequestToChangeCooldownIsReady(byte capacityIndex, bool value)
+        public void RequestToSetOnCooldownCapacity(byte indexOfSOInCollection, bool value)
         {
-            photonView.RPC("CooldownIsReadyRPC", RpcTarget.All, capacityIndex, value);
+            photonView.RPC("SetOnCooldownCapacityRPC", RpcTarget.All, indexOfSOInCollection, value);
         }
 
         [PunRPC]
-        void CooldownIsReadyRPC(byte capacityIndex, bool value)
+        void SetOnCooldownCapacityRPC(byte indexOfSOInCollection, bool value)
         {
             for (int i = 0; i < activeCapacities.Count; i++)
             {
-                if (activeCapacities[i].indexOfSOInCollection == capacityIndex)
+                if (activeCapacities[i].indexOfSOInCollection == indexOfSOInCollection)
                 {
                     activeCapacities[i].onCooldown = value;
                     return;
