@@ -15,5 +15,8 @@ public partial class UIManager : MonoBehaviour
         Instance = this;
     }
 
-
+    public void LookAtCamera(Transform transform)
+    {
+        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+    }
 }

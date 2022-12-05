@@ -316,6 +316,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleSystems: []
   meshRenderers: []
-  images:
+  graphics:
   - {fileID: 1557894269796629367}
   - {fileID: 1557894271386407144}

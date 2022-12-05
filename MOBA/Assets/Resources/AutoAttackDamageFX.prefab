@@ -4943,8 +4943,8 @@ MonoBehaviour:
   - {fileID: 2779714049642991591}
   particleSystemsToShowAlpha:
   - 1
-  imagesToShow: []
-  imagesToShowAlpha: []
+  graphicsToShow: []
+  graphicsToShowAlpha: []
   currentBush: {fileID: 0}
   canChangeTeam: 0
   team: 0

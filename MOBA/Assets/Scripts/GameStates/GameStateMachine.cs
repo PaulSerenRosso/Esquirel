@@ -517,5 +517,18 @@ namespace GameStates
         {
             winner = (Enums.Team)team;
         }
+
+        public Color GetTeamColor(Enums.Team team)
+        {
+        for (int i = 0; i < teamColors.Length; i++)
+        {
+            if (team == teamColors[i].team)
+            {
+               return teamColors[i].color;
+            }
+        }
+
+        return Color.black;
+        }
     }
 }

@@ -18,6 +18,5 @@ public partial class UIManager
         var canvasHealth = Instantiate(healthBarPrefab, entity.uiTransform.position + entity.offset, Quaternion.identity, entity.uiTransform);
         canvasHealth.GetComponent<EntityFOWShowableLinker>().LinkEntity(entity);
         canvasHealth.GetComponent<EntityHealthBar>().InitHealthBar(entity);
-      
     }
 }

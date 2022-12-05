@@ -256,8 +256,8 @@ MonoBehaviour:
   meshRenderersToShowAlpha: []
   particleSystemsToShow: []
   particleSystemsToShowAlpha: []
-  imagesToShow: []
-  imagesToShowAlpha: []
+  graphicsToShow: []
+  graphicsToShowAlpha: []
   currentBush: {fileID: 0}
   canChangeTeam: 0
   team: 0
