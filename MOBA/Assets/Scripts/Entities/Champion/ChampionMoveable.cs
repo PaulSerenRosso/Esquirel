@@ -304,6 +304,17 @@ namespace Entities.Champion
         {
             rotateParent.forward = direction;
         }
+        
+        public void RequestMoveChampion(Vector3 newPos)
+        {
+            photonView.RPC("MoveChampionRPC", RpcTarget.All, newPos);
+        }
+
+        [PunRPC]
+        public void MoveChampionRPC(Vector3 newPos)
+        {
+            transform.position = newPos;
+        }
 
         private void CheckMoveDistance()
         {

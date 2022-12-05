@@ -4,6 +4,7 @@ using Entities;
 using Entities.Capacities;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 namespace Entities.Capacities
@@ -12,12 +13,12 @@ namespace Entities.Capacities
     {
         private bool isDrawing = false;
         private PrevizualisableTP previsualisableTPObject;
-        private TpCapacitySO tpCapacitySo;
-        private Champion.Champion champion;
+        public TpCapacitySO tpCapacitySo;
+       public Champion.Champion champion;
         private Vector3 previsualisableTPObjectForward;
         public float range;
-        private Vector2 startPosition;
-        private Vector2 endPosition;
+        public  Vector2 startPosition;
+        public Vector2 endPosition;
         private TpObject tpObject;
 
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -25,7 +26,19 @@ namespace Entities.Capacities
             if (onCooldown) return false;
             InitiateCooldown();
             startPosition = caster.transform.position;
-            Vector3 candidateEndPosition = caster.transform.position+previsualisableTPObjectForward * range; 
+            Vector3 candidateEndPosition = caster.transform.position+previsualisableTPObjectForward * range;
+            NavMeshHit navMeshHit;
+            if (NavMesh.SamplePosition(candidateEndPosition, out navMeshHit, range, 0))
+            {
+                endPosition = navMeshHit.position;
+                tpObject.gameObject.SetActive(true);
+                tpObject.SetUp(this);
+            }
+            else
+            {
+                Debug.LogError("don't find endPosition");
+            }
+            
          //   if(candidateEndPosition.)
             return true;
         }
