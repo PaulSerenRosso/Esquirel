@@ -21,6 +21,7 @@ MonoBehaviour:
     - InGameScene
     - _FogOfWarDebugTry
     - FOG_InGameScene
+    - Tempo_In Game Scene
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
