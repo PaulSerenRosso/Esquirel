@@ -6,6 +6,7 @@ using Entities.Champion;
 using Entities.FogOfWar;
 using GameStates;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 namespace CapturePoint
@@ -33,59 +34,90 @@ namespace CapturePoint
         private Enums.CapturePointResolveType capturePointResolve;
         private float capturePointNewValue;
 
+        public float CapturePointValue
+        {
+            set
+            {
+                capturePointValue = value;
+                capturePointValueText.text = value.ToString();
+          
+            }
+        }
+
+
+        [SerializeField]
+        private TextMeshProUGUI capturePointValueText;
         protected override void OnStart()
         {
-            capturePointValue = neutralState.stabilityPoint;
+            CapturePointValue = neutralState.stabilityPoint;
             capturePointDirection = 0;
-
             FogOfWarManager.Instance.AddFOWViewable(this);
             team = Enums.Team.Neutral;
+            UIManager.Instance.LookAtCamera(this.capturePointValueText.transform);
+            capturePointValueText.enabled = false;
+            renderer.material.color= GameStateMachine.Instance.GetTeamColor(team);
             base.OnStart();
         }
 
         public override void TriggerEnter(Collider other)
         {
-            if(!PhotonNetwork.IsMasterClient) return;
+           
             Entity entity = other.GetComponent<Entity>();
             Debug.Log("bonsoir à tosu");
             if (entity != null)
             {
                 Debug.Log("je vois une entity");
-                Champion champion = (Champion) entity;
-                if (champion != null)
+                Champion champion = (Champion)entity;
+                if (PhotonNetwork.IsMasterClient)
                 {
-                    if (entity.team == Enums.Team.Team1)
+                    if (champion != null)
                     {
-                        firstTeamChampions.Add(champion);
-                        ResolveTeamSupremacy();
-                    }
-                    else if (entity.team == Enums.Team.Team2)
-                    {
-                        secondTeamChampions.Add(champion);
-                        ResolveTeamSupremacy();
+                        if (entity.team == Enums.Team.Team1)
+                        {
+                            firstTeamChampions.Add(champion);
+                            ResolveTeamSupremacy();
+                        }
+                        else if (entity.team == Enums.Team.Team2)
+                        {
+                            secondTeamChampions.Add(champion);
+                            ResolveTeamSupremacy();
+                        }
                     }
                 }
+                if (champion.photonView.IsMine)
+                    {
+                        capturePointValueText.enabled = true;
+                    }
+                
             }
         }
 
         public override void TriggerExit(Collider other)
         {
-            if(!PhotonNetwork.IsMasterClient) return;
+           
             Entity entity = other.GetComponent<Entity>();
             if (entity)
             {
-                Champion champion = (Champion) entity;
+                Champion champion = (Champion)entity;
                 if (champion)
                 {
-                    if (entity.team == Enums.Team.Team1)
+                    if (PhotonNetwork.IsMasterClient)
                     {
-                        firstTeamChampions.Remove(champion);
-                        ResolveTeamSupremacy();
+                        if (entity.team == Enums.Team.Team1)
+                        {
+                            firstTeamChampions.Remove(champion);
+                            ResolveTeamSupremacy();
+                        }
+                        else if (entity.team == Enums.Team.Team2)
+                        {
+                            secondTeamChampions.Remove(champion);
+                            ResolveTeamSupremacy();
+                        }
                     }
-                    else if (entity.team == Enums.Team.Team2)
+
+                    if (champion.photonView.IsMine)
                     {
-                        secondTeamChampions.Remove(champion);
-                        ResolveTeamSupremacy();
+                        capturePointValueText.enabled = false;
                     }
                 }
             }
@@ -176,6 +208,7 @@ namespace CapturePoint
             {
                 GameStateMachine.Instance.OnTick -= capturePointDelegates[i];
             }
+
             capturePointDelegates.Clear();
         }
 
@@ -188,7 +221,7 @@ namespace CapturePoint
             }
         }
 
-        void AddRangeCapturePointDelegatesToTick( params GlobalDelegates.NoParameterDelegate[] addedDelegates)
+        void AddRangeCapturePointDelegatesToTick(params GlobalDelegates.NoParameterDelegate[] addedDelegates)
         {
             for (int i = 0; i < addedDelegates.Length; i++)
             {
@@ -232,7 +265,7 @@ namespace CapturePoint
                 {
                     destinationState = firstTeamState;
                     RemoveAllCapturePointDelegatesToTick();
-                    AddRangeCapturePointDelegatesToTick( TickTowardsDestinationState);
+                    AddRangeCapturePointDelegatesToTick(TickTowardsDestinationState);
                     capturePointDirection = -1;
                     break;
                 }
@@ -272,13 +305,13 @@ namespace CapturePoint
         private void TickTowardsStabilityPoint()
         {
             capturePointNewValue = capturePointValue +
-                                   capturePointSpeed / (float) GameStateMachine.Instance.tickRate *
+                                   capturePointSpeed / (float)GameStateMachine.Instance.tickRate *
                                    capturePointDirection;
             if (capturePointDirection == 1)
             {
                 if (capturePointNewValue >= stateToStabilize.stabilityPoint)
                 {
-                    capturePointValue = stateToStabilize.stabilityPoint;
+                    CapturePointValue = stateToStabilize.stabilityPoint;
                     RemoveRangeCapturePointDelegateToTick(TickTowardsStabilityPoint);
                     stateToStabilize = null;
                     return;
@@ -288,14 +321,14 @@ namespace CapturePoint
             {
                 if (capturePointNewValue <= stateToStabilize.stabilityPoint)
                 {
-                    capturePointValue = stateToStabilize.stabilityPoint;
+                    CapturePointValue = stateToStabilize.stabilityPoint;
                     RemoveRangeCapturePointDelegateToTick(TickTowardsStabilityPoint);
                     stateToStabilize = null;
                     return;
                 }
             }
 
-            capturePointValue = capturePointNewValue;
+            CapturePointValue = capturePointNewValue;
         }
 
         private void TickTowardsDestinationState()
@@ -303,15 +336,16 @@ namespace CapturePoint
             Debug.Log("bonsoir je suis lu souvent");
 
             capturePointNewValue = capturePointValue +
-                                   capturePointSpeed / (float) GameStateMachine.Instance.tickRate *
+                                   capturePointSpeed / (float)GameStateMachine.Instance.tickRate *
                                    capturePointDirection;
             if (capturePointDirection == 1)
             {
                 if (capturePointNewValue >= destinationState.captureValue)
                 {
-                    capturePointValue = destinationState.maxValue;
+                    CapturePointValue = destinationState.maxValue;
                     RemoveRangeCapturePointDelegateToTick(TickTowardsDestinationState);
                     team = destinationState.team;
+                    RequestUpdateCapturePointVisual();
                     return;
                 }
             }
@@ -319,14 +353,15 @@ namespace CapturePoint
             {
                 if (capturePointNewValue <= destinationState.captureValue)
                 {
-                    capturePointValue = destinationState.maxValue;
+                    CapturePointValue = destinationState.maxValue;
                     team = destinationState.team;
+                    RequestUpdateCapturePointVisual();
                     RemoveRangeCapturePointDelegateToTick(TickTowardsDestinationState);
                     return;
                 }
             }
 
-            capturePointValue = capturePointNewValue;
+            CapturePointValue = capturePointNewValue;
         }
 
 
@@ -337,6 +372,7 @@ namespace CapturePoint
                 if (capturePointValue > currentTeamState.captureValue)
                 {
                     team = Enums.Team.Neutral;
+                    RequestUpdateCapturePointVisual();
                     currentTeamState = null;
                     RemoveRangeCapturePointDelegateToTick(TickCurrentTeamState);
                 }
@@ -346,6 +382,7 @@ namespace CapturePoint
                 if (capturePointValue < currentTeamState.captureValue)
                 {
                     team = Enums.Team.Neutral;
+                    RequestUpdateCapturePointVisual();
                     currentTeamState = null;
                     RemoveRangeCapturePointDelegateToTick(TickCurrentTeamState);
                 }
@@ -357,11 +394,29 @@ namespace CapturePoint
             if (stream.IsWriting)
             {
                 stream.SendNext(capturePointValue);
+            
             }
             else
             {
-              capturePointValue =(float) stream.ReceiveNext();
+                CapturePointValue = (float)stream.ReceiveNext();
+              
             }
+        }
+
+        public void RequestUpdateCapturePointVisual()
+        {
+            photonView.RPC("UpdateCapturePointVisual", RpcTarget.All,(byte) team);
+        }
+
+        [PunRPC]
+        public void UpdateCapturePointVisual(byte indexTeam)
+        {
+            team = (Enums.Team)indexTeam;
+            renderer.material.color= GameStateMachine.Instance.GetTeamColor(team);
+            
+           
+            
+
         }
     }
 }

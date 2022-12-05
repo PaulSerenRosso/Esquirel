@@ -17,14 +17,14 @@ namespace  Entities
         public List<float> meshRenderersToShowAlpha;
         public List<ParticleSystem> particleSystemsToShow;
         public List<float> particleSystemsToShowAlpha;
-        public List<Image> imagesToShow;
-        public List<float> imagesToShowAlpha;
+        public List<Graphic> graphicsToShow;
+        public List<float> graphicsToShowAlpha;
         public Bush currentBush;
 
         private void OnValidate()
         {
             meshRenderersToShowAlpha.Clear();
-            imagesToShowAlpha.Clear();
+            graphicsToShowAlpha.Clear();
             particleSystemsToShowAlpha.Clear();
             for (int i = 0; i <meshRenderersToShow.Count ; i++)
             {
@@ -34,9 +34,9 @@ namespace  Entities
             {
                 particleSystemsToShowAlpha.Add(1);
             }
-            for (int i = 0; i <imagesToShow.Count ; i++)
+            for (int i = 0; i <graphicsToShow.Count ; i++)
             {
-               imagesToShowAlpha.Add(1);
+               graphicsToShowAlpha.Add(1);
             }
 
         }
@@ -147,11 +147,11 @@ namespace  Entities
                 particleSystemsToShow[i].startColor = materialColor;
             }
             
-            for (int i = 0; i < imagesToShow.Count; i++)
+            for (int i = 0; i < graphicsToShow.Count; i++)
             {
-                var materialColor = imagesToShow[i].color;
-                materialColor.a =  imagesToShowAlpha[i];
-                imagesToShow[i].color = materialColor;
+                var materialColor = graphicsToShow[i].color;
+                materialColor.a =  graphicsToShowAlpha[i];
+                graphicsToShow[i].color = materialColor;
             }
            // Debug.Log("showelement" + this.gameObject.name);
             OnShowElementFeedback?.Invoke();
@@ -214,12 +214,12 @@ namespace  Entities
                 particleSystemsToShow[i].startColor = materialColor;
             }
             
-            for (int i = 0; i < imagesToShow.Count; i++)
+            for (int i = 0; i < graphicsToShow.Count; i++)
             {
-                var materialColor = imagesToShow[i].color;
-                imagesToShowAlpha[i] = imagesToShow[i].color.a;
+                var materialColor = graphicsToShow[i].color;
+                graphicsToShowAlpha[i] = graphicsToShow[i].color.a;
                 materialColor.a = 0;
-                imagesToShow[i].color = materialColor;
+                graphicsToShow[i].color = materialColor;
             }
             OnHideElementFeedback?.Invoke();
         }

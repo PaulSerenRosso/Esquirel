@@ -271,7 +271,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &7673529661679636680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,6 +316,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleSystems: []
   meshRenderers: []
-  images:
+  graphics:
   - {fileID: 992096781070105422}
   - {fileID: 992096781444771152}
