@@ -28,10 +28,7 @@ namespace Controllers.Inputs
         /// Actions Performed on Attack Activation
         /// </summary>
         /// <param name="ctx"></param>
-        private void OnAttack(InputAction.CallbackContext ctx)
-        {
-            champion.RequestAttack(champion.attackAbilityIndex, selectedEntity, cursorWorldPos);
-        }
+      
 
         /// <summary>
         /// Actions Performed on Show or Hide Shop
@@ -51,7 +48,7 @@ namespace Controllers.Inputs
             ActiveCapacitySO capacity0 =
                 CapacitySOCollectionManager.GetActiveCapacitySOByIndex(champion.abilitiesIndexes[0]);
 
-            champion.RequestCast(champion.abilitiesIndexes[0], selectedEntity, cursorWorldPos);
+            champion.RequestCast(0, selectedEntity, cursorWorldPos);
         }
 
         /// <summary>
@@ -60,7 +57,8 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateCapacity1(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast(champion.abilitiesIndexes[1], selectedEntity, cursorWorldPos);
+            
+            champion.RequestCast(1, selectedEntity, cursorWorldPos);
         }
 
         /// <summary>
@@ -69,7 +67,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast(champion.ultimateAbilityIndex, selectedEntity, cursorWorldPos);
+            champion.RequestCast(2, selectedEntity, cursorWorldPos);
         }
 
         /// <summary>
@@ -106,6 +104,8 @@ namespace Controllers.Inputs
             if (!Physics.Raycast(mouseRay, out var hit, movePositionDetectionDistance,layerForDetectMovePosition)) return;
             cursorWorldPos[0] = hit.point;
             selectedEntity[0] = -1;
+            InputManager.inputMouseWorldPosition = hit.point;
+            InputManager.inputMouseHit = hit;
             //Debug.Log("hit"+hit.collider.gameObject.name);
             var ent = hit.transform.GetComponent<Entity>();
             //    if (ent == null && hit.transform.parent != null) hit.transform.parent.GetComponent<Entity>();
@@ -210,11 +210,15 @@ namespace Controllers.Inputs
             selectedEntity = new int[1];
             cursorWorldPos = new Vector3[1];
 
-            inputs.Attack.Attack.performed += OnAttack;
+       
 
             inputs.Capacity.Capacity0.performed += OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed += OnActivateUltimateAbility;
+            inputs.Capacity.PrevisualisableCapacity0.performed += OnActivateCapacity0;
+            inputs.Capacity.PrevisualisableCapacity1.performed += OnActivateCapacity1;
+            inputs.Capacity.PrevisualisableCapacity2.performed += OnActivateUltimateAbility;
+            
 
 
             inputs.MoveMouse.ActiveButton.performed += OnMouseClick;
@@ -234,11 +238,13 @@ namespace Controllers.Inputs
 
         protected override void Unlink()
         {
-            inputs.Attack.Attack.performed -= OnAttack;
             inputsAreLinked = false; 
             inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed -= OnActivateUltimateAbility;
+            inputs.Capacity.PrevisualisableCapacity0.performed -= OnActivateCapacity0;
+            inputs.Capacity.PrevisualisableCapacity1.performed -= OnActivateCapacity1;
+            inputs.Capacity.PrevisualisableCapacity2.performed -= OnActivateUltimateAbility;
             inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
 
             inputs.MoveMouse.ActiveButton.performed -= OnMouseClick;

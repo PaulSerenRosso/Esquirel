@@ -141,6 +141,33 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrevisualisableCapacity0"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa06ff83-0b5b-49d5-b084-2364a1968652"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrevisualisableCapacity1"",
+                    ""type"": ""Button"",
+                    ""id"": ""5f35e97a-4de4-4604-9897-cfec5498565f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrevisualisableCapacity2"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc0cc3e6-6ddb-4fb9-80bc-e86b4771cbf1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -158,7 +185,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c0c5895f-7a86-4ec0-a37d-36df2dd2f8cd"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -174,6 +201,39 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Capacity2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d90d023c-32d2-45ef-b0df-f4846111d172"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrevisualisableCapacity0"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e35ceb82-4278-42c1-8c6a-d9d36e2c3f32"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrevisualisableCapacity1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e7316233-d645-4c71-bb3f-e1950ee84e9d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrevisualisableCapacity2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -377,6 +437,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Capacity_Capacity0 = m_Capacity.FindAction("Capacity0", throwIfNotFound: true);
         m_Capacity_Capacity1 = m_Capacity.FindAction("Capacity1", throwIfNotFound: true);
         m_Capacity_Capacity2 = m_Capacity.FindAction("Capacity2", throwIfNotFound: true);
+        m_Capacity_PrevisualisableCapacity0 = m_Capacity.FindAction("PrevisualisableCapacity0", throwIfNotFound: true);
+        m_Capacity_PrevisualisableCapacity1 = m_Capacity.FindAction("PrevisualisableCapacity1", throwIfNotFound: true);
+        m_Capacity_PrevisualisableCapacity2 = m_Capacity.FindAction("PrevisualisableCapacity2", throwIfNotFound: true);
         // Inventory
         m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
         m_Inventory_ActivateItem0 = m_Inventory.FindAction("ActivateItem0", throwIfNotFound: true);
@@ -519,6 +582,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Capacity_Capacity0;
     private readonly InputAction m_Capacity_Capacity1;
     private readonly InputAction m_Capacity_Capacity2;
+    private readonly InputAction m_Capacity_PrevisualisableCapacity0;
+    private readonly InputAction m_Capacity_PrevisualisableCapacity1;
+    private readonly InputAction m_Capacity_PrevisualisableCapacity2;
     public struct CapacityActions
     {
         private @PlayerInputs m_Wrapper;
@@ -526,6 +592,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @Capacity0 => m_Wrapper.m_Capacity_Capacity0;
         public InputAction @Capacity1 => m_Wrapper.m_Capacity_Capacity1;
         public InputAction @Capacity2 => m_Wrapper.m_Capacity_Capacity2;
+        public InputAction @PrevisualisableCapacity0 => m_Wrapper.m_Capacity_PrevisualisableCapacity0;
+        public InputAction @PrevisualisableCapacity1 => m_Wrapper.m_Capacity_PrevisualisableCapacity1;
+        public InputAction @PrevisualisableCapacity2 => m_Wrapper.m_Capacity_PrevisualisableCapacity2;
         public InputActionMap Get() { return m_Wrapper.m_Capacity; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -544,6 +613,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Capacity2.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity2;
                 @Capacity2.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity2;
                 @Capacity2.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity2;
+                @PrevisualisableCapacity0.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity0;
+                @PrevisualisableCapacity0.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity0;
+                @PrevisualisableCapacity0.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity0;
+                @PrevisualisableCapacity1.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity1;
+                @PrevisualisableCapacity1.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity1;
+                @PrevisualisableCapacity1.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity1;
+                @PrevisualisableCapacity2.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity2;
+                @PrevisualisableCapacity2.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity2;
+                @PrevisualisableCapacity2.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity2;
             }
             m_Wrapper.m_CapacityActionsCallbackInterface = instance;
             if (instance != null)
@@ -557,6 +635,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Capacity2.started += instance.OnCapacity2;
                 @Capacity2.performed += instance.OnCapacity2;
                 @Capacity2.canceled += instance.OnCapacity2;
+                @PrevisualisableCapacity0.started += instance.OnPrevisualisableCapacity0;
+                @PrevisualisableCapacity0.performed += instance.OnPrevisualisableCapacity0;
+                @PrevisualisableCapacity0.canceled += instance.OnPrevisualisableCapacity0;
+                @PrevisualisableCapacity1.started += instance.OnPrevisualisableCapacity1;
+                @PrevisualisableCapacity1.performed += instance.OnPrevisualisableCapacity1;
+                @PrevisualisableCapacity1.canceled += instance.OnPrevisualisableCapacity1;
+                @PrevisualisableCapacity2.started += instance.OnPrevisualisableCapacity2;
+                @PrevisualisableCapacity2.performed += instance.OnPrevisualisableCapacity2;
+                @PrevisualisableCapacity2.canceled += instance.OnPrevisualisableCapacity2;
             }
         }
     }
@@ -713,6 +800,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnCapacity0(InputAction.CallbackContext context);
         void OnCapacity1(InputAction.CallbackContext context);
         void OnCapacity2(InputAction.CallbackContext context);
+        void OnPrevisualisableCapacity0(InputAction.CallbackContext context);
+        void OnPrevisualisableCapacity1(InputAction.CallbackContext context);
+        void OnPrevisualisableCapacity2(InputAction.CallbackContext context);
     }
     public interface IInventoryActions
     {

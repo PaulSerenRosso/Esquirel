@@ -4,6 +4,7 @@ using Entities.Champion;
 using GameStates;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class ActiveAutoAttack : ActiveCapacity, IAimable
 {
@@ -30,6 +31,25 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
         GameStateMachine.Instance.OnTick += TickAnimationTimer;
     }
 
+    protected override void InitiateCooldown()
+    {
+        base.InitiateCooldown();
+        Debug.Log("bonsoir je suis tout le temps lu aussi");
+        caster.RequestToSetOnCooldownAttack(true);
+        
+    }
+
+    public override void EndCooldown()
+    {
+        Debug.Log("bonsoir je suis tout le temps lu");
+        base.EndCooldown();
+        caster.RequestToSetOnCooldownAttack(false);
+    }
+
+    protected override void CooldownTimer()
+    {
+        base.CooldownTimer();
+    }
 
     void InitiateBeginDamageTimer()
     {
@@ -58,6 +78,7 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
             CancelAnimationTimer();
         }
     }
+
 
     private void CancelAnimationTimer()
     {
@@ -99,6 +120,8 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
             PoolLocalManager.Instance.EnqueuePool(activeAutoAttackSO.damagePrefab, DamageObject);
             DamageObject = null;
         }
+
+        caster.SetCanMoveRPC(true);
         GameStateMachine.Instance.OnTick -= TickDamageTimer;
         caster.RequestCurrentResetCapacityUsed();
     }
@@ -110,27 +133,21 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
         fxObject = PoolNetworkManager.Instance.PoolInstantiate(activeAutoAttackSO.fxPrefab, caster.transform.position,
             caster.rotateParent.rotation);
         fxObject.RequestChangeTeam(caster.team);
-       
     }
+
 
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if (!onCooldown)
-        {
-            caster.rotateParent.forward = (
-                EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]).transform
-                                               .position-caster.transform.position).normalized;
-            InitiateCooldown();
-            InitiateAnimationTimer();
-            InitiateBeginDamageTimer();
-            InitiateFXTimer();
-            return true;
-        }
-
-        return false;
+        if (onCooldown) return false; 
+        caster.SetCanMoveRPC(false);
+        caster.RequestRotateMeshChampion((targetPositions[0] - caster.transform.position).normalized);
+        InitiateCooldown();
+        InitiateAnimationTimer();
+        InitiateBeginDamageTimer();
+        InitiateFXTimer();
+    
+        return true;
     }
-
-
 
 
     public override void CancelCapacity()
@@ -141,16 +158,16 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
         CancelFXTimer();
         caster.RequestCurrentResetCapacityUsed();
     }
-    
+
 
     public override void SetUpActiveCapacity(byte soIndex, Entity caster)
     {
         base.SetUpActiveCapacity(soIndex, caster);
 
-        activeAutoAttackSO = (ActiveAutoAttackSO) AssociatedActiveCapacitySO();
+        activeAutoAttackSO = (ActiveAutoAttackSO)AssociatedActiveCapacitySO();
         range = activeAutoAttackSO.maxRange;
         rangeSqrt = range * range;
-        this.caster = (Champion) caster;
+        this.caster = (Champion)caster;
 
         //   cooldownIsReadyEvent += champion.RequestToChangeCooldownIsReady;
     }

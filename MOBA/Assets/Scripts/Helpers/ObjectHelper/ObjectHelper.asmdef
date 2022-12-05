@@ -1,0 +1,16 @@
+{
+    "name": "ObjectHelper",
+    "rootNamespace": "",
+    "references": [
+        "GUID:97c161e07a8a968488059914236ac6ce"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

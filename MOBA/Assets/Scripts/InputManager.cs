@@ -1,3 +1,5 @@
+using System;
+using Entities;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -6,6 +8,8 @@ public class InputManager : MonoBehaviour
     
     public static PlayerInputs PlayerUIMap;
 
+    public static RaycastHit inputMouseHit;
+    public static Vector3 inputMouseWorldPosition;
     private void Awake()
     {
         if (PlayerMap != null)
@@ -15,6 +19,8 @@ public class InputManager : MonoBehaviour
         }
         PlayerMap = new PlayerInputs();
     }
+
+
 
     /// <summary>
     /// Toggle PlayerMap

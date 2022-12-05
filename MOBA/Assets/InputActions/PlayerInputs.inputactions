@@ -119,6 +119,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PrevisualisableCapacity0",
+                    "type": "Button",
+                    "id": "fa06ff83-0b5b-49d5-b084-2364a1968652",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrevisualisableCapacity1",
+                    "type": "Button",
+                    "id": "5f35e97a-4de4-4604-9897-cfec5498565f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrevisualisableCapacity2",
+                    "type": "Button",
+                    "id": "bc0cc3e6-6ddb-4fb9-80bc-e86b4771cbf1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -136,7 +163,7 @@
                 {
                     "name": "",
                     "id": "c0c5895f-7a86-4ec0-a37d-36df2dd2f8cd",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -152,6 +179,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Capacity2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d90d023c-32d2-45ef-b0df-f4846111d172",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrevisualisableCapacity0",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e35ceb82-4278-42c1-8c6a-d9d36e2c3f32",
+                    "path": "<Keyboard>/w",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrevisualisableCapacity1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e7316233-d645-4c71-bb3f-e1950ee84e9d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrevisualisableCapacity2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

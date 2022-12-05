@@ -10,8 +10,6 @@ namespace Entities.Champion
         public bool canAttack;
         public float attackDamage;
         
-        
-        
         public bool CanAttack()
         {
             return canAttack;
@@ -59,7 +57,6 @@ namespace Entities.Champion
 
         public void RequestAttack(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
-         
             if (!attackBase.onCooldown)
             {
                 photonView.RPC("AttackRPC",RpcTarget.MasterClient,capacityIndex,targetedEntities,targetedPositions);
@@ -72,11 +69,20 @@ namespace Entities.Champion
             if ( attackBase.TryCast( targetedEntities, targetedPositions))
             {
                 CancelCurrentCapacity();
-             
-               RequestSetCurrentCapacityUsedEqualToAttackBase();
+                RequestSetCurrentCapacityUsedEqualToAttackBase();
                 OnAttack?.Invoke(capacityIndex, targetedEntities, targetedPositions);
-      
             }
+        }
+        
+        public void RequestToSetOnCooldownAttack(bool value)
+        {
+            photonView.RPC("SetOnCooldownAttackRPC", RpcTarget.All,  value);
+        }
+
+        [PunRPC]
+        public void SetOnCooldownAttackRPC( bool value)
+        {
+            attackBase.onCooldown = value;
         }
         
         [PunRPC]
