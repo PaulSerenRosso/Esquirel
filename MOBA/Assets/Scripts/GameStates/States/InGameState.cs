@@ -23,7 +23,6 @@ namespace GameStates.States
                 sm.SwitchState(3);
                 return;
             }
-
             
             if (timer >= 1.0 / sm.tickRate)
             {
@@ -31,6 +30,7 @@ namespace GameStates.States
                 sm.Tick();
             }
             else timer += Time.deltaTime;
+
         }
 
         public override void ExitState() { }

@@ -125,6 +125,7 @@ namespace Entities
         {
             if (other.tag == "Bush")
             {
+                Debug.Log("bonsoir à tous je suis dans le bush");
                 currentBush = other.GetComponent<Bush>();
             }
      
@@ -134,6 +135,7 @@ namespace Entities
         {
             if (other.tag == "Bush")
             {
+                Debug.Log("bonsoir à tous je sors du bush");
                 currentBush = null;
             }
         }

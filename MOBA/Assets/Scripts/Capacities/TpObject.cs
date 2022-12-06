@@ -67,6 +67,7 @@ namespace Entities.Capacities
         protected override void OnUpdate()
         {
         
+            // je vois le problème lol le time deltatime ça quelle plaisir
             if(!PhotonNetwork.IsMasterClient || !isActive) return;
             if (currentTimer < tpObjectCurveTime)
                 currentTimer += Time.deltaTime;

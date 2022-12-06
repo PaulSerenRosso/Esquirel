@@ -6,7 +6,5 @@ namespace Entities.FogOfWar
   public class Bush : MonoBehaviour
   {
 
-
-    
   }
 }

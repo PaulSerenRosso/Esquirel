@@ -4,6 +4,7 @@ using Entities;
 using Entities.Capacities;
 using Entities.Champion;
 using GameStates;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,17 +48,31 @@ public class ChampionHUD : MonoBehaviour
             var timer = 0.0;
             var tckRate = GameStateMachine.Instance.tickRate;
 
-            GameStateMachine.Instance.OnTick += Tick;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                GameStateMachine.Instance.OnTick += Tick;
+            }
+            else
+            {
+                GameStateMachine.Instance.OnTickFeedback += Tick;
+            }
 
             void Tick()
             {
                 timer += 1.0 / tckRate;
-                spellCooldown.fillAmount = 1 - (float) (timer / coolDown);
+                spellCooldown.fillAmount = 1 - (float)(timer / coolDown);
                 if (!(timer > coolDown)) return;
-                GameStateMachine.Instance.OnTick -= Tick;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    GameStateMachine.Instance.OnTick -= Tick;
+                }
+                else
+                {
+                    GameStateMachine.Instance.OnTickFeedback -= Tick;
+                }
+
                 spellCooldown.fillAmount = 0;
             }
-
         }
     }
 
