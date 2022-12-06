@@ -64,7 +64,7 @@ namespace Entities.Capacities
         /// <summary>
         /// Initialize the cooldown of the capacity when used.
         /// </summary>
-        protected virtual void InitiateCooldown()
+        public virtual void InitiateCooldown()
         {
             onCooldown = true;
             cooldownTimer = AssociatedActiveCapacitySO().cooldown;

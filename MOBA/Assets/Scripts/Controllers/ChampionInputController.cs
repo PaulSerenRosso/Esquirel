@@ -45,9 +45,6 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateCapacity0(InputAction.CallbackContext ctx)
         {
-            ActiveCapacitySO capacity0 =
-                CapacitySOCollectionManager.GetActiveCapacitySOByIndex(champion.abilitiesIndexes[0]);
-
             champion.RequestCast(0, selectedEntity, cursorWorldPos);
         }
 
@@ -69,7 +66,22 @@ namespace Controllers.Inputs
         {
             champion.RequestCast(2, selectedEntity, cursorWorldPos);
         }
+        
+        private void OnPrintCapacity0Previsualisable(InputAction.CallbackContext ctx)
+        {
+            champion.LaunchCapacityWithPrevisualisable(0, selectedEntity, cursorWorldPos);
+        }
 
+        private void OnPrintCapacity1Previsualisable(InputAction.CallbackContext ctx)
+        {
+            champion.LaunchCapacityWithPrevisualisable(1, selectedEntity, cursorWorldPos);
+        }
+        
+        private void OnPrintUltimatePrevisualisable(InputAction.CallbackContext ctx)
+        {
+            champion.LaunchCapacityWithPrevisualisable(2, selectedEntity, cursorWorldPos);
+        }
+  
         /// <summary>
         /// Actions Performed on Item 0 Activation
         /// </summary>
@@ -215,9 +227,9 @@ namespace Controllers.Inputs
             inputs.Capacity.Capacity0.performed += OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed += OnActivateUltimateAbility;
-            inputs.Capacity.PrevisualisableCapacity0.performed += OnActivateCapacity0;
-            inputs.Capacity.PrevisualisableCapacity1.performed += OnActivateCapacity1;
-            inputs.Capacity.PrevisualisableCapacity2.performed += OnActivateUltimateAbility;
+            inputs.Capacity.PrevisualisableCapacity0.performed += OnPrintCapacity0Previsualisable;
+            inputs.Capacity.PrevisualisableCapacity1.performed += OnPrintCapacity1Previsualisable;
+            inputs.Capacity.PrevisualisableCapacity2.performed += OnPrintUltimatePrevisualisable;
             
 
 
@@ -242,9 +254,9 @@ namespace Controllers.Inputs
             inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed -= OnActivateUltimateAbility;
-            inputs.Capacity.PrevisualisableCapacity0.performed -= OnActivateCapacity0;
-            inputs.Capacity.PrevisualisableCapacity1.performed -= OnActivateCapacity1;
-            inputs.Capacity.PrevisualisableCapacity2.performed -= OnActivateUltimateAbility;
+            inputs.Capacity.PrevisualisableCapacity0.performed -= OnPrintCapacity0Previsualisable;
+            inputs.Capacity.PrevisualisableCapacity1.performed -= OnPrintCapacity1Previsualisable;
+            inputs.Capacity.PrevisualisableCapacity2.performed -= OnPrintUltimatePrevisualisable;
             inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
 
             inputs.MoveMouse.ActiveButton.performed -= OnMouseClick;

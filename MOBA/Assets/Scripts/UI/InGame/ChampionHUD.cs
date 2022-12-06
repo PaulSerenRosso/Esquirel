@@ -48,18 +48,19 @@ public class ChampionHUD : MonoBehaviour
             var tckRate = GameStateMachine.Instance.tickRate;
 
             GameStateMachine.Instance.OnTick += Tick;
-            
+
             void Tick()
             {
                 timer += 1.0 / tckRate;
-                spellCooldown.fillAmount = 1-(float)(timer / coolDown);
+                spellCooldown.fillAmount = 1 - (float) (timer / coolDown);
                 if (!(timer > coolDown)) return;
                 GameStateMachine.Instance.OnTick -= Tick;
                 spellCooldown.fillAmount = 0;
             }
+
         }
     }
-    
+
     public void InitHUD(Champion newChampion)
     {
         champion = newChampion;
@@ -84,7 +85,7 @@ public class ChampionHUD : MonoBehaviour
 
     private void LinkToEvents()
     {
-        castable.OnCastFeedback += UpdateCooldown;
+        champion.OnSetCooldownFeedback += UpdateCooldown;
 
         lifeable.OnSetCurrentHpFeedback += UpdateFillPercentHealth;
         lifeable.OnSetCurrentHpPercentFeedback += UpdateFillPercentByPercentHealth;
@@ -92,7 +93,7 @@ public class ChampionHUD : MonoBehaviour
         lifeable.OnDecreaseCurrentHpFeedback += UpdateFillPercentHealth;
         lifeable.OnIncreaseMaxHpFeedback += UpdateFillPercentHealth;
         lifeable.OnDecreaseMaxHpFeedback += UpdateFillPercentHealth;
-        
+
         resourceable.OnSetCurrentResourceFeedback += UpdateFillPercentResource;
         resourceable.OnSetCurrentResourcePercentFeedback += UpdateFillPercentByPercentResource;
         resourceable.OnIncreaseCurrentResourceFeedback += UpdateFillPercentResource;
@@ -124,33 +125,43 @@ public class ChampionHUD : MonoBehaviour
             spellIcon = spellUltimate,
             spellCooldown = spellUltimateCooldown
         };
-        spellHolderDict.Add(so.activeCapacitiesIndexes[0], spellOneHolder);
-        spellHolderDict.Add(so.activeCapacitiesIndexes[1], spellTwoHolder);
-        if(!spellHolderDict.ContainsKey(so.ultimateAbilityIndex))spellHolderDict.Add(so.ultimateAbilityIndex, ultimateHolder);
-        else Debug.Log("A FIXE, CA BUG ");
-        
-        if(so.passiveCapacities.Length != 0)
-        passiveHolder.Setup(so.passiveCapacities[0].icon);
+        spellHolderDict.Add(0, spellOneHolder);
+        spellHolderDict.Add(1, spellTwoHolder);
+        spellHolderDict.Add(2, ultimateHolder);
+
+        if (so.passiveCapacities.Length != 0)
+            passiveHolder.Setup(so.passiveCapacities[0].icon);
         spellOneHolder.Setup(so.activeCapacities[0].icon);
         spellTwoHolder.Setup(so.activeCapacities[1].icon);
         ultimateHolder.Setup(so.ultimateAbility.icon);
     }
 
-    private void UpdateCooldown(byte capacityIndex, int[] intArray, Vector3[] vectors, ActiveCapacity capacity)
+    private void UpdateCooldown(byte capacityIndex, bool inCooldown)
     {
-        spellHolderDict[capacityIndex].StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex).cooldown) ;
+        if (inCooldown && champion.photonView.IsMine)
+        {
+            for (byte i = 0; i < champion.activeCapacities.Count; i++)
+            {
+                if (champion.activeCapacities[i].indexOfSOInCollection == capacityIndex)
+                {
+                    spellHolderDict[i].StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex)
+                        .cooldown);
+                    return;
+                }
+            }
+        }
     }
-    
+
     private void UpdateFillPercentByPercentHealth(float value)
     {
-        healthBar.fillAmount = lifeable.GetCurrentHp()/lifeable.GetMaxHp();
+        healthBar.fillAmount = lifeable.GetCurrentHp() / lifeable.GetMaxHp();
     }
-    
+
     private void UpdateFillPercentHealth(float value)
     {
-        healthBar.fillAmount = lifeable.GetCurrentHp()/lifeable.GetMaxHp();
+        healthBar.fillAmount = lifeable.GetCurrentHp() / lifeable.GetMaxHp();
     }
-    
+
     private void UpdateFillPercentByPercentResource(float value)
     {
         resourceBar.fillAmount = value;
