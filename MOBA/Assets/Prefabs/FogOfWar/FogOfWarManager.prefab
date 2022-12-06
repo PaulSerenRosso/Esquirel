@@ -180,12 +180,12 @@ MonoBehaviour:
   fogColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   layerTargetFogOfWar:
     serializedVersion: 2
-    m_Bits: 1610711040
+    m_Bits: 1610719232
   layerObstacleFogOfWar:
     serializedVersion: 2
-    m_Bits: 1073741824
+    m_Bits: 1073750016
   fogMat: {fileID: 2100000, guid: 269845f80d310d74db13180ca168d3e1, type: 2}
-  worldSize: 100
+  worldSize: 171
   worldSizeGizmos: 1
   settingsFOV:
     meshResolution: 1

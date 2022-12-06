@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 namespace GameStates
 {
     [RequireComponent(typeof(PhotonView))]
-    public class GameStateMachine : MonoBehaviourPun
+    public class GameStateMachine : MonoBehaviourPun, IPunObservable
     {
         public static GameStateMachine Instance;
         public bool IsMaster => PhotonNetwork.IsMasterClient;
@@ -25,6 +25,17 @@ namespace GameStates
         private GameState[] gamesStates;
 
         [Tooltip("Ticks per second")] public double tickRate = 1;
+
+        private bool tickValue = false;
+
+        private bool TickValue
+        {
+            set
+            {
+                tickValue = value;
+                OnTickFeedback?.Invoke();
+            }
+        }
         
         public event GlobalDelegates.NoParameterDelegate OnTick;
         public event GlobalDelegates.NoParameterDelegate OnTickFeedback;
@@ -165,20 +176,16 @@ namespace GameStates
         public void Tick()
         {
             OnTick?.Invoke();
+            tickValue = !tickValue;
             /*
             Debug.Log(OnTick.GetInvocationList().Length);
             for (int i = 0; i < OnTick.GetInvocationList().Length; i++)
             {
                 Debug.Log(i+OnTick.GetInvocationList()[i].Method.Name);
             }*/
-            photonView.RPC("TickRPC", RpcTarget.All);
         }
 
-        [PunRPC]
-        private void TickRPC()
-        {
-            OnTickFeedback?.Invoke();
-        }
+   
 
         public int GetPlayerChampionPhotonViewId(int actorNumber)
         {
@@ -529,6 +536,18 @@ namespace GameStates
         }
 
         return Color.black;
+        }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if(stream.IsWriting)
+            {
+                stream.SendNext(tickValue);
+            }
+            else
+            {
+                TickValue = (bool) stream.ReceiveNext();
+            }
         }
     }
 }

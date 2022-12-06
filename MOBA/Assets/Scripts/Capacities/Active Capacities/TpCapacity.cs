@@ -28,6 +28,7 @@ namespace Entities.Capacities
             if (onCooldown) return false;
 
             startPosition = caster.transform.position;
+            champion.RequestRotateMeshChampion(previsualisableTPObjectForward);
             Vector3 candidateEndPosition = caster.transform.position + previsualisableTPObjectForward * range;
             Debug.DrawRay(caster.transform.position, previsualisableTPObjectForward * range, Color.red, 10);
             NavMeshHit navMeshHit;
