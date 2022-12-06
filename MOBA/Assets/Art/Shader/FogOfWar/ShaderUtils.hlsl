@@ -25,4 +25,20 @@ float3 CamToWorld (float4x4 inverseMVP, float2 uv, float depth)
     pos = mul(inverseMVP, pos);
     return pos.xyz / pos.w;
 }
+
+//LEVELS
+//https://gist.github.com/aferriss/9be46b6350a08148da02559278daa244
+
+float3 gammaCorrect(float3 color, float gamma){
+    return pow(color, float3((1.0/gamma).xxx));
+}
+
+float3 levelRange(float3 color, float minInput, float maxInput){
+    return min(max(color - float3(minInput.xxx), float3(0.0,0.0,0.0))
+        / (float3(maxInput.xxx) - float3(minInput.xxx)), float3(1.0,1.0,1.0));
+}
+
+float3 finalLevels(float3 color, float minInput, float gamma, float maxInput){
+    return gammaCorrect(levelRange(color, minInput, maxInput), gamma);
+}
 #endif
