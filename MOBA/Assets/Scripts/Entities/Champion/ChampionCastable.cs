@@ -22,18 +22,17 @@ namespace Entities.Champion
         {
             if (currentCapacityUsed != null)
             {
-               photonView.RPC("CancelCurrentCapacity", RpcTarget.MasterClient);
-              
+                photonView.RPC("CancelCurrentCapacity", RpcTarget.MasterClient);
             }
         }
-        
+
         [PunRPC]
         public void CancelCurrentCapacity()
         {
-           
-            if(currentCapacityUsed!= null)
-            currentCapacityUsed.CancelCapacity();
+            if (currentCapacityUsed != null)
+                currentCapacityUsed.CancelCapacity();
         }
+
         public void RequestSetCanCast(bool value)
         {
             photonView.RPC("CastRPC", RpcTarget.MasterClient, value);
@@ -57,23 +56,16 @@ namespace Entities.Champion
         public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanCast;
         public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanCastFeedback;
 
-        public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+        public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions, params object[] otherParameters)
         {
-            
             if (!activeCapacities[capacityIndex].onCooldown)
             {
-                    Debug.Log(activeCapacities[capacityIndex].GetType());
                 if (activeCapacities[capacityIndex] is IPrevisualisable)
                 {
                     IPrevisualisable previsualisable = (IPrevisualisable) activeCapacities[capacityIndex];
-                    if (!previsualisable.GetIsDrawing())
+                    if (!previsualisable.GetIsDrawing() && previsualisable.GetCanDraw())
                     {
-                    previsualisable.EnableDrawing();
-                    }
-                    else
-                    {
-                        photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
-                            targetedPositions);
+                        previsualisable.EnableDrawing();
                     }
                 }
                 else
@@ -82,15 +74,40 @@ namespace Entities.Champion
                         targetedPositions);
                 }
             }
-            
+        }
+
+        public void LaunchCapacityWithPrevisualisable(byte capacityIndex, int[] targetedEntities,
+            Vector3[] targetedPositions)
+        {
+            if (!activeCapacities[capacityIndex].onCooldown)
+            {
+                if (activeCapacities[capacityIndex] is IPrevisualisable)
+                {
+                    
+                    IPrevisualisable previsualisable = (IPrevisualisable) activeCapacities[capacityIndex];
+                    if (previsualisable.GetIsDrawing())
+                    {
+                        previsualisable.DisableDrawing();
+                    photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
+                        targetedPositions, previsualisable.GetPrevisualisableData());
+                    }
+                }
+            }
         }
 
         [PunRPC]
-        public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+        public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions, params object[] otherParameters)
         {
-            var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-
-            if (!activeCapacity.TryCast(targetedEntities, targetedPositions)) return;
+            if (activeCapacities[capacityIndex] is IPrevisualisable)
+            {
+                IPrevisualisable previsualisable =(IPrevisualisable) activeCapacities[capacityIndex];
+                if (!previsualisable.TryCastWithPrevisualisableData(targetedEntities, targetedPositions, otherParameters)) return;
+            }
+            else
+            {
+            if (!activeCapacities[capacityIndex].TryCast(targetedEntities, targetedPositions)) return;
+                
+            }
 
             OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
             photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
@@ -116,6 +133,7 @@ namespace Entities.Champion
                 if (activeCapacities[i].indexOfSOInCollection == indexOfSOInCollection)
                 {
                     activeCapacities[i].onCooldown = value;
+                    OnSetCooldownFeedback?.Invoke(indexOfSOInCollection, value);
                     return;
                 }
             }
@@ -144,5 +162,7 @@ namespace Entities.Champion
 
         public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> OnCast;
         public event GlobalDelegates.FourthParameterDelegate<byte, int[], Vector3[], ActiveCapacity> OnCastFeedback;
+
+        public event GlobalDelegates.TwoParameterDelegate<byte, bool> OnSetCooldownFeedback;
     }
 }

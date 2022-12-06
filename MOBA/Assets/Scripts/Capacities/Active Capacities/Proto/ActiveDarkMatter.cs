@@ -81,10 +81,7 @@ public class ActiveDarkMatter : ActiveCapacity
         throw new System.NotImplementedException();
     }
 
-    protected override void InitiateCooldown()
-    {
-        base.InitiateCooldown();
-    }
+  
 
     protected override void CooldownTimer()
     {

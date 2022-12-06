@@ -31,7 +31,7 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
         GameStateMachine.Instance.OnTick += TickAnimationTimer;
     }
 
-    protected override void InitiateCooldown()
+    public override void InitiateCooldown()
     {
         base.InitiateCooldown();
         Debug.Log("bonsoir je suis tout le temps lu aussi");

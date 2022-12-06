@@ -14,32 +14,35 @@ namespace Entities.Capacities
         private bool isDrawing = false;
         private PrevizualisableTP previsualisableTPObject;
         public TpCapacitySO tpCapacitySo;
-       public Champion.Champion champion;
+        public Champion.Champion champion;
         private Vector3 previsualisableTPObjectForward;
         public float range;
-        public  Vector2 startPosition;
-        public Vector2 endPosition;
+        public Vector3 startPosition;
+        public Vector3 endPosition;
         private TpObject tpObject;
+        private bool canDraw = true;
+
 
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
             if (onCooldown) return false;
-            InitiateCooldown();
+
             startPosition = caster.transform.position;
-            Vector3 candidateEndPosition = caster.transform.position+previsualisableTPObjectForward * range;
+            Vector3 candidateEndPosition = caster.transform.position + previsualisableTPObjectForward * range;
+            Debug.DrawRay(caster.transform.position, previsualisableTPObjectForward * range, Color.red, 10);
             NavMeshHit navMeshHit;
-            if (NavMesh.SamplePosition(candidateEndPosition, out navMeshHit, range, 0))
+            if (NavMesh.SamplePosition(candidateEndPosition, out navMeshHit, range, 1))
             {
                 endPosition = navMeshHit.position;
-                tpObject.gameObject.SetActive(true);
+          
                 tpObject.SetUp(this);
             }
             else
             {
                 Debug.LogError("don't find endPosition");
             }
-            
-         //   if(candidateEndPosition.)
+
+            //   if(candidateEndPosition.)
             return true;
         }
 
@@ -47,7 +50,7 @@ namespace Entities.Capacities
         {
         }
 
-        protected override void InitiateCooldown()
+        public override void InitiateCooldown()
         {
             base.InitiateCooldown();
             champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, true);
@@ -79,6 +82,7 @@ namespace Entities.Capacities
         public void DisableDrawing()
         {
             isDrawing = false;
+            canDraw = false;
             Debug.Log("je suis joue là aussi");
             InputManager.PlayerMap.MoveMouse.MousePos.performed -= RotateDraw;
             previsualisableTPObject.gameObject.SetActive(false);
@@ -94,28 +98,58 @@ namespace Entities.Capacities
             isDrawing = value;
         }
 
+        public bool GetCanDraw()
+        {
+            return canDraw;
+        }
+
+        public void SetCanDraw(bool value)
+        {
+            canDraw = value;
+        }
+
+        public bool TryCastWithPrevisualisableData(int[] targetsEntityIndexes, Vector3[] targetPositions,
+            params object[] previsualisableParameters)
+        {
+            previsualisableTPObjectForward = (Vector3) previsualisableParameters[0];
+            return TryCast(targetsEntityIndexes, targetPositions);
+        }
+
+        public object[] GetPrevisualisableData()
+        {
+            return new[] {(object) previsualisableTPObjectForward};
+        }
+
         public override void SetUpActiveCapacity(byte soIndex, Entity caster)
         {
             base.SetUpActiveCapacity(soIndex, caster);
-            tpCapacitySo = (TpCapacitySO)CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
-            champion = (Champion.Champion)caster;
+            tpCapacitySo = (TpCapacitySO) CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
+            champion = (Champion.Champion) caster;
             range = tpCapacitySo.referenceRange;
 
             if (PhotonNetwork.IsMasterClient)
             {
                 tpObject = PhotonNetwork.Instantiate(tpCapacitySo.tpObjectPrefab.name, Vector3.zero,
                     Quaternion.identity).GetComponent<TpObject>();
-                tpObject.gameObject.SetActive(false);
-            }
+                tpObject.RequestDeactivate();
 
-            if (caster.photonView.IsMine)
+
+            }
+                if (caster.photonView.IsMine)
+                {
+                    previsualisableTPObject =
+                        Object.Instantiate(tpCapacitySo.previsualisableTPPrefab, caster.transform)
+                            .GetComponent<PrevizualisableTP>();
+                    previsualisableTPObject.UpdatePositionAndSize(range);
+                    previsualisableTPObject.gameObject.SetActive(false);
+                    champion.OnSetCooldownFeedback += DisableCanDraw;
+                }
+        }
+
+        void DisableCanDraw(byte index, bool value)
             {
-                previsualisableTPObject =
-                    Object.Instantiate(tpCapacitySo.previsualisableTPPrefab, caster.transform)
-                        .GetComponent<PrevizualisableTP>();
-                previsualisableTPObject.UpdatePositionAndSize(range);
-                previsualisableTPObject.gameObject.SetActive(false);
+                if (index == indexOfSOInCollection)
+                    canDraw = true;
             }
         }
     }
-}

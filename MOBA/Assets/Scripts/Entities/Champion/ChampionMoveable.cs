@@ -313,7 +313,17 @@ namespace Entities.Champion
         [PunRPC]
         public void MoveChampionRPC(Vector3 newPos)
         {
-            transform.position = newPos;
+            if (photonView.IsMine)
+            {
+                agent.enabled = false; 
+                transform.position = newPos;
+                agent.enabled = true;
+            }
+            else
+            {
+                transform.position = newPos;
+            }
+
         }
 
         private void CheckMoveDistance()
