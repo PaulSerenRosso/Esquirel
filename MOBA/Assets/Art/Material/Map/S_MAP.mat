@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: S_MAP
   m_Shader: {fileID: 4800000, guid: f79761995faf07f459a7e2fc186875ed, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _DESATURATE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -30,8 +30,17 @@ Material:
     m_Floats:
     - _AlphaCutoff: 0.5
     - _DebugMap: 0
-    - _DesaturateDebug: 1
+    - _Desaturate: 1
+    - _DesaturateDebug: 0
+    - _DesaturateMapDebug: 0
     - _EnvironmentReflections: 1
+    - _GammaLevels: 0
+    - _GammaThreshold: 1
+    - _GammeThreshold: 0.803
+    - _Levels: 0.18
+    - _LevelsDebug: 0
+    - _MaxInput: 1
+    - _MinInput: 0
     - _ReceiveShadows: 1
     - _SpecularHighlights: 1
     m_Colors:

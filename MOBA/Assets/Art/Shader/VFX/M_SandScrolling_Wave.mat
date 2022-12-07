@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_SandScrolling_Wave
+  m_Shader: {fileID: -6465566751694194690, guid: dc2cfe26cd7723540a7e5b659425ab17, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_6250530ccc094803a22dea2976f4fc64:
+        m_Texture: {fileID: 2800000, guid: 0bb35a40259c9bb4ba7b9aeaca516391, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_358d2c83476e4ce597f9993198b649be: 2
+    - Vector1_98d6aa0bdbea4e0a8bb0130ad1b78185: 0
+    - Vector1_c4d4dadbfe86478ca5495c763d385d71: 0
+    - Vector1_c4d4dadbfe86478ca5495c763d385d71_1: 0
+    - Vector1_ed02ce191e434f92a4c19a04176b8f7c: 0.1
+    - Vector1_fc1e963acc91481aac61f40bf3d76a5b: 20.17
+    m_Colors:
+    - Vector4_1: {r: 0, g: 0, b: 0, a: 0}
+    - Vector4_90fa0447a30a46d08d4b1d23e5920eb6: {r: 0, g: 0, b: 0, a: 0}
+    - Vector4_d6f5cf97f50b4ddb9b643e0eb16a9f9d: {r: 0.88, g: 0.5, b: 0, a: 0.47}
+  m_BuildTextureStacks: []
