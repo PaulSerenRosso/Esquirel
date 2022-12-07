@@ -98,8 +98,11 @@ namespace Entities.Capacities
                 if (PhotonNetwork.IsMasterClient)
                 {
                 tpCapacity.InitiateCooldown();
+                
                 }
                 champion.MoveChampionRPC(transform.position);
+                champion.CancelCurrentCapacity();
+                
                 DeactivateTpObject();
             }
 

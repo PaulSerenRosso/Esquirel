@@ -15,6 +15,7 @@ namespace Entities.Capacities
         public float tpObjectCurveTime;
         public GameObject tpObjectPrefab; 
         public float referenceRange;
+        public ActiveCapacityAnimationLauncherInfo activeCapacityAnimationLauncherInfo;
         public override Type AssociatedType()
         {
             return typeof(TpCapacity);

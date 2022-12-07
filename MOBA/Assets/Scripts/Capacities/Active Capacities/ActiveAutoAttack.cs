@@ -14,7 +14,7 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
     public float rangeSqrt;
 
     public float timeFactor = 1;
-    private double animationTimer;
+  
     private double damageTimer;
 
     private GameObject DamageObject;
@@ -24,12 +24,10 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
     // 
     private Champion caster;
 
-    void InitiateAnimationTimer()
-    {
-        animationTimer = activeAutoAttackSO.animationTime;
-        caster.RequestChangeBoolParameterAnimator("autoAttack", true);
-        GameStateMachine.Instance.OnTick += TickAnimationTimer;
-    }
+    
+    private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher; 
+    
+    
 
     public override void InitiateCooldown()
     {
@@ -68,25 +66,7 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
 
         GameStateMachine.Instance.OnTick += TickDamageTimer;
     }
-
-    void TickAnimationTimer()
-    {
-        animationTimer -= 1.0 / GameStateMachine.Instance.tickRate;
-
-        if (animationTimer <= 0)
-        {
-            CancelAnimationTimer();
-        }
-    }
-
-
-    private void CancelAnimationTimer()
-    {
-        caster.RequestChangeBoolParameterAnimator("autoAttack", false);
-        GameStateMachine.Instance.OnTick -= TickAnimationTimer;
-    }
-
-
+    
     void TickBeginDamageTimer()
     {
         beginDamageTimer -= 1.0 / GameStateMachine.Instance.tickRate;
@@ -142,7 +122,7 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
         caster.SetCanMoveRPC(false);
         caster.RequestRotateMeshChampion((targetPositions[0] - caster.transform.position).normalized);
         InitiateCooldown();
-        InitiateAnimationTimer();
+        activeCapacityAnimationLauncher.InitiateAnimationTimer();
         InitiateBeginDamageTimer();
         InitiateFXTimer();
     
@@ -153,7 +133,7 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
     public override void CancelCapacity()
     {
         GameStateMachine.Instance.OnTick -= TickBeginDamageTimer;
-        CancelAnimationTimer();
+        activeCapacityAnimationLauncher.CancelAnimationTimer();
         CancelDamageTimer();
         CancelFXTimer();
         caster.RequestCurrentResetCapacityUsed();
@@ -168,7 +148,8 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
         range = activeAutoAttackSO.maxRange;
         rangeSqrt = range * range;
         this.caster = (Champion)caster;
-
+        activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
+        activeCapacityAnimationLauncher.Setup(activeAutoAttackSO.activeCapacityAnimationLauncherInfo, this.caster);
         //   cooldownIsReadyEvent += champion.RequestToChangeCooldownIsReady;
     }
 

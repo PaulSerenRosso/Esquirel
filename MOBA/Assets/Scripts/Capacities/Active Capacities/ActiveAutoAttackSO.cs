@@ -6,7 +6,7 @@ using UnityEngine;
 public class ActiveAutoAttackSO : ActiveCapacitySO
 {
     public float maxRange;
-    public float animationTime;
+    public ActiveCapacityAnimationLauncherInfo activeCapacityAnimationLauncherInfo;
 
     public float damageBeginTime;
     public float damageTime;

@@ -66,7 +66,6 @@ namespace Entities.Champion
 
         public override void OnInstantiatedFeedback()
         {
-            
         }
 
 

@@ -13,7 +13,7 @@ namespace  Entities
         public List<IFOWViewable> enemiesThatCanSeeMe = new List<IFOWViewable>();
         public bool canShow;
         public bool canHide;
-        public List<MeshRenderer> meshRenderersToShow;
+        public List<Renderer> meshRenderersToShow;
         public List<float> meshRenderersToShowAlpha;
         public List<ParticleSystem> particleSystemsToShow;
         public List<float> particleSystemsToShowAlpha;

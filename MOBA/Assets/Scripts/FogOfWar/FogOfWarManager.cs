@@ -264,7 +264,7 @@ namespace Entities.FogOfWar
         }
 
         private List<RaycastHit> fieldOfViewObstacles = new List<RaycastHit>();
-
+        private List<Entity> fieldOfViewEntities = new List<Entity>();
         ViewCastInfo ViewCastEntity(float globalAngle, Entity entity)
         {
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
@@ -272,19 +272,14 @@ namespace Entities.FogOfWar
                 layerTargetFogOfWar);
 
             fieldOfViewObstacles.Clear();
+      
 
             if (hits.Length != 0)
             {
                 RaycastHit closerHit = hits[0];
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
-                    if (candidateEntity != null)
-                    {
-                        entity.AddShowable(candidateEntity);
-                        if(entity.CheckBushCondition(candidateEntity)) currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
-                    }
-
+                    
                     if (IsInLayerMask(hits[i].collider.gameObject, layerObstacleFogOfWar))
                     {
                         Bush bush = hits[i].collider.GetComponent<Bush>();
@@ -299,6 +294,18 @@ namespace Entities.FogOfWar
                     {
                         closerHit = hits[i];
                     }
+                }
+                for (int i = 0; i < hits.Length; i++)
+                {
+                Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
+                if (candidateEntity != null)
+                {
+                    if (hits[i].distance <= closerHit.distance)
+                    {
+                    entity.AddShowable(candidateEntity);
+                    if(entity.CheckBushCondition(candidateEntity)) currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
+                    }
+                }
                 }
 
                 if (fieldOfViewObstacles.Count == 0)
