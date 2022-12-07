@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 7787077126835712635}
   - component: {fileID: 7787077126835712644}
   - component: {fileID: 7787077126835712645}
-  - component: {fileID: 7787077126835712634}
-  - component: {fileID: 7787077126835712647}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -83,35 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7787077126835712634
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7787077126835712632}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7787077126835712647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7787077126835712632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &7787077127828374449
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +92,6 @@ GameObject:
   - component: {fileID: 7787077127828374448}
   - component: {fileID: 7787077127828374450}
   - component: {fileID: 7787077127828374451}
-  - component: {fileID: 7787077127828374460}
   - component: {fileID: 7787077127828374461}
   m_Layer: 29
   m_Name: TPObject
@@ -165,9 +133,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 7787077127828374460}
-  - {fileID: 7787077126835712647}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -188,8 +154,8 @@ MonoBehaviour:
   canRemovePassiveCapacity: 1
   uiTransform: {fileID: 0}
   offset: {x: 0, y: 2, z: 0}
-  canShow: 0
-  canHide: 0
+  canShow: 1
+  canHide: 1
   meshRenderersToShow:
   - {fileID: 7787077126835712645}
   meshRenderersToShowAlpha:
@@ -207,23 +173,7 @@ MonoBehaviour:
   canView: 0
   meshFilterFoV: {fileID: 0}
   fogOfWarStartDetection: {fileID: 0}
-  renderer: {fileID: 7787077126835712632}
---- !u!114 &7787077127828374460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7787077127828374449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
+  renderer: {fileID: 7787077126835712645}
 --- !u!65 &7787077127828374461
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -232,8 +182,8 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7787077127828374449}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}

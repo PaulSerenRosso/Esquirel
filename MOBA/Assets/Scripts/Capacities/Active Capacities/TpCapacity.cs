@@ -35,8 +35,7 @@ namespace Entities.Capacities
             if (NavMesh.SamplePosition(candidateEndPosition, out navMeshHit, range, 1))
             {
                 endPosition = navMeshHit.position;
-          
-                tpObject.SetUp(this);
+                tpObject.RequestSetupRPC((byte) champion.activeCapacities.IndexOf(this),caster.entityIndex, endPosition);
             }
             else
             {
@@ -61,6 +60,7 @@ namespace Entities.Capacities
         {
             champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, false);
             base.EndCooldown();
+            
         }
 
         public void EnableDrawing()

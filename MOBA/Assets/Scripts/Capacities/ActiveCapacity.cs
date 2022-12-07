@@ -18,6 +18,7 @@ namespace Entities.Capacities
 
         protected int target;
         
+     
        protected virtual void InitiateFXTimer()
         {
             
@@ -77,7 +78,7 @@ namespace Entities.Capacities
         protected virtual void CooldownTimer()
         {
             cooldownTimer -= 1.0 / GameStateMachine.Instance.tickRate;
-
+            
             if (cooldownTimer <= 0)
             {
                 onCooldown = false;
