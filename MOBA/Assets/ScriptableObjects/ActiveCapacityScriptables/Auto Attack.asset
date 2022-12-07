@@ -22,7 +22,9 @@ MonoBehaviour:
   fxTime: 2
   indexInCollection: 2
   maxRange: 5
-  animationTime: 1
+  activeCapacityAnimationLauncherInfo:
+    animationTime: 0.7
+    animatorParameterName: autoAttack
   damageBeginTime: 1
   damageTime: 1
   damagePrefab: {fileID: 5454432412817579492, guid: ac8cee8679279af4785446d42c8f12d5, type: 3}

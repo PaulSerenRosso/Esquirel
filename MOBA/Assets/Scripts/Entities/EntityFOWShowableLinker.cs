@@ -9,8 +9,9 @@ namespace Entities.FogOfWar
 public class EntityFOWShowableLinker : MonoBehaviour
 {
     public ParticleSystem[] particleSystems;
-    public MeshRenderer[] meshRenderers;
+    public Renderer[] meshRenderers;
     public Graphic[] graphics;
+ 
     public void LinkEntity(Entity entity)
     {
         for (int i = 0; i < particleSystems.Length; i++)

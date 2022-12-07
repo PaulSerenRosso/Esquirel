@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Entities;
-using Entities.Capacities;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,14 +17,14 @@ namespace Entities.Capacities
         public Vector3 endPosition;
         private TpObject tpObject;
         private bool canDraw = true;
-
-
+        private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
             if (onCooldown) return false;
 
             startPosition = caster.transform.position;
             champion.RequestRotateMeshChampion(previsualisableTPObjectForward);
+            activeCapacityAnimationLauncher.InitiateAnimationTimer();
             Vector3 candidateEndPosition = caster.transform.position + previsualisableTPObjectForward * range;
             Debug.DrawRay(caster.transform.position, previsualisableTPObjectForward * range, Color.red, 10);
             NavMeshHit navMeshHit;
@@ -46,8 +42,10 @@ namespace Entities.Capacities
             return true;
         }
 
+
         public override void CancelCapacity()
         {
+            activeCapacityAnimationLauncher.CancelAnimationTimer();
         }
 
         public override void InitiateCooldown()
@@ -145,6 +143,9 @@ namespace Entities.Capacities
                     previsualisableTPObject.gameObject.SetActive(false);
                     champion.OnSetCooldownFeedback += DisableCanDraw;
                 }
+
+                activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
+                activeCapacityAnimationLauncher.Setup(tpCapacitySo.activeCapacityAnimationLauncherInfo,champion);
         }
 
         void DisableCanDraw(byte index, bool value)

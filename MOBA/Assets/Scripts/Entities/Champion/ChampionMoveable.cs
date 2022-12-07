@@ -18,6 +18,21 @@ namespace Entities.Champion
         public bool canMove = true;
         private Vector3 moveDirection;
 
+        
+        public bool IsMoved
+        {
+            get => isMoved;
+            set
+            {
+                isMoved = value;
+                if (animator)
+                {
+               RequestChangeBoolParameterAnimator("Move", value);
+                }
+            }
+        }
+
+        private bool isMoved;
         // === League Of Legends
         private int mouseTargetIndex;
         private bool isFollowing;
@@ -76,9 +91,14 @@ namespace Entities.Champion
         [PunRPC]
         public void SyncSetCanMoveRPC(bool value)
         {
-            if (photonView.IsMine && !value)
-                agent.SetDestination(transform.position);
             canMove = value;
+            if (!value)
+            {
+            if (photonView.IsMine)
+                agent.SetDestination(transform.position);
+            IsMoved = false; 
+            }
+            
         }
 
         [PunRPC]
@@ -330,15 +350,19 @@ namespace Entities.Champion
         {
             if (agent == null || !agent.isOnNavMesh || !canMove) return;
             if (agent.velocity.magnitude > 0.3f)
+            {
+                if (!IsMoved) IsMoved = true; 
                 rotateParent.forward = agent.velocity.normalized;
+            }
+            else IsMoved = false;
+           
             agent.velocity = agent.desiredVelocity;
             if (moveDestination != oldMoveDestination)
             {
                 agent.SetDestination(moveDestination);
-
                 oldMoveDestination = moveDestination;
             }
-
+            
             moveDestination = agent.destination;
         }
 

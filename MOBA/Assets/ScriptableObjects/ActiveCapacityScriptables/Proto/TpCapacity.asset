@@ -59,3 +59,6 @@ MonoBehaviour:
   tpObjectCurveTime: 0.7
   tpObjectPrefab: {fileID: 7787077127828374449, guid: 3bc0e1cbef669dc489d7ec479edc3c96, type: 3}
   referenceRange: 6
+  activeCapacityAnimationLauncherInfo:
+    animationTime: 0.867
+    animatorParameterName: Comp1

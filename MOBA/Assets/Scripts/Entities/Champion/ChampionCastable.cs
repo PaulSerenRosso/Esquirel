@@ -133,6 +133,7 @@ namespace Entities.Champion
         {
             for (int i = 0; i < activeCapacities.Count; i++)
             {
+                
                 if (activeCapacities[i].indexOfSOInCollection == indexOfSOInCollection)
                 {
                     activeCapacities[i].onCooldown = value;
