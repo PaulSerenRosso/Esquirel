@@ -50,25 +50,43 @@ public class ChampionHUD : MonoBehaviour
 
             if (PhotonNetwork.IsMasterClient)
             {
-                GameStateMachine.Instance.OnTick += Tick;
+                GameStateMachine.Instance.OnTick += TickMaster;
             }
             else
             {
-                GameStateMachine.Instance.OnTickFeedback += Tick;
+                GameStateMachine.Instance.OnTickFeedback += TickClient;
             }
 
-            void Tick()
+            
+            void TickMaster()
             {
                 timer += 1.0 / tckRate;
                 spellCooldown.fillAmount = 1 - (float)(timer / coolDown);
                 if (!(timer > coolDown)) return;
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    GameStateMachine.Instance.OnTick -= Tick;
+                    GameStateMachine.Instance.OnTick -= TickMaster;
                 }
                 else
                 {
-                    GameStateMachine.Instance.OnTickFeedback -= Tick;
+                    GameStateMachine.Instance.OnTickFeedback -= TickClient;
+                }
+
+                spellCooldown.fillAmount = 0;
+            }
+            void TickClient(double timeDiff)
+            {
+                timer += timeDiff;
+             
+                spellCooldown.fillAmount = 1 - (float)(timer / coolDown);
+                if (!(timer > coolDown)) return;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    GameStateMachine.Instance.OnTick -= TickMaster;
+                }
+                else
+                {
+                    GameStateMachine.Instance.OnTickFeedback -= TickClient;
                 }
 
                 spellCooldown.fillAmount = 0;

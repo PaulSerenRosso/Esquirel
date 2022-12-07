@@ -201,7 +201,6 @@ namespace  Entities
             for (int i = 0; i < meshRenderersToShow.Count; i++)
             {
                 var materialColor = meshRenderersToShow[i].material.color;
-                meshRenderersToShowAlpha[i] = meshRenderersToShow[i].material.color.a;
                 materialColor.a = 0;
                 meshRenderersToShow[i].material.color = materialColor;
             }
@@ -209,7 +208,6 @@ namespace  Entities
             for (int i = 0; i < particleSystemsToShow.Count; i++)
             {
                 var materialColor = particleSystemsToShow[i].startColor;
-                particleSystemsToShowAlpha[i] = particleSystemsToShow[i].startColor.a;
                 materialColor.a = 0;
                 particleSystemsToShow[i].startColor = materialColor;
             }
@@ -217,7 +215,6 @@ namespace  Entities
             for (int i = 0; i < graphicsToShow.Count; i++)
             {
                 var materialColor = graphicsToShow[i].color;
-                graphicsToShowAlpha[i] = graphicsToShow[i].color.a;
                 materialColor.a = 0;
                 graphicsToShow[i].color = materialColor;
             }

@@ -9,25 +9,45 @@ namespace Entities.Capacities
     public class TpObject : Entity
     {
         private TpCapacity tpCapacity;
+        private TpCapacitySO tpCapacitySo;
         private float currentTimer;
-        [SerializeField] private GameObject renderer;
+        [SerializeField] private MeshRenderer renderer;
         private float tpObjectCurveTime;
         private float tpObjectCurveTimeRatio;
         AnimationCurve tpObjectCurve ;
         private float tpObjectCurveYPosition;
-
         private bool isActive;
-        public void SetUp(TpCapacity tpCapacity)
+        private Vector3 startPosition;
+        private Champion.Champion champion;
+        private Vector3 endPosition;
+        public void RequestSetupRPC(byte capacityIndex, int championIndex, Vector3 endPos)
         {
-            this.tpCapacity = tpCapacity;
-            transform.position = this.tpCapacity.startPosition;
-            ChangeTeamRPC((byte)tpCapacity.caster.team);
+            photonView.RPC("SetUpRPC", RpcTarget.All, capacityIndex, championIndex, endPos);
+        }
+        [PunRPC] 
+        void SetUpRPC(byte capacityIndex, int championIndex, Vector3 endPos)
+        {
+            champion =(Champion.Champion) EntityCollectionManager.GetEntityByIndex(championIndex);
+            this.tpCapacity =(TpCapacity) champion.activeCapacities[capacityIndex];
+            this.tpCapacitySo = tpCapacity.tpCapacitySo;
+            SyncChangeTeamRPC((byte)champion.team);
+            endPosition = endPos;
             currentTimer = 0;
-            tpObjectCurve = tpCapacity.tpCapacitySo.tpObjectCurve;
-            tpObjectCurveTime = tpCapacity.tpCapacitySo.tpObjectCurveTime;
-            tpObjectCurveYPosition = tpCapacity.tpCapacitySo.tpObjectCurveYPosition;
-            Debug.Log(tpCapacity.endPosition);
-            RequestActivate();
+            tpObjectCurve = tpCapacitySo.tpObjectCurve;
+            tpObjectCurveTime = tpCapacitySo.tpObjectCurveTime;
+            tpObjectCurveYPosition = tpCapacitySo.tpObjectCurveYPosition;
+            Debug.Log(champion.transform.position);
+            ActivateRPC(champion.transform.position);
+                renderer.enabled =true;
+                
+            if (champion.photonView.IsMine)
+            {
+                ShowElements();
+            }
+            else
+            {
+                HideElements();
+            }
         }
 
         public void RequestActivate()
@@ -48,8 +68,9 @@ namespace Entities.Capacities
        public  void ActivateTpObject(Vector3 startPos)
         {
             isActive = true;
-            renderer.SetActive(true);
+            startPosition = startPos;
             transform.position = startPos;
+            Debug.Log(startPos);
         }
 
         [PunRPC]
@@ -61,29 +82,33 @@ namespace Entities.Capacities
        public void DeactivateTpObject()
         {
             isActive = false;
-            renderer.SetActive(false);
+            HideElements();
+            renderer.enabled =false;
         }
 
         protected override void OnUpdate()
         {
         
             // je vois le problème lol le time deltatime ça quelle plaisir
-            if(!PhotonNetwork.IsMasterClient || !isActive) return;
+            if(!isActive) return;
             if (currentTimer < tpObjectCurveTime)
                 currentTimer += Time.deltaTime;
-            else
+            else 
             {
+                if (PhotonNetwork.IsMasterClient)
+                {
                 tpCapacity.InitiateCooldown();
-                tpCapacity.champion.RequestMoveChampion(transform.position);
-                RequestDeactivate();
+                }
+                champion.MoveChampionRPC(transform.position);
+                DeactivateTpObject();
             }
 
             tpObjectCurveTimeRatio = currentTimer / tpObjectCurveTime;
-            transform.position = Vector3.Lerp(tpCapacity.startPosition, tpCapacity.endPosition,
+            transform.position = Vector3.Lerp(startPosition, endPosition,
                 tpObjectCurveTimeRatio);
             var transformPosition = renderer.transform.position;
-            var tpObjectCurve = tpCapacity.tpCapacitySo.tpObjectCurve;
-            var tpObjectCurveYPosition = tpCapacity.tpCapacitySo.tpObjectCurveYPosition;
+            var tpObjectCurve = tpCapacitySo.tpObjectCurve;
+            var tpObjectCurveYPosition = tpCapacitySo.tpObjectCurveYPosition;
             transformPosition.y = tpObjectCurve.Evaluate(tpObjectCurveTimeRatio) *
                                   tpObjectCurveYPosition;
             renderer.transform.position = transformPosition;

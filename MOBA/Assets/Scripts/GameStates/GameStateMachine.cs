@@ -28,17 +28,20 @@ namespace GameStates
 
         private bool tickValue = false;
 
+        private double oldPhotonTime;
+
         private bool TickValue
         {
             set
             {
                 tickValue = value;
-                OnTickFeedback?.Invoke();
+                OnTickFeedback?.Invoke((double)(PhotonNetwork.Time-oldPhotonTime));
+                oldPhotonTime = PhotonNetwork.Time;
             }
         }
         
         public event GlobalDelegates.NoParameterDelegate OnTick;
-        public event GlobalDelegates.NoParameterDelegate OnTickFeedback;
+        public event GlobalDelegates.OneParameterDelegate<double> OnTickFeedback;
 
         public Enums.Team winner = Enums.Team.Neutral;
         public List<int> allPlayersIDs = new List<int>();

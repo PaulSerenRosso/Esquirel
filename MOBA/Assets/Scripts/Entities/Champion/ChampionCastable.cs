@@ -58,11 +58,14 @@ namespace Entities.Champion
 
         public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions, params object[] otherParameters)
         {
+            
+            Debug.Log(activeCapacities[capacityIndex].onCooldown +"  " );
             if (!activeCapacities[capacityIndex].onCooldown)
             {
                 if (activeCapacities[capacityIndex] is IPrevisualisable)
                 {
                     IPrevisualisable previsualisable = (IPrevisualisable) activeCapacities[capacityIndex];
+                    Debug.Log(previsualisable.GetIsDrawing() + "  " + previsualisable.GetCanDraw());
                     if (!previsualisable.GetIsDrawing() && previsualisable.GetCanDraw())
                     {
                         previsualisable.EnableDrawing();
@@ -134,6 +137,7 @@ namespace Entities.Champion
                 {
                     activeCapacities[i].onCooldown = value;
                     OnSetCooldownFeedback?.Invoke(indexOfSOInCollection, value);
+                    Debug.Log("test");
                     return;
                 }
             }
