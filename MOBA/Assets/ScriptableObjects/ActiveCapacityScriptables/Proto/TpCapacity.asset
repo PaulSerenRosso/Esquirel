@@ -16,7 +16,7 @@ MonoBehaviour:
   descriptionName: 
   icon: {fileID: 21300000, guid: aed6393858493e647832e7cc3209fbf9, type: 3}
   description: 
-  cooldown: 5
+  cooldown: 2
   types: 
   fxPrefab: {fileID: 0}
   fxTime: 0
