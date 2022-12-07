@@ -250,8 +250,10 @@ namespace Entities.FogOfWar
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
             RaycastHit hit;
             if (Physics.Raycast(entity.fogOfWarStartDetection.position, dir, out hit, entity.viewRange,
-                    layerObstacleFogOfWar))
-            {
+                    layerObstacleFogOfWar)) {
+                Bush bush = hit.collider.GetComponent<Bush>();
+                if(bush && entity.currentBush == bush) return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange, globalAngle);
+                
                 return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
             }
             else
@@ -280,13 +282,13 @@ namespace Entities.FogOfWar
                     if (candidateEntity != null)
                     {
                         entity.AddShowable(candidateEntity);
-                        if(entity.CheckBushCondition(candidateEntity)) 
-                        currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
-                        
+                        if(entity.CheckBushCondition(candidateEntity)) currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
                     }
 
                     if (IsInLayerMask(hits[i].collider.gameObject, layerObstacleFogOfWar))
                     {
+                        Bush bush = hits[i].collider.GetComponent<Bush>();
+                        if(bush && entity.currentBush == bush) continue;
                         fieldOfViewObstacles.Add(hits[i]);
                     }
                 }

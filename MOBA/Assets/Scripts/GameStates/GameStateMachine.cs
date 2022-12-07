@@ -79,7 +79,7 @@ namespace GameStates
         }
 
         public string currentStateDebugString;
-
+        
         private void Awake()
         {
             if (Instance != null && Instance != this)
