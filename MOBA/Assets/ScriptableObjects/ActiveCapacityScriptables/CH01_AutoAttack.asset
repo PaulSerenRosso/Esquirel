@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dafae94bc2430942a9106e2a258c749, type: 3}
+  m_Name: CH01_AutoAttack
+  m_EditorClassIdentifier: 
+  referenceName: Auto
+  descriptionName: Auto attack
+  icon: {fileID: 21300000, guid: 80765a06dc799714bbe0733e2152d564, type: 3}
+  description: 
+  cooldown: 3
+  types: 
+  fxPrefab: {fileID: 782873847134293652, guid: a635c22fc9b904143bdd6b16713d8896, type: 3}
+  fxTime: 2
+  indexInCollection: 2
+  maxRange: 5
+  activeCapacityAnimationLauncherInfo:
+    animationTime: 0.7
+    animatorParameterName: autoAttack
+  damageBeginTime: 1
+  damageTime: 1
+  damagePrefab: {fileID: 5454432412817579492, guid: ac8cee8679279af4785446d42c8f12d5, type: 3}
+  damage: 2
