@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8800300683917108197}
   - component: {fileID: 8800300683917108198}
   - component: {fileID: 8800300683917108199}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: RendererRect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8c56342a2c3fd34daf65d24d20c2993, type: 2}
+  - {fileID: 2100000, guid: 39cfecae26bfa50488f98036f1a706cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8800300684960855682}
   - component: {fileID: 8800300684960855683}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: PrevizualisableTP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8800300685021895471}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: RendererRectPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,6 +221,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8ebb1fabe41652b47bc7822d6580e68e, type: 3}
       propertyPath: m_Name
       value: RendererCircle
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8ebb1fabe41652b47bc7822d6580e68e, type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ebb1fabe41652b47bc7822d6580e68e, type: 3}
