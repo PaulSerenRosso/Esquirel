@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa02e5b5a25eeb14e8183d568b389f67, type: 3}
+  m_Name: VictoryPoint
+  m_EditorClassIdentifier: 
+  ressourceMax: 500
+  ressourceMin: 0
+  ressourceInitial: 0
+  timeBetweenTick: 0.5
+  ressourceAmountPerTick: 1

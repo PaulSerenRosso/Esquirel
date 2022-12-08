@@ -379,7 +379,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generatorCapturePoint: {fileID: 11400000, guid: d0a4e117580c6f14eb35ef08c092dd0a, type: 2}
   relaiCapturePoint: {fileID: 11400000, guid: 54a79a3e06e0e24468f25479eedb9581, type: 2}
-  FOVManager: {fileID: 11400000, guid: 41bd07666dbcee04496d30f7c733ba68, type: 2}
   CHAMP01_BaseVariables: {fileID: 11400000, guid: 09a5f4fc328facc46b8df84dc8d1fbe7, type: 2}
   CHAMP01_AutoAttack: {fileID: 11400000, guid: e339005550fb5fc42bcd3dad960bae2e, type: 2}
   CHAMP02_BaseVariables: {fileID: 11400000, guid: 2c32bd83db976c344a82bd0dbb225626, type: 2}
