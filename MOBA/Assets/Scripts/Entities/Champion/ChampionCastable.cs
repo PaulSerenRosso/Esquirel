@@ -11,8 +11,10 @@ namespace Entities.Champion
         public byte ultimateAbilityIndex;
 
         public bool canCast;
+        private IPunObservable _punObservableImplementation;
 
 
+        
         public bool CanCast()
         {
             return canCast;
@@ -23,6 +25,7 @@ namespace Entities.Champion
             if (currentCapacityUsed != null)
             {
                 photonView.RPC("CancelCurrentCapacity", RpcTarget.MasterClient);
+                photonView.RefreshRpcMonoBehaviourCache();
             }
         }
 
@@ -126,8 +129,10 @@ namespace Entities.Champion
         public void RequestToSetOnCooldownCapacity(byte indexOfSOInCollection, bool value)
         {
             photonView.RPC("SetOnCooldownCapacityRPC", RpcTarget.All, indexOfSOInCollection, value);
+            PhotonNetwork.SendAllOutgoingCommands();
         }
 
+        
         [PunRPC]
         void SetOnCooldownCapacityRPC(byte indexOfSOInCollection, bool value)
         {
@@ -169,5 +174,6 @@ namespace Entities.Champion
         public event GlobalDelegates.FourthParameterDelegate<byte, int[], Vector3[], ActiveCapacity> OnCastFeedback;
 
         public event GlobalDelegates.TwoParameterDelegate<byte, bool> OnSetCooldownFeedback;
+    
     }
 }
