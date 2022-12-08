@@ -24,5 +24,7 @@ namespace CapturePoint {
         public float captureValue;
         public float maxValue;
         public Enums.Team team;
+        public GlobalDelegates.NoParameterDelegate enterStateEvent;
+        public  GlobalDelegates.NoParameterDelegate exitStateEvent;
     }
 }
