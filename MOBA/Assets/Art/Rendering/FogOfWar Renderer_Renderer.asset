@@ -35,7 +35,7 @@ MonoBehaviour:
   m_Name: FogOfWar Renderer_Renderer
   m_EditorClassIdentifier: 
   m_RendererFeatures:
-  - {fileID: -7344162105559021888}
+  - {fileID: 0}
   m_RendererFeatureMap: c00645dd794b149a
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
