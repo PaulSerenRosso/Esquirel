@@ -22,10 +22,10 @@ namespace CapturePoint
         private CapturePointTeamState destinationState;
         private int capturePointDirection;
         [SerializeField] private CapturePointSO capturePointSO;
+       public CapturePointState neutralState;
+       public CapturePointTeamState secondTeamState;
+       public CapturePointTeamState firstTeamState;
         private float capturePointSpeed;
-        private CapturePointTeamState firstTeamState;
-        private CapturePointTeamState secondTeamState;
-        private CapturePointState neutralState;
 
         private List<GlobalDelegates.NoParameterDelegate> capturePointDelegates =
             new List<GlobalDelegates.NoParameterDelegate>();
@@ -351,6 +351,7 @@ namespace CapturePoint
                     CapturePointValue = destinationState.maxValue;
                     RemoveRangeCapturePointDelegateToTick(TickTowardsDestinationState);
                     team = destinationState.team;
+                    destinationState.enterStateEvent?.Invoke();
                     RequestUpdateCapturePointVisual();
                     return;
                 }
@@ -361,6 +362,7 @@ namespace CapturePoint
                 {
                     CapturePointValue = destinationState.maxValue;
                     team = destinationState.team;
+                    destinationState.enterStateEvent?.Invoke();
                     RequestUpdateCapturePointVisual();
                     RemoveRangeCapturePointDelegateToTick(TickTowardsDestinationState);
                     return;
@@ -378,6 +380,8 @@ namespace CapturePoint
                 if (capturePointValue > currentTeamState.captureValue)
                 {
                     team = Enums.Team.Neutral;
+                        currentTeamState.exitStateEvent?.Invoke();
+                    
                     RequestUpdateCapturePointVisual();
                     currentTeamState = null;
                     RemoveRangeCapturePointDelegateToTick(TickCurrentTeamState);
@@ -388,6 +392,7 @@ namespace CapturePoint
                 if (capturePointValue < currentTeamState.captureValue)
                 {
                     team = Enums.Team.Neutral;
+                    currentTeamState.exitStateEvent?.Invoke();
                     RequestUpdateCapturePointVisual();
                     currentTeamState = null;
                     RemoveRangeCapturePointDelegateToTick(TickCurrentTeamState);
