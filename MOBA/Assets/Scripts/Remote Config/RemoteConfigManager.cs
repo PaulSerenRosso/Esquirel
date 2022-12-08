@@ -49,7 +49,6 @@ namespace RemoteConfig {
             SetChampion02Variables();
             SetGeneratorVariables();
             SetRelaiVariables();
-            SetFieldOfViewVariables();
         }
 
         /// <summary>
@@ -126,16 +125,6 @@ namespace RemoteConfig {
             variables.relaiCapturePoint.secondTeamState.captureValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange_TEAM02_CaptureValue");
             variables.relaiCapturePoint.secondTeamState.maxValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange_TEAM02_MaxValue");
             variables.relaiCapturePoint.neutralState.stabilityPoint = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_NEUTRAL_StabilityPoint");
-        }
-
-        /// <summary>
-        /// Set the variables of the FOV
-        /// </summary>
-        private void SetFieldOfViewVariables() {
-            variables.FOVManager.SettingsFOV.meshResolution = RemoteConfigService.Instance.appConfig.GetFloat("FOV_MeshResolution");
-            variables.FOVManager.SettingsFOV.edgeResolveIterations = RemoteConfigService.Instance.appConfig.GetInt("FOV_EdgeResolveIteration");
-            variables.FOVManager.SettingsFOV.edgeDstThreshold = RemoteConfigService.Instance.appConfig.GetFloat("FOV_EdgeDstThreshold");
-            variables.FOVManager.SettingsFOV.maskCutawayDst = RemoteConfigService.Instance.appConfig.GetFloat("FOV_MaskCutawayDst");
         }
     }
 }

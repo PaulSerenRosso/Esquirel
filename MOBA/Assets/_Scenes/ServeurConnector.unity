@@ -333,6 +333,71 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &366040048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 366040049}
+  - component: {fileID: 366040051}
+  - component: {fileID: 366040050}
+  m_Layer: 0
+  m_Name: RemoteConfigManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &366040049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366040048}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &366040050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366040048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53b970b22e8794b4ebe5c30453df3204, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generatorCapturePoint: {fileID: 11400000, guid: d0a4e117580c6f14eb35ef08c092dd0a, type: 2}
+  relaiCapturePoint: {fileID: 11400000, guid: 54a79a3e06e0e24468f25479eedb9581, type: 2}
+  FOVManager: {fileID: 11400000, guid: 41bd07666dbcee04496d30f7c733ba68, type: 2}
+  CHAMP01_BaseVariables: {fileID: 11400000, guid: 09a5f4fc328facc46b8df84dc8d1fbe7, type: 2}
+  CHAMP01_AutoAttack: {fileID: 11400000, guid: e339005550fb5fc42bcd3dad960bae2e, type: 2}
+  CHAMP02_BaseVariables: {fileID: 11400000, guid: 2c32bd83db976c344a82bd0dbb225626, type: 2}
+  CHAMP02_AutoAttack: {fileID: 11400000, guid: 21c7c14e005d4cc4f8470bf9a61776e2, type: 2}
+--- !u!114 &366040051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366040048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2177e0e049d1d419623ce553f1ee87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variables: {fileID: 366040050}
+  updateAtStart: 1
 --- !u!1 &750502350
 GameObject:
   m_ObjectHideFlags: 0

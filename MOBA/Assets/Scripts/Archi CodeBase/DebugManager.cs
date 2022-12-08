@@ -33,4 +33,8 @@ public class DebugManager : MonoBehaviour
     {
         GameStateMachine.Instance.GetPlayerChampion().DecreaseCurrentHpRPC(2);
     }
+
+    public void StopGame() {
+        
+    }
 }
