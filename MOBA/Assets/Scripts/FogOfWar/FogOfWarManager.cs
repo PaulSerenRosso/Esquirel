@@ -34,9 +34,10 @@ namespace Entities.FogOfWar
         /// </summary>
         /// <param name="IFogOfWarViewable"> Interface for Entity </param>
         private List<Entity> allViewables = new List<Entity>();
-        
+
         private Dictionary<Entity, List<Entity>> currentViewablesWithEntitiesShowables =
             new Dictionary<Entity, List<Entity>>();
+
         [Header("Camera and Scene Setup")] public Camera cameraFog;
         public List<string> sceneToRenderFog;
 
@@ -78,7 +79,7 @@ namespace Entities.FogOfWar
                     if (seenShowables.Contains(entity))
                     {
                         return true;
-                        
+
                         //Debug.Log("Remove Elements from list");
                     }
                 }
@@ -248,23 +249,47 @@ namespace Entities.FogOfWar
         ViewCastInfo ViewCast(float globalAngle, Entity entity)
         {
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
-            RaycastHit hit;
-            if (Physics.Raycast(entity.fogOfWarStartDetection.position, dir, out hit, entity.viewRange,
-                    layerObstacleFogOfWar)) {
-                Bush bush = hit.collider.GetComponent<Bush>();
-                if(bush && entity.currentBush == bush) return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange, globalAngle);
-                
-                return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+            RaycastHit[] hits = new RaycastHit[2];
+
+            int hitsCount = Physics.RaycastNonAlloc(entity.fogOfWarStartDetection.position, dir, hits, entity.viewRange,
+                layerObstacleFogOfWar);
+            Debug.Log(hits.Length);
+            for (int i = 0; i < hits.Length; i++)
+            {
+                Debug.Log(hits[i].collider.gameObject.name);
             }
-            else
+
+            if (hitsCount == 0)
             {
                 return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
                     globalAngle);
             }
+            else
+            {
+                if (hitsCount == 2)
+                    if (hits[0].distance > hits[1].distance)
+                        hits = new[]
+                        {
+                            hits[1], hits[0]
+                        };
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    Debug.Log(hits[i].collider.gameObject.name);
+                    Bush bush = hits[i].collider.GetComponent<Bush>();
+                    if (bush && entity.currentBush == bush) continue;
+
+                    return new ViewCastInfo(true, hits[i].point, hits[i].distance, globalAngle);
+                }
+            }
+
+            return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
+                globalAngle);
         }
+
 
         private List<RaycastHit> fieldOfViewObstacles = new List<RaycastHit>();
         private List<Entity> fieldOfViewEntities = new List<Entity>();
+
         ViewCastInfo ViewCastEntity(float globalAngle, Entity entity)
         {
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
@@ -272,57 +297,66 @@ namespace Entities.FogOfWar
                 layerTargetFogOfWar);
 
             fieldOfViewObstacles.Clear();
-      
+
 
             if (hits.Length != 0)
             {
-                RaycastHit closerHit = hits[0];
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    
                     if (IsInLayerMask(hits[i].collider.gameObject, layerObstacleFogOfWar))
                     {
                         Bush bush = hits[i].collider.GetComponent<Bush>();
-                        if(bush && entity.currentBush == bush) continue;
+                        if (bush && entity.currentBush == bush) continue;
                         fieldOfViewObstacles.Add(hits[i]);
                     }
                 }
 
-                for (int i = 1; i < fieldOfViewObstacles.Count; i++)
-                {
-                    if (hits[i].distance < closerHit.distance)
-                    {
-                        closerHit = hits[i];
-                    }
-                }
-                for (int i = 0; i < hits.Length; i++)
-                {
-                Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
-                if (candidateEntity != null)
-                {
-                    if (hits[i].distance <= closerHit.distance)
-                    {
-                    entity.AddShowable(candidateEntity);
-                    if(entity.CheckBushCondition(candidateEntity)) currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
-                    }
-                }
-                }
 
-                if (fieldOfViewObstacles.Count == 0)
+                if (fieldOfViewObstacles.Count != 0)
                 {
-                    return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
-                        globalAngle);
-                }
-                else
-                {
+                    RaycastHit closerHit = fieldOfViewObstacles[0];
+                    for (int i = 1; i < fieldOfViewObstacles.Count; i++)
+                    {
+                        if (fieldOfViewObstacles[i].distance < closerHit.distance)
+                        {
+                            closerHit = fieldOfViewObstacles[i];
+                        }
+                    }
+
+                    for (int i = 0; i < hits.Length; i++)
+                    {
+                        Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
+                        if (candidateEntity != null)
+                        {
+                            if (hits[i].distance <= closerHit.distance)
+                            {
+                                entity.AddShowable(candidateEntity);
+                                if (entity.CheckBushCondition(candidateEntity))
+                                    currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
+                            }
+                        }
+                    }
+
                     return new ViewCastInfo(true, closerHit.point, closerHit.distance, globalAngle);
                 }
-            }
-            else
-            {
+
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
+                    if (candidateEntity != null)
+                    {
+                        entity.AddShowable(candidateEntity);
+                        if (entity.CheckBushCondition(candidateEntity))
+                            currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
+                    }
+                }
+
                 return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
                     globalAngle);
             }
+
+            return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
+                globalAngle);
         }
 
         private Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal, Entity entity)

@@ -66,8 +66,9 @@ namespace Entities.Capacities
             isDrawing = true;
             Debug.Log("je suis joue là");
             InputManager.PlayerMap.MoveMouse.MousePos.performed += RotateDraw;
-            previsualisableTPObjectForward = caster.transform.forward;
+            previsualisableTPObjectForward = champion.rotateParent.transform.forward;
             previsualisableTPObject.gameObject.SetActive(true);
+            previsualisableTPObject.transform.forward = previsualisableTPObjectForward;
         }
 
         void RotateDraw(InputAction.CallbackContext ctx)
