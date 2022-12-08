@@ -21,10 +21,11 @@ namespace CapturePoint
 
         private CapturePointTeamState destinationState;
         private int capturePointDirection;
-        [SerializeField] private float capturePointSpeed;
-        [SerializeField] private CapturePointTeamState firstTeamState;
-        [SerializeField] private CapturePointTeamState secondTeamState;
-        [SerializeField] private CapturePointState neutralState;
+        [SerializeField] private CapturePointSO capturePointSO;
+        private float capturePointSpeed;
+        private CapturePointTeamState firstTeamState;
+        private CapturePointTeamState secondTeamState;
+        private CapturePointState neutralState;
 
         private List<GlobalDelegates.NoParameterDelegate> capturePointDelegates =
             new List<GlobalDelegates.NoParameterDelegate>();
@@ -47,8 +48,13 @@ namespace CapturePoint
 
         [SerializeField]
         private TextMeshProUGUI capturePointValueText;
-        protected override void OnStart()
-        {
+        protected override void OnStart() {
+            capturePointSpeed = capturePointSO.capturePointSpeed;
+            firstTeamState = capturePointSO.firstTeamState;
+            secondTeamState = capturePointSO.secondTeamState;
+            neutralState = capturePointSO.neutralState;
+            
+            
             CapturePointValue = neutralState.stabilityPoint;
             capturePointDirection = 0;
             FogOfWarManager.Instance.AddFOWViewable(this);
