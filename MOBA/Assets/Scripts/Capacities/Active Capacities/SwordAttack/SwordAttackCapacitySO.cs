@@ -10,7 +10,7 @@ public class SwordAttackCapacitySO : ActiveCapacitySO
 {
     public override Type AssociatedType()
     {
-        return typeof(SwordAttackCapacity);
+        return typeof(AttackCapacity);
     }
 }
 }
