@@ -340,6 +340,10 @@ namespace AmplifyShaderEditor
 			Debug.Assert( flag == ASEImportFlags.HDRP || flag == ASEImportFlags.URP );
 
 			string path = AssetDatabase.GUIDToAssetPath( guid );
+			if (path == "")
+			{
+				return;
+			}
 			uint currentCRC = IOUtils.CRC32( File.ReadAllBytes( path ) );
 
 			string srpName = flag.ToString();
