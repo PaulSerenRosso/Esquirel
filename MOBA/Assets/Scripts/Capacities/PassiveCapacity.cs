@@ -15,13 +15,22 @@ namespace Entities.Capacities
         public abstract PassiveCapacitySO AssociatedPassiveCapacitySO();
 
         protected Entity entity;
+
         
+
+       
+        
+        // sur le master 
+        // si tu peux le add alors 
+        // tu créer un passive tu l'ajoute dans ta liste tu lance on added qui va lancer les rpc pour les feedbacks
+        // tu lance un tick 
+        // qui va lancer le on remove 
+        // qui lancera un rpc
         
         public void OnAdded(Entity target)
         {
             if (stackable) count++;
             entity = target;
-            Debug.Log("onadded");
             OnAddedEffects(entity);
         }
 
@@ -30,16 +39,6 @@ namespace Entities.Capacities
         /// </summary>
         protected abstract void OnAddedEffects(Entity target);
 
-        /// <summary>
-        /// Call Feedback of the Stack on when Added
-        /// </summary>
-        public void OnAddedFeedback(Entity target)
-        {
-            entity = target;
-            OnAddedFeedbackEffects(target);
-        }
-        
-        protected abstract void OnAddedFeedbackEffects(Entity target);
 
         /// <summary>
         /// Call when a Stack of the capacity is Removed
@@ -48,17 +47,8 @@ namespace Entities.Capacities
         {
             OnRemovedEffects(target);
         }
-        
         protected abstract void OnRemovedEffects(Entity target);
 
-        /// <summary>
-        /// Call Feedback of the Stack on when Removed
-        /// </summary>
-        public void OnRemovedFeedback(Entity target)
-        {
-            OnRemovedFeedbackEffects(target);
-        }
-        
-        protected abstract void OnRemovedFeedbackEffects(Entity target);
+
     }
 }

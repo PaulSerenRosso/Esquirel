@@ -162,15 +162,27 @@ public class ChampionHUD : MonoBehaviour
         spellHolderDict.Add(1, spellTwoHolder);
         spellHolderDict.Add(2, ultimateHolder);
 
+        Debug.Log(so.activeCapacities.Length);
         if (so.passiveCapacities.Length != 0)
             passiveHolder.Setup(so.passiveCapacities[0].icon);
-        spellOneHolder.Setup(so.activeCapacities[0].icon);
+        if (so.activeCapacities.Length > 0)
+        {
+           spellOneHolder.Setup(so.activeCapacities[0].icon);
+        }
+       if (so.activeCapacities.Length > 1)
+       {
         spellTwoHolder.Setup(so.activeCapacities[1].icon);
+        Debug.Log(so.activeCapacities[1].icon);
+       }
+        if (so.ultimateAbility)
+        {
         ultimateHolder.Setup(so.ultimateAbility.icon);
+        }
     }
 
     private void UpdateCooldown(byte capacityIndex, bool inCooldown)
     {
+        Debug.Log(capacityIndex);
         if (inCooldown && champion.photonView.IsMine)
         {
             for (byte i = 0; i < champion.activeCapacities.Count; i++)

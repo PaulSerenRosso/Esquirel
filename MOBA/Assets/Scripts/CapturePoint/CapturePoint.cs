@@ -69,10 +69,10 @@ namespace CapturePoint
         {
            
             Entity entity = other.GetComponent<Entity>();
-            Debug.Log("bonsoir à tosu");
+
             if (entity != null)
             {
-                Debug.Log("je vois une entity");
+            
                 Champion champion = (Champion)entity;
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -264,7 +264,6 @@ namespace CapturePoint
 
         private void UpdateCapturePointDirectionNeutral()
         {
-            Debug.Log(capturePointResolve);
             switch (capturePointResolve)
             {
                 case Enums.CapturePointResolveType.Team1:
@@ -301,8 +300,7 @@ namespace CapturePoint
             {
                 capturePointDirection = 1;
             }
-
-            Debug.Log("update direction towards stability point" + capturePointState);
+            
             stateToStabilize = capturePointState;
             RemoveAllCapturePointDelegatesToTick();
             AddRangeCapturePointDelegatesToTick(TickTowardsStabilityPoint);
@@ -339,7 +337,6 @@ namespace CapturePoint
 
         private void TickTowardsDestinationState()
         {
-            Debug.Log("bonsoir je suis lu souvent");
 
             capturePointNewValue = capturePointValue +
                                    capturePointSpeed / (float)GameStateMachine.Instance.tickRate *
