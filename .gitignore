@@ -68,3 +68,23 @@ crashlytics-build.properties
 MOBA/UserSettings/
 
 MOBA/Assets/Packages/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset
+
+MOBA/Assets/Packages/AmplifyShaderEditor/Examples/Built-In Samples.unitypackage.meta
+
+MOBA/Assets/Packages/AmplifyShaderEditor/Examples/HDRP Samples.unitypackage.meta
+
+MOBA/Assets/Packages/AmplifyShaderEditor/Examples/Sample Resources.unitypackage.meta
+
+MOBA/Assets/Packages/AmplifyShaderEditor/Examples/URP Samples.unitypackage.meta
+
+MOBA/Assets/Packages/AmplifyShaderEditor/Plugins/EditorResources/Templates/HDRP 10x.unitypackage.meta
+
+MOBA/Assets/Packages/AmplifyShaderEditor/Plugins/EditorResources/Templates/HDRP 12x.unitypackage.meta
+
+MOBA/Assets/Packages/AmplifyShaderEditor/Plugins/EditorResources/Templates/HDRP 14x.unitypackage.meta
+
+MOBA/Assets/Packages/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP 10x.unitypackage.meta
+
+MOBA/Assets/Packages/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP 12x.unitypackage.meta
+
+MOBA/Assets/Packages/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP 14x.unitypackage.meta
