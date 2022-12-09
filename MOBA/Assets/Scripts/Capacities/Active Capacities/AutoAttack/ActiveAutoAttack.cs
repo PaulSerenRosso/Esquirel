@@ -125,11 +125,9 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
         activeCapacityAnimationLauncher.InitiateAnimationTimer();
         InitiateBeginDamageTimer();
         InitiateFXTimer();
-    
         return true;
     }
-
-
+    
     public override void CancelCapacity()
     {
         GameStateMachine.Instance.OnTick -= TickBeginDamageTimer;
