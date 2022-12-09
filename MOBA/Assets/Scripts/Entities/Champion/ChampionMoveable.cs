@@ -17,6 +17,7 @@ namespace Entities.Champion
 
         public bool canMove = true;
         private Vector3 moveDirection;
+       
 
         
         public bool IsMoved
@@ -54,6 +55,9 @@ namespace Entities.Champion
         {
             return canMove;
         }
+        
+     
+        
 
         void SetupNavMesh()
         {
@@ -324,6 +328,18 @@ namespace Entities.Champion
         public void RotateMeshChampionRPC(Vector3 direction)
         {
             rotateParent.forward = direction;
+        }
+        
+        public void RequestUpdateSpeed(float newSpeed)
+        {
+            photonView.RPC("UpdateRPC", RpcTarget.All, newSpeed);
+        }
+
+        [PunRPC]
+        public void UpdateSpeedRPC(float newSpeed)
+        {
+            agent.speed = newSpeed;
+            currentMoveSpeed = newSpeed;
         }
 
         public void RequestMoveChampion(Vector3 newPos)
