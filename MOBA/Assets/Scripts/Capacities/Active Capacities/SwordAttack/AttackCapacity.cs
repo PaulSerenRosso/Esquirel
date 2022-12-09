@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Entities.Capacities
 {
     
-public class SwordAttackCapacity : ActiveCapacity, IPrevisualisable
+public class AttackCapacity : ActiveCapacity, IPrevisualisable
 {
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
