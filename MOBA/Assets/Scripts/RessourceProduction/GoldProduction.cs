@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using CapturePoint;
+using Photon.Pun;
 using RessourceProduction;
 using UnityEngine;
 
@@ -22,6 +23,11 @@ public class GoldProduction : CapturePointTickProduction<float, GoldProductionSO
         Ressource += amount;
         if (so.ressourceMax < Ressource)
             Ressource = so.ressourceMax;
+    }
+    
+    public void RequestDecreaseRessource(float amount)
+    {
+       photonView.RPC("DecreaseRessource", RpcTarget.MasterClient, amount);
     }
 
     public override void DecreaseRessource(float amount)

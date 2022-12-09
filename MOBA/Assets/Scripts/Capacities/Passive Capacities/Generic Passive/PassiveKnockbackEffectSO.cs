@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
+    /*
     [CreateAssetMenu(menuName = "Capacity/PassiveCapacitySO/Generic Passive/Knockback", fileName = "new Knockback")]
     public class PassiveKnockbackEffectSO : PassiveCapacitySO
     {
@@ -13,6 +14,7 @@ namespace Entities.Capacities
             return typeof(PassiveKnockbackEffect);
         }
     }
+    */
 }
 
 

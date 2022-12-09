@@ -112,7 +112,6 @@ namespace  Entities
             var show = enemiesThatCanSeeMe.Count == 0;
             
             enemiesThatCanSeeMe.Add(viewable);
-            Debug.Log("try add viewable" + gameObject.name);
             if (show) ShowElements();
             
             //if (!PhotonNetwork.IsMasterClient) return;

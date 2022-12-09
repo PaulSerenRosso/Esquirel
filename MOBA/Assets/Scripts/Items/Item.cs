@@ -30,7 +30,7 @@ namespace Entities.Inventory
             OnItemAddedEffects(entity);
             foreach (var index in AssociatedItemSO().passiveCapacitiesIndexes)
             {
-                entityOfInventory.AddPassiveCapacityRPC(index);
+                //entityOfInventory.AddPassiveCapacityRPC(index);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Entities.Inventory
             OnItemRemovedEffects(entity);
             foreach (var index in AssociatedItemSO().passiveCapacitiesIndexes)
             {
-                entityOfInventory.RemovePassiveCapacityByIndex(index);
+               // entityOfInventory.RemovePassiveCapacityByIndex(index);
             }
         }
 

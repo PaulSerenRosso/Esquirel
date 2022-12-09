@@ -19,6 +19,12 @@ namespace Entities.Capacities
         
         public bool stackable;
 
+        virtual public bool TryAdded(Entity target)
+        {
+            if (!target.canAddPassiveCapacity) return false;
+            return true; 
+        }
+        
         
         /// <summary>
         /// return typeof(PassiveCapacity);

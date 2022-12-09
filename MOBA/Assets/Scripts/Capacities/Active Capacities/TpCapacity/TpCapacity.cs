@@ -64,7 +64,6 @@ namespace Entities.Capacities
         public void EnableDrawing()
         {
             isDrawing = true;
-            Debug.Log("je suis joue là");
             InputManager.PlayerMap.MoveMouse.MousePos.performed += RotateDraw;
             previsualisableTPObjectForward = champion.rotateParent.transform.forward;
             previsualisableTPObject.gameObject.SetActive(true);
@@ -83,7 +82,6 @@ namespace Entities.Capacities
         {
             isDrawing = false;
             canDraw = false;
-            Debug.Log("je suis joue là aussi");
             InputManager.PlayerMap.MoveMouse.MousePos.performed -= RotateDraw;
             previsualisableTPObject.gameObject.SetActive(false);
         }

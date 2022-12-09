@@ -25,10 +25,7 @@ namespace Entities.Capacities
             GameStateMachine.Instance.OnTick += IncreasePerTick;
         }
 
-        protected override void OnAddedFeedbackEffects(Entity target)
-        {
-            
-        }
+       
 
         protected override void OnRemovedEffects(Entity target)
         {
@@ -37,10 +34,7 @@ namespace Entities.Capacities
             GameStateMachine.Instance.OnTick -= IncreasePerTick;
         }
 
-        protected override void OnRemovedFeedbackEffects(Entity target)
-        {
-            
-        }
+     
 
         private void ActiveHealEffect()
         {

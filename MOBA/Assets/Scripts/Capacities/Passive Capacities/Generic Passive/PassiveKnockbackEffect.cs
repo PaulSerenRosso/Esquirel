@@ -2,6 +2,7 @@ using System.Numerics;
 
 namespace Entities.Capacities
 {
+    /*
     public class PassiveKnockbackEffect : PassiveCapacity
     {
         public Vector3 direction;
@@ -31,6 +32,7 @@ namespace Entities.Capacities
             
         }
     }
+    */
 }
 
 

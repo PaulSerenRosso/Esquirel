@@ -13,13 +13,11 @@ namespace RessourceProduction
         {
             timer = 0;
             GameStateMachine.Instance.OnTick += TickRessourceProductionTimer;
-            Debug.Log("bonsoir je suis lu à la ressource ");
         }
 
         public virtual void TickRessourceProductionTimer()
         {
             timer += 1.0 / GameStateMachine.Instance.tickRate;
-            Debug.Log("bonsoir je suis lu à la ressdfqfqffdource ");
             if (timer >= so.timeBetweenTick)
             {
                 EndTickRessourceProductionTimer();
@@ -29,13 +27,12 @@ namespace RessourceProduction
         public virtual void EndTickRessourceProductionTimer()
         {
             IncreaseRessource(so.ressourceAmountPerTick);
-            Debug.Log("IncreaseRessource");
+    
             timer -= so.timeBetweenTick;
         }
 
         public virtual void CancelRessourceProductionTimer()
         {
-            Debug.Log("bonsoir je suis lu à la ressourcefdqsfqdsfqsdfqsdfqdsf ");
             GameStateMachine.Instance.OnTick -= TickRessourceProductionTimer;
         }
 

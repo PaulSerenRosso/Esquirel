@@ -9,8 +9,6 @@ namespace Entities.Capacities
         public Entity caster;
         public double cooldownTimer;
         public bool onCooldown;
-
-        
         private double fxTimer;
        public Entity fxObject;
         
