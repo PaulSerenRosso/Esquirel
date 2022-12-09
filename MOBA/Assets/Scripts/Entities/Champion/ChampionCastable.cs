@@ -61,8 +61,7 @@ namespace Entities.Champion
 
         public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions, params object[] otherParameters)
         {
-            
-            Debug.Log(activeCapacities[capacityIndex].onCooldown +"  " );
+            if(activeCapacities.Count <= capacityIndex ) return;
             if (!activeCapacities[capacityIndex].onCooldown)
             {
                 if (activeCapacities[capacityIndex] is IPrevisualisable)
@@ -77,7 +76,7 @@ namespace Entities.Champion
                 else
                 {
                     photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
-                        targetedPositions);
+                        targetedPositions, null);
                 }
             }
         }
@@ -85,6 +84,7 @@ namespace Entities.Champion
         public void LaunchCapacityWithPrevisualisable(byte capacityIndex, int[] targetedEntities,
             Vector3[] targetedPositions)
         {
+            if(capacityIndex >= activeCapacities.Count) return;
             if (!activeCapacities[capacityIndex].onCooldown)
             {
                 if (activeCapacities[capacityIndex] is IPrevisualisable)
@@ -143,7 +143,6 @@ namespace Entities.Champion
                 {
                     activeCapacities[i].onCooldown = value;
                     OnSetCooldownFeedback?.Invoke(indexOfSOInCollection, value);
-                    Debug.Log("test");
                     return;
                 }
             }

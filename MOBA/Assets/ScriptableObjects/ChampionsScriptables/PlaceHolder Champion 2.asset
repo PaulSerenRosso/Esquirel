@@ -16,17 +16,17 @@ MonoBehaviour:
   canvasIndex: 0
   maxHp: 10
   maxRessource: 10
-  viewRange: 11
-  referenceMoveSpeed: 6.5
+  viewRange: 10
+  referenceMoveSpeed: 7
   attackAbility: {fileID: 11400000, guid: 21c7c14e005d4cc4f8470bf9a61776e2, type: 2}
-  attackAbilityIndex: 2
+  attackAbilityIndex: 0
   attackDamage: 0
   passiveCapacities:
   - {fileID: 11400000, guid: 4892e9fd3d893d04b8b520812f3c9710, type: 2}
   passiveCapacitiesIndexes: 00
   activeCapacities:
-  - {fileID: 11400000, guid: cf4b0ca6bc7bc7a4d9477d556903c9ac, type: 2}
   - {fileID: 11400000, guid: 558a7149786ab434c8b4a989c808974e, type: 2}
-  activeCapacitiesIndexes: 0307
-  ultimateAbility: {fileID: 11400000, guid: 07859fac7ee251f4da76f2d5937a8155, type: 2}
-  ultimateAbilityIndex: 1
+  - {fileID: 11400000, guid: 558a7149786ab434c8b4a989c808974e, type: 2}
+  activeCapacitiesIndexes: 0101
+  ultimateAbility: {fileID: 11400000, guid: 888a7f5f56181e24c8a2f954bd5dbb02, type: 2}
+  ultimateAbilityIndex: 3

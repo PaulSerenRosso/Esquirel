@@ -36,7 +36,6 @@ namespace Entities.Capacities
             tpObjectCurve = tpCapacitySo.tpObjectCurve;
             tpObjectCurveTime = tpCapacitySo.tpObjectCurveTime;
             tpObjectCurveYPosition = tpCapacitySo.tpObjectCurveYPosition;
-            Debug.Log(champion.transform.position);
             ActivateRPC(champion.transform.position);
                 renderer.enabled =true;
                 
@@ -70,7 +69,6 @@ namespace Entities.Capacities
             isActive = true;
             startPosition = startPos;
             transform.position = startPos;
-            Debug.Log(startPos);
         }
 
         [PunRPC]

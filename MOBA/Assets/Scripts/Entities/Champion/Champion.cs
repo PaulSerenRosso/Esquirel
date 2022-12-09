@@ -153,13 +153,18 @@ namespace Entities.Champion
                 activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.activeCapacities[i].indexInCollection,this));
                 activeCapacities[i].SetUpActiveCapacity(so.activeCapacities[i].indexInCollection, this);
             }
+            activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.ultimateAbility.indexInCollection,this));
+            activeCapacities[activeCapacities.Count-1].SetUpActiveCapacity(so.ultimateAbility.indexInCollection, this);
             attackBase =
                 CapacitySOCollectionManager.CreateActiveCapacity(so.attackAbility.indexInCollection, this);
             autoAttack =(IAimable) attackBase;
             attackBase.SetUpActiveCapacity(so.attackAbility.indexInCollection, this);
+            if (PhotonNetwork.IsMasterClient)
+            {
             for (int i = 0; i < so.passiveCapacitiesIndexes.Length; i++)
             {
-                AddPassiveCapacityRPC(so.passiveCapacitiesIndexes[i]);
+                RequestAddPassiveCapacity(so.passiveCapacitiesIndexes[i]);
+            }
             }
             championMesh.GetComponent<EntityFOWShowableLinker>().LinkEntity(this);
             if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)

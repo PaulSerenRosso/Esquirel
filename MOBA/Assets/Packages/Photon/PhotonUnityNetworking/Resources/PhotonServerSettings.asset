@@ -226,6 +226,7 @@ MonoBehaviour:
   - ActivateRPC
   - DeactivateRPC
   - SetUpRPC
+  - UpdateSpeedRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

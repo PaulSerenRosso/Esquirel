@@ -2,6 +2,7 @@ using GameStates;
 
 namespace Entities.Capacities
 {
+    /*
     public class PassiveStunEffect : PassiveCapacity
     {
         private PassiveStunEffectSO so;
@@ -46,6 +47,7 @@ namespace Entities.Capacities
             }
         }
     }
+    */
 }
 
 

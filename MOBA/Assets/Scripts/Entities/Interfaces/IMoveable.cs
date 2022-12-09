@@ -18,7 +18,7 @@ namespace Entities
         /// <summary>
         /// Sends an RPC to all clients to set if the entity can move.
         /// </summary>
-        public void SyncSetCanMoveRPC(bool value);
+      
         /// <summary>
         /// Sets if the entity can move.
         /// </summary>
@@ -32,11 +32,8 @@ namespace Entities
         /// </summary>
         /// <param name="value">the value to set it to</param>
         public void RequestSetReferenceMoveSpeed(float value);
-        /// <summary>
-        /// Sends an RPC to all clients to set the entity's reference move speed.
-        /// </summary>
-        /// <param name="value">the value to set it to</param>
-        public void SyncSetReferenceMoveSpeedRPC(float value);
+
+  
         /// <summary>
         /// Sets the entity's reference move speed.
         /// </summary>
@@ -51,11 +48,8 @@ namespace Entities
         /// </summary>
         /// <param name="amount">the increase amount</param>
         public void RequestIncreaseReferenceMoveSpeed(float amount);
-        /// <summary>
-        /// Sends an RPC to all clients to increase the entity's reference move speed.
-        /// </summary>
-        /// <param name="amount">the increase amount</param>
-        public void SyncIncreaseReferenceMoveSpeedRPC(float amount);
+ 
+   
         /// <summary>
         /// Increases the entity's reference move speed.
         /// </summary>
@@ -70,11 +64,8 @@ namespace Entities
         /// </summary>
         /// <param name="amount">the decrease amount</param>
         public void RequestDecreaseReferenceMoveSpeed(float amount);
-        /// <summary>
-        /// Sends an RPC to all clients to decrease the entity's reference move speed.
-        /// </summary>
-        /// <param name="amount">the increase amount</param>
-        public void SyncDecreaseReferenceMoveSpeedRPC(float amount);
+
+    
         /// <summary>
         /// Decreases the entity's reference move speed.
         /// </summary>
@@ -93,7 +84,7 @@ namespace Entities
         /// Sends an RPC to all clients to set the entity's current move speed.
         /// </summary>
         /// <param name="value">the value to set it to</param>
-        public void SyncSetCurrentMoveSpeedRPC(float value);
+    
         /// <summary>
         /// Sets the entity's current move speed.
         /// </summary>
@@ -108,11 +99,8 @@ namespace Entities
         /// </summary>
         /// <param name="amount">the increase amount</param>
         public void RequestIncreaseCurrentMoveSpeed(float amount);
-        /// <summary>
-        /// Sends an RPC to all clients to increase the entity's current move speed.
-        /// </summary>
-        /// <param name="amount">the increase amount</param>
-        public void SyncIncreaseCurrentMoveSpeedRPC(float amount);
+
+  
         /// <summary>
         /// Increases the entity's current move speed.
         /// </summary>
@@ -127,11 +115,7 @@ namespace Entities
         /// </summary>
         /// <param name="amount">the decrease amount</param>
         public void RequestDecreaseCurrentMoveSpeed(float amount);
-        /// <summary>
-        /// Sends an RPC to all clients to decrease the entity's current move speed.
-        /// </summary>
-        /// <param name="amount">the increase amount</param>
-        public void SyncDecreaseCurrentMoveSpeedRPC(float amount);
+  
         /// <summary>
         /// Decreases the entity's current move speed.
         /// </summary>

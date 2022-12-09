@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
+    /*
     public class PassiveSlowEffect : PassiveCapacity
     {
         private PassiveSlowEffectSO so;
@@ -34,5 +35,6 @@ namespace Entities.Capacities
             
         }
     }
+    */
 }
 

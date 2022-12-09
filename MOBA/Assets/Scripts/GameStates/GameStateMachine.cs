@@ -346,7 +346,7 @@ namespace GameStates
         [PunRPC]
         private void SyncDataDictionaryRPC(int key, byte team, byte championSO, bool ready)
         {
-            Debug.Log($"Je récupère les data du Master : {key}, {(Enums.Team)team}, {championSO}, {ready}");
+         
             var data = new PlayerData
             {
                 team = (Enums.Team)team,
