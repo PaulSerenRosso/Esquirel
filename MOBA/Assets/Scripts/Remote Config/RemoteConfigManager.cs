@@ -116,14 +116,14 @@ namespace RemoteConfig {
         /// </summary>
         private void SetRelaiVariables() {
             variables.relaiCapturePoint.baseViewRange = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange");
-            variables.relaiCapturePoint.viewRange = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange_ViewRange");
-            variables.relaiCapturePoint.capturePointSpeed = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange_CapturePointSpeed");
-            variables.relaiCapturePoint.firstTeamState.stabilityPoint = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange_TEAM01_StabilityPoint");
-            variables.relaiCapturePoint.firstTeamState.captureValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange_TEAM01_CaptureValue");
-            variables.relaiCapturePoint.firstTeamState.maxValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange_TEAM01_MaxValue");
-            variables.relaiCapturePoint.secondTeamState.stabilityPoint = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange_TEAM02_StabilityPoint");
-            variables.relaiCapturePoint.secondTeamState.captureValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange_TEAM02_CaptureValue");
-            variables.relaiCapturePoint.secondTeamState.maxValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange_TEAM02_MaxValue");
+            variables.relaiCapturePoint.viewRange = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_ViewRange");
+            variables.relaiCapturePoint.capturePointSpeed = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_CapturePointSpeed");
+            variables.relaiCapturePoint.firstTeamState.stabilityPoint = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_TEAM01_StabilityPoint");
+            variables.relaiCapturePoint.firstTeamState.captureValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_TEAM01_CaptureValue");
+            variables.relaiCapturePoint.firstTeamState.maxValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_TEAM01_MaxValue");
+            variables.relaiCapturePoint.secondTeamState.stabilityPoint = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_TEAM02_StabilityPoint");
+            variables.relaiCapturePoint.secondTeamState.captureValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_TEAM02_CaptureValue");
+            variables.relaiCapturePoint.secondTeamState.maxValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_TEAM02_MaxValue");
             variables.relaiCapturePoint.neutralState.stabilityPoint = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_NEUTRAL_StabilityPoint");
         }
     }
