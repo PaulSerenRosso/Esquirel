@@ -352,6 +352,7 @@ namespace CapturePoint
                     RemoveRangeCapturePointDelegateToTick(TickTowardsDestinationState);
                     team = destinationState.team;
                     destinationState.enterStateEvent?.Invoke();
+                    Debug.Log("bonsoir àtous enter ");
                     RequestUpdateCapturePointVisual();
                     return;
                 }

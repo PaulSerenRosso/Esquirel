@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseViewRange: 0
   viewRange: 0
-  capturePointSpeed: 0.2
+  capturePointSpeed: 111
   firstTeamState:
     stabilityPoint: 0
-    captureValue: 4
+    captureValue: 0
     maxValue: 0
     team: 1
   secondTeamState:
-    stabilityPoint: 14
-    captureValue: 10
-    maxValue: 14
+    stabilityPoint: 0
+    captureValue: 0
+    maxValue: 0
     team: 2
   neutralState:
     stabilityPoint: 7

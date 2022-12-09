@@ -1,47 +1,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CapturePoint;
 using Photon.Pun;
 using UnityEngine;
 
 namespace RessourceProduction
 {
-    public abstract class CapturePointTickProduction<T> : RessourceTickProduction<T>, IPunObservable
+    public abstract class CapturePointTickProduction<T, SO> : RessourceTickProduction<T, SO> where SO : CapturePointTickProductionSO<T>
     {
-        [SerializeField]
-        private CapturePoint.CapturePoint[] allCapturesPoint;
+        protected CapturePoint.CapturePoint[] allCapturesPoint;
         [SerializeField]
         protected Enums.Team team;
 
-        public T Ressource
+       
+        
+        protected override void OnStart()
         {
-            get
-            {
-                return ressource; 
-            }
-            set
-            {
-                ressource = value;
-                UpdateFeedback();
-            }
+            base.OnStart();
+            StartCoroutine(WaitForAddEventToCapturePoint());
         }
 
-        abstract public void UpdateFeedback();
-        
-        protected virtual void OnStart()
+        IEnumerator WaitForAddEventToCapturePoint()
+        {
+            yield return new WaitForEndOfFrame();
+            AddEventToCapturePoint();
+        }
+        private void AddEventToCapturePoint()
         {
             for (int i = 0; i < allCapturesPoint.Length; i++)
             {
                 switch (team)
                 {
-                    case Enums.Team.Team1 :
+                    case Enums.Team.Team1:
                     {
                         allCapturesPoint[i].firstTeamState.enterStateEvent += InitiateRessourceProductionTimer;
                         allCapturesPoint[i].firstTeamState.exitStateEvent += CancelRessourceProductionTimer;
                         break;
                     }
-                    
-                    case Enums.Team.Team2 :
+
+                    case Enums.Team.Team2:
                     {
                         allCapturesPoint[i].secondTeamState.enterStateEvent += InitiateRessourceProductionTimer;
                         allCapturesPoint[i].secondTeamState.exitStateEvent += CancelRessourceProductionTimer;
@@ -51,21 +49,7 @@ namespace RessourceProduction
             }
         }
 
-        private void Start()
-        {
-            OnStart();
-        }
-        
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        {
-            if (stream.IsWriting)
-            {
-                stream.SendNext(ressource);
-            }
-            else
-            {
-                Ressource = (T)stream.ReceiveNext();
-            }
-        }
+
+       
     }
 }

@@ -1,18 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using CapturePoint;
+using RessourceProduction;
 using UnityEngine;
 
-public class GoldProduction : MonoBehaviour
+namespace RessourceProduction
 {
-    // Start is called before the first frame update
-    void Start()
+public class GoldProduction : CapturePointTickProduction<float, GoldProductionSO>
+{
+    private UIManager uiManager;
+    protected override void OnStart()
     {
-        
+        allCapturesPoint = CapturePointCollectionManager.instance.GoldCapturePoints;
+        base.OnStart();
+        uiManager = UIManager.Instance;
+        uiManager.UpdateGoldText(Ressource);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void IncreaseRessource(float amount)
     {
-        
+        Ressource += amount;
+        if (so.ressourceMax < Ressource)
+            Ressource = so.ressourceMax;
     }
+
+    public override void DecreaseRessource(float amount)
+    {
+        Ressource -= amount;
+        if (so.ressourceMin > ressource)
+            Ressource = 0;
+    }
+
+    public override void UpdateFeedback()
+    {
+        if(uiManager != null)
+        uiManager.UpdateGoldText(ressource);
+    }
+}
 }
