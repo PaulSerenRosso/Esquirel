@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffadea0787f861843a1d7ea7d46324a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iteration: 1
-  upscaleTexture: 1
+  _iteration: 2
+  upscaleTexture: 2
   _useBlur: 1
   _material: {fileID: 2100000, guid: fb25180902f70ec40a0b988dbf4c415f, type: 2}
   _material1: {fileID: 2100000, guid: 269845f80d310d74db13180ca168d3e1, type: 2}
@@ -173,10 +173,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraFog: {fileID: 1126480335}
   sceneToRenderFog:
+  - Tempo_In Game Scene
   - InGameScene
   - _FogOfWarDebugTest
   - FOG_InGameScene
-  - Tempo_In Game Scene
   fogColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   layerTargetFogOfWar:
     serializedVersion: 2
@@ -185,7 +185,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1073750016
   fogMat: {fileID: 2100000, guid: 269845f80d310d74db13180ca168d3e1, type: 2}
-  worldSize: 171
+  worldSize: 160
   worldSizeGizmos: 1
   settingsFOV:
     meshResolution: 1
