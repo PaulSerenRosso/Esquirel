@@ -2,6 +2,7 @@ using GameStates;
 
 namespace Entities.Capacities
 {
+    /*
     public class PassiveDotEffect : PassiveCapacity
     {
         private PassiveDotEffectSO so;
@@ -54,6 +55,7 @@ namespace Entities.Capacities
             
         }
     }
+    */
 }
 
 

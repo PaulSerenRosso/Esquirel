@@ -13,13 +13,24 @@ namespace Entities.Champion
     public partial class Champion : IMoveable
     {
         public float referenceMoveSpeed;
-        public float currentMoveSpeed;
+
+        public float CurrentMoveSpeed
+        {
+            get => currentMoveSpeed;
+            set
+            {
+                currentMoveSpeed = value;
+                if (photonView.IsMine)
+                    agent.speed = currentMoveSpeed;
+            }
+        }
+
+        private float currentMoveSpeed;
 
         public bool canMove = true;
         private Vector3 moveDirection;
-       
 
-        
+
         public bool IsMoved
         {
             get => isMoved;
@@ -28,12 +39,13 @@ namespace Entities.Champion
                 isMoved = value;
                 if (animator)
                 {
-               RequestChangeBoolParameterAnimator("Move", value);
+                    RequestChangeBoolParameterAnimator("Move", value);
                 }
             }
         }
 
         private bool isMoved;
+
         // === League Of Legends
         private int mouseTargetIndex;
         private bool isFollowing;
@@ -55,9 +67,7 @@ namespace Entities.Champion
         {
             return canMove;
         }
-        
-     
-        
+
 
         void SetupNavMesh()
         {
@@ -90,6 +100,7 @@ namespace Entities.Champion
 
         public void RequestSetCanMove(bool value)
         {
+            
         }
 
         [PunRPC]
@@ -98,11 +109,10 @@ namespace Entities.Champion
             canMove = value;
             if (!value)
             {
-            if (photonView.IsMine)
-                agent.SetDestination(transform.position);
-            IsMoved = false; 
+                if (photonView.IsMine)
+                    agent.SetDestination(transform.position);
+                IsMoved = false;
             }
-            
         }
 
         [PunRPC]
@@ -116,16 +126,16 @@ namespace Entities.Champion
 
         public void RequestSetReferenceMoveSpeed(float value)
         {
+            photonView.RPC("SetReferenceMoveSpeedRPC", RpcTarget.All, value);
+            OnSetReferenceMoveSpeed?.Invoke(value);
         }
 
-        [PunRPC]
-        public void SyncSetReferenceMoveSpeedRPC(float value)
-        {
-        }
 
         [PunRPC]
         public void SetReferenceMoveSpeedRPC(float value)
         {
+            referenceMoveSpeed = value;
+            OnSetReferenceMoveSpeedFeedback?.Invoke(value);
         }
 
         public event GlobalDelegates.OneParameterDelegate<float> OnSetReferenceMoveSpeed;
@@ -133,33 +143,31 @@ namespace Entities.Champion
 
         public void RequestIncreaseReferenceMoveSpeed(float amount)
         {
+            photonView.RPC("IncreaseReferenceMoveSpeedRPC", RpcTarget.All, amount);
+            OnIncreaseReferenceMoveSpeed?.Invoke(amount);
         }
 
-        [PunRPC]
-        public void SyncIncreaseReferenceMoveSpeedRPC(float amount)
-        {
-        }
-
-        [PunRPC]
         public void IncreaseReferenceMoveSpeedRPC(float amount)
         {
+            referenceMoveSpeed += amount;
+            OnIncreaseReferenceMoveSpeedFeedback?.Invoke(amount);
         }
+
 
         public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseReferenceMoveSpeed;
         public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseReferenceMoveSpeedFeedback;
 
         public void RequestDecreaseReferenceMoveSpeed(float amount)
         {
-        }
-
-        [PunRPC]
-        public void SyncDecreaseReferenceMoveSpeedRPC(float amount)
-        {
+            photonView.RPC("DecreaseReferenceMoveSpeedRPC", RpcTarget.All, amount);
+            OnDecreaseReferenceMoveSpeed?.Invoke(amount);
         }
 
         [PunRPC]
         public void DecreaseReferenceMoveSpeedRPC(float amount)
         {
+            referenceMoveSpeed -= amount;
+            OnDecreaseReferenceMoveSpeedFeedback?.Invoke(amount);
         }
 
         public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseReferenceMoveSpeed;
@@ -167,16 +175,16 @@ namespace Entities.Champion
 
         public void RequestSetCurrentMoveSpeed(float value)
         {
-        }
+            photonView.RPC("SetCurrentMoveSpeedRPC", RpcTarget.All, value);
 
-        [PunRPC]
-        public void SyncSetCurrentMoveSpeedRPC(float value)
-        {
+            OnSetCurrentMoveSpeed?.Invoke(value);
         }
 
         [PunRPC]
         public void SetCurrentMoveSpeedRPC(float value)
         {
+            CurrentMoveSpeed = value;
+            OnSetCurrentMoveSpeedFeedback?.Invoke(value);
         }
 
         public event GlobalDelegates.OneParameterDelegate<float> OnSetCurrentMoveSpeed;
@@ -184,16 +192,15 @@ namespace Entities.Champion
 
         public void RequestIncreaseCurrentMoveSpeed(float amount)
         {
-        }
+            photonView.RPC("IncreaseCurrentMoveSpeedRPC", RpcTarget.All, amount);
 
-        [PunRPC]
-        public void SyncIncreaseCurrentMoveSpeedRPC(float amount)
-        {
+            OnIncreaseCurrentMoveSpeed?.Invoke(amount);
         }
 
         [PunRPC]
         public void IncreaseCurrentMoveSpeedRPC(float amount)
-        {
+        { CurrentMoveSpeed += amount;
+            OnIncreaseCurrentMoveSpeedFeedback?.Invoke(amount);
         }
 
         public event GlobalDelegates.OneParameterDelegate<float> OnIncreaseCurrentMoveSpeed;
@@ -201,16 +208,16 @@ namespace Entities.Champion
 
         public void RequestDecreaseCurrentMoveSpeed(float amount)
         {
+            photonView.RPC("DecreaseCurrentMoveSpeedRPC", RpcTarget.All, amount);
+            OnDecreaseCurrentMoveSpeedFeedback?.Invoke(amount);
         }
 
-        [PunRPC]
-        public void SyncDecreaseCurrentMoveSpeedRPC(float amount)
-        {
-        }
 
         [PunRPC]
         public void DecreaseCurrentMoveSpeedRPC(float amount)
         {
+            CurrentMoveSpeed -= amount;
+            OnDecreaseCurrentMoveSpeedFeedback?.Invoke(amount);
         }
 
         public event GlobalDelegates.OneParameterDelegate<float> OnDecreaseCurrentMoveSpeed;
@@ -329,18 +336,7 @@ namespace Entities.Champion
         {
             rotateParent.forward = direction;
         }
-        
-        public void RequestUpdateSpeed(float newSpeed)
-        {
-            photonView.RPC("UpdateRPC", RpcTarget.All, newSpeed);
-        }
 
-        [PunRPC]
-        public void UpdateSpeedRPC(float newSpeed)
-        {
-            agent.speed = newSpeed;
-            currentMoveSpeed = newSpeed;
-        }
 
         public void RequestMoveChampion(Vector3 newPos)
         {
@@ -367,18 +363,18 @@ namespace Entities.Champion
             if (agent == null || !agent.isOnNavMesh || !canMove) return;
             if (agent.velocity.magnitude > 0.3f)
             {
-                if (!IsMoved) IsMoved = true; 
+                if (!IsMoved) IsMoved = true;
                 rotateParent.forward = agent.velocity.normalized;
             }
             else IsMoved = false;
-           
+
             agent.velocity = agent.desiredVelocity;
             if (moveDestination != oldMoveDestination)
             {
                 agent.SetDestination(moveDestination);
                 oldMoveDestination = moveDestination;
             }
-            
+
             moveDestination = agent.destination;
         }
 

@@ -50,7 +50,6 @@ namespace Entities.Capacities
 
                 if (entityTouch)
                 {
-                    Debug.Log(entityTouch);
                     ITeamable entityTeam = entityTouch.GetComponent<ITeamable>();
                     ITeamable casterTeam = caster.GetComponent<ITeamable>();
 
