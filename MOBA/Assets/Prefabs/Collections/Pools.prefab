@@ -70,6 +70,8 @@ MonoBehaviour:
   poolElements:
   - Element: {fileID: 5454432412817579492, guid: ac8cee8679279af4785446d42c8f12d5, type: 3}
     amount: 5
+  - Element: {fileID: 5454432412817579492, guid: 90429151b8fce0a48bb13b4563b71bc5, type: 3}
+    amount: 5
 --- !u!114 &4154794844745012401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,5 +87,7 @@ MonoBehaviour:
   poolElements:
   - Element: {fileID: 3480681341667345175, guid: 73a83e6dab4b03843a993e90f0e36e35, type: 3}
     amount: 0
-  - Element: {fileID: 782873847134293652, guid: a635c22fc9b904143bdd6b16713d8896, type: 3}
+  - Element: {fileID: 2386609691527878384, guid: a6fb4d7cc5d4e0d48a5be2bfcf202ed4, type: 3}
+    amount: 5
+  - Element: {fileID: 2386609691527878384, guid: 6f3c70890eb87a24d9004899d920940e, type: 3}
     amount: 5

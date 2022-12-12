@@ -12,10 +12,9 @@ public abstract class ActiveAttackCapacitySO : ActiveCapacitySO
     public float damageBeginTime;
     public float damageTime;
     public float damage;
-    public AttackCollider damagePrefab;
-    public float height;
-    public float width;
-    public AttackPrevizualisable previsualisablePrefab;
+    public ActiveAttackCapacityCollider damagePrefab;
+    public float offsetAttack; 
+
 
 
 }
