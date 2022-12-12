@@ -8,11 +8,12 @@ public class ActiveAttackCapacityRectPrevizualisable : ActiveAttackCapacityPrevi
    public override void UpdatePrevisualisation(ActiveAttackWithPrevisualisableCapacity activeAttackCapacity) 
    {
       ActiveAttackRectCapacitySO activeAttackRectCapacitySo =(ActiveAttackRectCapacitySO) activeAttackCapacity.so;
-   //   ActiveAttackre activeAttackCapacity
-      transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack;
+      ActiveAttackRectCapacity attackRectCapacity = (ActiveAttackRectCapacity)activeAttackCapacity;
       previsualisation.transform.SetGlobalScale(new Coordinate[]
-         { new Coordinate(CoordinateType.X, activeAttackRectCapacitySo.height), new Coordinate(CoordinateType.Z, activeAttackRectCapacitySo.width) });
+         { new Coordinate(CoordinateType.X, activeAttackRectCapacitySo.width), new Coordinate(CoordinateType.Z, activeAttackRectCapacitySo.height) });
    }
+   
+   
 
   
 }

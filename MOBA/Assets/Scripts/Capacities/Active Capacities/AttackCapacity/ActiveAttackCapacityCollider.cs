@@ -8,7 +8,6 @@ namespace Entities.Capacities
 public class ActiveAttackCapacityCollider :ActiveCapacityCollider
 {
     public float damage;
-
     public override void CollideWithEntity(Entity entityCollided)
     {
         IActiveLifeable lifeable = (IActiveLifeable)entityCollided;
@@ -25,7 +24,8 @@ public class ActiveAttackCapacityCollider :ActiveCapacityCollider
         ActiveAttackCapacity activeAttackCapacity = (ActiveAttackCapacity)activeCapacity;
         damage = so.damage;
         team = activeCapacity.caster.team;
-        transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack;
+        transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up*2;
+        
     }
 }
 }

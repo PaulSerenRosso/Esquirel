@@ -15,9 +15,6 @@ public class ActiveAttackCapacityColliderRect : ActiveAttackCapacityCollider
         ActiveAttackRectCapacitySO activeAttackRectCapacitySo = (ActiveAttackRectCapacitySO) activeAttackRectCapacity.so;
        transform.SetGlobalScale(new Coordinate[]
             { new Coordinate(CoordinateType.X, activeAttackRectCapacitySo.width), new Coordinate(CoordinateType.Z, activeAttackRectCapacitySo.height)});
-       var boxColliderCenter = boxCollider.center;
-       boxColliderCenter.z = activeAttackRectCapacitySo.height / 2;
-       boxCollider.center = boxColliderCenter;
     }
 }
 }

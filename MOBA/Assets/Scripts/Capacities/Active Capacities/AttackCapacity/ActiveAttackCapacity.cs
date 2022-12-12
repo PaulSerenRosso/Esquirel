@@ -35,6 +35,7 @@ namespace Entities.Capacities
         {
             DamageObject = PoolLocalManager.Instance.PoolInstantiate(so.damagePrefab.gameObject,
                 champion.transform.position, champion.rotateParent.rotation);
+            Debug.Log(DamageObject);
             var activeCapacityCollider = DamageObject.transform.GetComponent<ActiveCapacityCollider>();
             activeCapacityCollider.InitCapacityCollider(this);
         }
@@ -60,6 +61,7 @@ namespace Entities.Capacities
         public override void InitiateCooldown()
         {
             base.InitiateCooldown();
+            if(champion.activeCapacities.Contains(this))
             champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, true);
         }
 
@@ -74,7 +76,7 @@ namespace Entities.Capacities
             base.InitiateFXTimer();
             fxObject=  PoolNetworkManager.Instance.PoolInstantiate(so.fxPrefab, champion.transform.position, champion.rotateParent.rotation);
             ActiveAttackCapacityFX attackCapacityFX = (ActiveAttackCapacityFX)fxObject;
-            attackCapacityFX.InitCapacityFX(this);
+            attackCapacityFX.RequestInitCapacityFX(caster.entityIndex, (byte)champion.activeCapacities.IndexOf(this));
         }
 
 

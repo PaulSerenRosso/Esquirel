@@ -6,135 +6,51 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
-public class ActiveAutoAttack : ActiveCapacity, IAimable
+public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
 {
     private ActiveAutoAttackSO activeAutoAttackSO;
-
-    public float range;
-    public float rangeSqrt;
-
-    public float timeFactor = 1;
-  
-    private double damageTimer;
-
-    private GameObject DamageObject;
-    private double beginDamageTimer;
-
-    //delay 
-    // 
-    private Champion caster;
-
+    
     
     private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher; 
     
-    
+    public float range;
+    public float rangeSqrt;
 
     public override void InitiateCooldown()
     {
         base.InitiateCooldown();
         Debug.Log("bonsoir je suis tout le temps lu aussi");
-        caster.RequestToSetOnCooldownAttack(true);
-        
+        champion.RequestToSetOnCooldownAttack(true);
     }
 
     public override void EndCooldown()
     {
         Debug.Log("bonsoir je suis tout le temps lu");
         base.EndCooldown();
-        caster.RequestToSetOnCooldownAttack(false);
-    }
-
-    protected override void CooldownTimer()
-    {
-        base.CooldownTimer();
-    }
-
-    void InitiateBeginDamageTimer()
-    {
-        beginDamageTimer = activeAutoAttackSO.damageBeginTime;
-        GameStateMachine.Instance.OnTick += TickBeginDamageTimer;
+        champion.RequestToSetOnCooldownAttack(false);
     }
 
 
-    void InitiateDamageTimer()
+    protected override void CancelDamagePrefab()
     {
-        damageTimer = activeAutoAttackSO.damageTime;
-        DamageObject = PoolLocalManager.Instance.PoolInstantiate(activeAutoAttackSO.damagePrefab,
-            caster.transform.position, caster.rotateParent.rotation);
-        var activeCapacityCollider = DamageObject.transform.GetChild(0).GetComponent<ActiveCapacityCollider>();
-        activeCapacityCollider.InitCapacityCollider(this);
-
-        GameStateMachine.Instance.OnTick += TickDamageTimer;
+        base.CancelDamagePrefab();
+        champion.SetCanMoveRPC(true);
+        champion.RequestCurrentResetCapacityUsed();
     }
     
-    void TickBeginDamageTimer()
-    {
-        beginDamageTimer -= 1.0 / GameStateMachine.Instance.tickRate;
-
-        if (beginDamageTimer <= 0)
-        {
-            CancelBeginDamageTimer();
-        }
-    }
-
-    private void CancelBeginDamageTimer()
-    {
-        InitiateDamageTimer();
-        GameStateMachine.Instance.OnTick -= TickBeginDamageTimer;
-    }
-
-    void TickDamageTimer()
-    {
-        damageTimer -= 1.0 / GameStateMachine.Instance.tickRate;
-
-        if (damageTimer <= 0)
-        {
-            CancelDamageTimer();
-        }
-    }
-
-    private void CancelDamageTimer()
-    {
-        if (DamageObject != null)
-        {
-            PoolLocalManager.Instance.EnqueuePool(activeAutoAttackSO.damagePrefab, DamageObject);
-            DamageObject = null;
-        }
-
-        caster.SetCanMoveRPC(true);
-        GameStateMachine.Instance.OnTick -= TickDamageTimer;
-        caster.RequestCurrentResetCapacityUsed();
-    }
-
-
-    protected override void InitiateFXTimer()
-    {
-        base.InitiateFXTimer();
-        fxObject = PoolNetworkManager.Instance.PoolInstantiate(activeAutoAttackSO.fxPrefab, caster.transform.position,
-            caster.rotateParent.rotation);
-        fxObject.RequestChangeTeam(caster.team);
-    }
-
-
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if (onCooldown) return false; 
-        caster.SetCanMoveRPC(false);
-        caster.RequestRotateMeshChampion((targetPositions[0] - caster.transform.position).normalized);
+
         InitiateCooldown();
-        activeCapacityAnimationLauncher.InitiateAnimationTimer();
-        InitiateBeginDamageTimer();
-        InitiateFXTimer();
+    champion.SetCanMoveRPC(false);
+    champion.RequestRotateMeshChampion((targetPositions[0] - caster.transform.position).normalized);
         return true;
     }
-    
     public override void CancelCapacity()
     {
-        GameStateMachine.Instance.OnTick -= TickBeginDamageTimer;
-        activeCapacityAnimationLauncher.CancelAnimationTimer();
-        CancelDamageTimer();
-        CancelFXTimer();
-        caster.RequestCurrentResetCapacityUsed();
+       base.CancelCapacity();
+        champion.RequestCurrentResetCapacityUsed();
     }
 
 
@@ -145,12 +61,7 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
         activeAutoAttackSO = (ActiveAutoAttackSO)AssociatedActiveCapacitySO();
         range = activeAutoAttackSO.maxRange;
         rangeSqrt = range * range;
-        this.caster = (Champion)caster;
-        activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
-        activeCapacityAnimationLauncher.Setup(activeAutoAttackSO.activeCapacityAnimationLauncherInfo, this.caster);
-        //   cooldownIsReadyEvent += champion.RequestToChangeCooldownIsReady;
     }
-
     public float GetMaxRange()
     {
         return range;
@@ -160,6 +71,7 @@ public class ActiveAutoAttack : ActiveCapacity, IAimable
     {
         return rangeSqrt;
     }
+
 
 
     /// <summary>

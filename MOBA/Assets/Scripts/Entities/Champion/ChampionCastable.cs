@@ -115,6 +115,7 @@ namespace Entities.Champion
                 
             }
 
+            CancelCurrentCapacity();
             OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
             photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
         }

@@ -8,7 +8,7 @@ namespace Entities.Capacities
 {
     public class ActiveAttackRectCapacity : ActiveAttackWithPrevisualisableCapacity
     {
-        private Vector3 previsualisableObjectForward;
+       public  Vector3 previsualisableObjectForward;
 
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
@@ -26,6 +26,8 @@ namespace Entities.Capacities
             InputManager.PlayerMap.MoveMouse.MousePos.performed += RotateDraw;
             previsualisableObjectForward = champion.rotateParent.transform.forward;
             previsualisableObject.transform.forward = previsualisableObjectForward;
+            previsualisableObject.transform.position =
+                champion.transform.position + previsualisableObjectForward * so.offsetAttack;
         }
 
         void RotateDraw(InputAction.CallbackContext ctx)
@@ -34,6 +36,8 @@ namespace Entities.Capacities
             previsualisableObjectForward.y = 0;
             previsualisableObjectForward.Normalize();
             previsualisableObject.transform.forward = previsualisableObjectForward;
+            previsualisableObject.transform.position =
+                champion.transform.position + previsualisableObjectForward * so.offsetAttack;
         }
 
      

@@ -7,11 +7,15 @@ namespace Entities.Capacities
 {
 public class ActiveAttackCapacityFX : ActiveCapacityFX
 {
-  public override void InitCapacityFX(ActiveCapacity capacity)
+  protected Champion.Champion champion;
+  public override void InitCapacityFX(int entityIndex, byte capacityIndex)
   {
-    ActiveAttackCapacity activeAttackCapacity = (ActiveAttackCapacity)capacity;
-
+    champion =(Champion.Champion) EntityCollectionManager.GetEntityByIndex(entityIndex);
+    base.InitCapacityFX(entityIndex, capacityIndex);
+    ActiveAttackCapacity activeAttackCapacity = (ActiveAttackCapacity) champion.activeCapacities[capacityIndex];
     transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack;
   }
+  
+  
 }
 }
