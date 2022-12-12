@@ -6,12 +6,7 @@ public class BakeVertexColorMap : MonoBehaviour
     Mesh SourceMesh;
     public Shader BakeVertexColorMapShader;
     public int Resolution = 2048;
-
-    private void Awake()
-    {
-
-    }
-
+    
     public void GetMesh()
     {
         SourceMesh = GetComponent<MeshFilter>().sharedMesh;
@@ -37,7 +32,6 @@ public class BakeVertexColorMap : MonoBehaviour
             DestroyImmediate(material);
             DestroyImmediate(texture);
             renderTexture.Release();
-            Debug.Log("JE Draw");
         }
     }
 }

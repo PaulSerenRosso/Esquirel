@@ -3,7 +3,8 @@ guid: b4cf0e05412d6e143a82caa6adb15b82
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BakeVertexColorMapShader: {fileID: 4800000, guid: a6caa7403935b084eb5bd284b50bf1f4, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
