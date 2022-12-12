@@ -124,19 +124,19 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  capturePointSpeed: 0.1
-  firstTeamState:
-    stabilityPoint: 0
-    captureValue: 5
-    maxValue: 0
-    team: 1
+  capturePointSO: {fileID: 0}
+  neutralState:
+    stabilityPoint: 7
   secondTeamState:
     stabilityPoint: 14
     captureValue: 9
     maxValue: 14
     team: 2
-  neutralState:
-    stabilityPoint: 7
+  firstTeamState:
+    stabilityPoint: 0
+    captureValue: 5
+    maxValue: 0
+    team: 1
   capturePointValueText: {fileID: 9061201126332823269}
 --- !u!136 &7900784335748898549
 CapsuleCollider:
@@ -148,10 +148,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.875
+  m_Radius: 0.36
   m_Height: 51.23
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: -0.27}
 --- !u!1 &1127989891035819215
 GameObject:
   m_ObjectHideFlags: 0
