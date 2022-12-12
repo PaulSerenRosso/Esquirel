@@ -10,10 +10,23 @@ public class ActiveAttackCapacityFX : ActiveCapacityFX
   protected Champion.Champion champion;
   public override void InitCapacityFX(int entityIndex, byte capacityIndex)
   {
-    champion =(Champion.Champion) EntityCollectionManager.GetEntityByIndex(entityIndex);
     base.InitCapacityFX(entityIndex, capacityIndex);
-    ActiveAttackCapacity activeAttackCapacity = (ActiveAttackCapacity) champion.activeCapacities[capacityIndex];
-    transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack;
+    champion =(Champion.Champion) EntityCollectionManager.GetEntityByIndex(entityIndex);
+    ActiveAttackCapacity activeAttackCapacity;
+    if (capacityIndex == 255)
+      activeAttackCapacity = (ActiveAttackCapacity) champion.attackBase;
+      else
+    {
+      
+    activeAttackCapacity = (ActiveAttackCapacity) champion.activeCapacities[capacityIndex];
+    }
+    transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up*2;
+    
+    for (int i = 0; i < allParticleSystems.Length; i++)
+    {
+      var mainModule = allParticleSystems[i].main;
+      mainModule.simulationSpeed = 1/activeAttackCapacity.so.fxTime;
+    }
   }
   
   

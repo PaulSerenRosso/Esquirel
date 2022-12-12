@@ -7,12 +7,11 @@ namespace Entities.Capacities
 {
 public class ActiveAttackCapacityColliderRect : ActiveAttackCapacityCollider
 {
-    [SerializeField] private BoxCollider boxCollider;
     public override void InitCapacityCollider(ActiveCapacity activeCapacity)
     {
         base.InitCapacityCollider(activeCapacity);
-        ActiveAttackRectCapacity activeAttackRectCapacity =(ActiveAttackRectCapacity) activeCapacity;
-        ActiveAttackRectCapacitySO activeAttackRectCapacitySo = (ActiveAttackRectCapacitySO) activeAttackRectCapacity.so;
+        Debug.Log(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(activeCapacity.indexOfSOInCollection));
+        ActiveAttackRectCapacitySO activeAttackRectCapacitySo = (ActiveAttackRectCapacitySO) CapacitySOCollectionManager.GetActiveCapacitySOByIndex(activeCapacity.indexOfSOInCollection);
        transform.SetGlobalScale(new Coordinate[]
             { new Coordinate(CoordinateType.X, activeAttackRectCapacitySo.width), new Coordinate(CoordinateType.Z, activeAttackRectCapacitySo.height)});
     }

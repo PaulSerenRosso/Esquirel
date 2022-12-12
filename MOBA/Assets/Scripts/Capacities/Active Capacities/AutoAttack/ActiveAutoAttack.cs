@@ -9,10 +9,10 @@ using UnityEngine.Assertions.Must;
 public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
 {
     private ActiveAutoAttackSO activeAutoAttackSO;
-    
-    
-    private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher; 
-    
+
+
+    private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
+
     public float range;
     public float rangeSqrt;
 
@@ -37,19 +37,23 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
         champion.SetCanMoveRPC(true);
         champion.RequestCurrentResetCapacityUsed();
     }
-    
+
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if (onCooldown) return false; 
+        if (base.TryCast(targetsEntityIndexes, targetPositions))
+        {
+            InitiateCooldown();
+            InitiateFXTimer();
+            champion.SetCanMoveRPC(false);
+            champion.RequestRotateMeshChampion((targetPositions[0] - caster.transform.position).normalized);
+        }
 
-        InitiateCooldown();
-    champion.SetCanMoveRPC(false);
-    champion.RequestRotateMeshChampion((targetPositions[0] - caster.transform.position).normalized);
         return true;
     }
+
     public override void CancelCapacity()
     {
-       base.CancelCapacity();
+        base.CancelCapacity();
         champion.RequestCurrentResetCapacityUsed();
     }
 
@@ -58,10 +62,11 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
     {
         base.SetUpActiveCapacity(soIndex, caster);
 
-        activeAutoAttackSO = (ActiveAutoAttackSO)AssociatedActiveCapacitySO();
+        activeAutoAttackSO = (ActiveAutoAttackSO) AssociatedActiveCapacitySO();
         range = activeAutoAttackSO.maxRange;
         rangeSqrt = range * range;
     }
+
     public float GetMaxRange()
     {
         return range;
@@ -71,7 +76,6 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
     {
         return rangeSqrt;
     }
-
 
 
     /// <summary>

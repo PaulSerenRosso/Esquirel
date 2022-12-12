@@ -8,6 +8,8 @@ namespace Entities.Capacities
 {
 public class ActiveCapacityFX : Entity
 {
+    [SerializeField]
+    protected ParticleSystem[] allParticleSystems;
     [PunRPC]
     public void StartInitCapacityFX(int entityIndex, byte capacityIndex)
     {
@@ -15,7 +17,7 @@ public class ActiveCapacityFX : Entity
     }
     public virtual void InitCapacityFX(int entityIndex, byte capacityIndex)
     {
-        
+
         team = EntityCollectionManager.GetEntityByIndex(entityIndex).team;
     }
 

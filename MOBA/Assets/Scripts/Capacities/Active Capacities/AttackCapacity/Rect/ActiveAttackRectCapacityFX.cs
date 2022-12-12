@@ -14,8 +14,11 @@ namespace Entities.Capacities
   public override void InitCapacityFX(int entityIndex, byte capacityIndex)
   {
    base.InitCapacityFX( entityIndex, capacityIndex);
-   ActiveAttackRectCapacity activeAttackRectCapacity = (ActiveAttackRectCapacity) champion.activeCapacities[capacityIndex];
-   ActiveAttackRectCapacitySO activeAttackRectCapacitySo = (ActiveAttackRectCapacitySO)activeAttackRectCapacity.so;
+   ActiveCapacity capacity;
+   if (capacityIndex == 255)
+    capacity =champion.attackBase;
+   else   capacity = champion.activeCapacities[capacityIndex];
+   ActiveAttackRectCapacitySO activeAttackRectCapacitySo =(ActiveAttackRectCapacitySO) CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacity.indexOfSOInCollection);
  
  
    fxObject.transform.SetGlobalScale(new Coordinate[]

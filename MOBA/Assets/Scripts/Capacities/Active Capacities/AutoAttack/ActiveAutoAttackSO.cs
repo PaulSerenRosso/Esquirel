@@ -3,7 +3,7 @@ using Entities.Capacities;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/Auto Attack", fileName = "AutoAttackSO")]
-public class ActiveAutoAttackSO : ActiveAttackCapacitySO
+public class ActiveAutoAttackSO : ActiveAttackRectCapacitySO
 {
     public float maxRange;
     public override Type AssociatedType()
