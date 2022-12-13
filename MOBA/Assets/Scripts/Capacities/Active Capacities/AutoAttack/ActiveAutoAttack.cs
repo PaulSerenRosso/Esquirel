@@ -20,14 +20,12 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
     {
         base.InitiateCooldown();
         Debug.Log("bonsoir je suis tout le temps lu aussi");
-        champion.RequestToSetOnCooldownAttack(true);
     }
 
     public override void EndCooldown()
     {
         Debug.Log("bonsoir je suis tout le temps lu");
         base.EndCooldown();
-        champion.RequestToSetOnCooldownAttack(false);
     }
 
 
@@ -43,9 +41,9 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
         if (base.TryCast(targetsEntityIndexes, targetPositions))
         {
             InitiateCooldown();
+            champion.RequestRotateMeshChampion((targetPositions[0] - caster.transform.position).normalized);
             InitiateFXTimer();
             champion.SetCanMoveRPC(false);
-            champion.RequestRotateMeshChampion((targetPositions[0] - caster.transform.position).normalized);
         }
 
         return true;

@@ -63,6 +63,7 @@ namespace Entities.Champion
                 InputManager.PlayerMap.Capacity.Disable();
                 InputManager.PlayerMap.Inventory.Disable();
             agent.isStopped = true;
+            agent.enabled = false;
             }
             isAlive = false;
             canBeTargeted = false;
@@ -110,6 +111,7 @@ namespace Entities.Champion
                 InputManager.PlayerMap.Attack.Enable();
                 InputManager.PlayerMap.Capacity.Enable();
                 InputManager.PlayerMap.Inventory.Enable();
+            agent.enabled = true;
             agent.isStopped = false;
             agent.destination = transform.position;
             }

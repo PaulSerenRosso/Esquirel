@@ -147,6 +147,9 @@ namespace Entities.Champion
                     return;
                 }
             }
+            SetOnCooldownAttackRPC(value);
+           
+
         }
 
         public void RequestToEnqueueCapacityFX(byte capacityIndex)

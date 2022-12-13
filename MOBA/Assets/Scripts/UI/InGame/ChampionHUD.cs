@@ -161,8 +161,7 @@ public class ChampionHUD : MonoBehaviour
         spellHolderDict.Add(0, spellOneHolder);
         spellHolderDict.Add(1, spellTwoHolder);
         spellHolderDict.Add(2, ultimateHolder);
-
-        Debug.Log(so.activeCapacities.Length);
+        
         if (so.passiveCapacities.Length != 0)
             passiveHolder.Setup(so.passiveCapacities[0].icon);
         if (so.activeCapacities.Length > 0)
@@ -172,7 +171,7 @@ public class ChampionHUD : MonoBehaviour
        if (so.activeCapacities.Length > 1)
        {
         spellTwoHolder.Setup(so.activeCapacities[1].icon);
-        Debug.Log(so.activeCapacities[1].icon);
+        
        }
         if (so.ultimateAbility)
         {

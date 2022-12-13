@@ -66,7 +66,8 @@ namespace Entities.Champion
         [PunRPC]
         public void AttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
-            if ( attackBase.TryCast( targetedEntities, targetedPositions))
+            if(attackBase.onCooldown) return;
+                if ( attackBase.TryCast( targetedEntities, targetedPositions))
             {
                 CancelCurrentCapacity();
                 RequestSetCurrentCapacityUsedEqualToAttackBase();
@@ -83,6 +84,7 @@ namespace Entities.Champion
         public void SetOnCooldownAttackRPC( bool value)
         {
             attackBase.onCooldown = value;
+       
         }
         
         [PunRPC]

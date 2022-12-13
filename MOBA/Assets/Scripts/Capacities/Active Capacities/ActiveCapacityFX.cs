@@ -23,7 +23,6 @@ public class ActiveCapacityFX : Entity
 
     public void RequestInitCapacityFX(int entityIndex, byte capacityIndex)
     {
-        Debug.Log(photonView);
         photonView.RPC("StartInitCapacityFX", RpcTarget.All, entityIndex, capacityIndex  );
     }
     

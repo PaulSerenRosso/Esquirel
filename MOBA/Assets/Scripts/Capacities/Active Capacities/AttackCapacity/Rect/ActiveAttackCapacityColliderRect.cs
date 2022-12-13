@@ -10,7 +10,6 @@ public class ActiveAttackCapacityColliderRect : ActiveAttackCapacityCollider
     public override void InitCapacityCollider(ActiveCapacity activeCapacity)
     {
         base.InitCapacityCollider(activeCapacity);
-        Debug.Log(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(activeCapacity.indexOfSOInCollection));
         ActiveAttackRectCapacitySO activeAttackRectCapacitySo = (ActiveAttackRectCapacitySO) CapacitySOCollectionManager.GetActiveCapacitySOByIndex(activeCapacity.indexOfSOInCollection);
        transform.SetGlobalScale(new Coordinate[]
             { new Coordinate(CoordinateType.X, activeAttackRectCapacitySo.width), new Coordinate(CoordinateType.Z, activeAttackRectCapacitySo.height)});
