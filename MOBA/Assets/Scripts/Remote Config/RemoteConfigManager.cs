@@ -70,9 +70,21 @@ namespace RemoteConfig {
             variables.CHAMP01_AutoAttack.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_FxTime");
             
             //CAPACITY 01
-
-            //CAPACITY 02
+            variables.CHAMP01_CAPA01.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_Cooldown");
+            variables.CHAMP01_CAPA01.tpObjectCurveYPosition = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_YPosition");
+            variables.CHAMP01_CAPA01.tpObjectCurveTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_TimeLength");
+            variables.CHAMP01_CAPA01.referenceRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_ReferenceRange");
             
+            //CAPACITY 02
+            variables.CHAMP01_CAPA02.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_Cooldown");
+            variables.CHAMP01_CAPA02.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_FxTime");
+            variables.CHAMP01_CAPA02.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_DamageBeginTime");
+            variables.CHAMP01_CAPA02.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_DamageTime");
+            variables.CHAMP01_CAPA02.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_Damage");
+            variables.CHAMP01_CAPA02.offsetAttack = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_OffsetAttack");
+            variables.CHAMP01_CAPA02.height = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_Height");
+            variables.CHAMP01_CAPA02.width = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_Width");
+
             //ULTIMATE
         }
 
@@ -87,10 +99,24 @@ namespace RemoteConfig {
             variables.CHAMP02_BaseVariables.referenceMoveSpeed = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_BASE_MoveSpeed");
             
             //AUTO-ATTACK
-
+            variables.CHAMP02_AutoAttack.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Cooldown");
+            variables.CHAMP02_AutoAttack.maxRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_MaxRange");
+            variables.CHAMP02_AutoAttack.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Damage");
+            variables.CHAMP02_AutoAttack.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_DamageBeginTime");
+            variables.CHAMP02_AutoAttack.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_DamageTime");
+            variables.CHAMP02_AutoAttack.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_FxTime");
+            
             //CAPACITY 01
 
             //CAPACITY 02
+            variables.CHAMP02_CAPA02.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA02_Cooldown");
+            variables.CHAMP02_CAPA02.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA02_FxTime");
+            variables.CHAMP02_CAPA02.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA02_DamageBeginTime");
+            variables.CHAMP02_CAPA02.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA02_DamageTime");
+            variables.CHAMP02_CAPA02.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA02_Damage");
+            variables.CHAMP02_CAPA02.offsetAttack = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA02_OffsetAttack");
+            variables.CHAMP02_CAPA02.height = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA02_Height");
+            variables.CHAMP02_CAPA02.width = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA02_Width");
             
             //ULTIMATE
         }
@@ -99,6 +125,7 @@ namespace RemoteConfig {
         /// Set the variables of the generator
         /// </summary>
         private void SetGeneratorVariables() {
+            //CAPTURE POINT
             variables.generatorCapturePoint.baseViewRange = RemoteConfigService.Instance.appConfig.GetFloat("GEN_BaseViewRange");
             variables.generatorCapturePoint.viewRange = RemoteConfigService.Instance.appConfig.GetFloat("GEN_ViewRange");
             variables.generatorCapturePoint.capturePointSpeed = RemoteConfigService.Instance.appConfig.GetFloat("GEN_CapturePointSpeed");
@@ -109,12 +136,20 @@ namespace RemoteConfig {
             variables.generatorCapturePoint.secondTeamState.captureValue = RemoteConfigService.Instance.appConfig.GetFloat("GEN_TEAM02_CaptureValue");
             variables.generatorCapturePoint.secondTeamState.maxValue = RemoteConfigService.Instance.appConfig.GetFloat("GEN_TEAM02_MaxValue");
             variables.generatorCapturePoint.neutralState.stabilityPoint = RemoteConfigService.Instance.appConfig.GetFloat("GEN_NEUTRAL_StabilityPoint");
+            
+            //PRODUCTION
+            variables.generatorProduction.ressourceMax = RemoteConfigService.Instance.appConfig.GetFloat("GEN_PROD_ResourceMax");
+            variables.generatorProduction.ressourceMin = RemoteConfigService.Instance.appConfig.GetFloat("GEN_PROD_ResourceMin");
+            variables.generatorProduction.ressourceInitial = RemoteConfigService.Instance.appConfig.GetFloat("GEN_PROD_ResourceInitial");
+            variables.generatorProduction.timeBetweenTick = RemoteConfigService.Instance.appConfig.GetFloat("GEN_PROD_TimeBetweenTick");
+            variables.generatorProduction.ressourceAmountPerTick = RemoteConfigService.Instance.appConfig.GetFloat("GEN_PROD_ResourceAmountPerTick");
         }
 
         /// <summary>
         /// Set the variables of the relai
         /// </summary>
         private void SetRelaiVariables() {
+            //CAPTURE POINT
             variables.relaiCapturePoint.baseViewRange = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_BaseViewRange");
             variables.relaiCapturePoint.viewRange = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_ViewRange");
             variables.relaiCapturePoint.capturePointSpeed = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_CapturePointSpeed");
@@ -125,6 +160,13 @@ namespace RemoteConfig {
             variables.relaiCapturePoint.secondTeamState.captureValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_TEAM02_CaptureValue");
             variables.relaiCapturePoint.secondTeamState.maxValue = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_TEAM02_MaxValue");
             variables.relaiCapturePoint.neutralState.stabilityPoint = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_NEUTRAL_StabilityPoint");
+            
+            //PRODUCTION
+            variables.relaiProduction.ressourceMax = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceMax");
+            variables.relaiProduction.ressourceMin = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceMin");
+            variables.relaiProduction.ressourceInitial = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceInitial");
+            variables.relaiProduction.timeBetweenTick = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_TimeBetweenTick");
+            variables.relaiProduction.ressourceAmountPerTick = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceAmountPerTick");
         }
     }
 }
