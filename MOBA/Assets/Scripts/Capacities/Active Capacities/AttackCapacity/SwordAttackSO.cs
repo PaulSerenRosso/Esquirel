@@ -6,11 +6,12 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
-public class SwordAttackCapacitySO : ActiveCapacitySO
+    [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/Sword Attack", fileName = "Sword Attack")]
+public class SwordAttackSO : ActiveAttackRectCapacitySO
 {
     public override Type AssociatedType()
     {
-        return typeof(AttackCapacity);
+        return typeof(SwordAttack);
     }
 }
 }

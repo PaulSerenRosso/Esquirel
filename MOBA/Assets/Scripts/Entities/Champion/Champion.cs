@@ -183,6 +183,7 @@ namespace Entities.Champion
         [PunRPC]
         void ChangeBoolParameterAnimator(string parameterName, bool value)
         {
+            
             animator.SetBool(parameterName, value);
         }
         

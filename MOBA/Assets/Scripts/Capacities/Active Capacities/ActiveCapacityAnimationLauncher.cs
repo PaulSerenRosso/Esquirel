@@ -32,7 +32,6 @@ public class ActiveCapacityAnimationLauncher
     public virtual  void CancelAnimationTimer()
     {
         caster.RequestChangeBoolParameterAnimator(animatorParameterName, false);
-        Debug.Log("bonsoir je test ic ");
         GameStateMachine.Instance.OnTick -= TickAnimationTimer;
     }
         
