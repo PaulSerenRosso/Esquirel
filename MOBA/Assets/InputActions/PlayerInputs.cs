@@ -143,6 +143,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Capacity3"",
+                    ""type"": ""Button"",
+                    ""id"": ""8026275b-0b3b-47de-8543-9ab4dbed675d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""PrevisualisableCapacity0"",
                     ""type"": ""Button"",
                     ""id"": ""fa06ff83-0b5b-49d5-b084-2364a1968652"",
@@ -164,6 +173,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""name"": ""PrevisualisableCapacity2"",
                     ""type"": ""Button"",
                     ""id"": ""bc0cc3e6-6ddb-4fb9-80bc-e86b4771cbf1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrevisualisableCapacity3"",
+                    ""type"": ""Button"",
+                    ""id"": ""5eda6fd2-ae00-4697-8d8f-bed5f2fd2094"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -196,7 +214,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9023c4ba-5907-4e90-8ea0-9568be0c0c2b"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -234,6 +252,28 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PrevisualisableCapacity2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""84288946-d22e-4752-b707-38cd7ff5807a"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Capacity3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48690e1c-db34-4db2-b69d-d05b44b423e0"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrevisualisableCapacity3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -437,9 +477,11 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Capacity_Capacity0 = m_Capacity.FindAction("Capacity0", throwIfNotFound: true);
         m_Capacity_Capacity1 = m_Capacity.FindAction("Capacity1", throwIfNotFound: true);
         m_Capacity_Capacity2 = m_Capacity.FindAction("Capacity2", throwIfNotFound: true);
+        m_Capacity_Capacity3 = m_Capacity.FindAction("Capacity3", throwIfNotFound: true);
         m_Capacity_PrevisualisableCapacity0 = m_Capacity.FindAction("PrevisualisableCapacity0", throwIfNotFound: true);
         m_Capacity_PrevisualisableCapacity1 = m_Capacity.FindAction("PrevisualisableCapacity1", throwIfNotFound: true);
         m_Capacity_PrevisualisableCapacity2 = m_Capacity.FindAction("PrevisualisableCapacity2", throwIfNotFound: true);
+        m_Capacity_PrevisualisableCapacity3 = m_Capacity.FindAction("PrevisualisableCapacity3", throwIfNotFound: true);
         // Inventory
         m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
         m_Inventory_ActivateItem0 = m_Inventory.FindAction("ActivateItem0", throwIfNotFound: true);
@@ -582,9 +624,11 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Capacity_Capacity0;
     private readonly InputAction m_Capacity_Capacity1;
     private readonly InputAction m_Capacity_Capacity2;
+    private readonly InputAction m_Capacity_Capacity3;
     private readonly InputAction m_Capacity_PrevisualisableCapacity0;
     private readonly InputAction m_Capacity_PrevisualisableCapacity1;
     private readonly InputAction m_Capacity_PrevisualisableCapacity2;
+    private readonly InputAction m_Capacity_PrevisualisableCapacity3;
     public struct CapacityActions
     {
         private @PlayerInputs m_Wrapper;
@@ -592,9 +636,11 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @Capacity0 => m_Wrapper.m_Capacity_Capacity0;
         public InputAction @Capacity1 => m_Wrapper.m_Capacity_Capacity1;
         public InputAction @Capacity2 => m_Wrapper.m_Capacity_Capacity2;
+        public InputAction @Capacity3 => m_Wrapper.m_Capacity_Capacity3;
         public InputAction @PrevisualisableCapacity0 => m_Wrapper.m_Capacity_PrevisualisableCapacity0;
         public InputAction @PrevisualisableCapacity1 => m_Wrapper.m_Capacity_PrevisualisableCapacity1;
         public InputAction @PrevisualisableCapacity2 => m_Wrapper.m_Capacity_PrevisualisableCapacity2;
+        public InputAction @PrevisualisableCapacity3 => m_Wrapper.m_Capacity_PrevisualisableCapacity3;
         public InputActionMap Get() { return m_Wrapper.m_Capacity; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -613,6 +659,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Capacity2.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity2;
                 @Capacity2.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity2;
                 @Capacity2.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity2;
+                @Capacity3.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity3;
+                @Capacity3.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity3;
+                @Capacity3.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity3;
                 @PrevisualisableCapacity0.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity0;
                 @PrevisualisableCapacity0.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity0;
                 @PrevisualisableCapacity0.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity0;
@@ -622,6 +671,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @PrevisualisableCapacity2.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity2;
                 @PrevisualisableCapacity2.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity2;
                 @PrevisualisableCapacity2.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity2;
+                @PrevisualisableCapacity3.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity3;
+                @PrevisualisableCapacity3.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity3;
+                @PrevisualisableCapacity3.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnPrevisualisableCapacity3;
             }
             m_Wrapper.m_CapacityActionsCallbackInterface = instance;
             if (instance != null)
@@ -635,6 +687,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Capacity2.started += instance.OnCapacity2;
                 @Capacity2.performed += instance.OnCapacity2;
                 @Capacity2.canceled += instance.OnCapacity2;
+                @Capacity3.started += instance.OnCapacity3;
+                @Capacity3.performed += instance.OnCapacity3;
+                @Capacity3.canceled += instance.OnCapacity3;
                 @PrevisualisableCapacity0.started += instance.OnPrevisualisableCapacity0;
                 @PrevisualisableCapacity0.performed += instance.OnPrevisualisableCapacity0;
                 @PrevisualisableCapacity0.canceled += instance.OnPrevisualisableCapacity0;
@@ -644,6 +699,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @PrevisualisableCapacity2.started += instance.OnPrevisualisableCapacity2;
                 @PrevisualisableCapacity2.performed += instance.OnPrevisualisableCapacity2;
                 @PrevisualisableCapacity2.canceled += instance.OnPrevisualisableCapacity2;
+                @PrevisualisableCapacity3.started += instance.OnPrevisualisableCapacity3;
+                @PrevisualisableCapacity3.performed += instance.OnPrevisualisableCapacity3;
+                @PrevisualisableCapacity3.canceled += instance.OnPrevisualisableCapacity3;
             }
         }
     }
@@ -800,9 +858,11 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnCapacity0(InputAction.CallbackContext context);
         void OnCapacity1(InputAction.CallbackContext context);
         void OnCapacity2(InputAction.CallbackContext context);
+        void OnCapacity3(InputAction.CallbackContext context);
         void OnPrevisualisableCapacity0(InputAction.CallbackContext context);
         void OnPrevisualisableCapacity1(InputAction.CallbackContext context);
         void OnPrevisualisableCapacity2(InputAction.CallbackContext context);
+        void OnPrevisualisableCapacity3(InputAction.CallbackContext context);
     }
     public interface IInventoryActions
     {
