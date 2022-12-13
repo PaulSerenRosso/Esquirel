@@ -82,7 +82,8 @@ namespace Entities.Champion
                 agent.enabled = true;
                 moveDestination = transform.position;
                 agent.speed = currentMoveSpeed;
-                agent.SetDestination(transform.position);
+                
+             
             }
             //NavMeshBuilder.ClearAllNavMeshes();
             //NavMeshBuilder.BuildNavMesh();
