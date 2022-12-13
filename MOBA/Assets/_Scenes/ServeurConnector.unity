@@ -379,10 +379,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generatorCapturePoint: {fileID: 11400000, guid: d0a4e117580c6f14eb35ef08c092dd0a, type: 2}
   relaiCapturePoint: {fileID: 11400000, guid: 54a79a3e06e0e24468f25479eedb9581, type: 2}
+  relaiProduction: {fileID: 11400000, guid: f9477f62550293c4e9e920f17249ae26, type: 2}
+  generatorProduction: {fileID: 11400000, guid: f732d07e9fa77d641b9aa59683a4b11c, type: 2}
   CHAMP01_BaseVariables: {fileID: 11400000, guid: 09a5f4fc328facc46b8df84dc8d1fbe7, type: 2}
   CHAMP01_AutoAttack: {fileID: 11400000, guid: e339005550fb5fc42bcd3dad960bae2e, type: 2}
+  CHAMP01_CAPA01: {fileID: 11400000, guid: 558a7149786ab434c8b4a989c808974e, type: 2}
+  CHAMP01_CAPA02: {fileID: 11400000, guid: 58376b91df0d9a94490ed2d720806b7f, type: 2}
   CHAMP02_BaseVariables: {fileID: 11400000, guid: 2c32bd83db976c344a82bd0dbb225626, type: 2}
   CHAMP02_AutoAttack: {fileID: 11400000, guid: 21c7c14e005d4cc4f8470bf9a61776e2, type: 2}
+  CHAMP02_CAPA01: {fileID: 0}
+  CHAMP02_CAPA02: {fileID: 11400000, guid: ad595481d827f564e92f1c7118532bda, type: 2}
 --- !u!114 &366040051
 MonoBehaviour:
   m_ObjectHideFlags: 0
