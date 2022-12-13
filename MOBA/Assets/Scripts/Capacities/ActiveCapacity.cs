@@ -19,17 +19,15 @@ namespace Entities.Capacities
      
        protected virtual void InitiateFXTimer()
         {
-            
             fxTimer = AssociatedActiveCapacitySO().fxTime;
             GameStateMachine.Instance.OnTick += TickFxTimer;
+            
         }
        protected void TickFxTimer()
         {
             fxTimer -= 1.0 / GameStateMachine.Instance.tickRate;
             if (fxTimer <= 0)
             {
-                // fx timer 
-
                 CancelFXTimer();
             }
         }

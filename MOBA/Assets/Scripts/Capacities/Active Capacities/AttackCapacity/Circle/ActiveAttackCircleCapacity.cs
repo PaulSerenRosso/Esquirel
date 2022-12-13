@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
-public class AttackFX : ActiveCapacityFX
-{
-  
-}
+    public class ActiveAttackCircleCapacity: ActiveAttackWithPrevisualisableCapacity
+    {
+        
+    }
 }

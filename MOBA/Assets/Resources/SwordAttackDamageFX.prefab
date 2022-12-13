@@ -1361,8 +1361,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0, b: 0, a: 1}
-        key1: {r: 0, g: 0.1451273, b: 1, a: 1}
+        key0: {r: 0, g: 0.26041698, b: 1, a: 1}
+        key1: {r: 1, g: 0.71657264, b: 0, a: 1}
         key2: {r: 0, g: 0.1451273, b: 1, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -4873,9 +4873,9 @@ GameObject:
   - component: {fileID: 6399138209464040742}
   - component: {fileID: 5131993104318608311}
   - component: {fileID: 7451711762720744311}
-  - component: {fileID: 8402012246838916218}
+  - component: {fileID: 2386609691527878384}
   m_Layer: 16
-  m_Name: AutoAttackDamageFX
+  m_Name: SwordAttackDamageFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4930,8 +4930,8 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0.5}
---- !u!114 &8402012246838916218
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2386609691527878384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
