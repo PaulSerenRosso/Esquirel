@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AlgebraHelpers;
 using Controllers;
 using Entities.Capacities;
 using Entities.FogOfWar;
@@ -217,6 +218,24 @@ namespace Entities.Champion
         void ResetCurrentCapacityUsed()
         {
             currentCapacityUsed = null;
+        }
+
+        public void RequestIncreaseHealAmountOfPerseverance(float amount)
+        {
+            photonView.RPC("IncreaseHealAmountOfPerseverance", RpcTarget.MasterClient, amount);
+        }
+
+        [PunRPC]
+        public void IncreaseHealAmountOfPerseverance(float amount)
+        {
+            PassivePerseverance passivePerseverance = (PassivePerseverance)passiveCapacitiesList[0];
+            passivePerseverance.healPercentage += amount;
+            Debug.Log(passivePerseverance.healPercentage);
+            if(!passivePerseverance.healPercentage.IsClamp(0 ,1))
+            {
+                passivePerseverance.healPercentage = 1; 
+    
+            }
         }
     }
 }

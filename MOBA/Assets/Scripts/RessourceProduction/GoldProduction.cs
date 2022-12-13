@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using CapturePoint;
+using GameStates;
 using Photon.Pun;
 using RessourceProduction;
 using UnityEngine;
@@ -30,6 +31,7 @@ public class GoldProduction : CapturePointTickProduction<float, GoldProductionSO
        photonView.RPC("DecreaseRessource", RpcTarget.MasterClient, amount);
     }
 
+    [PunRPC]
     public override void DecreaseRessource(float amount)
     {
         Ressource -= amount;
@@ -39,7 +41,7 @@ public class GoldProduction : CapturePointTickProduction<float, GoldProductionSO
 
     public override void UpdateFeedback()
     {
-        if(uiManager != null)
+        if(uiManager != null && GameStateMachine.Instance.GetPlayerTeam() == team)
         uiManager.UpdateGoldText(ressource);
     }
 }
