@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T3_Terrain:
-        m_Texture: {fileID: 2800000, guid: 67574e7a5a39fb54eaef3c4efe768356, type: 3}
+        m_Texture: {fileID: 2800000, guid: ceb1bacd3e5dc9b4cb4b85eb1a74cfb6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T3_TerrainNAOH:
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T4_Terrain:
-        m_Texture: {fileID: 2800000, guid: 401bbb72c9170f343bd105e06e7880b0, type: 3}
+        m_Texture: {fileID: 2800000, guid: ceb1bacd3e5dc9b4cb4b85eb1a74cfb6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T4_TerrainNAOH:
@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TerrainMask_VertexPaint:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 61bcabd8649009f41850e63708dd1066, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -62,19 +62,31 @@ Material:
     m_Floats:
     - _AddVertexPaintingToMask: 1
     - _AlphaCutoff: 0.5
+    - _ColorIntensity: 2
     - _DebugVertexPaintingAdding: 1
+    - _DesaturateDebug: 0
+    - _EnvironmentReflections: 1
+    - _FlipTexture: 0
     - _GrayscaleDebug: 0
+    - _Metallic: 0
     - _NormalDebug: 0
-    - _T1_ProceduralTiling1: 0
+    - _ReceiveShadows: 1
+    - _Smoothness: 0
+    - _SpecularHighlights: 1
+    - _T1_ProceduralTiling1: 1
     - _T1_Tiling1: 14.5
     - _T2_ProceduralTiling1: 0
     - _T2_Tilling1: 6.6
     - _T3_ProceduralTiling1: 0
-    - _T3_Tilling1: 42
+    - _T3_Tilling1: 7.7
     - _T4_ProceduralTiling1: 0
-    - _T4_Tilling1: 17.6
+    - _T4_Tilling1: 3.8
+    - _ThresholdDebug: 1
+    - _UseVertexPainting: 0
     - _VertexPaintDebug: 0
     - _VertexPaintingAddingDebug: 0
     m_Colors:
+    - _Color0: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainTint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
