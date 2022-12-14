@@ -41,6 +41,7 @@ namespace Entities.FogOfWar
         [Header("Camera and Scene Setup")] public Camera cameraFog;
         public List<string> sceneToRenderFog;
 
+        [SerializeField] private float startYPositionRay;
         [Header("Fog Of War Parameter")] [Tooltip("Color for the area where the player can't see")]
         public Color fogColor = new Color(0.25f, 0.25f, 0.25f, 1f);
 
@@ -108,6 +109,10 @@ namespace Entities.FogOfWar
             allViewables.Remove(viewable);
             currentViewablesWithEntitiesShowables.Remove(viewable);
             viewable.meshFilterFoV.gameObject.SetActive(false);
+            for (int i = 0; i < viewable.seenShowables.Count; i++)
+            {
+                viewable.RemoveShowable(viewable.seenShowables[i]);
+            }
         }
 
 
@@ -251,7 +256,7 @@ namespace Entities.FogOfWar
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
             RaycastHit[] hits = new RaycastHit[2];
 
-            int hitsCount = Physics.RaycastNonAlloc(entity.fogOfWarStartDetection.position, dir, hits, entity.viewRange,
+            int hitsCount = Physics.RaycastNonAlloc(new Vector3(entity.transform.position.x,startYPositionRay ,entity.transform.position.z) , dir, hits, entity.viewRange,
                 layerObstacleFogOfWar);
             Debug.Log(hits.Length);
             for (int i = 0; i < hits.Length; i++)
@@ -293,16 +298,18 @@ namespace Entities.FogOfWar
         ViewCastInfo ViewCastEntity(float globalAngle, Entity entity)
         {
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
-            RaycastHit[] hits = Physics.RaycastAll(entity.fogOfWarStartDetection.position, dir, entity.viewRange,
+            RaycastHit[] hits = Physics.RaycastAll(new Vector3(entity.transform.position.x,startYPositionRay ,entity.transform.position.z), dir, entity.viewRange,
                 layerTargetFogOfWar);
 
             fieldOfViewObstacles.Clear();
 
 
+            Debug.Log(entity.name + "hit" +hits.Length);
             if (hits.Length != 0)
             {
                 for (int i = 0; i < hits.Length; i++)
                 {
+                    Debug.Log(entity.name + "hit" +hits[i].collider.gameObject.name);
                     if (IsInLayerMask(hits[i].collider.gameObject, layerObstacleFogOfWar))
                     {
                         Bush bush = hits[i].collider.GetComponent<Bush>();

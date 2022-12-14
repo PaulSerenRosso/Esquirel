@@ -7,9 +7,9 @@ using UnityEngine;
 public class Timer
 {
     private double timer;
-    public event GlobalDelegates.NoParameterDelegate initiateTimerEvent;
-    public event GlobalDelegates.NoParameterDelegate tickTimerEvent;
-    public event GlobalDelegates.NoParameterDelegate cancelTimerEvent;
+    public event GlobalDelegates.NoParameterDelegate InitiateTimerEvent;
+    public event GlobalDelegates.NoParameterDelegate TickTimerEvent;
+    public event GlobalDelegates.NoParameterDelegate CancelTimerEvent;
     public float time;
 
     public Timer(float time)
@@ -18,7 +18,7 @@ public class Timer
     }
     public void InitiateTimer()
     {
-        initiateTimerEvent?.Invoke();
+        InitiateTimerEvent?.Invoke();
         GameStateMachine.Instance.OnTick += TickTimer;
         timer = time;
     }
@@ -28,13 +28,13 @@ public class Timer
         timer -= 1.0 / GameStateMachine.Instance.tickRate;
         if (timer <= 0)
         {
-            tickTimerEvent?.Invoke();
+            TickTimerEvent?.Invoke();
         }
     }
 
     public void CancelTimer()
     {
         
-        cancelTimerEvent?.Invoke();
+        CancelTimerEvent?.Invoke();
     }
 }

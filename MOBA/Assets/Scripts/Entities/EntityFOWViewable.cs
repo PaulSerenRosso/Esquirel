@@ -21,8 +21,7 @@ namespace Entities
         public bool canView;
         public List<IFOWShowable> seenShowables = new List<IFOWShowable>();
         public MeshFilter meshFilterFoV;
-       public Transform fogOfWarStartDetection;
-        
+
         public Enums.Team GetTeam()
         {
             return team;
@@ -116,12 +115,13 @@ namespace Entities
             photonView.RPC("SyncSetViewAngleRPC", RpcTarget.MasterClient, value);
         }
 
+        [PunRPC]
         public void SyncSetViewAngleRPC(float value)
         {
             viewAngle = value;
             OnSetViewAngleFeedback?.Invoke(value);
         }
-
+        [PunRPC]
         public void SetViewAngleRPC(float value)
         {
             viewAngle = value;
@@ -169,6 +169,7 @@ namespace Entities
         {
             if (seenShowables.Contains(showable)) return;
             if(!CheckBushCondition(showable)) return;
+            Debug.Log(gameObject.name + showable);
                 seenShowables.Add(showable);
             //Debug.Log("seen Showable Add");
             showable.TryAddFOWViewable(this);

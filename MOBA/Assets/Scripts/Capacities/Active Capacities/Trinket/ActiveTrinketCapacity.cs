@@ -11,12 +11,12 @@ namespace Entities.Capacities
     {
         private bool canDraw = true;
         private bool isDrawing = false;
-        private ActiveTrinketCapacitySO so;
+        public ActiveTrinketCapacitySO so;
         private Champion.Champion champion;
         private Trinket currentTrinket;
         private bool canSpawn;
-        private NavMeshHit navMeshHit;
         private Vector3 spawnPosition;
+        private RaycastHit hit;
         
       public virtual void EnableDrawing()
         {
@@ -30,21 +30,25 @@ namespace Entities.Capacities
             isDrawing = false;
             canDraw = false;
             UIManager.Instance.ChangeCursorSpriteToBaseSprite();
+            UIManager.Instance.ChangeCursorSpriteColor(Color.white);
+            GameStateMachine.Instance.OnUpdate -= CheckWorldCursorPositionIsInNavmesh;
         }
 
         public void CheckWorldCursorPositionIsInNavmesh()
         {
-            if (NavMesh.SamplePosition(InputManager.inputMouseWorldPosition, out navMeshHit,
-                    so.toleranceNavmeshDetection, 1))
+            var mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(mouseRay, out hit, so.trinketDetectionDistance, so.trinketDetectionMask))
             {
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Floor"))
+                {
                 canSpawn =true;
-                spawnPosition = navMeshHit.position;
+                spawnPosition = hit.point;
+                UIManager.Instance.ChangeCursorSpriteColor(Color.white);
+                return;
+                }
             }
-            else
-            {
-                canSpawn = false;
-                
-            }
+            canSpawn = false;
+            UIManager.Instance.ChangeCursorSpriteColor(Color.grey);
             
         }
     
@@ -71,13 +75,19 @@ namespace Entities.Capacities
         public virtual bool TryCastWithPrevisualisableData(int[] targetsEntityIndexes, Vector3[] targetPositions,
             params object[] previsualisableParameters)
         {
-             
-            return TryCast(targetsEntityIndexes, targetPositions);
+            canSpawn = (bool)previsualisableParameters[0];
+            if (canSpawn)
+            {
+                spawnPosition =(Vector3) previsualisableParameters[1];
+                return TryCast(targetsEntityIndexes, targetPositions);
+            }
+            champion.RequestToSetCanDrawCapacity(indexOfSOInCollection, true);
+            return false;
         }
     
         public virtual object[] GetPrevisualisableData()
         {
-            return null;
+            return new []{(object) canSpawn, spawnPosition};
         }
     
         public override void SetUpActiveCapacity(byte soIndex, Entity caster)
@@ -95,15 +105,28 @@ namespace Entities.Capacities
         {
             if (!onCooldown)
             {
-                if (canSpawn)
-                {
+               
+                    InitiateCooldown();
                 currentTrinket = (Trinket) PoolNetworkManager.Instance.PoolInstantiate(so.trinketPrefab, spawnPosition,
                     Quaternion.identity);
+                currentTrinket.InitTrinket(this);
                 return true;
-                }
+
             }
 
             return false;
+        }
+
+        public override void InitiateCooldown()
+        {
+            base.InitiateCooldown();
+            champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, true);
+        }
+
+        public override void EndCooldown()
+        {
+            base.EndCooldown();
+            champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, false);
         }
 
         public override void CancelCapacity()
@@ -115,7 +138,7 @@ namespace Entities.Capacities
         {
             if (index == indexOfSOInCollection)
                 canDraw = true;
-            GameStateMachine.Instance.OnUpdate -= CheckWorldCursorPositionIsInNavmesh;
+   
         }
     }
 }

@@ -29,7 +29,7 @@ public class PassiveSpeed : PassiveCapacity
         speedDurationTimer = new Timer(so.time);
         this.target = target;
         speedDurationTimer.InitiateTimer();
-        speedDurationTimer.tickTimerEvent +=
+        speedDurationTimer.TickTimerEvent +=
             EndMove;
     }
 

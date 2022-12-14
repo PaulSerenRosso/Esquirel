@@ -4966,7 +4966,6 @@ MonoBehaviour:
   viewAngle: 0
   canView: 0
   meshFilterFoV: {fileID: 0}
-  fogOfWarStartDetection: {fileID: 0}
   allParticleSystems:
   - {fileID: 2779714049642991591}
   fxObject: {fileID: 2779714049642991588}
