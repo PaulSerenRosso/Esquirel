@@ -7,6 +7,6 @@ public class TimerOneCount : Timer
 {
     public TimerOneCount(float time) : base(time)
     {
-        tickTimerEvent += delegate {   GameStateMachine.Instance.OnTick -= TickTimer; }; 
+        TickTimerEvent += delegate {   GameStateMachine.Instance.OnTick -= TickTimer; }; 
     }
 }

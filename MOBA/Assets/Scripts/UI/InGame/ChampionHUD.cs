@@ -15,10 +15,12 @@ public class ChampionHUD : MonoBehaviour
     [SerializeField] private Image spellPassive;
     [SerializeField] private Image spellOne;
     [SerializeField] private Image spellTwo;
+    [SerializeField] private Image spellThree;
     [SerializeField] private Image spellUltimate;
     [SerializeField] private Image spellPassiveCooldown;
     [SerializeField] private Image spellOneCooldown;
     [SerializeField] private Image spellTwoCooldown;
+    [SerializeField] private Image spellThreeCooldown;
     [SerializeField] private Image spellUltimateCooldown;
     private Champion champion;
     private IResourceable resourceable;
@@ -57,7 +59,7 @@ public class ChampionHUD : MonoBehaviour
                 GameStateMachine.Instance.OnTickFeedback += TickClient;
             }
 
-            
+
             void TickMaster()
             {
                 timer += 1.0 / tckRate;
@@ -74,10 +76,11 @@ public class ChampionHUD : MonoBehaviour
 
                 spellCooldown.fillAmount = 0;
             }
+
             void TickClient(double timeDiff)
             {
                 timer += timeDiff;
-             
+
                 spellCooldown.fillAmount = 1 - (float)(timer / coolDown);
                 if (!(timer > coolDown)) return;
                 if (PhotonNetwork.IsMasterClient)
@@ -153,29 +156,40 @@ public class ChampionHUD : MonoBehaviour
             spellIcon = spellTwo,
             spellCooldown = spellTwoCooldown
         };
+        var spellThreeHolder = new SpellHolder
+        {
+            spellIcon = spellThree,
+            spellCooldown = spellThreeCooldown
+        };
         var ultimateHolder = new SpellHolder
         {
             spellIcon = spellUltimate,
             spellCooldown = spellUltimateCooldown
         };
+
         spellHolderDict.Add(0, spellOneHolder);
         spellHolderDict.Add(1, spellTwoHolder);
-        spellHolderDict.Add(2, ultimateHolder);
-        
+        spellHolderDict.Add(2, spellThreeHolder);
+        spellHolderDict.Add(3, ultimateHolder);
+
         if (so.passiveCapacities.Length != 0)
             passiveHolder.Setup(so.passiveCapacities[0].icon);
         if (so.activeCapacities.Length > 0)
         {
-           spellOneHolder.Setup(so.activeCapacities[0].icon);
+            spellOneHolder.Setup(so.activeCapacities[0].icon);
         }
-       if (so.activeCapacities.Length > 1)
-       {
-        spellTwoHolder.Setup(so.activeCapacities[1].icon);
-        
-       }
+
+        if (so.activeCapacities.Length > 1)
+        {
+            spellTwoHolder.Setup(so.activeCapacities[1].icon);
+        }
+
+        if (so.activeCapacities.Length > 2)
+            spellThreeHolder.Setup(so.activeCapacities[2].icon);
+
         if (so.ultimateAbility)
         {
-        ultimateHolder.Setup(so.ultimateAbility.icon);
+            ultimateHolder.Setup(so.ultimateAbility.icon);
         }
     }
 

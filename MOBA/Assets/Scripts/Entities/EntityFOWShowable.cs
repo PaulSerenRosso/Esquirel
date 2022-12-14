@@ -152,7 +152,8 @@ namespace  Entities
                 materialColor.a =  graphicsToShowAlpha[i];
                 graphicsToShow[i].color = materialColor;
             }
-           // Debug.Log("showelement" + this.gameObject.name);
+            
+            Debug.Log("showelement" + this.gameObject.name);
             OnShowElementFeedback?.Invoke();
         }
 
@@ -216,7 +217,9 @@ namespace  Entities
                 var materialColor = graphicsToShow[i].color;
                 materialColor.a = 0;
                 graphicsToShow[i].color = materialColor;
+                
             }
+            Debug.Log("showelement" + this.gameObject.name);
             OnHideElementFeedback?.Invoke();
         }
 

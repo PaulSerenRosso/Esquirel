@@ -177,6 +177,7 @@ MonoBehaviour:
   - InGameScene
   - _FogOfWarDebugTest
   - FOG_InGameScene
+  startYPositionRay: 0.5
   fogColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   layerTargetFogOfWar:
     serializedVersion: 2

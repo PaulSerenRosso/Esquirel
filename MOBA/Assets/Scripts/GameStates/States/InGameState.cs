@@ -7,7 +7,7 @@ namespace GameStates.States
         public InGameState(GameStateMachine sm) : base(sm) { }
 
         private double timer;
-
+        
         public override void StartState()
         {
             InputManager.EnablePlayerMap(true);
@@ -15,6 +15,7 @@ namespace GameStates.States
 
         public override void UpdateState()
         {
+            sm.OnUpdate?.Invoke();
             if (!sm.IsMaster) return;
 
             if (IsWinConditionChecked())

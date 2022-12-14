@@ -57,6 +57,11 @@ namespace Controllers.Inputs
             
             champion.RequestCast(1, selectedEntity, cursorWorldPos);
         }
+        private void OnActivateCapacity2(InputAction.CallbackContext ctx)
+        {
+            
+            champion.RequestCast(2, selectedEntity, cursorWorldPos);
+        }
 
         /// <summary>
         /// Actions Performed on Capacity 2 Activation
@@ -64,7 +69,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast(2, selectedEntity, cursorWorldPos);
+            champion.RequestCast(3, selectedEntity, cursorWorldPos);
         }
         
         private void OnPrintCapacity0Previsualisable(InputAction.CallbackContext ctx)
@@ -77,9 +82,14 @@ namespace Controllers.Inputs
             champion.LaunchCapacityWithPrevisualisable(1, selectedEntity, cursorWorldPos);
         }
         
-        private void OnPrintUltimatePrevisualisable(InputAction.CallbackContext ctx)
+        private void OnPrintCapacity2Previsualisable(InputAction.CallbackContext ctx)
         {
             champion.LaunchCapacityWithPrevisualisable(2, selectedEntity, cursorWorldPos);
+        }
+        
+        private void OnPrintUltimatePrevisualisable(InputAction.CallbackContext ctx)
+        {
+            champion.LaunchCapacityWithPrevisualisable(3, selectedEntity, cursorWorldPos);
         }
   
         /// <summary>
@@ -226,19 +236,18 @@ namespace Controllers.Inputs
 
             inputs.Capacity.Capacity0.performed += OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
-            inputs.Capacity.Capacity2.performed += OnActivateUltimateAbility;
+            inputs.Capacity.Capacity2.performed += OnActivateCapacity2;
+            inputs.Capacity.Capacity3.performed += OnActivateUltimateAbility;
             inputs.Capacity.PrevisualisableCapacity0.performed += OnPrintCapacity0Previsualisable;
             inputs.Capacity.PrevisualisableCapacity1.performed += OnPrintCapacity1Previsualisable;
-            inputs.Capacity.PrevisualisableCapacity2.performed += OnPrintUltimatePrevisualisable;
-            
-
+            inputs.Capacity.PrevisualisableCapacity2.performed += OnPrintCapacity2Previsualisable;
+            inputs.Capacity.PrevisualisableCapacity3.performed += OnPrintUltimatePrevisualisable;
 
             inputs.MoveMouse.ActiveButton.performed += OnMouseClick;
             inputs.MoveMouse.ActiveButton.started += context => isActivebuttonPress = true;
             inputs.MoveMouse.ActiveButton.canceled += context => isActivebuttonPress = false;
 
             inputsAreLinked = true;
-
 
             inputs.Inventory.ActivateItem0.performed += OnActivateItem0;
             inputs.Inventory.ActivateItem1.performed += OnActivateItem1;
@@ -253,15 +262,14 @@ namespace Controllers.Inputs
             inputsAreLinked = false; 
             inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
-            inputs.Capacity.Capacity2.performed -= OnActivateUltimateAbility;
+            inputs.Capacity.Capacity2.performed -= OnActivateCapacity2;
+            inputs.Capacity.Capacity3.performed -= OnActivateUltimateAbility;
             inputs.Capacity.PrevisualisableCapacity0.performed -= OnPrintCapacity0Previsualisable;
             inputs.Capacity.PrevisualisableCapacity1.performed -= OnPrintCapacity1Previsualisable;
-            inputs.Capacity.PrevisualisableCapacity2.performed -= OnPrintUltimatePrevisualisable;
+            inputs.Capacity.PrevisualisableCapacity2.performed -= OnPrintCapacity2Previsualisable;
+            inputs.Capacity.PrevisualisableCapacity3.performed -= OnPrintUltimatePrevisualisable;
             inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
-
             inputs.MoveMouse.ActiveButton.performed -= OnMouseClick;
-
-
             CameraController.Instance.UnLinkCamera();
         }
     }

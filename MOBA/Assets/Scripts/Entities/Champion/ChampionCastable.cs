@@ -151,6 +151,28 @@ namespace Entities.Champion
            
 
         }
+        
+        public void RequestToSetCanDrawCapacity(byte indexOfSOInCollection, bool value)
+        {
+            photonView.RPC("SetCanDrawCapacityRPC", RpcTarget.All, indexOfSOInCollection, value);
+            PhotonNetwork.SendAllOutgoingCommands();
+        }
+
+        
+        [PunRPC]
+        void SetCanDrawCapacityRPC(byte indexOfSOInCollection, bool value)
+        {
+            for (int i = 0; i < activeCapacities.Count; i++)
+            {
+                
+                if (activeCapacities[i].indexOfSOInCollection == indexOfSOInCollection)
+                {
+                    IPrevisualisable previsualisable =(IPrevisualisable) activeCapacities[i];
+                    previsualisable.SetCanDraw(value);
+                    return;
+                }
+            }
+        }
 
         public void RequestToEnqueueCapacityFX(byte capacityIndex)
         {
