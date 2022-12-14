@@ -195,7 +195,6 @@ public class ChampionHUD : MonoBehaviour
 
     private void UpdateCooldown(byte capacityIndex, bool inCooldown)
     {
-        Debug.Log(capacityIndex);
         if (inCooldown && champion.photonView.IsMine)
         {
             for (byte i = 0; i < champion.activeCapacities.Count; i++)

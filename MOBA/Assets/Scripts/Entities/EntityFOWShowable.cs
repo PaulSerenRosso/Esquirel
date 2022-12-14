@@ -219,7 +219,6 @@ namespace  Entities
                 graphicsToShow[i].color = materialColor;
                 
             }
-            Debug.Log("showelement" + this.gameObject.name);
             OnHideElementFeedback?.Invoke();
         }
 

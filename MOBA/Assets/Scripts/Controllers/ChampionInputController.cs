@@ -156,9 +156,14 @@ namespace Controllers.Inputs
             }
         }
 
-        void OnMouseClick(InputAction.CallbackContext ctx)
+        void OnMouseRightClick(InputAction.CallbackContext ctx)
         {
             SelectMoveTarget();
+        }
+        
+        void OnMouseLeftClick(InputAction.CallbackContext ctx)
+        {
+            champion.CancelPrevisualisable();
         }
 
         public void SelectMoveTarget()
@@ -242,8 +247,9 @@ namespace Controllers.Inputs
             inputs.Capacity.PrevisualisableCapacity1.performed += OnPrintCapacity1Previsualisable;
             inputs.Capacity.PrevisualisableCapacity2.performed += OnPrintCapacity2Previsualisable;
             inputs.Capacity.PrevisualisableCapacity3.performed += OnPrintUltimatePrevisualisable;
+            inputs.MoveMouse.CancelButton.performed += OnMouseLeftClick;
 
-            inputs.MoveMouse.ActiveButton.performed += OnMouseClick;
+            inputs.MoveMouse.ActiveButton.performed += OnMouseRightClick;
             inputs.MoveMouse.ActiveButton.started += context => isActivebuttonPress = true;
             inputs.MoveMouse.ActiveButton.canceled += context => isActivebuttonPress = false;
 
@@ -269,7 +275,8 @@ namespace Controllers.Inputs
             inputs.Capacity.PrevisualisableCapacity2.performed -= OnPrintCapacity2Previsualisable;
             inputs.Capacity.PrevisualisableCapacity3.performed -= OnPrintUltimatePrevisualisable;
             inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
-            inputs.MoveMouse.ActiveButton.performed -= OnMouseClick;
+            inputs.MoveMouse.ActiveButton.performed -= OnMouseRightClick;
+            inputs.MoveMouse.CancelButton.performed -= OnMouseLeftClick;
             CameraController.Instance.UnLinkCamera();
         }
     }

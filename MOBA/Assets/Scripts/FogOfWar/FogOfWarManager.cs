@@ -304,12 +304,12 @@ namespace Entities.FogOfWar
             fieldOfViewObstacles.Clear();
 
 
-            Debug.Log(entity.name + "hit" +hits.Length);
+           
             if (hits.Length != 0)
             {
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    Debug.Log(entity.name + "hit" +hits[i].collider.gameObject.name);
+                   
                     if (IsInLayerMask(hits[i].collider.gameObject, layerObstacleFogOfWar))
                     {
                         Bush bush = hits[i].collider.GetComponent<Bush>();

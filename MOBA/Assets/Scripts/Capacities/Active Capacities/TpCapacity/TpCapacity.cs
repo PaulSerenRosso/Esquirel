@@ -81,7 +81,6 @@ namespace Entities.Capacities
         public void DisableDrawing()
         {
             isDrawing = false;
-            canDraw = false;
             InputManager.PlayerMap.MoveMouse.MousePos.performed -= RotateDraw;
             previsualisableTPObject.gameObject.SetActive(false);
         }

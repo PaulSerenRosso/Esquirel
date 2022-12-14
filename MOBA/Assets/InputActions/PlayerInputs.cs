@@ -436,6 +436,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CancelButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c1d8cb6-d2c3-4880-89ef-5719d11a4517"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -458,6 +467,17 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ActiveButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1626464c-2c19-4d3b-a020-d55c66db7793"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -496,6 +516,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_MoveMouse = asset.FindActionMap("MoveMouse", throwIfNotFound: true);
         m_MoveMouse_MousePos = m_MoveMouse.FindAction("MousePos", throwIfNotFound: true);
         m_MoveMouse_ActiveButton = m_MoveMouse.FindAction("ActiveButton", throwIfNotFound: true);
+        m_MoveMouse_CancelButton = m_MoveMouse.FindAction("CancelButton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -810,12 +831,14 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private IMoveMouseActions m_MoveMouseActionsCallbackInterface;
     private readonly InputAction m_MoveMouse_MousePos;
     private readonly InputAction m_MoveMouse_ActiveButton;
+    private readonly InputAction m_MoveMouse_CancelButton;
     public struct MoveMouseActions
     {
         private @PlayerInputs m_Wrapper;
         public MoveMouseActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @MousePos => m_Wrapper.m_MoveMouse_MousePos;
         public InputAction @ActiveButton => m_Wrapper.m_MoveMouse_ActiveButton;
+        public InputAction @CancelButton => m_Wrapper.m_MoveMouse_CancelButton;
         public InputActionMap Get() { return m_Wrapper.m_MoveMouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -831,6 +854,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @ActiveButton.started -= m_Wrapper.m_MoveMouseActionsCallbackInterface.OnActiveButton;
                 @ActiveButton.performed -= m_Wrapper.m_MoveMouseActionsCallbackInterface.OnActiveButton;
                 @ActiveButton.canceled -= m_Wrapper.m_MoveMouseActionsCallbackInterface.OnActiveButton;
+                @CancelButton.started -= m_Wrapper.m_MoveMouseActionsCallbackInterface.OnCancelButton;
+                @CancelButton.performed -= m_Wrapper.m_MoveMouseActionsCallbackInterface.OnCancelButton;
+                @CancelButton.canceled -= m_Wrapper.m_MoveMouseActionsCallbackInterface.OnCancelButton;
             }
             m_Wrapper.m_MoveMouseActionsCallbackInterface = instance;
             if (instance != null)
@@ -841,6 +867,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @ActiveButton.started += instance.OnActiveButton;
                 @ActiveButton.performed += instance.OnActiveButton;
                 @ActiveButton.canceled += instance.OnActiveButton;
+                @CancelButton.started += instance.OnCancelButton;
+                @CancelButton.performed += instance.OnCancelButton;
+                @CancelButton.canceled += instance.OnCancelButton;
             }
         }
     }
@@ -880,5 +909,6 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     {
         void OnMousePos(InputAction.CallbackContext context);
         void OnActiveButton(InputAction.CallbackContext context);
+        void OnCancelButton(InputAction.CallbackContext context);
     }
 }
