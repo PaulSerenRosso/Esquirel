@@ -21,16 +21,15 @@ namespace Entities.Capacities
       public virtual void EnableDrawing()
         {
             isDrawing = true;
-            UIManager.Instance.ChangeCursorSpriteToAimSprite();
+            CursorManager.Instance.ChangeCursorSpriteToAimSprite();
             GameStateMachine.Instance.OnUpdate += CheckWorldCursorPositionIsInNavmesh;
         }
             
         public virtual void DisableDrawing()
         {
             isDrawing = false;
-            canDraw = false;
-            UIManager.Instance.ChangeCursorSpriteToBaseSprite();
-            UIManager.Instance.ChangeCursorSpriteColor(Color.white);
+            CursorManager.Instance.ChangeCursorSpriteToBaseSprite();
+            CursorManager.Instance.ChangeCursorSpriteColor(Color.white);
             GameStateMachine.Instance.OnUpdate -= CheckWorldCursorPositionIsInNavmesh;
         }
 
@@ -43,12 +42,12 @@ namespace Entities.Capacities
                 {
                 canSpawn =true;
                 spawnPosition = hit.point;
-                UIManager.Instance.ChangeCursorSpriteColor(Color.white);
+                CursorManager.Instance.ChangeCursorSpriteColor(Color.white);
                 return;
                 }
             }
             canSpawn = false;
-            UIManager.Instance.ChangeCursorSpriteColor(Color.grey);
+            CursorManager.Instance.ChangeCursorSpriteColor(Color.grey);
             
         }
     

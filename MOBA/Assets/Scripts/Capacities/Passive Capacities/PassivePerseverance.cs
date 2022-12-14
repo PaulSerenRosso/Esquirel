@@ -21,7 +21,6 @@ namespace Entities.Capacities
             passiveCapacitySo = (PassivePerseveranceSO)AssociatedPassiveCapacitySO();
 
             activeLifeable = entity.GetComponent<IActiveLifeable>();
-            Debug.Log("addedpassive" + entity.gameObject.name);
             activeLifeable.OnDecreaseCurrentHp += ResetTimeSinceLastAttack;
             GameStateMachine.Instance.OnTick += IncreasePerTick;
             healPercentage = passiveCapacitySo.percentage;
@@ -60,7 +59,6 @@ namespace Entities.Capacities
                 {
                     ActiveHealEffect();
                     timeSinceLastHeal = 0;
-                    Debug.Log(passiveCapacitySo.percentage);
                 }
             }
         }
