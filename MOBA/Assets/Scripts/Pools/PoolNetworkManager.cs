@@ -74,7 +74,6 @@ public class PoolNetworkManager : MonoBehaviour
             }
             else
             {
-                Debug.Log(entityRef);
                 entity = queue.Dequeue();
                 entity.SendSyncInstantiate(position,rotation);
             }

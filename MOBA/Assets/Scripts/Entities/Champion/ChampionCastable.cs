@@ -12,9 +12,18 @@ namespace Entities.Champion
 
         public bool canCast;
         private IPunObservable _punObservableImplementation;
+        private IPrevisualisable currentPrevisualisable;
 
 
-        
+        public void CancelPrevisualisable()
+        {
+            if (currentPrevisualisable != null)
+            {
+                currentPrevisualisable.DisableDrawing();
+                currentPrevisualisable = null;
+            }
+        }
+
         public bool CanCast()
         {
             return canCast;
@@ -59,17 +68,19 @@ namespace Entities.Champion
         public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanCast;
         public event GlobalDelegates.OneParameterDelegate<bool> OnSetCanCastFeedback;
 
-        public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions, params object[] otherParameters)
+        public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
+            params object[] otherParameters)
         {
-            if(activeCapacities.Count <= capacityIndex ) return;
+            if (activeCapacities.Count <= capacityIndex) return;
+            CancelPrevisualisable();
             if (!activeCapacities[capacityIndex].onCooldown)
             {
                 if (activeCapacities[capacityIndex] is IPrevisualisable)
                 {
-                    IPrevisualisable previsualisable = (IPrevisualisable) activeCapacities[capacityIndex];
-                    Debug.Log(previsualisable.GetIsDrawing() + "  " + previsualisable.GetCanDraw());
+                    IPrevisualisable previsualisable = (IPrevisualisable)activeCapacities[capacityIndex];
                     if (!previsualisable.GetIsDrawing() && previsualisable.GetCanDraw())
                     {
+                        currentPrevisualisable = previsualisable;
                         previsualisable.EnableDrawing();
                     }
                 }
@@ -81,38 +92,41 @@ namespace Entities.Champion
             }
         }
 
+
         public void LaunchCapacityWithPrevisualisable(byte capacityIndex, int[] targetedEntities,
             Vector3[] targetedPositions)
         {
-            if(capacityIndex >= activeCapacities.Count) return;
+            if (capacityIndex >= activeCapacities.Count) return;
             if (!activeCapacities[capacityIndex].onCooldown)
             {
                 if (activeCapacities[capacityIndex] is IPrevisualisable)
                 {
-                    
-                    IPrevisualisable previsualisable = (IPrevisualisable) activeCapacities[capacityIndex];
+                    IPrevisualisable previsualisable = (IPrevisualisable)activeCapacities[capacityIndex];
                     if (previsualisable.GetIsDrawing())
                     {
+                        previsualisable.SetCanDraw(false);
                         previsualisable.DisableDrawing();
-                    photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
-                        targetedPositions, previsualisable.GetPrevisualisableData());
+                        currentPrevisualisable = null;
+                        photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
+                            targetedPositions, previsualisable.GetPrevisualisableData());
                     }
                 }
             }
         }
 
         [PunRPC]
-        public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions, params object[] otherParameters)
+        public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
+            params object[] otherParameters)
         {
             if (activeCapacities[capacityIndex] is IPrevisualisable)
             {
-                IPrevisualisable previsualisable =(IPrevisualisable) activeCapacities[capacityIndex];
-                if (!previsualisable.TryCastWithPrevisualisableData(targetedEntities, targetedPositions, otherParameters)) return;
+                IPrevisualisable previsualisable = (IPrevisualisable)activeCapacities[capacityIndex];
+                if (!previsualisable.TryCastWithPrevisualisableData(targetedEntities, targetedPositions,
+                        otherParameters)) return;
             }
             else
             {
-            if (!activeCapacities[capacityIndex].TryCast(targetedEntities, targetedPositions)) return;
-                
+                if (!activeCapacities[capacityIndex].TryCast(targetedEntities, targetedPositions)) return;
             }
 
             CancelCurrentCapacity();
@@ -133,13 +147,12 @@ namespace Entities.Champion
             PhotonNetwork.SendAllOutgoingCommands();
         }
 
-        
+
         [PunRPC]
         void SetOnCooldownCapacityRPC(byte indexOfSOInCollection, bool value)
         {
             for (int i = 0; i < activeCapacities.Count; i++)
             {
-                
                 if (activeCapacities[i].indexOfSOInCollection == indexOfSOInCollection)
                 {
                     activeCapacities[i].onCooldown = value;
@@ -147,27 +160,25 @@ namespace Entities.Champion
                     return;
                 }
             }
-            SetOnCooldownAttackRPC(value);
-           
 
+            SetOnCooldownAttackRPC(value);
         }
-        
+
         public void RequestToSetCanDrawCapacity(byte indexOfSOInCollection, bool value)
         {
             photonView.RPC("SetCanDrawCapacityRPC", RpcTarget.All, indexOfSOInCollection, value);
             PhotonNetwork.SendAllOutgoingCommands();
         }
 
-        
+
         [PunRPC]
         void SetCanDrawCapacityRPC(byte indexOfSOInCollection, bool value)
         {
             for (int i = 0; i < activeCapacities.Count; i++)
             {
-                
                 if (activeCapacities[i].indexOfSOInCollection == indexOfSOInCollection)
                 {
-                    IPrevisualisable previsualisable =(IPrevisualisable) activeCapacities[i];
+                    IPrevisualisable previsualisable = (IPrevisualisable)activeCapacities[i];
                     previsualisable.SetCanDraw(value);
                     return;
                 }
@@ -199,6 +210,5 @@ namespace Entities.Champion
         public event GlobalDelegates.FourthParameterDelegate<byte, int[], Vector3[], ActiveCapacity> OnCastFeedback;
 
         public event GlobalDelegates.TwoParameterDelegate<byte, bool> OnSetCooldownFeedback;
-    
     }
 }

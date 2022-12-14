@@ -19,7 +19,6 @@ public class ActiveAttackWithPrevisualisableCapacity : ActiveAttackCapacity, IPr
     public virtual void DisableDrawing()
     {
         isDrawing = false;
-        canDraw = false;
         previsualisableObject.gameObject.SetActive(false);
     }
 

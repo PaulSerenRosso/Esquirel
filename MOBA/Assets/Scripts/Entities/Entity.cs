@@ -119,7 +119,7 @@ namespace Entities
             transform.position = position;
             transform.rotation = rotation;
             gameObject.SetActive(true);
-            Debug.Log("bonsoir à tous ");
+     
             OnInstantiatedFeedback();
         }
 
