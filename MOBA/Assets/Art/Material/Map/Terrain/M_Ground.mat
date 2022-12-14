@@ -62,9 +62,17 @@ Material:
     m_Floats:
     - _AddVertexPaintingToMask: 1
     - _AlphaCutoff: 0.5
+    - _ColorIntensity: 2
     - _DebugVertexPaintingAdding: 1
+    - _DesaturateDebug: 0
+    - _EnvironmentReflections: 1
+    - _FlipTexture: 0
     - _GrayscaleDebug: 0
+    - _Metallic: 0
     - _NormalDebug: 0
+    - _ReceiveShadows: 1
+    - _Smoothness: 0
+    - _SpecularHighlights: 1
     - _T1_ProceduralTiling1: 0
     - _T1_Tiling1: 14.5
     - _T2_ProceduralTiling1: 0
@@ -73,8 +81,11 @@ Material:
     - _T3_Tilling1: 42
     - _T4_ProceduralTiling1: 0
     - _T4_Tilling1: 17.6
+    - _ThresholdDebug: 1
+    - _UseVertexPainting: 1
     - _VertexPaintDebug: 0
     - _VertexPaintingAddingDebug: 0
     m_Colors:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainTint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
