@@ -230,6 +230,9 @@ MonoBehaviour:
   - StartInitCapacityFX
   - DecreaseRessource
   - IncreaseHealAmountOfPerseverance
+  - SetViewAngleRPC
+  - SyncSetViewAngleRPC
+  - SetCanDrawCapacityRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

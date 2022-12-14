@@ -91,10 +91,10 @@ namespace Entities.Capacities
             {
                 damageTimer = new TimerOneCount(so.damageTime);
                 beginDamageTimer = new TimerOneCount(so.damageBeginTime);
-                damageTimer.initiateTimerEvent += InitiateDamagePrefab;
-                beginDamageTimer.tickTimerEvent += damageTimer.InitiateTimer;
-                damageTimer.cancelTimerEvent += CancelDamagePrefab;
-                damageTimer.tickTimerEvent += CancelDamagePrefab;
+                damageTimer.InitiateTimerEvent += InitiateDamagePrefab;
+                beginDamageTimer.TickTimerEvent += damageTimer.InitiateTimer;
+                damageTimer.CancelTimerEvent += CancelDamagePrefab;
+                damageTimer.TickTimerEvent += CancelDamagePrefab;
             }
 
             

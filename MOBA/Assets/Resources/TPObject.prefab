@@ -172,7 +172,6 @@ MonoBehaviour:
   viewAngle: 0
   canView: 0
   meshFilterFoV: {fileID: 0}
-  fogOfWarStartDetection: {fileID: 0}
   renderer: {fileID: 7787077126835712645}
 --- !u!65 &7787077127828374461
 BoxCollider:

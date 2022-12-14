@@ -121,6 +121,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Capacity3",
+                    "type": "Button",
+                    "id": "8026275b-0b3b-47de-8543-9ab4dbed675d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "PrevisualisableCapacity0",
                     "type": "Button",
                     "id": "fa06ff83-0b5b-49d5-b084-2364a1968652",
@@ -142,6 +151,15 @@
                     "name": "PrevisualisableCapacity2",
                     "type": "Button",
                     "id": "bc0cc3e6-6ddb-4fb9-80bc-e86b4771cbf1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrevisualisableCapacity3",
+                    "type": "Button",
+                    "id": "5eda6fd2-ae00-4697-8d8f-bed5f2fd2094",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -174,7 +192,7 @@
                 {
                     "name": "",
                     "id": "9023c4ba-5907-4e90-8ea0-9568be0c0c2b",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -212,6 +230,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PrevisualisableCapacity2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "84288946-d22e-4752-b707-38cd7ff5807a",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Capacity3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48690e1c-db34-4db2-b69d-d05b44b423e0",
+                    "path": "<Keyboard>/r",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrevisualisableCapacity3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

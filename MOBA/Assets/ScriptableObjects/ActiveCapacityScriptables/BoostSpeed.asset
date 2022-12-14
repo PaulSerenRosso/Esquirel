@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceName: 
   descriptionName: 
-  icon: {fileID: 21300000, guid: 80765a06dc799714bbe0733e2152d564, type: 3}
+  icon: {fileID: 21300000, guid: 80ab37a9e4f49c842903bb43bdd7bcd2, type: 3}
   description: 
   cooldown: 3
   types: 

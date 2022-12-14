@@ -42,7 +42,7 @@ namespace GameStates
         
         public event GlobalDelegates.NoParameterDelegate OnTick;
         public event GlobalDelegates.OneParameterDelegate<double> OnTickFeedback;
-
+        public  GlobalDelegates.NoParameterDelegate OnUpdate;
         public Enums.Team winner = Enums.Team.Neutral;
         public List<int> allPlayersIDs = new List<int>();
 

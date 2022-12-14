@@ -25,6 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4892e9fd3d893d04b8b520812f3c9710, type: 2}
   passiveCapacitiesIndexes: 00
   activeCapacities:
+  - {fileID: 11400000, guid: aad87c277a071be459b9251985d0be77, type: 2}
   - {fileID: 11400000, guid: 558a7149786ab434c8b4a989c808974e, type: 2}
   - {fileID: 11400000, guid: ad595481d827f564e92f1c7118532bda, type: 2}
   activeCapacitiesIndexes: 0104
