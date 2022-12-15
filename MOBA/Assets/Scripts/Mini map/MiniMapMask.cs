@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class MiniMapMask
 {
     public Color color;
-    public RenderTexture renderTexture;
-    public Texture2D textureBaked;
-
+    public RenderTexture inputTexture;
+    public RenderTexture outputTexture;
 }
