@@ -8,4 +8,5 @@ public class MiniMapMask
     public Color color;
     public RenderTexture inputTexture;
     public RenderTexture outputTexture;
+    public Camera camera;
 }

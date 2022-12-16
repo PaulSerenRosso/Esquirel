@@ -9,29 +9,68 @@ namespace MiniMap
     {
         [SerializeField] private List<MiniMapMask> miniMapMasks;
 
-        private Texture2D currentTextureMerged;
-        [SerializeField] private Shader maskColorApplier;
-        [SerializeField] private Shader masksMerger;
+        [SerializeField]
+        private RenderTexture baseMapTexture;
 
+        public Material applierMaskColorMaterial;
+        public Material mergerMaskMaterial;
 
-        public Material material;
-
+       
         public void BakeBaseTexture()
+        {
+            EnabledMaskCameras();
+            for (int i = 0; i < miniMapMasks.Count; i++)
+            {
+                BakeTextureWithColor(i);
+            }
+            BakeFirstIterationOfBaseTexture();
+            MergeTextureWithColor();
+            DisabledMaskCameras();
+        }
+
+        private void EnabledMaskCameras()
         {
             for (int i = 0; i < miniMapMasks.Count; i++)
             {
-                BakeTexture(i);
+                miniMapMasks[i].camera.enabled = true;
+            }
+        }
+        
+        private void DisabledMaskCameras()
+        {
+            for (int i = 0; i < miniMapMasks.Count; i++)
+            {
+                miniMapMasks[i].camera.enabled = false;
             }
         }
 
-        void BakeTexture(int index)
+        private void MergeTextureWithColor()
         {
-            material.SetColor("_MainColor", miniMapMasks[index].color);
-            material.SetTexture("_BaseMap", miniMapMasks[index].inputTexture);
-            material.SetFloat("ToleranceStep", 0.1f);
-            material.SetPass(0);
-            Graphics.Blit(miniMapMasks[index].inputTexture, miniMapMasks[index].outputTexture, material, 0);
+            for (int i = 2; i < miniMapMasks.Count; i++)
+            {
+                mergerMaskMaterial.SetTexture("_SecondTex", miniMapMasks[i].outputTexture);
+                mergerMaskMaterial.SetFloat("_ToleranceStep", 0.1f);
+
+                Graphics.Blit(baseMapTexture, baseMapTexture, mergerMaskMaterial, 0);
+                AssetDatabase.Refresh();
+            }
+        }
+
+        private void BakeFirstIterationOfBaseTexture()
+        {
+            mergerMaskMaterial.SetTexture("_SecondTex", miniMapMasks[0].outputTexture);
+            mergerMaskMaterial.SetFloat("_ToleranceStep", 0.1f);
+            Graphics.Blit(miniMapMasks[1].outputTexture, baseMapTexture, mergerMaskMaterial, 0);
             AssetDatabase.Refresh();
         }
+
+        void BakeTextureWithColor(int index)
+        {
+            applierMaskColorMaterial.SetColor("_MainColor", miniMapMasks[index].color);
+            applierMaskColorMaterial.SetFloat("_ToleranceStep", 0.1f);
+            Graphics.Blit(miniMapMasks[index].inputTexture, miniMapMasks[index].outputTexture, applierMaskColorMaterial, 0);
+            AssetDatabase.Refresh();
+        }
+        
     }
 }

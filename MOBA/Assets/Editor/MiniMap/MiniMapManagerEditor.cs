@@ -23,8 +23,4 @@ public class MiniMapManagerEditor : Editor
         }
         miniMapManager.UpdateMiniMapPos();
     }
-    
-    
-    
-    
 }
