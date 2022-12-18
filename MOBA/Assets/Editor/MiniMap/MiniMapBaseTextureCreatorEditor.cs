@@ -20,6 +20,7 @@ public class MiniMapBaseTextureCreatorEditor : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("Update Mini Map Base Texture"))
         {
+           if(Application.isEditor) 
             miniMapBaseTextureCreator.BakeBaseTexture();
         }
       

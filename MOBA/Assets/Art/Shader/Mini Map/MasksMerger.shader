@@ -40,7 +40,16 @@ Shader "MasksMerger.shader"
                 half4 secondTex = tex2D(_SecondTex, i.uv);
                   half4 finalColor;
                 if (secondTex.a < _ToleranceStep)finalColor = firstTex;
-                else  finalColor = secondTex;
+                else
+                {
+
+                    float alpha = secondTex.a;
+                    float reverseAlpha = 1-secondTex.a;
+                    finalColor.r = secondTex.r*alpha+firstTex.r*reverseAlpha;
+                    finalColor.g = secondTex.g*alpha+firstTex.g*reverseAlpha;
+                    finalColor.b = secondTex.b*alpha+firstTex.b*reverseAlpha;
+                    finalColor.a = 1;
+                }
                 return finalColor;
             }
             ENDCG

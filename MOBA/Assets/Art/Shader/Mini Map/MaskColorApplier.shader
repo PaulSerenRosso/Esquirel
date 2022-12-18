@@ -8,7 +8,6 @@ Shader "MaskColorApplier.shader"
     Properties
     {
         _MainColor("Color",Color) = (0,0,0,0)
-        _ToleranceStep("ToleranceStep", float) =0
         _MainTex("-", 2D) = "white" {}
     }
 
@@ -35,14 +34,8 @@ Shader "MaskColorApplier.shader"
                 half4 customColor  = _MainColor;
            
                 half4 tex = tex2D(_MainTex, i.uv);
-                
-                if (tex.a> _ToleranceStep)
-                {
-                    tex = 1, 1, 1, 1;
-                }
-                else tex = 0, 0, 0, 0;
-                
-                customColor *= tex;
+
+                customColor.a *= tex.a;
                 
                 return customColor;
             }
