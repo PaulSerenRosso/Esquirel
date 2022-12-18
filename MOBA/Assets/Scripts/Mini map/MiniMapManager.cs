@@ -16,12 +16,18 @@ namespace MiniMap
         [SerializeField] private float ratioYX;
         [SerializeField] private Vector2 screenMapCenter;
 
+      
         
           private bool updateMiniMapPos;
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawWireCube(worldMapCenter, new Vector3(worldMapSize.x , 5, worldMapSize.y));
+        }
+
+        private void Start()
+        {
+            UpdateMiniMapPos();
         }
 
         private void OnValidate()
