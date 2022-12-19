@@ -64,6 +64,8 @@ namespace RemoteConfig {
             //AUTO-ATTACK
             variables.CHAMP01_AutoAttack.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Cooldown");
             variables.CHAMP01_AutoAttack.maxRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_MaxRange");
+            variables.CHAMP01_AutoAttack.height = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Height");
+            variables.CHAMP01_AutoAttack.width = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Width");
             variables.CHAMP01_AutoAttack.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Damage");
             variables.CHAMP01_AutoAttack.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_DamageBeginTime");
             variables.CHAMP01_AutoAttack.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_DamageTime");
@@ -101,6 +103,8 @@ namespace RemoteConfig {
             //AUTO-ATTACK
             variables.CHAMP02_AutoAttack.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Cooldown");
             variables.CHAMP02_AutoAttack.maxRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_MaxRange");
+            variables.CHAMP02_AutoAttack.height = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Height");
+            variables.CHAMP02_AutoAttack.width = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Width");
             variables.CHAMP02_AutoAttack.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Damage");
             variables.CHAMP02_AutoAttack.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_DamageBeginTime");
             variables.CHAMP02_AutoAttack.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_DamageTime");
