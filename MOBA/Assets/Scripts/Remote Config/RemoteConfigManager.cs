@@ -71,6 +71,14 @@ namespace RemoteConfig {
             variables.CHAMP01_AutoAttack.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_DamageTime");
             variables.CHAMP01_AutoAttack.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_FxTime");
             
+            //TRINKET
+            variables.CHAMP01_Trinket.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_TRINKET_Cooldown");
+            variables.CHAMP01_Trinket.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_TRINKET_FxTime");
+            variables.CHAMP01_Trinket.trinketDuration = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_TRINKET_Duration");
+            variables.CHAMP01_Trinket.trinketViewRadius = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_TRINKET_ViewRadius");
+            variables.CHAMP01_Trinket.trinketViewAngle = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_TRINKET_ViewAngle");
+            variables.CHAMP01_Trinket.trinketDetectionDistance = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_TRINKET_DetectionDistance");
+            
             //CAPACITY 01
             variables.CHAMP01_CAPA01.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_Cooldown");
             variables.CHAMP01_CAPA01.tpObjectCurveYPosition = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_YPosition");
@@ -109,6 +117,14 @@ namespace RemoteConfig {
             variables.CHAMP02_AutoAttack.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_DamageBeginTime");
             variables.CHAMP02_AutoAttack.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_DamageTime");
             variables.CHAMP02_AutoAttack.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_FxTime");
+            
+            //TRINKET
+            variables.CHAMP02_Trinket.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_TRINKET_Cooldown");
+            variables.CHAMP02_Trinket.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_TRINKET_FxTime");
+            variables.CHAMP02_Trinket.trinketDuration = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_TRINKET_Duration");
+            variables.CHAMP02_Trinket.trinketViewRadius = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_TRINKET_ViewRadius");
+            variables.CHAMP02_Trinket.trinketViewAngle = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_TRINKET_ViewAngle");
+            variables.CHAMP02_Trinket.trinketDetectionDistance = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_TRINKET_DetectionDistance");
             
             //CAPACITY 01
 
