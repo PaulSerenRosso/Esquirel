@@ -1,9 +1,9 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
 namespace MiniMap
 {
     public class MiniMapBaseTextureCreator : MonoBehaviour
@@ -95,3 +95,4 @@ namespace MiniMap
         
     }
 }
+#endif

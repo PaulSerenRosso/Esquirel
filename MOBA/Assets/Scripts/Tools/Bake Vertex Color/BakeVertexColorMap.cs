@@ -1,7 +1,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
- 
+#if UNITY_EDITOR
 public class BakeVertexColorMap : MonoBehaviour
 {
     Mesh SourceMesh;
@@ -43,3 +43,4 @@ public class BakeVertexColorMap : MonoBehaviour
         }
     }
 }
+ #endif

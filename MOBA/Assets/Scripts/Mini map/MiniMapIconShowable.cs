@@ -1,18 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Entities;
+using MiniMap;
 using UnityEngine;
 
+namespace MiniMap
+{
 public class MiniMapIconShowable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Entity entity;
+    private MiniMapIcon miniMapIcon;
+    private void Start()
     {
-        
+        entity = GetComponent<Entity>();
+        miniMapIcon = GetComponent<MiniMapIcon>();
+        entity.OnShowElementFeedback += Show;
+        entity.OnHideElementFeedback += Hide;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Hide() => miniMapIcon.SetActiveImage(false);
+    void Show() => miniMapIcon.SetActiveImage(true);
+}
 }

@@ -259,11 +259,7 @@ namespace Entities.FogOfWar
             
             int hitsCount = Physics.RaycastNonAlloc(new Vector3(entity.transform.position.x,startYPositionRay ,entity.transform.position.z) , dir, hits, entity.viewRange,
                 layerObstacleFogOfWar);
-            Debug.Log(hits.Length);
-            for (int i = 0; i < hits.Length; i++)
-            {
-                Debug.Log(hits[i].collider.gameObject.name);
-            }
+       
 
             if (hitsCount == 0)
             {

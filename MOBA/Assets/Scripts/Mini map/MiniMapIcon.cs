@@ -10,18 +10,17 @@ namespace MiniMap
     [Serializable]
     public class MiniMapIcon : MonoBehaviour
     {
-        private RectTransform screenPosition;
         [SerializeField] private Sprite sprite;
         [SerializeField] private Vector2 iconSize;
          private Image image;
-
-         [SerializeField] private bool setSize;
+        
         private MiniMapManager miniMapManager;
 
         public void Start()
         {
             miniMapManager = MiniMapManager.instance;
             image = Instantiate(miniMapManager.iconPrefab, miniMapManager.mapObject).GetComponent<Image>();
+          
             image.sprite = sprite;
             SetPositionInMiniMap();
             SetSizeInMiniMap();
@@ -33,19 +32,22 @@ namespace MiniMap
      
         }
 
-        public void SetSizeInMiniMap()
+        public void SetActiveImage(bool value) => image.enabled = value;
+
+        public void SetSprite(Sprite sprite)
         {
-            image.rectTransform.sizeDelta = iconSize;
-        
+            this.sprite = sprite;
+            image.sprite = sprite;
         }
 
-        private void OnValidate()
+        public void SetSizeInMiniMap()
         {
-            if (setSize)
-            {
-                SetSizeInMiniMap();
-            }
+            Vector2 miniMapSize = miniMapManager.GetMiniMapSize();
+            image.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, iconSize.x*miniMapSize.x);
+            image.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, iconSize.y*miniMapSize.y);
         }
+
+        
 
         public void GetSprite()
         {

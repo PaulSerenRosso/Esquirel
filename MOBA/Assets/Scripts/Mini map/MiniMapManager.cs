@@ -10,22 +10,30 @@ namespace MiniMap
         [SerializeField] private Vector3 worldMapCenter;
         [SerializeField] Vector2 worldMapSize;
         [SerializeField] float screenMapSize;
-        public RectTransform mapObject;
-
-      
-        [SerializeField] private  Vector2 maxWorldMapPosition;
-        [SerializeField] private float ratioXY;
-        [SerializeField] private float ratioYX;
         [SerializeField] private Vector2 screenMapCenter;
-        [SerializeField] Vector2 minWorldMapPosition;
+        public RectTransform mapObject;
         public GameObject iconPrefab;
+
         public static MiniMapManager instance;
+      
+
+        [SerializeField] Vector2 minWorldMapPosition;
+
+        [SerializeField] public Vector2 miniMapSize;
+
+       [SerializeField]Vector2 substractionBetweenMaxAndMinWorldPos;
+
+        [SerializeField] private  Vector2 maxWorldMapPosition;
+ 
+        [SerializeField] private float ratioXY;
+ 
+        [SerializeField] private float ratioYX;
         private void Awake()
         {
             instance = this;
+           UpdateMiniMapPos();
         }
-   // TODO curseur à corriger
-        private bool updateMiniMapPos;
+
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.blue;
@@ -41,17 +49,25 @@ namespace MiniMap
             ratioXY = worldMapSize.x / worldMapSize.y;
             ratioYX = worldMapSize.y / worldMapSize.x;
             mapObject.anchoredPosition = screenMapCenter;
+            
             mapObject.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, ratioXY*screenMapSize);
             mapObject.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ratioYX*screenMapSize);
             minWorldMapPosition =  new Vector2(worldMapCenter.x, worldMapCenter.z) - worldMapSize/2;
             maxWorldMapPosition = (new Vector2(worldMapCenter.x, worldMapCenter.z) + worldMapSize/2);
+            miniMapSize = new Vector2(ratioXY * screenMapSize, ratioYX * screenMapSize);
+            substractionBetweenMaxAndMinWorldPos = maxWorldMapPosition - minWorldMapPosition;
         }
 
 
+        public Vector2 GetMiniMapSize()
+        {
+            return miniMapSize;
+        }
         public Vector2 GetMiniMapPos(Vector2 worldPos)
         {
-            Vector2 ratioPos = ((worldPos)-minWorldMapPosition)/(maxWorldMapPosition-minWorldMapPosition);
-            return (ratioPos-Vector2.one/2)*screenMapSize;
+            Vector2 ratioPos = ((worldPos)-minWorldMapPosition)/substractionBetweenMaxAndMinWorldPos;
+            Debug.Log(ratioPos);
+            return (ratioPos-Vector2.one/2)*miniMapSize;
         }
        
        
