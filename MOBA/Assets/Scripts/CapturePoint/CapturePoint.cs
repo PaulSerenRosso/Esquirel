@@ -50,11 +50,9 @@ namespace CapturePoint
         private TextMeshProUGUI capturePointValueText;
         protected override void OnStart() {
             capturePointSpeed = capturePointSO.capturePointSpeed;
-            firstTeamState = capturePointSO.firstTeamState;
-            secondTeamState = capturePointSO.secondTeamState;
-            neutralState = capturePointSO.neutralState;
-            
-            
+            firstTeamState.Copy(capturePointSO.firstTeamState);
+            secondTeamState.Copy(capturePointSO.secondTeamState);
+            neutralState.Copy(capturePointSO.neutralState);
             CapturePointValue = neutralState.stabilityPoint;
             capturePointDirection = 0;
             FogOfWarManager.Instance.AddFOWViewable(this);
@@ -349,6 +347,7 @@ namespace CapturePoint
                     RemoveRangeCapturePointDelegateToTick(TickTowardsDestinationState);
                     team = destinationState.team;
                     destinationState.enterStateEvent?.Invoke();
+                    neutralState.exitStateEvent?.Invoke();
                     Debug.Log("bonsoir àtous enter ");
                     RequestUpdateCapturePointVisual();
                     return;
@@ -361,6 +360,8 @@ namespace CapturePoint
                     CapturePointValue = destinationState.maxValue;
                     team = destinationState.team;
                     destinationState.enterStateEvent?.Invoke();
+                    neutralState.exitStateEvent?.Invoke();
+                    Debug.Log("bonsoir àtous enter ");
                     RequestUpdateCapturePointVisual();
                     RemoveRangeCapturePointDelegateToTick(TickTowardsDestinationState);
                     return;
@@ -379,6 +380,8 @@ namespace CapturePoint
                 {
                     team = Enums.Team.Neutral;
                         currentTeamState.exitStateEvent?.Invoke();
+                        neutralState.enterStateEvent?.Invoke();
+                        
                     
                     RequestUpdateCapturePointVisual();
                     currentTeamState = null;
@@ -393,6 +396,7 @@ namespace CapturePoint
                     currentTeamState.exitStateEvent?.Invoke();
                     RequestUpdateCapturePointVisual();
                     currentTeamState = null;
+                    neutralState.enterStateEvent?.Invoke();
                     RemoveRangeCapturePointDelegateToTick(TickCurrentTeamState);
                 }
             }

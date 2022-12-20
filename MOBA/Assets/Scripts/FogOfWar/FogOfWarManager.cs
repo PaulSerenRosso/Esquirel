@@ -58,7 +58,7 @@ namespace Entities.FogOfWar
 
         //Parameter For Creating Field Of View Mesh
         public FOVSettings settingsFOV;
-
+        
         private void RenderFOW()
         {
             foreach (var viewable in allViewables)
@@ -68,6 +68,7 @@ namespace Entities.FogOfWar
                     DrawFieldOfView(viewable);
                 }
             }
+            
         }
 
         public bool CheckEntityIsVisibleForPlayer(Entity entity)
@@ -255,14 +256,10 @@ namespace Entities.FogOfWar
         {
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
             RaycastHit[] hits = new RaycastHit[2];
-
+            
             int hitsCount = Physics.RaycastNonAlloc(new Vector3(entity.transform.position.x,startYPositionRay ,entity.transform.position.z) , dir, hits, entity.viewRange,
                 layerObstacleFogOfWar);
-            Debug.Log(hits.Length);
-            for (int i = 0; i < hits.Length; i++)
-            {
-                Debug.Log(hits[i].collider.gameObject.name);
-            }
+       
 
             if (hitsCount == 0)
             {

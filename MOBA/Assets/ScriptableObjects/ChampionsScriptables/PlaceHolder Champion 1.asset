@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   championMeshPrefab: {fileID: 939176126738527526, guid: 503c9d1bd63ea8645a625d4738cf5e70, type: 3}
   canvasIndex: 0
+  championIcon: {fileID: 21300000, guid: d08e198ef389c4e4e810d1dc0138cbd2, type: 3}
   maxHp: 10
   maxRessource: 10
   viewRange: 10
@@ -23,11 +24,11 @@ MonoBehaviour:
   attackDamage: 0
   passiveCapacities:
   - {fileID: 11400000, guid: 4892e9fd3d893d04b8b520812f3c9710, type: 2}
-  passiveCapacitiesIndexes: 
+  passiveCapacitiesIndexes: 00
   activeCapacities:
   - {fileID: 11400000, guid: d8c88b8470a74d24a91599c34efbccfb, type: 2}
   - {fileID: 11400000, guid: 558a7149786ab434c8b4a989c808974e, type: 2}
   - {fileID: 11400000, guid: 58376b91df0d9a94490ed2d720806b7f, type: 2}
-  activeCapacitiesIndexes: 0104
+  activeCapacitiesIndexes: 060104
   ultimateAbility: {fileID: 11400000, guid: 888a7f5f56181e24c8a2f954bd5dbb02, type: 2}
   ultimateAbilityIndex: 3

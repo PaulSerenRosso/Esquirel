@@ -900,5 +900,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: CursorManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6505229500644527562, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505229500644527562, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505229500793123419, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505229500793123420, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -1624.648
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505229500793123420, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -975.486
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505229500793123420, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -486.015
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505229500793123420, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -246.649
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1127989889882929517}
   - component: {fileID: 1127989889882929514}
   - component: {fileID: 7900784335748898549}
+  - component: {fileID: 7010567661357603966}
+  - component: {fileID: 6349999555079414504}
   m_Layer: 15
   m_Name: CapturePoint
   m_TagString: Untagged
@@ -93,7 +95,6 @@ MonoBehaviour:
   viewAngle: 360
   canView: 1
   meshFilterFoV: {fileID: 7672945575054462519}
-  fogOfWarStartDetection: {fileID: 1127989891035819214}
   renderer: {fileID: 5393284651723786285}
   gradient:
     serializedVersion: 2
@@ -152,6 +153,35 @@ CapsuleCollider:
   m_Height: 51.23
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: -0.27}
+--- !u!114 &7010567661357603966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127989889882929515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c806bd4a1296ad47bc86de79a90757c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  neutralStateSprite: {fileID: 21300000, guid: a4cbf539e6caed945b7de9fc3e594786, type: 3}
+  firstTeamStateSprite: {fileID: 21300000, guid: 696b64edf23a13246bf79636093ca6c4, type: 3}
+  secondTeamStateSprite: {fileID: 21300000, guid: 48bd8af93fe93e3458b07054b98942f7, type: 3}
+--- !u!114 &6349999555079414504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127989889882929515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ee8183a5b03944c9a207b055af0b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: a4cbf539e6caed945b7de9fc3e594786, type: 3}
+  iconSize: {x: 0, y: 0}
 --- !u!1 &1127989891035819215
 GameObject:
   m_ObjectHideFlags: 0

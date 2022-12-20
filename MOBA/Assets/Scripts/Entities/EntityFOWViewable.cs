@@ -169,8 +169,7 @@ namespace Entities
         {
             if (seenShowables.Contains(showable)) return;
             if(!CheckBushCondition(showable)) return;
-            Debug.Log(gameObject.name + showable);
-                seenShowables.Add(showable);
+            seenShowables.Add(showable);
             //Debug.Log("seen Showable Add");
             showable.TryAddFOWViewable(this);
             //Debug.Log("Try add This FowViewable");
