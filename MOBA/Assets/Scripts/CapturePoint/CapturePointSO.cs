@@ -17,6 +17,13 @@ namespace CapturePoint {
     [Serializable]
     public class CapturePointState {
         public float stabilityPoint;
+        public GlobalDelegates.NoParameterDelegate enterStateEvent;
+        public  GlobalDelegates.NoParameterDelegate exitStateEvent;
+
+        public virtual void Copy(CapturePointState capturePointState)
+        {
+            stabilityPoint = capturePointState.stabilityPoint;
+        }
     }
 
     [Serializable]
@@ -24,7 +31,14 @@ namespace CapturePoint {
         public float captureValue;
         public float maxValue;
         public Enums.Team team;
-        public GlobalDelegates.NoParameterDelegate enterStateEvent;
-        public  GlobalDelegates.NoParameterDelegate exitStateEvent;
+
+        public override void Copy(CapturePointState capturePointState)
+        {
+            CapturePointTeamState capturePointTeamState = (CapturePointTeamState)capturePointState;
+            base.Copy(capturePointState);
+            captureValue = capturePointTeamState.captureValue;
+            maxValue = capturePointTeamState.maxValue;
+            team = capturePointTeamState.team;
+        }
     }
 }

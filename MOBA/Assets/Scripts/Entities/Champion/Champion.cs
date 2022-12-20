@@ -5,6 +5,7 @@ using Controllers;
 using Entities.Capacities;
 using Entities.FogOfWar;
 using GameStates;
+using MiniMap;
 using Photon.Pun;
 
 using UnityEngine;
@@ -88,6 +89,7 @@ namespace Entities.Champion
             var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position,
                 Quaternion.identity, rotateParent);
             championMesh.transform.localEulerAngles = Vector3.zero;
+            GetComponent<MiniMapIcon>().SetSprite(championSo.championIcon);
           
 
             team = newTeam;

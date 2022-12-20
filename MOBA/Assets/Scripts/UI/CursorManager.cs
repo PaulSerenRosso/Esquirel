@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,8 @@ public class CursorManager : MonoBehaviour
         DontDestroyOnLoad(this);
         
     }
-    
+
+
     private void Update()
     {
         cursor.position =Input.mousePosition;
