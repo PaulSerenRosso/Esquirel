@@ -138,11 +138,11 @@ namespace Controllers.Inputs
                {
                 ITargetable entTarget = (ITargetable)ent;
                 if (entTarget.CanBeTargeted())
-                    {
-                       // Debug.Log("set list input");
-                        selectedEntity[0] = ent.entityIndex;
-                        cursorWorldPos[0] = ent.transform.position;
-                    }
+                {
+                    // Debug.Log("set list input");
+                    selectedEntity[0] = ent.entityIndex;
+                    cursorWorldPos[0] = ent.transform.position;
+                }
                }
             }
             else

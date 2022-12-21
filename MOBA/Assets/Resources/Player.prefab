@@ -260,7 +260,7 @@ MonoBehaviour:
   particleSystemsToShowAlpha: []
   graphicsToShow: []
   graphicsToShowAlpha: []
-  currentBush: {fileID: 0}
+  bushes: []
   canChangeTeam: 0
   team: 0
   baseViewRange: 5

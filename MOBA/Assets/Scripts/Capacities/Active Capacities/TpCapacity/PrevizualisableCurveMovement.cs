@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
-public class PrevizualisableTP : MonoBehaviour
+public class PrevizualisableCurveMovement : MonoBehaviour
 {
     [SerializeField]
     private GameObject circleRenderer;

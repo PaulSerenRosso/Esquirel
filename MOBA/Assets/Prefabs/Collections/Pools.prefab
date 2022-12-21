@@ -95,3 +95,5 @@ MonoBehaviour:
     amount: 5
   - Element: {fileID: 4960659890045411926, guid: 1b4df5dfb5fbb094eaf62543f635adce, type: 3}
     amount: 5
+  - Element: {fileID: 1608149160280095728, guid: 0712ece915baa3e488a750bf0ba17234, type: 3}
+    amount: 3

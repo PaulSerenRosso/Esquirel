@@ -5,151 +5,67 @@ using UnityEngine.InputSystem;
 
 namespace Entities.Capacities
 {
-    public class TpCapacity : ActiveCapacity, IPrevisualisable
+    public class TpCapacity : CurveMovementWithPrevisualisableCapacity
     {
-        private bool isDrawing = false;
-        private PrevizualisableTP previsualisableTPObject;
         public TpCapacitySO tpCapacitySo;
-        public Champion.Champion champion;
         private Vector3 previsualisableTPObjectForward;
-        public float range;
-        public Vector3 startPosition;
-        public Vector3 endPosition;
-        private TpObject tpObject;
-        private bool canDraw = true;
-        private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
+
+        private int useCount = 0;
+
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
-            if (onCooldown) return false;
-
-            startPosition = caster.transform.position;
-            champion.RequestRotateMeshChampion(previsualisableTPObjectForward);
-            activeCapacityAnimationLauncher.InitiateAnimationTimer();
-            Vector3 candidateEndPosition = caster.transform.position + previsualisableTPObjectForward * range;
-            Debug.DrawRay(caster.transform.position, previsualisableTPObjectForward * range, Color.red, 10);
-            NavMeshHit navMeshHit;
-            if (NavMesh.SamplePosition(candidateEndPosition, out navMeshHit, range, 1))
+            if (useCount == 0)
             {
-                endPosition = navMeshHit.position;
-                tpObject.RequestSetupRPC((byte) champion.activeCapacities.IndexOf(this),caster.entityIndex, endPosition);
+                if (base.TryCast(targetsEntityIndexes, targetPositions))
+                {
+                    useCount = 1;
+                    curveObject.endCurveEvent -= TpChampion;
+
+                    champion.RequestSetSkipDrawingCapacity(indexOfSOInCollection, true );
+                    return true;
+                }
             }
-            else
+            else if(useCount == 1)
             {
-                Debug.LogError("don't find endPosition");
+                curveObject.endCurveEvent += TpChampion;
+                useCount = 2;
+                return true; 
             }
 
-            //   if(candidateEndPosition.)
-            return true;
-        }
 
-
-        public override void CancelCapacity()
-        {
-            activeCapacityAnimationLauncher.CancelAnimationTimer();
+            return false;
         }
+        
 
         public override void InitiateCooldown()
         {
             base.InitiateCooldown();
-            champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, true);
+            champion.CancelCurrentCapacity();
+            champion.RequestSetSkipDrawingCapacity(indexOfSOInCollection, false);
+            useCount = 0;
         }
 
-        public override void EndCooldown()
+        void TpChampion()
         {
-            champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, false);
-            base.EndCooldown();
-            
-        }
-
-        public void EnableDrawing()
-        {
-            isDrawing = true;
-            InputManager.PlayerMap.MoveMouse.MousePos.performed += RotateDraw;
-            previsualisableTPObjectForward = champion.rotateParent.transform.forward;
-            previsualisableTPObject.gameObject.SetActive(true);
-            previsualisableTPObject.transform.forward = previsualisableTPObjectForward;
-        }
-
-        void RotateDraw(InputAction.CallbackContext ctx)
-        {
-            previsualisableTPObjectForward = InputManager.inputMouseWorldPosition - caster.transform.position;
-            previsualisableTPObjectForward.y = 0;
-            previsualisableTPObjectForward.Normalize();
-            previsualisableTPObject.transform.forward = previsualisableTPObjectForward;
-        }
-
-        public void DisableDrawing()
-        {
-            isDrawing = false;
-            InputManager.PlayerMap.MoveMouse.MousePos.performed -= RotateDraw;
-            previsualisableTPObject.gameObject.SetActive(false);
-        }
-
-        public bool GetIsDrawing()
-        {
-            return isDrawing;
-        }
-
-        public void SetIsDrawing(bool value)
-        {
-            isDrawing = value;
-        }
-
-        public bool GetCanDraw()
-        {
-            return canDraw;
-        }
-
-        public void SetCanDraw(bool value)
-        {
-            canDraw = value;
-        }
-
-        public bool TryCastWithPrevisualisableData(int[] targetsEntityIndexes, Vector3[] targetPositions,
-            params object[] previsualisableParameters)
-        {
-            previsualisableTPObjectForward = (Vector3) previsualisableParameters[0];
-            return TryCast(targetsEntityIndexes, targetPositions);
-        }
-
-        public object[] GetPrevisualisableData()
-        {
-            return new[] {(object) previsualisableTPObjectForward};
+            champion.RequestMoveChampion(curveObject.transform.position);
         }
 
         public override void SetUpActiveCapacity(byte soIndex, Entity caster)
         {
             base.SetUpActiveCapacity(soIndex, caster);
-            tpCapacitySo = (TpCapacitySO) CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
-            champion = (Champion.Champion) caster;
-            range = tpCapacitySo.referenceRange;
+            tpCapacitySo = (TpCapacitySO)CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
 
             if (PhotonNetwork.IsMasterClient)
             {
-                tpObject = PhotonNetwork.Instantiate(tpCapacitySo.tpObjectPrefab.name, Vector3.zero,
-                    Quaternion.identity).GetComponent<TpObject>();
-                tpObject.RequestDeactivate();
-
-
+                curveObject = PhotonNetwork.Instantiate(tpCapacitySo.tpObjectPrefab.gameObject.name, Vector3.zero,
+                    Quaternion.identity).GetComponent<CurveMovement>();
+                curveObject.GetComponent<TpObject>().RequestDeactivate();
+                curveObject.endCurveEvent += InitiateCooldown;
             }
-                if (caster.photonView.IsMine)
-                {
-                    previsualisableTPObject =
-                        Object.Instantiate(tpCapacitySo.previsualisableTPPrefab, caster.transform)
-                            .GetComponent<PrevizualisableTP>();
-                    previsualisableTPObject.UpdatePositionAndSize(range);
-                    previsualisableTPObject.gameObject.SetActive(false);
-                    champion.OnSetCooldownFeedback += DisableCanDraw;
-                }
 
-                activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
-                activeCapacityAnimationLauncher.Setup(tpCapacitySo.activeCapacityAnimationLauncherInfo,champion);
+            
         }
 
-        void DisableCanDraw(byte index, bool value)
-            {
-                if (index == indexOfSOInCollection)
-                    canDraw = true;
-            }
-        }
+      
     }
+}

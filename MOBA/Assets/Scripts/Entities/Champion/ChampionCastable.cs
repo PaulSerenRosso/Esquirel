@@ -83,6 +83,12 @@ namespace Entities.Champion
                         currentPrevisualisable = previsualisable;
                         previsualisable.EnableDrawing();
                     }
+                    else if (previsualisable.GetCanSkipDrawing())
+                    {
+                        photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
+                            targetedPositions, null);
+                    
+                    }
                 }
                 else
                 {
@@ -118,8 +124,10 @@ namespace Entities.Champion
         public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
             params object[] otherParameters)
         {
+         
             if (activeCapacities[capacityIndex] is IPrevisualisable)
             {
+                
                 IPrevisualisable previsualisable = (IPrevisualisable)activeCapacities[capacityIndex];
                 if (!previsualisable.TryCastWithPrevisualisableData(targetedEntities, targetedPositions,
                         otherParameters)) return;
@@ -188,6 +196,25 @@ namespace Entities.Champion
         public void RequestToEnqueueCapacityFX(byte capacityIndex)
         {
             photonView.RPC("EnqueueCapacityFX", RpcTarget.All, capacityIndex);
+        }
+
+        public void RequestSetSkipDrawingCapacity(byte capacityIndex, bool value)
+        {
+            
+            photonView.RPC("SetSkipDrawingCapacityRPC", RpcTarget.All, capacityIndex, value);
+        }
+
+        [PunRPC]
+        private void SetSkipDrawingCapacityRPC(byte capacityIndex, bool value)
+        {
+            for (int i = 0; i < activeCapacities.Count; i++)
+            {
+                if (activeCapacities[i].indexOfSOInCollection == capacityIndex)
+                {
+                    IPrevisualisable previsualisable = (IPrevisualisable)activeCapacities[i];
+                    previsualisable.SetCanSkipDrawing(value);
+                }
+            }
         }
 
         [PunRPC]

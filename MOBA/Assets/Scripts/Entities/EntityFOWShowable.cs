@@ -19,7 +19,7 @@ namespace  Entities
         public List<float> particleSystemsToShowAlpha;
         public List<Graphic> graphicsToShow;
         public List<float> graphicsToShowAlpha;
-        public Bush currentBush;
+        public List<Bush> bushes;
 
         private void OnValidate()
         {
@@ -132,6 +132,7 @@ namespace  Entities
 
         public void ShowElements()
         {
+    
             for (int i = 0; i < meshRenderersToShow.Count; i++)
             {
                 var materialColor = meshRenderersToShow[i].material.color;
@@ -162,7 +163,6 @@ namespace  Entities
         public void TryRemoveFOWViewable(int viewableIndex)
         {
             var entity = EntityCollectionManager.GetEntityByIndex(viewableIndex);
-          //  Debug.Log("try remove viewable" + gameObject.name);
             if(entity == null) return;
             
             var viewable = entity.GetComponent<IFOWViewable>();
@@ -197,6 +197,7 @@ namespace  Entities
 
         public void HideElements()
         {
+            
             for (int i = 0; i < meshRenderersToShow.Count; i++)
             {
                 var materialColor = meshRenderersToShow[i].material.color;

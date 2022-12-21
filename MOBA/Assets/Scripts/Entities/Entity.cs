@@ -127,7 +127,9 @@ namespace Entities
         {
             if (other.tag == "Bush")
             {
-                currentBush = other.GetComponent<Bush>();
+                Bush bush = other.GetComponent<Bush>();
+                bush.entitiesInside.Add(this);
+                bushes.Add(bush);
             }
         }
 
@@ -135,7 +137,9 @@ namespace Entities
         {
             if (other.tag == "Bush")
             {
-                currentBush = null;
+                Bush bush = other.GetComponent<Bush>();
+                bush.entitiesInside.Remove(this);
+                bushes.Remove(bush);
             }
         }
 
