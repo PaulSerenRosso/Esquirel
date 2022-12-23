@@ -32,6 +32,16 @@ namespace Entities.Capacities
             }
         }
 
+       public virtual void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
+       {
+           
+       }
+
+       public virtual object[] GetCustomSyncParameters()
+       {
+           return null;
+       }
+
        protected virtual void CancelFXTimer()
        {
            if (fxObject != null)

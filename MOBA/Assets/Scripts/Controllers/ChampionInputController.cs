@@ -69,7 +69,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast(3, selectedEntity, cursorWorldPos);
+            champion.RequestCast((byte)(champion.activeCapacities.Count-1), selectedEntity, cursorWorldPos);
         }
         
         private void OnPrintCapacity0Previsualisable(InputAction.CallbackContext ctx)
@@ -228,7 +228,7 @@ namespace Controllers.Inputs
             }
 
 
-        protected override void Link(Entity entity)
+            public override void Link(Entity entity)
         {
             champion = controlledEntity as Champion;
             base.Link(entity);
@@ -263,7 +263,7 @@ namespace Controllers.Inputs
             inputs.Inventory.ShowHideShop.performed += OnShowHideShop;
         }
 
-        protected override void Unlink()
+        public override void Unlink()
         {
             inputsAreLinked = false; 
             inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;

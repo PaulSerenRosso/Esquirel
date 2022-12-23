@@ -12,17 +12,16 @@ public class SwordAttack : ActiveAttackRectCapacity
         {
             InitiateCooldown();
             InitiateFXTimer();
-            champion.SetCanMoveRPC(false);
             return true;
         }
 
         return false;
     }
 
-    protected override void InitiateFXTimer()
+    public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
     {
-        base.InitiateFXTimer();
-
+        base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);
+        champion.SyncSetCanMoveRPC(false);
     }
     
     protected override void CancelDamagePrefab()

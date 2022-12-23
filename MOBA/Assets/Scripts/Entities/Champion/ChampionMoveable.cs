@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using Entities.Capacities;
 using ExitGames.Client.Photon.StructWrapping;
+using GameStates;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.AI;
@@ -46,6 +48,7 @@ namespace Entities.Champion
 
         private bool isMoved;
 
+  
         // === League Of Legends
         private int mouseTargetIndex;
         private bool isFollowing;
@@ -108,12 +111,17 @@ namespace Entities.Champion
         public void SyncSetCanMoveRPC(bool value)
         {
             canMove = value;
+                if (photonView.IsMine)
+                {
+                    moveDestination = transform.position;
+                    agent.enabled = value;
+                }
             if (!value)
             {
-                if (photonView.IsMine)
-                    agent.SetDestination(transform.position);
                 IsMoved = false;
             }
+          
+               
         }
 
         [PunRPC]
@@ -349,16 +357,25 @@ namespace Entities.Champion
         {
             if (photonView.IsMine)
             {
-                agent.enabled = false;
                 transform.position = newPos;
-                agent.enabled = true;
+                moveDestination = transform.position;
+                    photonView.RPC("ActivateObstacle", RpcTarget.Others);
+                //rpc other activate aobstacle
             }
-            else
-            {
-                transform.position = newPos;
-            }
+            
+            Debug.Log("bonsoir ");
+            
+            SyncSetCanMoveRPC(true);
+            blocker.characterColliderBlocker.enabled = true;
         }
 
+
+        [PunRPC]
+        void ActivateObstacle()
+        {
+            Debug.Log("bonjour ");
+            obstacle.enabled = true; 
+        }
         private void CheckMoveDistance()
         {
             if (agent == null || !agent.isOnNavMesh || !canMove) return;

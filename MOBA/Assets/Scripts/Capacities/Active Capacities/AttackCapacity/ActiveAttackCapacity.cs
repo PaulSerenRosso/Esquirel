@@ -21,6 +21,7 @@ namespace Entities.Capacities
         private TimerOneCount beginDamageTimer;
         private TimerOneCount damageTimer;
 
+        protected Quaternion rotationFx;
      
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
@@ -74,7 +75,7 @@ namespace Entities.Capacities
         protected override void InitiateFXTimer()
         {
             base.InitiateFXTimer();
-            fxObject=  PoolNetworkManager.Instance.PoolInstantiate(so.fxPrefab, champion.transform.position, champion.rotateParent.rotation);
+            fxObject=  PoolNetworkManager.Instance.PoolInstantiate(so.fxPrefab, champion.transform.position, rotationFx);
             ActiveAttackCapacityFX attackCapacityFX = (ActiveAttackCapacityFX)fxObject;
             attackCapacityFX.RequestInitCapacityFX(caster.entityIndex, (byte)champion.activeCapacities.IndexOf(this));
         }

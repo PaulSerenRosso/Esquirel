@@ -28,7 +28,7 @@ namespace Entities.Champion
 
         public Animator animator;
         public CollisionBlocker blocker;
-        [SerializeField] private NavMeshObstacle obstacle;
+        [SerializeField] public NavMeshObstacle obstacle;
 
         public ActiveCapacity attackBase;
         public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
@@ -75,6 +75,7 @@ namespace Entities.Champion
         {
             var so = GameStateMachine.Instance.allChampionsSo[championSoIndex];
             championSo = so;
+            
             maxHp = championSo.maxHp;
             currentHp = maxHp;
             maxResource = championSo.maxRessource;
@@ -154,6 +155,9 @@ namespace Entities.Champion
             for (int i = 0; i < so.activeCapacities.Length; i++)
             {
                 activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.activeCapacities[i].indexInCollection,this));
+            }
+            for (int i = 0; i < so.activeCapacities.Length; i++)
+            {
                 activeCapacities[i].SetUpActiveCapacity(so.activeCapacities[i].indexInCollection, this);
             }
             activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.ultimateAbility.indexInCollection,this));

@@ -9,17 +9,7 @@ namespace Entities.Capacities
     public class ActiveAttackRectCapacity : ActiveAttackWithPrevisualisableCapacity
     {
        public  Vector3 previsualisableObjectForward;
-
-        public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
-        {
-            if (base.TryCast(targetsEntityIndexes, targetPositions))
-            {
-                champion.RequestRotateMeshChampion(previsualisableObjectForward);
-                return true;
-            }
-            return false;
-        }
-
+       
         public override void EnableDrawing()
         {
             base.EnableDrawing();
@@ -40,7 +30,10 @@ namespace Entities.Capacities
                 champion.transform.position + previsualisableObjectForward * so.offsetAttack;
         }
 
-     
+        public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
+        {
+            champion.RotateMeshChampionRPC(previsualisableObjectForward);
+        }
 
         public override void DisableDrawing()
         {
@@ -52,6 +45,7 @@ namespace Entities.Capacities
             params object[] previsualisableParameters)
         {
             previsualisableObjectForward = (Vector3)previsualisableParameters[0];
+            rotationFx = Quaternion.LookRotation(previsualisableObjectForward, Vector3.up);
             return base.TryCastWithPrevisualisableData(targetsEntityIndexes, targetPositions,
                 previsualisableParameters);
         }

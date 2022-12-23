@@ -67,6 +67,21 @@ public partial class MinionSpawner : IActiveLifeable, IDeadable
         throw new System.NotImplementedException();
     }
 
+    public bool GetCanDecreaseCurrentHp()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RequestSetCanDecreaseCurrentHp(bool value)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SyncSetCanDecreaseCurrentHpRPC(bool value)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void RequestSetMaxHp(float value)
     {
         throw new System.NotImplementedException();

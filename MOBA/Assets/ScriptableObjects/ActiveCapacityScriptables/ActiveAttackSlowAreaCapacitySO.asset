@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d9e8c4a102f34418258c2ac9220fb8, type: 3}
+  m_Name: ActiveAttackSlowAreaCapacitySO
+  m_EditorClassIdentifier: 
+  referenceName: 
+  descriptionName: 
+  icon: {fileID: 0}
+  description: 
+  cooldown: 0
+  types: 
+  fxPrefab: {fileID: 8621144565032064032, guid: f25a65caa7a21734dae6d21f88a1be2b, type: 3}
+  fxTime: 1
+  indexInCollection: 9
+  activeCapacityAnimationLauncherInfo:
+    animationTime: 0
+    animatorParameterName: 
+  damageBeginTime: 0.5
+  damageTime: 1
+  damage: 200
+  damagePrefab: {fileID: 3623394139957654841, guid: 1cf099b1be515e94181d7fe7fefc4e9c, type: 3}
+  offsetAttack: 0
+  passiveSpeed: {fileID: 11400000, guid: e2a0726a715287e4db0f94ee538f1871, type: 2}
+  radiusArea: 6

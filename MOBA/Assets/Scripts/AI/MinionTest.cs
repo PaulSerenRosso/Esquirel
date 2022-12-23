@@ -155,6 +155,21 @@ public partial class MinionTest : Entity, IMoveable, IAttackable, IActiveLifeabl
         OnAttack?.Invoke(capacityIndex,targetedEntities,targetedPositions);
         photonView.RPC("SyncAttackRPC",RpcTarget.All,capacityIndex,targetedEntities,targetedPositions);
     }
+
+    public bool GetCanDecreaseCurrentHp()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RequestSetCanDecreaseCurrentHp(bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SyncSetCanDecreaseCurrentHpRPC(bool value)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public partial class MinionTest : IDeadable

@@ -108,6 +108,7 @@ MonoBehaviour:
   viewAngle: 0
   canView: 1
   meshFilterFoV: {fileID: 736488405490680133}
+  viewObstructedByObstacle: 1
   duration: 0
 --- !u!54 &3169168769462684903
 Rigidbody:

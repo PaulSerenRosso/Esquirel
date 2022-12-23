@@ -85,15 +85,18 @@ namespace Entities.Champion
                     }
                     else if (previsualisable.GetCanSkipDrawing())
                     {
+                       
                         photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
                             targetedPositions, null);
-                    
+                        
                     }
                 }
                 else
                 {
-                    photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
-                        targetedPositions, null);
+                    
+                        photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
+                            targetedPositions, null);
+                    
                 }
             }
         }
@@ -113,6 +116,7 @@ namespace Entities.Champion
                         previsualisable.SetCanDraw(false);
                         previsualisable.DisableDrawing();
                         currentPrevisualisable = null;
+                        
                         photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities,
                             targetedPositions, previsualisable.GetPrevisualisableData());
                     }
@@ -124,10 +128,9 @@ namespace Entities.Champion
         public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
             params object[] otherParameters)
         {
-         
+            Debug.Log(capacityIndex);
             if (activeCapacities[capacityIndex] is IPrevisualisable)
             {
-                
                 IPrevisualisable previsualisable = (IPrevisualisable)activeCapacities[capacityIndex];
                 if (!previsualisable.TryCastWithPrevisualisableData(targetedEntities, targetedPositions,
                         otherParameters)) return;
@@ -136,17 +139,20 @@ namespace Entities.Champion
             {
                 if (!activeCapacities[capacityIndex].TryCast(targetedEntities, targetedPositions)) return;
             }
-
             CancelCurrentCapacity();
             OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
-            photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
+            photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions,
+                activeCapacities[capacityIndex].GetCustomSyncParameters());
         }
 
         [PunRPC]
-        public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+        public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
+            params object[] customParameters)
         {
-            var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-            OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
+            activeCapacities[capacityIndex].SyncCapacity(targetedEntities, targetedPositions, customParameters);
+
+            OnCastSync?.Invoke(capacityIndex, targetedEntities, targetedPositions, customParameters);
+            // play feedback
         }
 
         public void RequestToSetOnCooldownCapacity(byte indexOfSOInCollection, bool value)
@@ -200,12 +206,11 @@ namespace Entities.Champion
 
         public void RequestSetSkipDrawingCapacity(byte capacityIndex, bool value)
         {
-            
             photonView.RPC("SetSkipDrawingCapacityRPC", RpcTarget.All, capacityIndex, value);
         }
 
         [PunRPC]
-        private void SetSkipDrawingCapacityRPC(byte capacityIndex, bool value)
+        public void SetSkipDrawingCapacityRPC(byte capacityIndex, bool value)
         {
             for (int i = 0; i < activeCapacities.Count; i++)
             {
@@ -234,7 +239,8 @@ namespace Entities.Champion
         }
 
         public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> OnCast;
-        public event GlobalDelegates.FourthParameterDelegate<byte, int[], Vector3[], ActiveCapacity> OnCastFeedback;
+        public event GlobalDelegates.FourthParameterDelegate<byte, int[], Vector3[], object[]> OnCastSync;
+
 
         public event GlobalDelegates.TwoParameterDelegate<byte, bool> OnSetCooldownFeedback;
     }

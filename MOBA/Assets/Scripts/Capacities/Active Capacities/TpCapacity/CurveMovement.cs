@@ -10,49 +10,78 @@ namespace Entities.Capacities
         protected CurveMovementCapacity curveMovementCapacity;
         protected CurveMovementCapacitySO curveCapacitySo;
         private float currentTimer;
-        [SerializeField] private MeshRenderer renderer;
+        public Transform renderer;
         private float curveTime;
         private float curveTimeRatio;
         AnimationCurve curve;
         private float curveYMaxPosition;
-       
+
+        private bool isEndCurve = true;
         private Vector3 startPosition;
         protected Champion.Champion champion;
         private Vector3 endPosition;
+       protected Champion.Champion championOfPlayerWhoMakesSecondDetection;
         public event GlobalDelegates.NoParameterDelegate endCurveEvent;
 
-        public void RequestSetupRPC(byte capacityIndex, int championIndex, Vector3 endPos)
+        public void RequestSetupRPC(byte capacityIndex, int championIndex, int championOfPlayerWhoMakesSecondDetectionIndex)
         {
-          
-            photonView.RPC("LaunchSetUpRPC", RpcTarget.All, capacityIndex, championIndex, endPos);
+            photonView.RPC("LaunchSetUpRPC", RpcTarget.All, capacityIndex, championIndex, championOfPlayerWhoMakesSecondDetectionIndex);
         }
 
         [PunRPC]
-        public void LaunchSetUpRPC(byte capacityIndex, int championIndex, Vector3 endPos)
+        public void LaunchSetUpRPC(byte capacityIndex, int championIndex, int championOfPlayerWhoMakesSecondDetectionIndex)
         {
-            SetUp(capacityIndex, championIndex, endPos);
+            SetUp(capacityIndex, championIndex,  championOfPlayerWhoMakesSecondDetectionIndex);
         }
 
-        protected virtual void SetUp(byte capacityIndex, int championIndex, Vector3 endPos)
+        public virtual void SetUp(byte capacityIndex, int championIndex, int championOfPlayerWhoMakesSecondDetectionIndex)
         {
+            
             champion = (Champion.Champion)EntityCollectionManager.GetEntityByIndex(championIndex);
             this.curveMovementCapacity = (CurveMovementCapacity)champion.activeCapacities[capacityIndex];
             this.curveCapacitySo = curveMovementCapacity.curveMovementCapacitySo;
-            endPosition = endPos;
-            currentTimer = 0;
             curve = curveCapacitySo.curve;
             curveTime = curveCapacitySo.curveMovementTime;
             curveYMaxPosition = curveCapacitySo.curveMovementMaxYPosition;
+            curveMovementCapacity.curveObject = this;
+         
+            championOfPlayerWhoMakesSecondDetection =
+                (Champion.Champion)EntityCollectionManager.GetEntityByIndex(championIndex);
+            curveMovementCapacity.championOfPlayerWhoMakesSecondDetection = championOfPlayerWhoMakesSecondDetection;
+        }
+        
+        public void RequestStartCurveMovementRPC( Vector3 endPos)
+        {
+            photonView.RPC("LaunchStartCurveMovementRPC", RpcTarget.All,  endPos);
+        }
+
+        [PunRPC]
+        public void LaunchStartCurveMovementRPC( Vector3 endPos)
+        {
+            StartCurveMovementRPC( endPos);
+        }
+
+        protected virtual void StartCurveMovementRPC(Vector3 endPos)
+        {
+            endPosition = endPos;
+            currentTimer = 0;
             startPosition = champion.transform.position;
+            transform.position = curveMovementCapacity.startPosition;
+            isEndCurve = false;
         }
 
         protected virtual void OnUpdate()
         {
             if (currentTimer < curveTime)
                 currentTimer += Time.deltaTime;
+            else if(!isEndCurve)
+            {
+                isEndCurve = true;
+                endCurveEvent?.Invoke();
+            }
             else
             {
-                endCurveEvent?.Invoke();
+                return;
             }
 
             curveTimeRatio = currentTimer / curveTime;

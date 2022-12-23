@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Entities.FogOfWar;
+using GameStates;
 using Photon.Pun;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Entities.Capacities
 {
@@ -28,12 +30,19 @@ public class TpMovement : CurveMovement
        StartCoroutine(smoke.SetUp(tpCapacitySo.smokeDuration, tpCapacitySo.smokePrefab, transform.position));
        
     }
-    protected override void SetUp(byte capacityIndex, int championIndex, Vector3 endPos)
+    public override void SetUp(byte capacityIndex, int championIndex, int championOfPlayerWhoMakesSecondDetectionIndex)
     {
-        base.SetUp(capacityIndex, championIndex, endPos);
-        transform.position = curveMovementCapacity.startPosition;
-        tpObject.ActivateTpObject(transform.position, champion.team);
+        base.SetUp(capacityIndex, championIndex, championOfPlayerWhoMakesSecondDetectionIndex);
         tpCapacitySo = (TpCapacitySO)curveCapacitySo;
+    
+    }
+
+    protected override void StartCurveMovementRPC(Vector3 endPos)
+    {
+        base.StartCurveMovementRPC(endPos);
+        clientCountReadyToTP = 0; 
+        tpObject.ActivateTpObject(transform.position, champion.team);
+        
     }
 
     protected override void OnUpdate()
@@ -41,5 +50,26 @@ public class TpMovement : CurveMovement
         if(!tpObject.GetIsActive()) return;
         base.OnUpdate();
     }
+
+
+    private int clientCountReadyToTP;
+
+    
+    [PunRPC]
+    void UpdateClientReadyForTP()
+    {
+        clientCountReadyToTP++ ;
+        if (clientCountReadyToTP == GameStateMachine.Instance.playersReadyDict.Count)
+        {
+            if(championOfPlayerWhoMakesSecondDetection != GameStateMachine.Instance.GetPlayerChampion()) return;
+            Debug.Log(GameStateMachine.Instance.GetPlayerChampion());
+            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit,
+                    tpCapacitySo.toleranceSecondDetection, 1))
+            {
+                champion.RequestMoveChampion(hit.position);
+            }
+        }
+    }
+    
 }
 }

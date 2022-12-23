@@ -33,6 +33,24 @@ public class PassiveSpeed : PassiveCapacity
             EndMove;
     }
 
+    public override void SyncOnAdded(Entity target)
+    {
+        for (int i = 0; i < target.passiveCapacitiesList.Count; i++)
+        {
+            if (target.passiveCapacitiesList[i].indexOfSo == indexOfSo) return ;
+        }
+        base.SyncOnAdded(target);
+    }
+
+    public override void SyncOnRemoved(Entity target)
+    {
+        for (int i = 0; i < target.passiveCapacitiesList.Count; i++)
+        {
+            if (target.passiveCapacitiesList[i].indexOfSo == indexOfSo) return ;
+        }
+       base.SyncOnRemoved(target);
+    }
+
     private void EndMove()
     {
         target.RequestRemovePassiveCapacity((byte)target.passiveCapacitiesList.IndexOf(this));

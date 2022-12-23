@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Entities.Capacities
 {
@@ -13,6 +14,8 @@ namespace Entities.Capacities
         [Tooltip("GD Name")] public string descriptionName;
         
         [Tooltip("Capacity Icon")] public Sprite icon;
+
+    public GameObject fxPrefab;
 
         [TextArea(4, 4)] [Tooltip("Description of the capacity")]
         public string description;

@@ -1,18 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class JumpCapacitySO : MonoBehaviour
+namespace Entities.Capacities
 {
-    // Start is called before the first frame update
-    void Start()
+    [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/JumpCapacity", fileName = "JumpCapacitySO")]   
+public class JumpCapacitySO : CurveMovementWithPrevisualisableCapacitySO
+{
+    public override Type AssociatedType()
     {
-        
+        return typeof(JumpCapacity);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+}
 }

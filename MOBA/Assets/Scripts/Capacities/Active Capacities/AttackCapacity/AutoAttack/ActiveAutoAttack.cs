@@ -41,9 +41,8 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
         if (base.TryCast(targetsEntityIndexes, targetPositions))
         {
             InitiateCooldown();
-            champion.RequestRotateMeshChampion((targetPositions[0] - caster.transform.position).normalized);
+            rotationFx = Quaternion.LookRotation((targetPositions[0] - caster.transform.position).normalized, Vector3.up);
             InitiateFXTimer();
-            champion.SetCanMoveRPC(false);
         }
 
         return true;
@@ -59,7 +58,6 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
     public override void SetUpActiveCapacity(byte soIndex, Entity caster)
     {
         base.SetUpActiveCapacity(soIndex, caster);
-
         activeAutoAttackSO = (ActiveAutoAttackSO) AssociatedActiveCapacitySO();
         range = activeAutoAttackSO.maxRange;
         rangeSqrt = range * range;
@@ -75,6 +73,11 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
         return rangeSqrt;
     }
 
+    public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
+    {
+        champion.RotateMeshChampionRPC((targetPositions[0] - caster.transform.position).normalized);
+        champion.SyncSetCanMoveRPC(false);
+    }
 
     /// <summary>
     /// Method which update the timer.

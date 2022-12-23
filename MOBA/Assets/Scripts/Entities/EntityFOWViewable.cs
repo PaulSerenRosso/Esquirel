@@ -20,6 +20,7 @@ namespace Entities
         public List<IFOWShowable> seenShowables = new List<IFOWShowable>();
         public MeshFilter meshFilterFoV;
 
+        public bool viewObstructedByObstacle = true;
         public Enums.Team GetTeam()
         {
             return team;
@@ -59,6 +60,15 @@ namespace Entities
         public bool CanView() => canView;
         public float GetFOWViewRange() => viewRange;
         public float GetFOWBaseViewRange() => baseViewRange;
+        public void SetViewObstructedByObstacle(bool value)
+        {
+            viewObstructedByObstacle = value;
+        }
+
+        public bool GetViewObstructedByObstacle()
+        {
+            return viewObstructedByObstacle;
+        }
 
         public List<IFOWShowable> SeenShowables() => seenShowables;
 

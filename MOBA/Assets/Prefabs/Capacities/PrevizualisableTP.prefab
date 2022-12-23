@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 8800300684960855682}
   - component: {fileID: 8800300684960855683}
   m_Layer: 18
-  m_Name: PrevizualisableCurve
+  m_Name: PrevizualisableTP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

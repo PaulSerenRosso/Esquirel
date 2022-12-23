@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3480681341152264626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3480681341667345171}
@@ -251,7 +251,7 @@ MonoBehaviour:
   canAddPassiveCapacity: 1
   canRemovePassiveCapacity: 1
   uiTransform: {fileID: 3480681342087303708}
-  offset: {x: 0, y: 2, z: 0}
+  offset: {x: 0, y: 4, z: 0}
   canShow: 0
   canHide: 0
   meshRenderersToShow: []
@@ -268,6 +268,7 @@ MonoBehaviour:
   viewAngle: 360
   canView: 1
   meshFilterFoV: {fileID: 3480681341397647661}
+  viewObstructedByObstacle: 1
   championSo: {fileID: 0}
   rotateParent: {fileID: 3480681341152264625}
   championMesh: {fileID: 0}
@@ -351,12 +352,12 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3480681341667345177}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.6, y: 1, z: 0.6}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
+  m_Shape: 0
+  m_Extents: {x: 0.00001, y: 0.00001, z: 0.00001}
+  m_MoveThreshold: 0.01
+  m_Carve: 0
   m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: 1, z: 0}
   m_TimeToStationary: 0
@@ -410,7 +411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3480681342087303709}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.899, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3480681341667345171}
@@ -459,8 +460,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 1.07
+  m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &3711244289653556686

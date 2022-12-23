@@ -173,6 +173,7 @@ MonoBehaviour:
   viewAngle: 0
   canView: 0
   meshFilterFoV: {fileID: 0}
+  viewObstructedByObstacle: 0
   collider: {fileID: 7787077127828374461}
   renderer: {fileID: 7787077126835712645}
 --- !u!65 &7787077127828374461
@@ -200,5 +201,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3acfa7e2698df4f9371f08463d3685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 7787077126835712645}
+  renderer: {fileID: 7787077126835712635}
   tpObject: {fileID: 7787077127828374451}

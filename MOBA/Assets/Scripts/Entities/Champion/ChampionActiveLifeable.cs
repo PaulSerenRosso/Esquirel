@@ -1,4 +1,5 @@
 using Photon.Pun;
+using UnityEngine;
 
 namespace Entities.Champion
 {
@@ -6,6 +7,7 @@ namespace Entities.Champion
     {
         public float maxHp;
         public float currentHp;
+        private bool canDecreaseCurrentHp = true;
 
         public float GetMaxHp()
         {
@@ -20,6 +22,21 @@ namespace Entities.Champion
         public float GetCurrentHpPercent()
         {
             return currentHp / maxHp * 100f;
+        }
+
+        public bool GetCanDecreaseCurrentHp()
+        {
+            return canDecreaseCurrentHp;
+        }
+
+        public void RequestSetCanDecreaseCurrentHp(bool value)
+        {
+            photonView.RPC("SyncSetCanDecreaseCurrentHpRPC", RpcTarget.MasterClient, value);
+        }
+        [PunRPC]
+        public void SyncSetCanDecreaseCurrentHpRPC(bool value)
+        {
+            canDecreaseCurrentHp = value;
         }
 
         public void RequestSetMaxHp(float value)
@@ -188,6 +205,7 @@ namespace Entities.Champion
         [PunRPC]
         public void DecreaseCurrentHpRPC(float amount)
         {
+            if(!canDecreaseCurrentHp) return;
             if (isAlive)
             {
             currentHp -= amount;

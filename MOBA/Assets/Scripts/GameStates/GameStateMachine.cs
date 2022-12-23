@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using Controllers.Inputs;
 using Entities.Champion;
 using Entities.Inventory;
 using Photon.Pun;
 using GameStates.States;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 namespace GameStates
@@ -35,21 +37,21 @@ namespace GameStates
             set
             {
                 tickValue = value;
-                OnTickFeedback?.Invoke((double)(PhotonNetwork.Time-oldPhotonTime));
+                OnTickFeedback?.Invoke((double)(PhotonNetwork.Time - oldPhotonTime));
                 oldPhotonTime = PhotonNetwork.Time;
             }
         }
-        
+
         public event GlobalDelegates.NoParameterDelegate OnTick;
         public event GlobalDelegates.OneParameterDelegate<double> OnTickFeedback;
-        public  GlobalDelegates.NoParameterDelegate OnUpdate;
+        public GlobalDelegates.NoParameterDelegate OnUpdate;
         public Enums.Team winner = Enums.Team.Neutral;
         public List<int> allPlayersIDs = new List<int>();
 
         /// <summary>
         /// Key : actorNumber, Values : Team, ChampionSOindex, ready
         /// </summary>
-        private readonly Dictionary<int, PlayerData> playersReadyDict =
+        public readonly Dictionary<int, PlayerData> playersReadyDict =
             new Dictionary<int, PlayerData>();
 
         public List<PlayerData> debugList;
@@ -79,7 +81,19 @@ namespace GameStates
         }
 
         public string currentStateDebugString;
-        
+
+
+        public Champion GetOtherPlayerChampion(Champion champion)
+        {
+            foreach (var player in playersReadyDict)
+            {
+                if (player.Value.champion != champion)
+                    return player.Value.champion;
+            }
+
+            return null;
+        }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -188,18 +202,17 @@ namespace GameStates
             }*/
         }
 
-   
 
         public int GetPlayerChampionPhotonViewId(int actorNumber)
         {
             return playersReadyDict[actorNumber].championPhotonViewId;
         }
-        
+
         public int GetPlayerChampionPhotonViewId()
         {
             return playersReadyDict[PhotonNetwork.LocalPlayer.ActorNumber].championPhotonViewId;
         }
-        
+
         public Champion GetPlayerChampion(int actorNumber)
         {
             return playersReadyDict[actorNumber].champion;
@@ -209,7 +222,7 @@ namespace GameStates
         {
             return playersReadyDict[PhotonNetwork.LocalPlayer.ActorNumber].champion;
         }
-        
+
         public Enums.Team GetPlayerTeam(int actorNumber)
         {
             return playersReadyDict.ContainsKey(actorNumber) ? playersReadyDict[actorNumber].team : Enums.Team.Neutral;
@@ -346,7 +359,6 @@ namespace GameStates
         [PunRPC]
         private void SyncDataDictionaryRPC(int key, byte team, byte championSO, bool ready)
         {
-         
             var data = new PlayerData
             {
                 team = (Enums.Team)team,
@@ -411,7 +423,6 @@ namespace GameStates
         {
             PhotonNetwork.IsMessageQueueRunning = false;
             PhotonNetwork.LoadLevel(gameSceneName);
-              
         }
 
         /// <summary>
@@ -426,17 +437,17 @@ namespace GameStates
             ItemCollectionManager.Instance.LinkCapacityIndexes();
 
             InstantiateChampion();
-            
+
             SendSetToggleReady(true);
         }
-        
+
         /// <summary>
         /// Executed during the exit of loading state, so after every champion is instantiated and every indexes are linked
         /// </summary>
         public void LateLoad()
         {
             LinkLoadChampionData();
-            
+
             SetupUI();
         }
 
@@ -450,9 +461,11 @@ namespace GameStates
 
         private void InstantiateChampion()
         {
-            var champion = PhotonNetwork.Instantiate(championPrefab.name, Vector3.up, Quaternion.identity).GetComponent<Champion>();
-            
-            photonView.RPC("SyncChampionPhotonId", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, champion.photonView.ViewID);
+            var champion = PhotonNetwork.Instantiate(championPrefab.name, Vector3.up, Quaternion.identity)
+                .GetComponent<Champion>();
+
+            photonView.RPC("SyncChampionPhotonId", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber,
+                champion.photonView.ViewID);
 
             champion.name = $"Player ID:{PhotonNetwork.LocalPlayer.ActorNumber} [MINE]";
             LinkController(champion);
@@ -467,7 +480,7 @@ namespace GameStates
 
             debugList[photonId].championPhotonViewId = playersReadyDict[photonId].championPhotonViewId;
             debugList[photonId].champion = playersReadyDict[photonId].champion;
-            
+
             champion.name = $"Player ID : {photonId}";
         }
 
@@ -508,9 +521,9 @@ namespace GameStates
         private void SetupUI()
         {
             if (UIManager.Instance == null) return;
-            
+
             UIManager.Instance.InstantiateChampionHUD();
-            
+
             foreach (var actorNumber in playersReadyDict)
             {
                 UIManager.Instance.AssignInventory(actorNumber.Key);
@@ -530,26 +543,26 @@ namespace GameStates
 
         public Color GetTeamColor(Enums.Team team)
         {
-        for (int i = 0; i < teamColors.Length; i++)
-        {
-            if (team == teamColors[i].team)
+            for (int i = 0; i < teamColors.Length; i++)
             {
-               return teamColors[i].color;
+                if (team == teamColors[i].team)
+                {
+                    return teamColors[i].color;
+                }
             }
-        }
 
-        return Color.black;
+            return Color.black;
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if(stream.IsWriting)
+            if (stream.IsWriting)
             {
                 stream.SendNext(tickValue);
             }
             else
             {
-                TickValue = (bool) stream.ReceiveNext();
+                TickValue = (bool)stream.ReceiveNext();
             }
         }
     }

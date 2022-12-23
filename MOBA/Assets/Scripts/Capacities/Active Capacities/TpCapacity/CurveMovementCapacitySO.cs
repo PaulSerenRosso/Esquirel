@@ -9,6 +9,8 @@ namespace Entities.Capacities
 {
     public abstract class CurveMovementCapacitySO : ActiveCapacitySO
     {
+       public float toleranceFirstDetection;
+        public float toleranceSecondDetection;
         public AnimationCurve curve;
         public float curveMovementMaxYPosition;
         public float curveMovementTime;

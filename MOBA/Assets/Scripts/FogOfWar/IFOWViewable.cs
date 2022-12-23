@@ -12,6 +12,8 @@ namespace Entities.FogOfWar
         /// <returns>The base view range of the entity</returns>
         public float GetFOWBaseViewRange();
 
+        public void SetViewObstructedByObstacle(bool value);
+        public bool GetViewObstructedByObstacle();
         public List<IFOWShowable> SeenShowables();
 
         public void RequestSetCanView(bool value);

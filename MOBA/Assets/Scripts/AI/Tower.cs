@@ -163,6 +163,21 @@ public partial class Tower : IAttackable, IActiveLifeable, IDeadable
         throw new NotImplementedException();
     }
 
+    public bool GetCanDecreaseCurrentHp()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RequestSetCanDecreaseCurrentHp(bool value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SyncSetCanDecreaseCurrentHpRPC(bool value)
+    {
+        throw new NotImplementedException();
+    }
+
     public void RequestSetMaxHp(float value)
     {
         throw new NotImplementedException();

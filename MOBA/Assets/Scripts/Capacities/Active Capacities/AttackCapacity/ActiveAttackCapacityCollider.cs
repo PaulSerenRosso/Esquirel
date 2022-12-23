@@ -11,8 +11,11 @@ public class ActiveAttackCapacityCollider :ActiveCapacityCollider
     public override void CollideWithEntity(Entity entityCollided)
     {
         IActiveLifeable lifeable = (IActiveLifeable)entityCollided;
+        Debug.Log(entityCollided);
+        Debug.Log(lifeable);
         if (lifeable != null)
         {
+            Debug.Log(team + "  " +entityCollided.team);
             if(entityCollided.team != team)
                 lifeable.DecreaseCurrentHpRPC(damage);
         }

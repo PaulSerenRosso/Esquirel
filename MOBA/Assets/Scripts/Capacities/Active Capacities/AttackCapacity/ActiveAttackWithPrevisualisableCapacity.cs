@@ -41,6 +41,8 @@ public class ActiveAttackWithPrevisualisableCapacity : ActiveAttackCapacity, IPr
     {
         canDraw = value;
     }
+    
+    
 
     public virtual bool TryCastWithPrevisualisableData(int[] targetsEntityIndexes, Vector3[] targetPositions,
         params object[] previsualisableParameters)

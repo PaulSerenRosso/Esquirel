@@ -50,7 +50,10 @@ namespace Entities.Capacities
              
            if(GameStateMachine.Instance.GetPlayerTeam() == team)
                ShowElements();
-           else HideElements();
+           else
+           {
+               HideElements();
+           }
         }
 
         [PunRPC]

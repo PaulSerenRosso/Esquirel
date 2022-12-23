@@ -282,6 +282,7 @@ namespace Entities.FogOfWar
                     {
                         if(!bush.CheckBushMaskView(entity)) continue;
                     }
+                    else  if(!entity.GetViewObstructedByObstacle()) continue;
                         fieldOfViewObstacles.Add(hits[i]);
                     return new ViewCastInfo(true, hits[i].point, hits[i].distance, globalAngle);
                 }
@@ -316,6 +317,10 @@ namespace Entities.FogOfWar
                         if (bush)
                         {
                             if(!bush.CheckBushMaskView(entity)) continue;
+                        }
+                        else
+                        {
+                            if(!entity.GetViewObstructedByObstacle()) continue;
                         }
                         fieldOfViewObstacles.Add(hits[i]);
                     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameStates;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,15 +8,18 @@ using UnityEngine.InputSystem;
 
 namespace Entities.Capacities
 {
-public class CurveMovementCapacity : ActiveCapacity
-{
+    public class CurveMovementCapacity : ActiveCapacity
+    {
         public CurveMovementCapacitySO curveMovementCapacitySo;
         public Champion.Champion champion;
         public float range;
+        public float toleranceDetection;
         public Vector3 startPosition;
         public Vector3 endPosition;
-        protected CurveMovement curveObject;
+        public CurveMovement curveObject;
         protected ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
+        public Champion.Champion championOfPlayerWhoMakesSecondDetection;
+
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
             if (onCooldown) return false;
@@ -25,18 +29,31 @@ public class CurveMovementCapacity : ActiveCapacity
 
         protected void SearchEndPositionAvailable()
         {
+            if(championOfPlayerWhoMakesSecondDetection != GameStateMachine.Instance.GetPlayerChampion()) return;
             NavMeshHit navMeshHit;
-            if (NavMesh.SamplePosition(endPosition, out navMeshHit, range, 1))
+            if (NavMesh.SamplePosition(endPosition, out navMeshHit, toleranceDetection, 1))
             {
                 endPosition = navMeshHit.position;
-                curveObject.RequestSetupRPC((byte)champion.activeCapacities.IndexOf(this), caster.entityIndex, endPosition);
+                curveObject.RequestStartCurveMovementRPC(endPosition);
             }
             else
             {
-                Debug.LogError("don't find endPosition");
+                NavMesh.Raycast(champion.transform.position, endPosition, out navMeshHit, 1);
+                endPosition = navMeshHit.position;
             }
         }
 
+        public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
+        {
+            endPosition = (Vector3)customParameters[0];
+            SearchEndPositionAvailable();
+            base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);
+        }
+
+        public override object[] GetCustomSyncParameters()
+        {
+            return new object[] { endPosition };
+        }
 
         public override void CancelCapacity()
         {
@@ -53,21 +70,22 @@ public class CurveMovementCapacity : ActiveCapacity
         {
             champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, false);
             base.EndCooldown();
-            
         }
 
-   
+
         public override void SetUpActiveCapacity(byte soIndex, Entity caster)
         {
             base.SetUpActiveCapacity(soIndex, caster);
-            curveMovementCapacitySo = (CurveMovementCapacitySO) CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
-            champion = (Champion.Champion) caster;
+            champion = (Champion.Champion)caster;
+            if (PhotonNetwork.IsMasterClient)
+                championOfPlayerWhoMakesSecondDetection = GameStateMachine.Instance.GetOtherPlayerChampion(champion);
+            curveMovementCapacitySo =
+                (CurveMovementCapacitySO)CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
             range = curveMovementCapacitySo.referenceRange;
-            
-                activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
-                activeCapacityAnimationLauncher.Setup(curveMovementCapacitySo.activeCapacityAnimationLauncherInfo,champion);
+            activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
+            activeCapacityAnimationLauncher.Setup(curveMovementCapacitySo.activeCapacityAnimationLauncherInfo,
+                champion);
+           toleranceDetection =curveMovementCapacitySo.toleranceFirstDetection;
         }
-
-}
-    
+    }
 }

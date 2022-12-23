@@ -20,17 +20,21 @@ namespace Entities.Capacities
         
             if (base.TryCast(targetsEntityIndexes, targetPositions))
             {
-                champion.RequestRotateMeshChampion(previsualisableCurveMovementObjectForward);
                 startPosition = caster.transform.position;
                 activeCapacityAnimationLauncher.InitiateAnimationTimer();
                 endPosition = caster.transform.position + previsualisableCurveMovementObjectForward * range;
-                SearchEndPositionAvailable();
-
                 return true;
             }
             
 
             return false;
+        }
+
+        public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
+        {
+            base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);
+            champion.RotateMeshChampionRPC(previsualisableCurveMovementObjectForward);
+            
         }
 
         public void EnableDrawing()

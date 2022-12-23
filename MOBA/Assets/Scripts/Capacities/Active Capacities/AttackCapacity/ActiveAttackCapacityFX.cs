@@ -8,11 +8,11 @@ namespace Entities.Capacities
 public class ActiveAttackCapacityFX : ActiveCapacityFX
 {
   protected Champion.Champion champion;
+  protected  ActiveAttackCapacity activeAttackCapacity;
   public override void InitCapacityFX(int entityIndex, byte capacityIndex)
   {
     base.InitCapacityFX(entityIndex, capacityIndex);
     champion =(Champion.Champion) EntityCollectionManager.GetEntityByIndex(entityIndex);
-    ActiveAttackCapacity activeAttackCapacity;
     if (capacityIndex == 255)
       activeAttackCapacity = (ActiveAttackCapacity) champion.attackBase;
       else

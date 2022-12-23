@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c68f33263d9d95418c6606d13fbad01, type: 3}
+  m_Name: TpCapacity
+  m_EditorClassIdentifier: 
+  referenceName: 
+  descriptionName: 
+  icon: {fileID: 21300000, guid: aed6393858493e647832e7cc3209fbf9, type: 3}
+  description: 
+  cooldown: 2
+  types: 
+  fxPrefab: {fileID: 0}
+  fxTime: 0
+  indexInCollection: 1
+  toleranceFirstDetection: 4
+  toleranceSecondDetection: 4
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.12970942
+      value: 1
+      inSlope: 0.5028064
+      outSlope: 0.5028064
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveMovementMaxYPosition: 10
+  curveMovementTime: 4
+  referenceRange: 6
+  activeCapacityAnimationLauncherInfo:
+    animationTime: 0.867
+    animatorParameterName: Comp1
+  previsualisableCurveMovementPrefab: {fileID: 8800300684960855708, guid: 60ea00a92fa380f4e85bab9ed1dfaa74, type: 3}
+  tpObjectPrefab: {fileID: 7787077127828374451, guid: 3bc0e1cbef669dc489d7ec479edc3c96, type: 3}
+  smokeDuration: 5
+  smokePrefab: {fileID: 1608149160280095728, guid: 0712ece915baa3e488a750bf0ba17234, type: 3}
