@@ -20,7 +20,7 @@ public class ActiveAttackCapacityFX : ActiveCapacityFX
       
     activeAttackCapacity = (ActiveAttackCapacity) champion.activeCapacities[capacityIndex];
     }
-    transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up*2;
+    transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up;
     
     for (int i = 0; i < allParticleSystems.Length; i++)
     {

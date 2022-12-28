@@ -7,11 +7,11 @@ using UnityEngine;
 namespace Entities.Capacities
 {
     [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/JumpCapacity", fileName = "JumpCapacitySO")]   
-public class JumpCapacitySO : CurveMovementWithPrevisualisableCapacitySO
+public class JumpWithSlowCapacityCapacitySO : CurveMovementWithPrevisualisableCapacitySO
 {
     public override Type AssociatedType()
     {
-        return typeof(JumpCapacity);
+        return typeof(JumpWithSlowCapacity);
     }
 }
 }

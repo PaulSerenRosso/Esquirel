@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class CatapultCapacity : MonoBehaviour
+namespace Entities.Capacities{
+public class CatapultCapacity : CurveMovementCapacity
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
+   {
+      return base.TryCast(targetsEntityIndexes, targetPositions);
+   }
+   
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

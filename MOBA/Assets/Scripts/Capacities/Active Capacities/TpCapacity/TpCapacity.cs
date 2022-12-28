@@ -1,3 +1,4 @@
+using Entities.Champion;
 using GameStates;
 using Photon.Pun;
 using UnityEngine;
@@ -34,16 +35,12 @@ namespace Entities.Capacities
 
             return false;
         }
-        
-        public void RequestUpdateClientReadyToTP()
-        {
-            curveObject.photonView.RPC("UpdateClientReadyForTP", RpcTarget.All);
-        }
+
 
         public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions,
             params object[] customParameters)
         {
-            useCount = (int)customParameters[1];
+            useCount = (int)customParameters[2];
             Debug.Log(useCount);
             if (useCount == 1)
             {
@@ -59,7 +56,8 @@ namespace Entities.Capacities
 
         public override object[] GetCustomSyncParameters()
         {
-            return new object[] { base.GetCustomSyncParameters()[0], useCount };
+            object[] baseObjects = base.GetCustomSyncParameters();
+            return new object[] { baseObjects[0], baseObjects[1], useCount };
         }
 
         public override void InitiateCooldown()
@@ -72,18 +70,15 @@ namespace Entities.Capacities
 
         void TpChampion()
         {
-            if (!champion.photonView.IsMine)
+            if (PhotonNetwork.IsMasterClient)
             {
-            champion.obstacle.enabled = false;
-                
-            Debug.Log("bonmatin");
+                champion.RequestMoveChampion(
+                    ChampionPlacerManager.instance.GetLauncher.LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(curveObject
+                            .transform.position, champion.pointPlacerDistanceAvoidance, champion.agent.radius,
+                        champion.championPlacerDistanceAvoider.pointAvoider).point);
             }
-            champion.blocker.characterColliderBlocker.enabled = false;
-            champion.SyncSetCanMoveRPC(false);
-            RequestUpdateClientReadyToTP();
         }
-        
-        
+
 
         public override void SetUpActiveCapacity(byte soIndex, Entity caster)
         {
@@ -95,9 +90,8 @@ namespace Entities.Capacities
                     Quaternion.identity).GetComponent<CurveMovement>();
                 curveObject.GetComponent<TpObject>().RequestDeactivate();
                 curveObject.endCurveEvent += InitiateCooldown;
-               
-                curveObject.RequestSetupRPC((byte)champion.activeCapacities.IndexOf(this), caster.entityIndex,
-                    championOfPlayerWhoMakesSecondDetection.entityIndex);
+
+                curveObject.RequestSetupRPC((byte)champion.activeCapacities.IndexOf(this), caster.entityIndex);
             }
         }
     }

@@ -20,21 +20,20 @@ namespace Entities.Capacities
         private Vector3 startPosition;
         protected Champion.Champion champion;
         private Vector3 endPosition;
-       protected Champion.Champion championOfPlayerWhoMakesSecondDetection;
         public event GlobalDelegates.NoParameterDelegate endCurveEvent;
 
-        public void RequestSetupRPC(byte capacityIndex, int championIndex, int championOfPlayerWhoMakesSecondDetectionIndex)
+        public void RequestSetupRPC(byte capacityIndex, int championIndex)
         {
-            photonView.RPC("LaunchSetUpRPC", RpcTarget.All, capacityIndex, championIndex, championOfPlayerWhoMakesSecondDetectionIndex);
+            photonView.RPC("LaunchSetUpRPC", RpcTarget.All, capacityIndex, championIndex);
         }
 
         [PunRPC]
-        public void LaunchSetUpRPC(byte capacityIndex, int championIndex, int championOfPlayerWhoMakesSecondDetectionIndex)
+        public void LaunchSetUpRPC(byte capacityIndex, int championIndex)
         {
-            SetUp(capacityIndex, championIndex,  championOfPlayerWhoMakesSecondDetectionIndex);
+            SetUp(capacityIndex, championIndex);
         }
 
-        public virtual void SetUp(byte capacityIndex, int championIndex, int championOfPlayerWhoMakesSecondDetectionIndex)
+        public virtual void SetUp(byte capacityIndex, int championIndex)
         {
             
             champion = (Champion.Champion)EntityCollectionManager.GetEntityByIndex(championIndex);
@@ -44,34 +43,33 @@ namespace Entities.Capacities
             curveTime = curveCapacitySo.curveMovementTime;
             curveYMaxPosition = curveCapacitySo.curveMovementMaxYPosition;
             curveMovementCapacity.curveObject = this;
-         
-            championOfPlayerWhoMakesSecondDetection =
-                (Champion.Champion)EntityCollectionManager.GetEntityByIndex(championIndex);
-            curveMovementCapacity.championOfPlayerWhoMakesSecondDetection = championOfPlayerWhoMakesSecondDetection;
+
         }
         
-        public void RequestStartCurveMovementRPC( Vector3 endPos)
+        public void RequestStartCurveMovementRPC(Vector3 startPos, Vector3 endPos)
         {
-            photonView.RPC("LaunchStartCurveMovementRPC", RpcTarget.All,  endPos);
+            photonView.RPC("LaunchStartCurveMovementRPC", RpcTarget.All, startPos,  endPos);
         }
 
         [PunRPC]
-        public void LaunchStartCurveMovementRPC( Vector3 endPos)
+        public void LaunchStartCurveMovementRPC(Vector3 startPos,  Vector3 endPos)
         {
-            StartCurveMovementRPC( endPos);
+            StartCurveMovementRPC(startPos, endPos);
         }
 
-        protected virtual void StartCurveMovementRPC(Vector3 endPos)
+        protected virtual void StartCurveMovementRPC(Vector3 startPos, Vector3 endPos)
         {
             endPosition = endPos;
             currentTimer = 0;
-            startPosition = champion.transform.position;
-            transform.position = curveMovementCapacity.startPosition;
+            startPosition = startPos;
+            transform.position = startPos;
+            Debug.Log(startPos);
             isEndCurve = false;
         }
 
         protected virtual void OnUpdate()
         {
+         
             if (currentTimer < curveTime)
                 currentTimer += Time.deltaTime;
             else if(!isEndCurve)
@@ -84,6 +82,7 @@ namespace Entities.Capacities
                 return;
             }
 
+   
             curveTimeRatio = currentTimer / curveTime;
             transform.position = Vector3.Lerp(startPosition, endPosition,
                 curveTimeRatio);

@@ -1,18 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CatapultCapacitySO : MonoBehaviour
+namespace Entities.Capacities
 {
-    // Start is called before the first frame update
-    void Start()
+public class CatapultCapacitySO : CurveMovementCapacitySO
+{
+    public override Type AssociatedType()
     {
-        
+        return typeof(CatapultCapacity);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+}
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Entities.Champion;
 using GameStates;
 using Photon.Pun;
 using UnityEngine;
@@ -10,43 +11,92 @@ namespace Entities.Capacities
 {
     public class JumpMovement : CurveMovement
     {
-        private ActiveAttackSlowAreaCapacity activeAttackSlowAreaCapacity;
-         [SerializeField] public Transform UIRoot;
-        public override void SetUp(byte capacityIndex, int championIndex, int championOfPlayerWhoMakesSecondDetectionIndex)
+        [SerializeField] public Transform UIRoot;
+
+        private bool isActive = false;
+        public override void SetUp(byte capacityIndex, int championIndex
+        )
         {
-            base.SetUp(capacityIndex, championIndex, championOfPlayerWhoMakesSecondDetectionIndex);
-            JumpCapacity jumpCapacity = (JumpCapacity) champion.activeCapacities[capacityIndex];
-            activeAttackSlowAreaCapacity = jumpCapacity.activeAttackSlowAreaCapacity;
+            base.SetUp(capacityIndex, championIndex);
+            
+          
             endCurveEvent += LaunchActiveAttackSlowAreaCapacity;
             enabled = false;
+            
         }
-        
-        
+
+        protected override void StartCurveMovementRPC(Vector3 startPos, Vector3 endPos)
+        {
+            base.StartCurveMovementRPC(startPos, endPos);
+            champion.OnStartMoveChampion += ActivateChampionMove;
+            champion.OnEndMoveChampion += EndJump;
+            isActive = true;
+            DeactivateController();
+        }
+
+        void ActivateChampionMove()
+        {
+            champion.blocker.characterColliderBlocker.enabled = true;
+            champion.OnStartMoveChampion -= ActivateChampionMove;
+        }
+
+        void EndJump()
+        {
+            champion.SyncSetCanMoveRPC(true);
+            champion.OnEndMoveChampion -= EndJump;
+            ActivateController();
+            void ActivateController()
+            {
+                if (champion.photonView.IsMine)
+                {
+                    InputManager.PlayerMap.Movement.Enable();
+                    InputManager.PlayerMap.Attack.Enable();
+                    InputManager.PlayerMap.Capacity.Enable();
+                    InputManager.PlayerMap.MoveMouse.Enable();
+                }
+                champion.entityCapacityCollider.DisableEntityCollider();
+                champion.SetViewObstructedByObstacle(true);
+            }
+        }
+        void DeactivateController()
+        {
+            if (champion.photonView.IsMine)
+            {
+                InputManager.PlayerMap.Movement.Disable();
+                InputManager.PlayerMap.Attack.Disable();
+                InputManager.PlayerMap.MoveMouse.Disable();
+                InputManager.PlayerMap.Capacity.Disable();
+            }
+            else
+            {
+                champion.obstacle.enabled = false;
+            }
+            champion.entityCapacityCollider.DisableEntityCollider();
+            champion.SetViewObstructedByObstacle(false);
+            champion.SyncSetCanMoveRPC(false);
+            champion.blocker.characterColliderBlocker.enabled = false;
+        }
+
 
         void LaunchActiveAttackSlowAreaCapacity()
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                champion.CastRPC((byte)champion.activeCapacities.IndexOf(activeAttackSlowAreaCapacity), null, null, null);    
+                champion.RequestMoveChampion(
+                    ChampionPlacerManager.instance.GetLauncher.LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(
+                        transform.position, champion.pointPlacerDistanceAvoidance,
+                        champion.agent.radius, champion.championPlacerDistanceAvoider.pointAvoider).point);
+                
             }
-                if (GameStateMachine.Instance.GetPlayerChampion() == championOfPlayerWhoMakesSecondDetection)
-            {
-                if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit,
-                        curveCapacitySo.toleranceSecondDetection, 1))
-                {
-                    champion.RequestMoveChampion(hit.position);
-                    
-                }
-            }
-            
-             
-           
-              
+            isActive = false;
         }
 
         protected override void OnUpdate()
         {
+           // Debug.Log(transform.position);
+            if(!isActive) return;
             base.OnUpdate();
+            
             UIRoot.position = renderer.position;
         }
     }

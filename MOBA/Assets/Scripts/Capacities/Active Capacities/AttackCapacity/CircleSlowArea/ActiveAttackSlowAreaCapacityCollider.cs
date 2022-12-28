@@ -26,6 +26,7 @@ namespace Entities.Capacities
             base.CollideWithEntity(entityCollided);
             if (entityCollided.team != team)
             {
+                Debug.Log("bonsoir je test la collision");
             entityCollided.RequestAddPassiveCapacity(passiveSpeedSo.indexInCollection);
             }
         }

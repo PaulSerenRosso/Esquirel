@@ -30,17 +30,16 @@ public class TpMovement : CurveMovement
        StartCoroutine(smoke.SetUp(tpCapacitySo.smokeDuration, tpCapacitySo.smokePrefab, transform.position));
        
     }
-    public override void SetUp(byte capacityIndex, int championIndex, int championOfPlayerWhoMakesSecondDetectionIndex)
+    public override void SetUp(byte capacityIndex, int championIndex)
     {
-        base.SetUp(capacityIndex, championIndex, championOfPlayerWhoMakesSecondDetectionIndex);
+        base.SetUp(capacityIndex, championIndex);
         tpCapacitySo = (TpCapacitySO)curveCapacitySo;
     
     }
 
-    protected override void StartCurveMovementRPC(Vector3 endPos)
+    protected override void StartCurveMovementRPC( Vector3 startPos,Vector3 endPos)
     {
-        base.StartCurveMovementRPC(endPos);
-        clientCountReadyToTP = 0; 
+        base.StartCurveMovementRPC(startPos, endPos);
         tpObject.ActivateTpObject(transform.position, champion.team);
         
     }
@@ -50,26 +49,10 @@ public class TpMovement : CurveMovement
         if(!tpObject.GetIsActive()) return;
         base.OnUpdate();
     }
-
-
-    private int clientCountReadyToTP;
+    
 
     
-    [PunRPC]
-    void UpdateClientReadyForTP()
-    {
-        clientCountReadyToTP++ ;
-        if (clientCountReadyToTP == GameStateMachine.Instance.playersReadyDict.Count)
-        {
-            if(championOfPlayerWhoMakesSecondDetection != GameStateMachine.Instance.GetPlayerChampion()) return;
-            Debug.Log(GameStateMachine.Instance.GetPlayerChampion());
-            if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit,
-                    tpCapacitySo.toleranceSecondDetection, 1))
-            {
-                champion.RequestMoveChampion(hit.position);
-            }
-        }
-    }
+   
     
 }
 }

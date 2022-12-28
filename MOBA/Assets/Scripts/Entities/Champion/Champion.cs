@@ -15,16 +15,21 @@ namespace Entities.Champion
 {
     public partial class Champion : Entity
     {
+
+        public CatapultMovment catapultMovment;
+        public PhotonTransformView transformView;
         public ChampionSO championSo;
         public Transform rotateParent;
         public Transform championMesh;
         private Vector3 respawnPos;
-
+        [SerializeField]
+        public float pointPlacerDistanceAvoidance;
         private FogOfWarManager fowm;
         private CapacitySOCollectionManager capacityCollection;
         private UIManager uiManager;
         public Camera camera;
         public Rigidbody rb;
+        public ChampionPlacerDistanceAvoider championPlacerDistanceAvoider;
 
         public Animator animator;
         public CollisionBlocker blocker;
@@ -36,7 +41,12 @@ namespace Entities.Champion
         
         public IAimable autoAttack;
 
- 
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, pointPlacerDistanceAvoidance);
+        }
 
         protected override void OnStart()
         {
@@ -75,7 +85,6 @@ namespace Entities.Champion
         {
             var so = GameStateMachine.Instance.allChampionsSo[championSoIndex];
             championSo = so;
-            
             maxHp = championSo.maxHp;
             currentHp = maxHp;
             maxResource = championSo.maxRessource;

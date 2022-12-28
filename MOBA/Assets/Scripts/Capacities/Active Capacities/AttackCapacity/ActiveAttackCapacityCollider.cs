@@ -11,8 +11,6 @@ public class ActiveAttackCapacityCollider :ActiveCapacityCollider
     public override void CollideWithEntity(Entity entityCollided)
     {
         IActiveLifeable lifeable = (IActiveLifeable)entityCollided;
-        Debug.Log(entityCollided);
-        Debug.Log(lifeable);
         if (lifeable != null)
         {
             Debug.Log(team + "  " +entityCollided.team);
@@ -27,7 +25,7 @@ public class ActiveAttackCapacityCollider :ActiveCapacityCollider
         ActiveAttackCapacity activeAttackCapacity = (ActiveAttackCapacity)activeCapacity;
         damage = so.damage;
         team = activeCapacity.caster.team;
-        transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up*2;
+        transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up;
         
     }
 }
