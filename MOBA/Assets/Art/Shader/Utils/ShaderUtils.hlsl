@@ -41,4 +41,13 @@ float3 levelRange(float3 color, float minInput, float maxInput){
 float3 finalLevels(float3 color, float minInput, float gamma, float maxInput){
     return gammaCorrect(levelRange(color, minInput, maxInput), gamma);
 }
+
+//SDF
+//https://iquilezles.org/articles/distfunctions2d/
+float SDFBox(float2 uv, float2 size)
+{
+    float2 d = abs(uv)-size;
+    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
+}
+
 #endif
