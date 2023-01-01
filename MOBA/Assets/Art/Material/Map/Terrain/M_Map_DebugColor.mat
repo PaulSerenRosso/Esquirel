@@ -110,7 +110,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DesaturateDebugMap: 1
-    - _DesaturateMap: 0
+    - _DesaturateMap: 1
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
