@@ -30,14 +30,15 @@ Material:
     m_Floats:
     - _AlphaCutoff: 0.5
     - _EnvironmentReflections: 1
+    - _Fresnel_Normal_Tex_Power: 0
     - _Fresnel_Normal_Tex_UTiling: 1
     - _Fresnel_Normal_Tex_VTiling: 1
     - _Fresnel_Power: 3
-    - _Fresnel_Scale: 0.1
-    - _Fresnel_Value: 1
+    - _Fresnel_Scale: 2
+    - _Fresnel_Value: 0
     - _ReceiveShadows: 1
     - _SpecularHighlights: 1
     m_Colors:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Fresnel_Color: {r: 4, g: 0, b: 0, a: 1}
+    - _Fresnel_Color: {r: 2.9960785, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
