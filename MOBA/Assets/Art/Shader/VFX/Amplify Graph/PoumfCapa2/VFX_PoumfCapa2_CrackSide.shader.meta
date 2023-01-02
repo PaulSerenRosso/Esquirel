@@ -1,8 +1,9 @@
 fileFormatVersion: 2
-guid: ccb0dc3c6c1a7b64fac8a585710a8304
+guid: 543e68cdc8e67c94286274559375bccc
 ShaderImporter:
   externalObjects: {}
-  defaultTextures: []
+  defaultTextures:
+  - _MainCrackTexture: {fileID: 2800000, guid: 0139374ceb9162c40b0010439d4fc893, type: 3}
   nonModifiableTextures: []
   preprocessorOverride: 0
   userData: 
