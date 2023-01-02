@@ -22,6 +22,7 @@ namespace Entities.Champion
             set
             {
                 currentMoveSpeed = value;
+                animator.SetFloat("speedRatio", currentMoveSpeed/referenceMoveSpeed);
                 if (photonView.IsMine)
                     agent.speed = currentMoveSpeed;
             }
@@ -62,7 +63,6 @@ namespace Entities.Champion
         public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent;
 
         //NavMesh
-
         [SerializeField] public NavMeshAgent agent;
 
 
