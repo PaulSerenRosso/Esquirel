@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VFX_AplhaBlend_Dissolve
+  m_Shader: {fileID: 4800000, guid: 56de1d7bcb7e4664fafa49d3dfa52b70, type: 3}
+  m_ShaderKeywords: _BLURTEXTURE_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ChromaticTex2D:
+        m_Texture: {fileID: 2800000, guid: f631fa6989759d848bb4c1c5d67a6cc4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Main_Texture:
+        m_Texture: {fileID: 2800000, guid: 62fc6e90b68de5b4a848b801ddcac945, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlphaCutoff: 0.5
+    - _BlurTexture: 1
+    - _ChromaticValue: 0.025
+    - _Chromatic_Texture_UPanner: 0
+    - _Chromatic_Texture_VPanner: 0
+    - _Depth_Fade: 1
+    - _Dissolve: 1
+    - _Dissolve_Tex_UPanner: 0
+    - _Dissolve_Tex_VPanner: 0
+    - _Intensity: 1
+    - _Main_Power: 1
+    - _Main_UOffset: 0
+    - _Main_VOffset: 0
+    - _Main_VOffset1: 0
+    - _Rotator: 0.5
+    - _Use_Custom: 0
+    m_Colors:
+    - _Chromatic_Texture_Offset: {r: 1, g: 1, b: 0, a: 0}
+    - _Chromatic_Texture_Scale: {r: 1, g: 1, b: 0, a: 0}
+    - _Chromatic_Texture_ScaleXY_OffsetZW: {r: 1, g: 1, b: 0, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TintColor: {r: 1, g: 0.6941177, b: 0, a: 1}
+  m_BuildTextureStacks: []
