@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edc4d99e24b7f2e4eb615db67c07adc3, type: 3}
-  m_Name: EntityPlacerSO
+  m_Name: CurveCapacityStartCurveDetection
   m_EditorClassIdentifier: 
   circularDetectors:
   - factorRadius: 1

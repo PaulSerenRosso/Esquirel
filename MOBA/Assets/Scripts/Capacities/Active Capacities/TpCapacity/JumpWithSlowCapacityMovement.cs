@@ -11,6 +11,9 @@ namespace Entities.Capacities
 
         public override void SetUp(byte capacityIndex, int championIndex)
         {
+            champion = (Champion.Champion)EntityCollectionManager.GetEntityByIndex(championIndex);
+            this.curveMovementCapacity = (CurveMovementCapacity)champion.activeCapacities[capacityIndex];
+            this.curveCapacitySo = curveMovementCapacity.curveMovementCapacitySo;
             base.SetUp(capacityIndex, championIndex);
             JumpWithSlowCapacity jumpWithSlowCapacity = (JumpWithSlowCapacity)champion.activeCapacities[capacityIndex];
             activeAttackSlowAreaCapacity = jumpWithSlowCapacity.activeAttackSlowAreaCapacity;
@@ -22,6 +25,18 @@ namespace Entities.Capacities
                         null);
                 }
             };
+        }
+
+        protected override void DeactivateController()
+        {
+            base.DeactivateController();
+            champion.SetViewObstructedByObstacle(false);
+        }
+
+        protected override void ActivateController()
+        {
+            base.ActivateController();
+            champion.SetViewObstructedByObstacle(true);
         }
     }
 }

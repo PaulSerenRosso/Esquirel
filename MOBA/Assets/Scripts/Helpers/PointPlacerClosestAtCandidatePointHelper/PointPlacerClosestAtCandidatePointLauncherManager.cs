@@ -12,11 +12,11 @@ public class PointPlacerClosestAtCandidatePointLauncherManager : MonoBehaviour
  [SerializeField]
  private PointPlacerClosestAtCandidatePointLauncher launcher;
  public static PointPlacerClosestAtCandidatePointLauncherManager instance;
- [SerializeField] private PointPlacerClosestAtCandidatePointSO so;
+
  private void Awake()
  {
   instance = this;
-  launcher = new PointPlacerClosestAtCandidatePointLauncher(so);
+  launcher = new PointPlacerClosestAtCandidatePointLauncher();
  }
 
  private void OnDrawGizmosSelected()

@@ -20,9 +20,11 @@ namespace Entities.Capacities
         
             if (base.TryCast(targetsEntityIndexes, targetPositions))
             {
+                activeCapacityAnimationLauncher.InitiateAnimationTimer();
                 startPosition = caster.transform.position;
                 activeCapacityAnimationLauncher.InitiateAnimationTimer();
                 endPosition = caster.transform.position + previsualisableCurveMovementObjectForward * range;
+                SearchEndPositionAvailable();
                 return true;
             }
             
@@ -60,7 +62,7 @@ namespace Entities.Capacities
             base.InitiateCooldown();
             champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, true);
         }
-
+        
         public override void EndCooldown()
         {
             champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, false);
@@ -127,6 +129,10 @@ namespace Entities.Capacities
         public override void SetUpActiveCapacity(byte soIndex, Entity caster)
         {
             base.SetUpActiveCapacity(soIndex, caster);
+            champion = (Champion.Champion)caster;
+            activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
+            activeCapacityAnimationLauncher.Setup(curveMovementCapacitySo.activeCapacityAnimationLauncherInfo,
+                champion);
             if (caster.photonView.IsMine)
             {
                 CurveMovementWithPrevisualisableCapacitySO curveMovementWithPrevisualisableCapacitySo =

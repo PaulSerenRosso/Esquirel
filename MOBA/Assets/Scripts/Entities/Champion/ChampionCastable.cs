@@ -140,7 +140,7 @@ namespace Entities.Champion
                 if (!activeCapacities[capacityIndex].TryCast(targetedEntities, targetedPositions)) return;
             }
             CancelCurrentCapacity();
-            OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
+            OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions, otherParameters);
             photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions,
                 activeCapacities[capacityIndex].GetCustomSyncParameters());
         }
@@ -238,7 +238,7 @@ namespace Entities.Champion
             }
         }
 
-        public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> OnCast;
+        public event GlobalDelegates.FourthParameterDelegate<byte, int[], Vector3[], object[]> OnCast;
         public event GlobalDelegates.FourthParameterDelegate<byte, int[], Vector3[], object[]> OnCastSync;
 
 

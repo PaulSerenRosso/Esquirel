@@ -214,8 +214,9 @@ namespace Entities
             if (!canAddPassiveCapacity || !passiveCapacitySo.TryAdded(this)) return;
             var capacity = CapacitySOCollectionManager.Instance.CreatePassiveCapacity(index, this);
             if (!passiveCapacitiesList.Contains(capacity)) passiveCapacitiesList.Add(capacity);
-            photonView.RPC("SyncAddPassiveCapacityRPC", RpcTarget.All, index);
+            photonView.RPC("SyncAddPassiveCapacityRPC", RpcTarget.Others, index);
             capacity.OnAdded(this);
+            capacity.SyncOnAdded(this);
             OnPassiveCapacityAdded?.Invoke(index);
         }
 
@@ -223,9 +224,9 @@ namespace Entities
         public void SyncAddPassiveCapacityRPC(byte index)
         {
             var capacity = CapacitySOCollectionManager.Instance.CreatePassiveCapacity(index, this);
-            if(!PhotonNetwork.IsMasterClient)
             if (!passiveCapacitiesList.Contains(capacity)) passiveCapacitiesList.Add(capacity);
             capacity.SyncOnAdded(this);
+         
             OnPassiveCapacityAddedFeedbacks?.Invoke(index);
         }
 

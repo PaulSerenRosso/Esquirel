@@ -515,6 +515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderer: {fileID: 3480681341667345171}
+  UIRoot: {fileID: 0}
 --- !u!1 &3480681342087303709
 GameObject:
   m_ObjectHideFlags: 0

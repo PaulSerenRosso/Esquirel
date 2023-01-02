@@ -20,14 +20,14 @@ namespace Entities.Capacities
             base.SetUp(capacityIndex, championIndex);
             
           
-            endCurveEvent += LaunchActiveAttackSlowAreaCapacity;
-            enabled = false;
-            
+            endCurveEvent += LaunchTP;
+
         }
 
         protected override void StartCurveMovementRPC(Vector3 startPos, Vector3 endPos)
         {
             base.StartCurveMovementRPC(startPos, endPos);
+            Debug.Log(champion);
             champion.OnStartMoveChampion += ActivateChampionMove;
             champion.OnEndMoveChampion += EndJump;
             isActive = true;
@@ -40,12 +40,13 @@ namespace Entities.Capacities
             champion.OnStartMoveChampion -= ActivateChampionMove;
         }
 
-        void EndJump()
+        protected virtual void EndJump()
         {
             champion.SyncSetCanMoveRPC(true);
             champion.OnEndMoveChampion -= EndJump;
             ActivateController();
-            void ActivateController()
+        }
+        protected virtual  void ActivateController()
             {
                 if (champion.photonView.IsMine)
                 {
@@ -55,10 +56,8 @@ namespace Entities.Capacities
                     InputManager.PlayerMap.MoveMouse.Enable();
                 }
                 champion.entityCapacityCollider.DisableEntityCollider();
-                champion.SetViewObstructedByObstacle(true);
             }
-        }
-        void DeactivateController()
+        protected virtual void  DeactivateController()
         {
             if (champion.photonView.IsMine)
             {
@@ -72,20 +71,21 @@ namespace Entities.Capacities
                 champion.obstacle.enabled = false;
             }
             champion.entityCapacityCollider.DisableEntityCollider();
-            champion.SetViewObstructedByObstacle(false);
             champion.SyncSetCanMoveRPC(false);
             champion.blocker.characterColliderBlocker.enabled = false;
         }
 
 
-        void LaunchActiveAttackSlowAreaCapacity()
+        void LaunchTP()
         {
             if (PhotonNetwork.IsMasterClient)
             {
                 champion.RequestMoveChampion(
-                    ChampionPlacerManager.instance.GetLauncher.LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(
-                        transform.position, champion.pointPlacerDistanceAvoidance,
-                        champion.agent.radius, champion.championPlacerDistanceAvoider.pointAvoider).point);
+                    ChampionPlacerManager.instance.GetLauncher
+                        .LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(
+                            transform.position, champion.pointPlacerDistanceAvoidance,
+                            champion.agent.radius, curveCapacitySo.secondDetectionSo, champion.championPlacerDistanceAvoider.pointAvoider).point);
+                Debug.Log(champion+"bonsoir à tous ");
                 
             }
             isActive = false;

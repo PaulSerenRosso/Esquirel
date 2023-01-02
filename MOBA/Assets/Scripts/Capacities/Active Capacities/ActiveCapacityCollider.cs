@@ -6,6 +6,8 @@ namespace Entities.Capacities
 {
     public abstract class ActiveCapacityCollider : MonoBehaviour
     {public Enums.Team team;
+        
+        
         public abstract void CollideWithEntity(Entity entityCollided);
         public abstract void InitCapacityCollider(ActiveCapacity activeCapacity);
 

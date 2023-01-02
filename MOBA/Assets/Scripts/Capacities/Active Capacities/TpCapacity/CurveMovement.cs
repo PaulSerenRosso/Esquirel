@@ -13,15 +13,16 @@ namespace Entities.Capacities
         public Transform renderer;
         private float curveTime;
         private float curveTimeRatio;
-        AnimationCurve curve;
+        AnimationCurve heightCurve;
+        private AnimationCurve widthCurve;
         private float curveYMaxPosition;
 
         private bool isEndCurve = true;
         private Vector3 startPosition;
-        protected Champion.Champion champion;
+    
         private Vector3 endPosition;
         public event GlobalDelegates.NoParameterDelegate endCurveEvent;
-
+        protected Champion.Champion champion;
         public void RequestSetupRPC(byte capacityIndex, int championIndex)
         {
             photonView.RPC("LaunchSetUpRPC", RpcTarget.All, capacityIndex, championIndex);
@@ -35,15 +36,12 @@ namespace Entities.Capacities
 
         public virtual void SetUp(byte capacityIndex, int championIndex)
         {
-            
-            champion = (Champion.Champion)EntityCollectionManager.GetEntityByIndex(championIndex);
-            this.curveMovementCapacity = (CurveMovementCapacity)champion.activeCapacities[capacityIndex];
-            this.curveCapacitySo = curveMovementCapacity.curveMovementCapacitySo;
-            curve = curveCapacitySo.curve;
+            heightCurve = curveCapacitySo.heightJumpCurve;
             curveTime = curveCapacitySo.curveMovementTime;
             curveYMaxPosition = curveCapacitySo.curveMovementMaxYPosition;
             curveMovementCapacity.curveObject = this;
-
+            widthCurve = curveCapacitySo.widthJumpCurve;
+            
         }
         
         public void RequestStartCurveMovementRPC(Vector3 startPos, Vector3 endPos)
@@ -63,7 +61,6 @@ namespace Entities.Capacities
             currentTimer = 0;
             startPosition = startPos;
             transform.position = startPos;
-            Debug.Log(startPos);
             isEndCurve = false;
         }
 
@@ -85,9 +82,9 @@ namespace Entities.Capacities
    
             curveTimeRatio = currentTimer / curveTime;
             transform.position = Vector3.Lerp(startPosition, endPosition,
-                curveTimeRatio);
+                widthCurve.Evaluate(curveTimeRatio));
             var transformPosition = renderer.transform.position;
-            transformPosition.y = curve.Evaluate(curveTimeRatio) *
+            transformPosition.y = heightCurve.Evaluate(curveTimeRatio) *
                                   curveYMaxPosition;
             renderer.transform.position = transformPosition;
         }

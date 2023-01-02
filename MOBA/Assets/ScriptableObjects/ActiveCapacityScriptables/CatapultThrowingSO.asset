@@ -9,18 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c68f33263d9d95418c6606d13fbad01, type: 3}
-  m_Name: TpCapacity
+  m_Script: {fileID: 11500000, guid: e5ff99b3229a40a4ab7635b2802656f3, type: 3}
+  m_Name: CatapultThrowingSO
   m_EditorClassIdentifier: 
   referenceName: 
   descriptionName: 
-  icon: {fileID: 21300000, guid: aed6393858493e647832e7cc3209fbf9, type: 3}
+  icon: {fileID: 0}
   description: 
   cooldown: 2
   types: 
   fxPrefab: {fileID: 0}
   fxTime: 0
-  indexInCollection: 1
+  indexInCollection: 10
   heightJumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -96,18 +96,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  curveMovementMaxYPosition: 10
-  curveMovementTime: 4
-  referenceRange: 6
+  curveMovementMaxYPosition: 30
+  curveMovementTime: 10
+  referenceRange: 10
   activeCapacityAnimationLauncherInfo:
-    animationTime: 0.867
-    animatorParameterName: Comp1
+    animationTime: 0
+    animatorParameterName: 
   firstDetectionSo: {fileID: 11400000, guid: 02469eb0e3f69de4fbc666a38c64d6c4, type: 2}
   secondDetectionSo: {fileID: 11400000, guid: 81e76e5d8d4f0d84ab64d32b6d79163a, type: 2}
   firstDetectionLayerMask:
     serializedVersion: 2
-    m_Bits: 1073741824
-  previsualisableCurveMovementPrefab: {fileID: 8800300684960855708, guid: 60ea00a92fa380f4e85bab9ed1dfaa74, type: 3}
-  tpObjectPrefab: {fileID: 7787077127828374451, guid: 3bc0e1cbef669dc489d7ec479edc3c96, type: 3}
-  smokeDuration: 5
-  smokePrefab: {fileID: 1608149160280095728, guid: 0712ece915baa3e488a750bf0ba17234, type: 3}
+    m_Bits: 3221225472

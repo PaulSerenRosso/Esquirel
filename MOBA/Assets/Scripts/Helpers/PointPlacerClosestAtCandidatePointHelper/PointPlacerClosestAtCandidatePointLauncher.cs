@@ -8,16 +8,15 @@ namespace PointPlacerClosestAtCandidatePointHelper
     [Serializable]
     public class PointPlacerClosestAtCandidatePointLauncher
     {
-        private PointPlacerClosestAtCandidatePointSO so;
+   
         public PointPlacerClosestAtCandidatePoint placer;
 
 
-        void SetUpGameObjectPlacer() => placer = new PointPlacerClosestAtCandidatePoint(distanceAvoiders, so);
+        void SetUpGameObjectPlacer() => placer = new PointPlacerClosestAtCandidatePoint(distanceAvoiders);
 
 
-        public PointPlacerClosestAtCandidatePointLauncher(PointPlacerClosestAtCandidatePointSO so)
+        public PointPlacerClosestAtCandidatePointLauncher()
         {
-            this.so = so;
             SetUpGameObjectPlacer();
         }
 
@@ -38,13 +37,13 @@ namespace PointPlacerClosestAtCandidatePointHelper
 
 
         public (Vector3 point, bool isValided) LaunchPlacePointClosestAtCandidatePointWithoutDistanceAvoider(Vector3 referencePoint,
-            float minRadiusWithNoAvoiderNeededToPlacePoint, float minRadiusWithNoCollisionNeededToPlacePoint) => placer.PlacePointWithDistanceAvoider(
-            referencePoint, minRadiusWithNoAvoiderNeededToPlacePoint, minRadiusWithNoCollisionNeededToPlacePoint);
+             float minRadiusWithNoCollisionNeededToPlacePoint, PointPlacerClosestAtCandidatePointSO so) => placer.PlacePointWithoutDistanceAvoider(
+            referencePoint, minRadiusWithNoCollisionNeededToPlacePoint, so);
         
         public (Vector3 point, bool isValided) LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(Vector3 referencePoint,
-            float minRadiusWithNoAvoiderNeededToPlacePoint, float minRadiusWithNoCollisionNeededToPlacePoint,
+            float minRadiusWithNoAvoiderNeededToPlacePoint, float minRadiusWithNoCollisionNeededToPlacePoint, PointPlacerClosestAtCandidatePointSO so,
             PointPlacerDistanceClosestAtCandidatePointAvoider currentAvoider = null) => placer.PlacePointWithDistanceAvoider(
-            referencePoint, minRadiusWithNoAvoiderNeededToPlacePoint, minRadiusWithNoCollisionNeededToPlacePoint,
+            referencePoint, minRadiusWithNoAvoiderNeededToPlacePoint, minRadiusWithNoCollisionNeededToPlacePoint, so,
             currentAvoider);
     }
 }

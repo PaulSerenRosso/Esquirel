@@ -10,7 +10,7 @@ using UnityEngine.AI;
 
 namespace Entities.Capacities
 {
-public class TpMovement : CurveMovement
+public class TpMovement : ChampionCapacityCurveMovement
 {
     [SerializeField] private TpObject tpObject;
     private TpCapacitySO tpCapacitySo;

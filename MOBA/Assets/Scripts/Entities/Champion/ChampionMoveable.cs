@@ -356,6 +356,7 @@ namespace Entities.Champion
         {
             OnStartMoveChampion?.Invoke();
             transformView.enabled = false;
+        
             photonView.RPC("WaitForAllReceiveStartMoveChampion", RpcTarget.MasterClient, newPos);
            if (!photonView.IsMine)
             {
@@ -369,7 +370,7 @@ namespace Entities.Champion
         void WaitForAllReceiveStartMoveChampion(Vector3 pos)
         {
             receiveStartMoveChampionCount++;
-           
+     
             if(receiveStartMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
             photonView.RPC("MoveChampionRPC", RpcTarget.All, pos);
         }
@@ -379,6 +380,7 @@ namespace Entities.Champion
         [PunRPC]
         public void MoveChampionRPC(Vector3 newPos)
         {
+        
             transform.position = newPos;
             moveDestination = newPos;
             photonView.RPC("WaitForAllReceiveMoveChampion", RpcTarget.MasterClient);
@@ -386,6 +388,7 @@ namespace Entities.Champion
         [PunRPC]
         void WaitForAllReceiveMoveChampion()
         {
+    
             receiveMoveChampionCount++;
             if(receiveMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
                 photonView.RPC("EndMoveChampion", RpcTarget.All);
@@ -394,6 +397,7 @@ namespace Entities.Champion
         [PunRPC]
         void EndMoveChampion()
         {
+       
             transformView.enabled = true;
             if (!photonView.IsMine)
             {

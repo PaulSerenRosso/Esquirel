@@ -12,24 +12,25 @@ namespace Controllers.Inputs
     public class ChampionInputController : PlayerInputController
     {
         private Champion champion;
-        private int[] selectedEntity;
+        private int[] targetEntity;
         private Vector3[] cursorWorldPos;
         private bool isMoving;
 
         private bool inputsAreLinked = false;
         private Vector2 moveInput;
         private Vector3 moveVector;
-        private Camera cam ;
+        private Camera cam;
         private bool isActivebuttonPress;
         [SerializeField] private LayerMask layerForDetectMovePosition;
 
+        private Catapult catapultTarget;
+        private Catapult catapultDetected;
         [SerializeField] private float movePositionDetectionDistance;
+
         /// <summary>
         /// Actions Performed on Attack Activation
         /// </summary>
         /// <param name="ctx"></param>
-      
-
         /// <summary>
         /// Actions Performed on Show or Hide Shop
         /// </summary>
@@ -45,7 +46,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateCapacity0(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast(0, selectedEntity, cursorWorldPos);
+            champion.RequestCast(0, targetEntity, cursorWorldPos);
         }
 
         /// <summary>
@@ -54,13 +55,12 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateCapacity1(InputAction.CallbackContext ctx)
         {
-            
-            champion.RequestCast(1, selectedEntity, cursorWorldPos);
+            champion.RequestCast(1, targetEntity, cursorWorldPos);
         }
+
         private void OnActivateCapacity2(InputAction.CallbackContext ctx)
         {
-            
-            champion.RequestCast(2, selectedEntity, cursorWorldPos);
+            champion.RequestCast(2, targetEntity, cursorWorldPos);
         }
 
         /// <summary>
@@ -69,36 +69,36 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast((byte)(champion.activeCapacities.Count-1), selectedEntity, cursorWorldPos);
+            champion.RequestCast((byte)(champion.activeCapacities.Count - 1), targetEntity, cursorWorldPos);
         }
-        
+
         private void OnPrintCapacity0Previsualisable(InputAction.CallbackContext ctx)
         {
-            champion.LaunchCapacityWithPrevisualisable(0, selectedEntity, cursorWorldPos);
+            champion.LaunchCapacityWithPrevisualisable(0, targetEntity, cursorWorldPos);
         }
 
         private void OnPrintCapacity1Previsualisable(InputAction.CallbackContext ctx)
         {
-            champion.LaunchCapacityWithPrevisualisable(1, selectedEntity, cursorWorldPos);
+            champion.LaunchCapacityWithPrevisualisable(1, targetEntity, cursorWorldPos);
         }
-        
+
         private void OnPrintCapacity2Previsualisable(InputAction.CallbackContext ctx)
         {
-            champion.LaunchCapacityWithPrevisualisable(2, selectedEntity, cursorWorldPos);
+            champion.LaunchCapacityWithPrevisualisable(2, targetEntity, cursorWorldPos);
         }
-        
+
         private void OnPrintUltimatePrevisualisable(InputAction.CallbackContext ctx)
         {
-            champion.LaunchCapacityWithPrevisualisable(3, selectedEntity, cursorWorldPos);
+            champion.LaunchCapacityWithPrevisualisable(3, targetEntity, cursorWorldPos);
         }
-  
+
         /// <summary>
         /// Actions Performed on Item 0 Activation
         /// </summary>
         /// <param name="ctx"></param>
         private void OnActivateItem0(InputAction.CallbackContext ctx)
         {
-            champion.RequestActivateItem(0, selectedEntity, cursorWorldPos);
+            champion.RequestActivateItem(0, targetEntity, cursorWorldPos);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateItem1(InputAction.CallbackContext ctx)
         {
-            champion.RequestActivateItem(1, selectedEntity, cursorWorldPos);
+            champion.RequestActivateItem(1, targetEntity, cursorWorldPos);
         }
 
         /// <summary>
@@ -116,16 +116,17 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateItem2(InputAction.CallbackContext ctx)
         {
-            champion.RequestActivateItem(2, selectedEntity, cursorWorldPos);
+            champion.RequestActivateItem(2, targetEntity, cursorWorldPos);
         }
 
         private void Update()
         {
-            if(!inputsAreLinked) return;
-                var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(mouseRay, out var hit, movePositionDetectionDistance,layerForDetectMovePosition)) return;
+            if (!inputsAreLinked) return;
+            var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
+            if (!Physics.Raycast(mouseRay, out var hit, movePositionDetectionDistance,
+                    layerForDetectMovePosition)) return;
             cursorWorldPos[0] = hit.point;
-            selectedEntity[0] = -1;
+            targetEntity[0] = -1;
             InputManager.inputMouseWorldPosition = hit.point;
             InputManager.inputMouseHit = hit;
             //Debug.Log("hit"+hit.collider.gameObject.name);
@@ -133,26 +134,46 @@ namespace Controllers.Inputs
             //    if (ent == null && hit.transform.parent != null) hit.transform.parent.GetComponent<Entity>();
             if (ent != null)
             {
-               // Debug.Log("hitentity");
-               if (ent is ITargetable)
-               {
-                ITargetable entTarget = (ITargetable)ent;
-                if (entTarget.CanBeTargeted())
+                // Debug.Log("hitentity");
+                if (ent is ITargetable)
                 {
-                    // Debug.Log("set list input");
-                    selectedEntity[0] = ent.entityIndex;
-                    cursorWorldPos[0] = ent.transform.position;
+                    ITargetable entTarget = (ITargetable)ent;
+                    if (entTarget.CanBeTargeted())
+                    {
+                        // Debug.Log("set list input");
+                        targetEntity[0] = ent.entityIndex;
+                        cursorWorldPos[0] = ent.transform.position;
+                    }
                 }
-               }
+                else if (ent is Catapult catapult)
+                {
+                    catapultDetected = catapult;
+                }
             }
             else
             {
-                selectedEntity[0] = -1;
+                catapultDetected = null;
+                targetEntity[0] = -1;
             }
 
             if (isActivebuttonPress)
             {
                 SelectMoveTarget();
+            }
+
+            if (catapultTarget != null)
+            {
+
+                if (catapultTarget.requestSended)
+                {
+                    catapultTarget = null;
+                    return;
+                }
+                if (champion.isAlive)
+                {
+                    catapultTarget.RequestCast(0, new int[] { champion.entityIndex },
+                    new Vector3[] { champion.transform.position });
+                }
             }
         }
 
@@ -160,7 +181,7 @@ namespace Controllers.Inputs
         {
             SelectMoveTarget();
         }
-        
+
         void OnMouseLeftClick(InputAction.CallbackContext ctx)
         {
             champion.CancelPrevisualisable();
@@ -168,17 +189,28 @@ namespace Controllers.Inputs
 
         public void SelectMoveTarget()
         {
-            if (selectedEntity[0] != -1)
+            if (catapultDetected!= null)
             {
-             //   Debug.Log(selectedEntity[0] != -1);
-                Entity targetEntity = EntityCollectionManager.GetEntityByIndex(selectedEntity[0]);
+                catapultTarget = catapultDetected;
+                champion.MoveToPosition(cursorWorldPos[0]);
+                return;
+            }
+            else
+            {
+                catapultTarget = null;
+            }
+
+            if (targetEntity[0] != -1)
+            {
+                //   Debug.Log(selectedEntity[0] != -1);
+                Entity targetEntity = EntityCollectionManager.GetEntityByIndex(this.targetEntity[0]);
                 if (FogOfWarManager.Instance.CheckEntityIsVisibleForPlayer(targetEntity))
                 {
-                   // Debug.Log(FogOfWarManager.Instance.CheckEntityIsVisibleForPlayer(targetEntity));
-                    if (champion.autoAttack.TryAim(champion.entityIndex, selectedEntity[0], cursorWorldPos[0]))
+                    // Debug.Log(FogOfWarManager.Instance.CheckEntityIsVisibleForPlayer(targetEntity));
+                    if (champion.autoAttack.TryAim(champion.entityIndex, this.targetEntity[0], cursorWorldPos[0]))
                     {
-                     //   Debug.Log(champion.autoAttack.TryAim(champion.entityIndex, selectedEntity[0], cursorWorldPos[0]));
-                        champion.StartMoveToTarget(EntityCollectionManager.GetEntityByIndex(selectedEntity[0]),
+                        //   Debug.Log(champion.autoAttack.TryAim(champion.entityIndex, selectedEntity[0], cursorWorldPos[0]));
+                        champion.StartMoveToTarget(EntityCollectionManager.GetEntityByIndex(this.targetEntity[0]),
                             champion.attackBase, champion.RequestAttack);
                     }
                     else
@@ -199,45 +231,44 @@ namespace Controllers.Inputs
 
 
         /// <summary>
-            /// Get World Position of mouse
-            /// </summary>
-            /// <param name="mousePos"></param>
-            /// <returns></returns>
-            public Vector3 GetMouseOverWorldPos()
+        /// Get World Position of mouse
+        /// </summary>
+        /// <param name="mousePos"></param>
+        /// <returns></returns>
+        public Vector3 GetMouseOverWorldPos()
+        {
+            Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(mouseRay, out RaycastHit hit))
             {
-                Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(mouseRay, out RaycastHit hit))
-                {
-                    return hit.point;
-                }
-
-                return Vector3.zero;
+                return hit.point;
             }
 
-            /// <summary>
-            /// Actions Performed on Move inputs direction Change
-            /// </summary>
-            /// <param name="ctx"></param>
-            void OnMoveChange(InputAction.CallbackContext ctx)
-            {
-                moveInput = ctx.ReadValue<Vector2>();
-                moveVector = new Vector3(moveInput.x, 0, moveInput.y);
-                champion.SetMoveDirection(moveVector);
-                NavMeshAgent agent;
-            }
+            return Vector3.zero;
+        }
+
+        /// <summary>
+        /// Actions Performed on Move inputs direction Change
+        /// </summary>
+        /// <param name="ctx"></param>
+        void OnMoveChange(InputAction.CallbackContext ctx)
+        {
+            moveInput = ctx.ReadValue<Vector2>();
+            moveVector = new Vector3(moveInput.x, 0, moveInput.y);
+            champion.SetMoveDirection(moveVector);
+            NavMeshAgent agent;
+        }
 
 
-            public override void Link(Entity entity)
+        public override void Link(Entity entity)
         {
             champion = controlledEntity as Champion;
             base.Link(entity);
 
             cam = Camera.main;
-            selectedEntity = new int[1];
+            targetEntity = new int[1];
             cursorWorldPos = new Vector3[1];
 
-       
 
             inputs.Capacity.Capacity0.performed += OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
@@ -265,7 +296,7 @@ namespace Controllers.Inputs
 
         public override void Unlink()
         {
-            inputsAreLinked = false; 
+            inputsAreLinked = false;
             inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed -= OnActivateCapacity2;

@@ -75,7 +75,7 @@ namespace Entities.Capacities
                 champion.RequestMoveChampion(
                     ChampionPlacerManager.instance.GetLauncher.LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(curveObject
                             .transform.position, champion.pointPlacerDistanceAvoidance, champion.agent.radius,
-                        champion.championPlacerDistanceAvoider.pointAvoider).point);
+                       tpCapacitySo.secondDetectionSo,  champion.championPlacerDistanceAvoider.pointAvoider).point);
             }
         }
 
