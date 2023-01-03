@@ -7,7 +7,9 @@ using UnityEngine;
 
 namespace RemoteConfig {
     public class RemoteConfigVariables : MonoBehaviour {
-        [Header("Capture Point")] 
+        public PassivePerseveranceSO perseveranceSo = null;
+        
+        [Header("Capture Point")]
         public CapturePointSO generatorCapturePoint = null;
         public CapturePointSO relaiCapturePoint = null;
         public GoldProductionSO relaiProduction = null;
