@@ -30,9 +30,9 @@ public class BakeVertexColorMap : MonoBehaviour
             GL.Clear(false, true, Color.black, 1.0f);
             material.SetPass(0);
             Graphics.DrawMeshNow(SourceMesh, Vector3.zero, Quaternion.identity);
-            RenderTexture.active = currentTexture;
             Texture2D texture = new Texture2D(Resolution, Resolution, TextureFormat.ARGB32, false);
             texture.ReadPixels( new Rect(0, 0, Resolution, Resolution), 0, 0);
+            RenderTexture.active = currentTexture;
             byte[] bytes = texture.EncodeToPNG();
             System.IO.File.WriteAllBytes(System.IO.Path.Combine(Application.dataPath, "Map Data Vertex Color.png"), bytes);
             DestroyImmediate(material);
@@ -43,4 +43,4 @@ public class BakeVertexColorMap : MonoBehaviour
         }
     }
 }
- #endif
+#endif
