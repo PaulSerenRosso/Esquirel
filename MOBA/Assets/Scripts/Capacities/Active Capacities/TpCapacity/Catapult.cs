@@ -121,10 +121,13 @@ namespace Entities
         [PunRPC]
         void SetOnCooldownCapacityRPC(byte indexOfSOInCollection, bool value)
         {
+            
+      
             for (int i = 0; i < activeCapacities.Count; i++)
             {
                 if (activeCapacities[i].indexOfSOInCollection == indexOfSOInCollection)
                 {
+                  
                     activeCapacities[i].onCooldown = value;
                     return;
                 }

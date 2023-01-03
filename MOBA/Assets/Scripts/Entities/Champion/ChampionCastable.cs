@@ -42,7 +42,16 @@ namespace Entities.Champion
         public void CancelCurrentCapacity()
         {
             if (currentCapacityUsed != null)
+            {
                 currentCapacityUsed.CancelCapacity();
+                photonView.RPC("SyncCurrentCapacityRPC", RpcTarget.All);
+            }
+        }
+
+        [PunRPC]
+        public void SyncCurrentCapacityRPC()
+        {
+            currentCapacityUsed = null;
         }
 
         public void RequestSetCanCast(bool value)

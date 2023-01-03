@@ -67,6 +67,7 @@ namespace Entities.Champion
             }
             isAlive = false;
             canBeTargeted = false;
+            entityClicker.EnableCollider = false;
             rotateParent.gameObject.SetActive(false); 
             uiTransform.gameObject.SetActive(false);
             FogOfWarManager.Instance.RemoveFOWViewable(this);
@@ -116,6 +117,7 @@ namespace Entities.Champion
             agent.destination = transform.position;
             }
             canBeTargeted = true;
+            entityClicker.EnableCollider = true;
             FogOfWarManager.Instance.AddFOWViewable(this);
             rotateParent.gameObject.SetActive(true);
             uiTransform.gameObject.SetActive(true);

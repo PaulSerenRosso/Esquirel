@@ -101,7 +101,7 @@ namespace PointPlacerClosestAtCandidatePointHelper
                 SetAllDirections();
 
                 if (CheckCandidatePointsAreValided(out var findCandidatePointValided))
-                    return (findCandidatePointValided, false);
+                    return (findCandidatePointValided, true);
                 ;
 
                 currentCircularDetectorCount++;
@@ -208,8 +208,7 @@ namespace PointPlacerClosestAtCandidatePointHelper
                     continue;
                 }
 
-                Debug.Log(point + "avoider" + distanceAvoiders[i]
-                    .IsInAvoidanceRange(point, minRadiusWithNoAvoiderNeededToPlacePoint));
+               
                 if (distanceAvoiders[i].IsInAvoidanceRange(point, minRadiusWithNoAvoiderNeededToPlacePoint))
                     return false;
             }
