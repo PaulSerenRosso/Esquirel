@@ -1,6 +1,6 @@
 // Made with Amplify Shader Editor v1.9.1.2
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "VFX_PoumfCapa2_Crack"
+Shader "VFX_PoumfCapa2_CrackSide"
 {
 	Properties
 	{
@@ -9,7 +9,7 @@ Shader "VFX_PoumfCapa2_Crack"
 		[ASEBegin]_MainCrackTexture("Main Crack Texture", 2D) = "white" {}
 		_IntensityRChannel("Intensity R Channel", Float) = 10
 		[HDR]_TintColor("Tint Color", Color) = (1,1,1,0)
-		[ASEEnd][IntRange]_FlipTexture("FlipTexture?", Range( 0 , 1)) = 1
+		[ASEEnd][IntRange]_FlipTexture("FlipTexture?", Range( 0 , 1)) = 0
 
 
 		//_TransmissionShadow( "Transmission Shadow", Range( 0, 1 ) ) = 0.5
@@ -505,48 +505,37 @@ Shader "VFX_PoumfCapa2_Crack"
 
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
-				float2 texCoord44 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos60 = cos( ( _FlipTexture * PI ) );
-				float sin60 = sin( ( _FlipTexture * PI ) );
-				float2 rotator60 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos60 , -sin60 , sin60 , cos60 )) + float2( 0.5,0.5 );
-				float4 tex2DNode8 = tex2D( _MainCrackTexture, rotator60 );
-				float4 break13_g3 = float4(0.2,0.3,0.2,0.3);
-				float cos59 = cos( ( _FlipTexture * PI ) );
-				float sin59 = sin( ( _FlipTexture * PI ) );
-				float2 rotator59 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos59 , -sin59 , sin59 , cos59 )) + float2( 0.5,0.5 );
-				float4 texCoord48 = IN.ase_texcoord8;
-				texCoord48.xy = IN.ase_texcoord8.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 appendResult41 = (float4(texCoord48.w , texCoord48.x , 0.0 , 0.0));
-				float2 temp_output_7_0_g3 = ( float4( rotator59, 0.0 , 0.0 ) + appendResult41 ).xy;
+				float2 texCoord75 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos76 = cos( ( _FlipTexture * PI ) );
+				float sin76 = sin( ( _FlipTexture * PI ) );
+				float2 rotator76 = mul( texCoord75 - float2( 0.5,0.5 ) , float2x2( cos76 , -sin76 , sin76 , cos76 )) + float2( 0.5,0.5 );
+				float2 appendResult41 = (float2(IN.ase_texcoord8.x , IN.ase_texcoord8.y));
+				float4 tex2DNode8 = tex2D( _MainCrackTexture, ( rotator76 + appendResult41 ) );
+				float4 break13_g3 = float4(-1,4,1,0);
+				float2 texCoord79 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos77 = cos( ( _FlipTexture * PI ) );
+				float sin77 = sin( ( _FlipTexture * PI ) );
+				float2 rotator77 = mul( texCoord79 - float2( 0.5,0.5 ) , float2x2( cos77 , -sin77 , sin77 , cos77 )) + float2( 0.5,0.5 );
+				float2 appendResult81 = (float2(IN.ase_texcoord8.z , IN.ase_texcoord8.w));
+				float2 temp_output_7_0_g3 = ( ( rotator77 + appendResult81 ) * float2( 0.5,1 ) );
 				float smoothstepResult11_g3 = smoothstep( break13_g3.x , break13_g3.y , temp_output_7_0_g3.x);
 				float smoothstepResult14_g3 = smoothstep( break13_g3.z , break13_g3.w , ( 1.0 - temp_output_7_0_g3.x ));
-				float4 break18_g3 = float4(1,0.5,1.5,-1);
+				float4 break18_g3 = float4(0,0.02,0,0.02);
 				float smoothstepResult19_g3 = smoothstep( break18_g3.x , break18_g3.y , temp_output_7_0_g3.y);
 				float smoothstepResult20_g3 = smoothstep( break18_g3.z , break18_g3.w , ( 1.0 - temp_output_7_0_g3.y ));
-				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 10.0 ) );
+				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 6.0 ) );
 				float temp_output_20_0 = saturate( ( tex2DNode8.r * temp_output_46_0 ) );
-				float4 _Vector4 = float4(0.1,0.5,0.1,0.5);
-				float temp_output_52_0 = ( texCoord48.y * 5.0 );
-				float4 appendResult30 = (float4(( _Vector4.x * temp_output_52_0 ) , _Vector4.y , ( _Vector4.z * temp_output_52_0 ) , _Vector4.w));
-				float4 break13_g4 = appendResult30;
-				float2 texCoord45 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_output_7_0_g4 = texCoord45;
-				float smoothstepResult11_g4 = smoothstep( break13_g4.x , break13_g4.y , temp_output_7_0_g4.x);
-				float smoothstepResult14_g4 = smoothstep( break13_g4.z , break13_g4.w , ( 1.0 - temp_output_7_0_g4.x ));
-				float4 break18_g4 = float4(0,1,0,1);
-				float smoothstepResult19_g4 = smoothstep( break18_g4.x , break18_g4.y , temp_output_7_0_g4.y);
-				float smoothstepResult20_g4 = smoothstep( break18_g4.z , break18_g4.w , ( 1.0 - temp_output_7_0_g4.y ));
-				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
+				float temp_output_53_0 = ( temp_output_20_0 * ( temp_output_20_0 * 1.0 * _IntensityRChannel ) );
 				
 
-				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_19_0 ) ).rgb;
+				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_53_0 ) ).rgb;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
 				float Occlusion = 1;
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( IN.ase_color.a * temp_output_53_0 );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -995,41 +984,30 @@ Shader "VFX_PoumfCapa2_Crack"
 					#endif
 				#endif
 
-				float2 texCoord44 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos60 = cos( ( _FlipTexture * PI ) );
-				float sin60 = sin( ( _FlipTexture * PI ) );
-				float2 rotator60 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos60 , -sin60 , sin60 , cos60 )) + float2( 0.5,0.5 );
-				float4 tex2DNode8 = tex2D( _MainCrackTexture, rotator60 );
-				float4 break13_g3 = float4(0.2,0.3,0.2,0.3);
-				float cos59 = cos( ( _FlipTexture * PI ) );
-				float sin59 = sin( ( _FlipTexture * PI ) );
-				float2 rotator59 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos59 , -sin59 , sin59 , cos59 )) + float2( 0.5,0.5 );
-				float4 texCoord48 = IN.ase_texcoord3;
-				texCoord48.xy = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 appendResult41 = (float4(texCoord48.w , texCoord48.x , 0.0 , 0.0));
-				float2 temp_output_7_0_g3 = ( float4( rotator59, 0.0 , 0.0 ) + appendResult41 ).xy;
+				float2 texCoord75 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos76 = cos( ( _FlipTexture * PI ) );
+				float sin76 = sin( ( _FlipTexture * PI ) );
+				float2 rotator76 = mul( texCoord75 - float2( 0.5,0.5 ) , float2x2( cos76 , -sin76 , sin76 , cos76 )) + float2( 0.5,0.5 );
+				float2 appendResult41 = (float2(IN.ase_texcoord3.x , IN.ase_texcoord3.y));
+				float4 tex2DNode8 = tex2D( _MainCrackTexture, ( rotator76 + appendResult41 ) );
+				float4 break13_g3 = float4(-1,4,1,0);
+				float2 texCoord79 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos77 = cos( ( _FlipTexture * PI ) );
+				float sin77 = sin( ( _FlipTexture * PI ) );
+				float2 rotator77 = mul( texCoord79 - float2( 0.5,0.5 ) , float2x2( cos77 , -sin77 , sin77 , cos77 )) + float2( 0.5,0.5 );
+				float2 appendResult81 = (float2(IN.ase_texcoord3.z , IN.ase_texcoord3.w));
+				float2 temp_output_7_0_g3 = ( ( rotator77 + appendResult81 ) * float2( 0.5,1 ) );
 				float smoothstepResult11_g3 = smoothstep( break13_g3.x , break13_g3.y , temp_output_7_0_g3.x);
 				float smoothstepResult14_g3 = smoothstep( break13_g3.z , break13_g3.w , ( 1.0 - temp_output_7_0_g3.x ));
-				float4 break18_g3 = float4(1,0.5,1.5,-1);
+				float4 break18_g3 = float4(0,0.02,0,0.02);
 				float smoothstepResult19_g3 = smoothstep( break18_g3.x , break18_g3.y , temp_output_7_0_g3.y);
 				float smoothstepResult20_g3 = smoothstep( break18_g3.z , break18_g3.w , ( 1.0 - temp_output_7_0_g3.y ));
-				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 10.0 ) );
+				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 6.0 ) );
 				float temp_output_20_0 = saturate( ( tex2DNode8.r * temp_output_46_0 ) );
-				float4 _Vector4 = float4(0.1,0.5,0.1,0.5);
-				float temp_output_52_0 = ( texCoord48.y * 5.0 );
-				float4 appendResult30 = (float4(( _Vector4.x * temp_output_52_0 ) , _Vector4.y , ( _Vector4.z * temp_output_52_0 ) , _Vector4.w));
-				float4 break13_g4 = appendResult30;
-				float2 texCoord45 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_output_7_0_g4 = texCoord45;
-				float smoothstepResult11_g4 = smoothstep( break13_g4.x , break13_g4.y , temp_output_7_0_g4.x);
-				float smoothstepResult14_g4 = smoothstep( break13_g4.z , break13_g4.w , ( 1.0 - temp_output_7_0_g4.x ));
-				float4 break18_g4 = float4(0,1,0,1);
-				float smoothstepResult19_g4 = smoothstep( break18_g4.x , break18_g4.y , temp_output_7_0_g4.y);
-				float smoothstepResult20_g4 = smoothstep( break18_g4.z , break18_g4.w , ( 1.0 - temp_output_7_0_g4.y ));
-				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
+				float temp_output_53_0 = ( temp_output_20_0 * ( temp_output_20_0 * 1.0 * _IntensityRChannel ) );
 				
 
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( IN.ase_color.a * temp_output_53_0 );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -1321,41 +1299,30 @@ Shader "VFX_PoumfCapa2_Crack"
 					#endif
 				#endif
 
-				float2 texCoord44 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos60 = cos( ( _FlipTexture * PI ) );
-				float sin60 = sin( ( _FlipTexture * PI ) );
-				float2 rotator60 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos60 , -sin60 , sin60 , cos60 )) + float2( 0.5,0.5 );
-				float4 tex2DNode8 = tex2D( _MainCrackTexture, rotator60 );
-				float4 break13_g3 = float4(0.2,0.3,0.2,0.3);
-				float cos59 = cos( ( _FlipTexture * PI ) );
-				float sin59 = sin( ( _FlipTexture * PI ) );
-				float2 rotator59 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos59 , -sin59 , sin59 , cos59 )) + float2( 0.5,0.5 );
-				float4 texCoord48 = IN.ase_texcoord3;
-				texCoord48.xy = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 appendResult41 = (float4(texCoord48.w , texCoord48.x , 0.0 , 0.0));
-				float2 temp_output_7_0_g3 = ( float4( rotator59, 0.0 , 0.0 ) + appendResult41 ).xy;
+				float2 texCoord75 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos76 = cos( ( _FlipTexture * PI ) );
+				float sin76 = sin( ( _FlipTexture * PI ) );
+				float2 rotator76 = mul( texCoord75 - float2( 0.5,0.5 ) , float2x2( cos76 , -sin76 , sin76 , cos76 )) + float2( 0.5,0.5 );
+				float2 appendResult41 = (float2(IN.ase_texcoord3.x , IN.ase_texcoord3.y));
+				float4 tex2DNode8 = tex2D( _MainCrackTexture, ( rotator76 + appendResult41 ) );
+				float4 break13_g3 = float4(-1,4,1,0);
+				float2 texCoord79 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos77 = cos( ( _FlipTexture * PI ) );
+				float sin77 = sin( ( _FlipTexture * PI ) );
+				float2 rotator77 = mul( texCoord79 - float2( 0.5,0.5 ) , float2x2( cos77 , -sin77 , sin77 , cos77 )) + float2( 0.5,0.5 );
+				float2 appendResult81 = (float2(IN.ase_texcoord3.z , IN.ase_texcoord3.w));
+				float2 temp_output_7_0_g3 = ( ( rotator77 + appendResult81 ) * float2( 0.5,1 ) );
 				float smoothstepResult11_g3 = smoothstep( break13_g3.x , break13_g3.y , temp_output_7_0_g3.x);
 				float smoothstepResult14_g3 = smoothstep( break13_g3.z , break13_g3.w , ( 1.0 - temp_output_7_0_g3.x ));
-				float4 break18_g3 = float4(1,0.5,1.5,-1);
+				float4 break18_g3 = float4(0,0.02,0,0.02);
 				float smoothstepResult19_g3 = smoothstep( break18_g3.x , break18_g3.y , temp_output_7_0_g3.y);
 				float smoothstepResult20_g3 = smoothstep( break18_g3.z , break18_g3.w , ( 1.0 - temp_output_7_0_g3.y ));
-				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 10.0 ) );
+				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 6.0 ) );
 				float temp_output_20_0 = saturate( ( tex2DNode8.r * temp_output_46_0 ) );
-				float4 _Vector4 = float4(0.1,0.5,0.1,0.5);
-				float temp_output_52_0 = ( texCoord48.y * 5.0 );
-				float4 appendResult30 = (float4(( _Vector4.x * temp_output_52_0 ) , _Vector4.y , ( _Vector4.z * temp_output_52_0 ) , _Vector4.w));
-				float4 break13_g4 = appendResult30;
-				float2 texCoord45 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_output_7_0_g4 = texCoord45;
-				float smoothstepResult11_g4 = smoothstep( break13_g4.x , break13_g4.y , temp_output_7_0_g4.x);
-				float smoothstepResult14_g4 = smoothstep( break13_g4.z , break13_g4.w , ( 1.0 - temp_output_7_0_g4.x ));
-				float4 break18_g4 = float4(0,1,0,1);
-				float smoothstepResult19_g4 = smoothstep( break18_g4.x , break18_g4.y , temp_output_7_0_g4.y);
-				float smoothstepResult20_g4 = smoothstep( break18_g4.z , break18_g4.w , ( 1.0 - temp_output_7_0_g4.y ));
-				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
+				float temp_output_53_0 = ( temp_output_20_0 * ( temp_output_20_0 * 1.0 * _IntensityRChannel ) );
 				
 
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( IN.ase_color.a * temp_output_53_0 );
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 					float DepthValue = 0;
@@ -1635,43 +1602,32 @@ Shader "VFX_PoumfCapa2_Crack"
 					#endif
 				#endif
 
-				float2 texCoord44 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos60 = cos( ( _FlipTexture * PI ) );
-				float sin60 = sin( ( _FlipTexture * PI ) );
-				float2 rotator60 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos60 , -sin60 , sin60 , cos60 )) + float2( 0.5,0.5 );
-				float4 tex2DNode8 = tex2D( _MainCrackTexture, rotator60 );
-				float4 break13_g3 = float4(0.2,0.3,0.2,0.3);
-				float cos59 = cos( ( _FlipTexture * PI ) );
-				float sin59 = sin( ( _FlipTexture * PI ) );
-				float2 rotator59 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos59 , -sin59 , sin59 , cos59 )) + float2( 0.5,0.5 );
-				float4 texCoord48 = IN.ase_texcoord3;
-				texCoord48.xy = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 appendResult41 = (float4(texCoord48.w , texCoord48.x , 0.0 , 0.0));
-				float2 temp_output_7_0_g3 = ( float4( rotator59, 0.0 , 0.0 ) + appendResult41 ).xy;
+				float2 texCoord75 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos76 = cos( ( _FlipTexture * PI ) );
+				float sin76 = sin( ( _FlipTexture * PI ) );
+				float2 rotator76 = mul( texCoord75 - float2( 0.5,0.5 ) , float2x2( cos76 , -sin76 , sin76 , cos76 )) + float2( 0.5,0.5 );
+				float2 appendResult41 = (float2(IN.ase_texcoord3.x , IN.ase_texcoord3.y));
+				float4 tex2DNode8 = tex2D( _MainCrackTexture, ( rotator76 + appendResult41 ) );
+				float4 break13_g3 = float4(-1,4,1,0);
+				float2 texCoord79 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos77 = cos( ( _FlipTexture * PI ) );
+				float sin77 = sin( ( _FlipTexture * PI ) );
+				float2 rotator77 = mul( texCoord79 - float2( 0.5,0.5 ) , float2x2( cos77 , -sin77 , sin77 , cos77 )) + float2( 0.5,0.5 );
+				float2 appendResult81 = (float2(IN.ase_texcoord3.z , IN.ase_texcoord3.w));
+				float2 temp_output_7_0_g3 = ( ( rotator77 + appendResult81 ) * float2( 0.5,1 ) );
 				float smoothstepResult11_g3 = smoothstep( break13_g3.x , break13_g3.y , temp_output_7_0_g3.x);
 				float smoothstepResult14_g3 = smoothstep( break13_g3.z , break13_g3.w , ( 1.0 - temp_output_7_0_g3.x ));
-				float4 break18_g3 = float4(1,0.5,1.5,-1);
+				float4 break18_g3 = float4(0,0.02,0,0.02);
 				float smoothstepResult19_g3 = smoothstep( break18_g3.x , break18_g3.y , temp_output_7_0_g3.y);
 				float smoothstepResult20_g3 = smoothstep( break18_g3.z , break18_g3.w , ( 1.0 - temp_output_7_0_g3.y ));
-				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 10.0 ) );
+				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 6.0 ) );
 				float temp_output_20_0 = saturate( ( tex2DNode8.r * temp_output_46_0 ) );
-				float4 _Vector4 = float4(0.1,0.5,0.1,0.5);
-				float temp_output_52_0 = ( texCoord48.y * 5.0 );
-				float4 appendResult30 = (float4(( _Vector4.x * temp_output_52_0 ) , _Vector4.y , ( _Vector4.z * temp_output_52_0 ) , _Vector4.w));
-				float4 break13_g4 = appendResult30;
-				float2 texCoord45 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_output_7_0_g4 = texCoord45;
-				float smoothstepResult11_g4 = smoothstep( break13_g4.x , break13_g4.y , temp_output_7_0_g4.x);
-				float smoothstepResult14_g4 = smoothstep( break13_g4.z , break13_g4.w , ( 1.0 - temp_output_7_0_g4.x ));
-				float4 break18_g4 = float4(0,1,0,1);
-				float smoothstepResult19_g4 = smoothstep( break18_g4.x , break18_g4.y , temp_output_7_0_g4.y);
-				float smoothstepResult20_g4 = smoothstep( break18_g4.z , break18_g4.w , ( 1.0 - temp_output_7_0_g4.y ));
-				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
+				float temp_output_53_0 = ( temp_output_20_0 * ( temp_output_20_0 * 1.0 * _IntensityRChannel ) );
 				
 
-				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_19_0 ) ).rgb;
+				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_53_0 ) ).rgb;
 				float3 Emission = 0;
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( IN.ase_color.a * temp_output_53_0 );
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1944,42 +1900,31 @@ Shader "VFX_PoumfCapa2_Crack"
 					#endif
 				#endif
 
-				float2 texCoord44 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos60 = cos( ( _FlipTexture * PI ) );
-				float sin60 = sin( ( _FlipTexture * PI ) );
-				float2 rotator60 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos60 , -sin60 , sin60 , cos60 )) + float2( 0.5,0.5 );
-				float4 tex2DNode8 = tex2D( _MainCrackTexture, rotator60 );
-				float4 break13_g3 = float4(0.2,0.3,0.2,0.3);
-				float cos59 = cos( ( _FlipTexture * PI ) );
-				float sin59 = sin( ( _FlipTexture * PI ) );
-				float2 rotator59 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos59 , -sin59 , sin59 , cos59 )) + float2( 0.5,0.5 );
-				float4 texCoord48 = IN.ase_texcoord3;
-				texCoord48.xy = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 appendResult41 = (float4(texCoord48.w , texCoord48.x , 0.0 , 0.0));
-				float2 temp_output_7_0_g3 = ( float4( rotator59, 0.0 , 0.0 ) + appendResult41 ).xy;
+				float2 texCoord75 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos76 = cos( ( _FlipTexture * PI ) );
+				float sin76 = sin( ( _FlipTexture * PI ) );
+				float2 rotator76 = mul( texCoord75 - float2( 0.5,0.5 ) , float2x2( cos76 , -sin76 , sin76 , cos76 )) + float2( 0.5,0.5 );
+				float2 appendResult41 = (float2(IN.ase_texcoord3.x , IN.ase_texcoord3.y));
+				float4 tex2DNode8 = tex2D( _MainCrackTexture, ( rotator76 + appendResult41 ) );
+				float4 break13_g3 = float4(-1,4,1,0);
+				float2 texCoord79 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos77 = cos( ( _FlipTexture * PI ) );
+				float sin77 = sin( ( _FlipTexture * PI ) );
+				float2 rotator77 = mul( texCoord79 - float2( 0.5,0.5 ) , float2x2( cos77 , -sin77 , sin77 , cos77 )) + float2( 0.5,0.5 );
+				float2 appendResult81 = (float2(IN.ase_texcoord3.z , IN.ase_texcoord3.w));
+				float2 temp_output_7_0_g3 = ( ( rotator77 + appendResult81 ) * float2( 0.5,1 ) );
 				float smoothstepResult11_g3 = smoothstep( break13_g3.x , break13_g3.y , temp_output_7_0_g3.x);
 				float smoothstepResult14_g3 = smoothstep( break13_g3.z , break13_g3.w , ( 1.0 - temp_output_7_0_g3.x ));
-				float4 break18_g3 = float4(1,0.5,1.5,-1);
+				float4 break18_g3 = float4(0,0.02,0,0.02);
 				float smoothstepResult19_g3 = smoothstep( break18_g3.x , break18_g3.y , temp_output_7_0_g3.y);
 				float smoothstepResult20_g3 = smoothstep( break18_g3.z , break18_g3.w , ( 1.0 - temp_output_7_0_g3.y ));
-				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 10.0 ) );
+				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 6.0 ) );
 				float temp_output_20_0 = saturate( ( tex2DNode8.r * temp_output_46_0 ) );
-				float4 _Vector4 = float4(0.1,0.5,0.1,0.5);
-				float temp_output_52_0 = ( texCoord48.y * 5.0 );
-				float4 appendResult30 = (float4(( _Vector4.x * temp_output_52_0 ) , _Vector4.y , ( _Vector4.z * temp_output_52_0 ) , _Vector4.w));
-				float4 break13_g4 = appendResult30;
-				float2 texCoord45 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_output_7_0_g4 = texCoord45;
-				float smoothstepResult11_g4 = smoothstep( break13_g4.x , break13_g4.y , temp_output_7_0_g4.x);
-				float smoothstepResult14_g4 = smoothstep( break13_g4.z , break13_g4.w , ( 1.0 - temp_output_7_0_g4.x ));
-				float4 break18_g4 = float4(0,1,0,1);
-				float smoothstepResult19_g4 = smoothstep( break18_g4.x , break18_g4.y , temp_output_7_0_g4.y);
-				float smoothstepResult20_g4 = smoothstep( break18_g4.z , break18_g4.w , ( 1.0 - temp_output_7_0_g4.y ));
-				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
+				float temp_output_53_0 = ( temp_output_20_0 * ( temp_output_20_0 * 1.0 * _IntensityRChannel ) );
 				
 
-				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_19_0 ) ).rgb;
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_53_0 ) ).rgb;
+				float Alpha = ( IN.ase_color.a * temp_output_53_0 );
 				float AlphaClipThreshold = 0.5;
 
 				half4 color = half4(BaseColor, Alpha );
@@ -2260,41 +2205,30 @@ Shader "VFX_PoumfCapa2_Crack"
 					#endif
 				#endif
 
-				float2 texCoord44 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos60 = cos( ( _FlipTexture * PI ) );
-				float sin60 = sin( ( _FlipTexture * PI ) );
-				float2 rotator60 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos60 , -sin60 , sin60 , cos60 )) + float2( 0.5,0.5 );
-				float4 tex2DNode8 = tex2D( _MainCrackTexture, rotator60 );
-				float4 break13_g3 = float4(0.2,0.3,0.2,0.3);
-				float cos59 = cos( ( _FlipTexture * PI ) );
-				float sin59 = sin( ( _FlipTexture * PI ) );
-				float2 rotator59 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos59 , -sin59 , sin59 , cos59 )) + float2( 0.5,0.5 );
-				float4 texCoord48 = IN.ase_texcoord4;
-				texCoord48.xy = IN.ase_texcoord4.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 appendResult41 = (float4(texCoord48.w , texCoord48.x , 0.0 , 0.0));
-				float2 temp_output_7_0_g3 = ( float4( rotator59, 0.0 , 0.0 ) + appendResult41 ).xy;
+				float2 texCoord75 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos76 = cos( ( _FlipTexture * PI ) );
+				float sin76 = sin( ( _FlipTexture * PI ) );
+				float2 rotator76 = mul( texCoord75 - float2( 0.5,0.5 ) , float2x2( cos76 , -sin76 , sin76 , cos76 )) + float2( 0.5,0.5 );
+				float2 appendResult41 = (float2(IN.ase_texcoord4.x , IN.ase_texcoord4.y));
+				float4 tex2DNode8 = tex2D( _MainCrackTexture, ( rotator76 + appendResult41 ) );
+				float4 break13_g3 = float4(-1,4,1,0);
+				float2 texCoord79 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos77 = cos( ( _FlipTexture * PI ) );
+				float sin77 = sin( ( _FlipTexture * PI ) );
+				float2 rotator77 = mul( texCoord79 - float2( 0.5,0.5 ) , float2x2( cos77 , -sin77 , sin77 , cos77 )) + float2( 0.5,0.5 );
+				float2 appendResult81 = (float2(IN.ase_texcoord4.z , IN.ase_texcoord4.w));
+				float2 temp_output_7_0_g3 = ( ( rotator77 + appendResult81 ) * float2( 0.5,1 ) );
 				float smoothstepResult11_g3 = smoothstep( break13_g3.x , break13_g3.y , temp_output_7_0_g3.x);
 				float smoothstepResult14_g3 = smoothstep( break13_g3.z , break13_g3.w , ( 1.0 - temp_output_7_0_g3.x ));
-				float4 break18_g3 = float4(1,0.5,1.5,-1);
+				float4 break18_g3 = float4(0,0.02,0,0.02);
 				float smoothstepResult19_g3 = smoothstep( break18_g3.x , break18_g3.y , temp_output_7_0_g3.y);
 				float smoothstepResult20_g3 = smoothstep( break18_g3.z , break18_g3.w , ( 1.0 - temp_output_7_0_g3.y ));
-				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 10.0 ) );
+				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 6.0 ) );
 				float temp_output_20_0 = saturate( ( tex2DNode8.r * temp_output_46_0 ) );
-				float4 _Vector4 = float4(0.1,0.5,0.1,0.5);
-				float temp_output_52_0 = ( texCoord48.y * 5.0 );
-				float4 appendResult30 = (float4(( _Vector4.x * temp_output_52_0 ) , _Vector4.y , ( _Vector4.z * temp_output_52_0 ) , _Vector4.w));
-				float4 break13_g4 = appendResult30;
-				float2 texCoord45 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_output_7_0_g4 = texCoord45;
-				float smoothstepResult11_g4 = smoothstep( break13_g4.x , break13_g4.y , temp_output_7_0_g4.x);
-				float smoothstepResult14_g4 = smoothstep( break13_g4.z , break13_g4.w , ( 1.0 - temp_output_7_0_g4.x ));
-				float4 break18_g4 = float4(0,1,0,1);
-				float smoothstepResult19_g4 = smoothstep( break18_g4.x , break18_g4.y , temp_output_7_0_g4.y);
-				float smoothstepResult20_g4 = smoothstep( break18_g4.z , break18_g4.w , ( 1.0 - temp_output_7_0_g4.y ));
-				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
+				float temp_output_53_0 = ( temp_output_20_0 * ( temp_output_20_0 * 1.0 * _IntensityRChannel ) );
 				
 
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( IN.ase_color.a * temp_output_53_0 );
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 					float DepthValue = 0;
@@ -2672,48 +2606,37 @@ Shader "VFX_PoumfCapa2_Crack"
 
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
-				float2 texCoord44 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos60 = cos( ( _FlipTexture * PI ) );
-				float sin60 = sin( ( _FlipTexture * PI ) );
-				float2 rotator60 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos60 , -sin60 , sin60 , cos60 )) + float2( 0.5,0.5 );
-				float4 tex2DNode8 = tex2D( _MainCrackTexture, rotator60 );
-				float4 break13_g3 = float4(0.2,0.3,0.2,0.3);
-				float cos59 = cos( ( _FlipTexture * PI ) );
-				float sin59 = sin( ( _FlipTexture * PI ) );
-				float2 rotator59 = mul( texCoord44 - float2( 0.5,0.5 ) , float2x2( cos59 , -sin59 , sin59 , cos59 )) + float2( 0.5,0.5 );
-				float4 texCoord48 = IN.ase_texcoord8;
-				texCoord48.xy = IN.ase_texcoord8.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 appendResult41 = (float4(texCoord48.w , texCoord48.x , 0.0 , 0.0));
-				float2 temp_output_7_0_g3 = ( float4( rotator59, 0.0 , 0.0 ) + appendResult41 ).xy;
+				float2 texCoord75 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos76 = cos( ( _FlipTexture * PI ) );
+				float sin76 = sin( ( _FlipTexture * PI ) );
+				float2 rotator76 = mul( texCoord75 - float2( 0.5,0.5 ) , float2x2( cos76 , -sin76 , sin76 , cos76 )) + float2( 0.5,0.5 );
+				float2 appendResult41 = (float2(IN.ase_texcoord8.x , IN.ase_texcoord8.y));
+				float4 tex2DNode8 = tex2D( _MainCrackTexture, ( rotator76 + appendResult41 ) );
+				float4 break13_g3 = float4(-1,4,1,0);
+				float2 texCoord79 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos77 = cos( ( _FlipTexture * PI ) );
+				float sin77 = sin( ( _FlipTexture * PI ) );
+				float2 rotator77 = mul( texCoord79 - float2( 0.5,0.5 ) , float2x2( cos77 , -sin77 , sin77 , cos77 )) + float2( 0.5,0.5 );
+				float2 appendResult81 = (float2(IN.ase_texcoord8.z , IN.ase_texcoord8.w));
+				float2 temp_output_7_0_g3 = ( ( rotator77 + appendResult81 ) * float2( 0.5,1 ) );
 				float smoothstepResult11_g3 = smoothstep( break13_g3.x , break13_g3.y , temp_output_7_0_g3.x);
 				float smoothstepResult14_g3 = smoothstep( break13_g3.z , break13_g3.w , ( 1.0 - temp_output_7_0_g3.x ));
-				float4 break18_g3 = float4(1,0.5,1.5,-1);
+				float4 break18_g3 = float4(0,0.02,0,0.02);
 				float smoothstepResult19_g3 = smoothstep( break18_g3.x , break18_g3.y , temp_output_7_0_g3.y);
 				float smoothstepResult20_g3 = smoothstep( break18_g3.z , break18_g3.w , ( 1.0 - temp_output_7_0_g3.y ));
-				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 10.0 ) );
+				float temp_output_46_0 = saturate( ( ( ( smoothstepResult11_g3 * smoothstepResult14_g3 ) * ( smoothstepResult19_g3 * smoothstepResult20_g3 ) ) * 6.0 ) );
 				float temp_output_20_0 = saturate( ( tex2DNode8.r * temp_output_46_0 ) );
-				float4 _Vector4 = float4(0.1,0.5,0.1,0.5);
-				float temp_output_52_0 = ( texCoord48.y * 5.0 );
-				float4 appendResult30 = (float4(( _Vector4.x * temp_output_52_0 ) , _Vector4.y , ( _Vector4.z * temp_output_52_0 ) , _Vector4.w));
-				float4 break13_g4 = appendResult30;
-				float2 texCoord45 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_output_7_0_g4 = texCoord45;
-				float smoothstepResult11_g4 = smoothstep( break13_g4.x , break13_g4.y , temp_output_7_0_g4.x);
-				float smoothstepResult14_g4 = smoothstep( break13_g4.z , break13_g4.w , ( 1.0 - temp_output_7_0_g4.x ));
-				float4 break18_g4 = float4(0,1,0,1);
-				float smoothstepResult19_g4 = smoothstep( break18_g4.x , break18_g4.y , temp_output_7_0_g4.y);
-				float smoothstepResult20_g4 = smoothstep( break18_g4.z , break18_g4.w , ( 1.0 - temp_output_7_0_g4.y ));
-				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
+				float temp_output_53_0 = ( temp_output_20_0 * ( temp_output_20_0 * 1.0 * _IntensityRChannel ) );
 				
 
-				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_19_0 ) ).rgb;
+				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_53_0 ) ).rgb;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
 				float Occlusion = 1;
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( IN.ase_color.a * temp_output_53_0 );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -2801,25 +2724,7 @@ Shader "VFX_PoumfCapa2_Crack"
 }
 /*ASEBEGIN
 Version=19102
-Node;AmplifyShaderEditor.SamplerNode;8;-1168,0;Inherit;True;Property;_MainCrackTexture;Main Crack Texture;0;0;Create;True;0;0;0;False;0;False;-1;d3038830ba4344b49ac4a77e2a924677;90b4085a806edf1459309d5472bb3def;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SaturateNode;20;-400,16;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SaturateNode;21;-351,346.5;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;18;-624,24.5;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;22;-624,288;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.Vector4Node;17;-1392,512;Inherit;False;Constant;_Vector3;Vector 3;1;0;Create;True;0;0;0;False;0;False;1,0.5,1.5,-1;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.Vector4Node;26;-1392,896;Inherit;False;Constant;_Vector5;Vector 3;1;0;Create;True;0;0;0;False;0;False;0,1,0,1;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;27;-1696,888.5;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.DynamicAppendNode;30;-1552,752;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;31;-637.5175,740.9306;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.Vector4Node;16;-1472,320;Inherit;False;Constant;_Vector2;Vector 2;1;0;Create;True;0;0;0;False;0;False;0.2,0.3,0.2,0.3;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleAddOpNode;43;-1845.967,167.2385;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT4;0,0,0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;45;-1632,624;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.FunctionNode;46;-1111,238.5;Inherit;True;ASF_UVMasking;-1;;3;ad643ee8a2854804a93b5315764532a5;0;4;7;FLOAT2;0,0;False;12;FLOAT4;0,0,0,0;False;23;FLOAT4;0,0,0,0;False;4;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;47;-1120,704;Inherit;True;ASF_UVMasking;-1;;4;ad643ee8a2854804a93b5315764532a5;0;4;7;FLOAT2;0,0;False;12;FLOAT4;0,0,0,0;False;23;FLOAT4;0,0,0,0;False;4;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;51;-2160,1088;Inherit;False;Constant;_Float0;Float 0;1;0;Create;True;0;0;0;False;0;False;5;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;52;-1904,1024;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;28;-1696,752;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.Vector4Node;25;-1989,720;Inherit;False;Constant;_Vector4;Vector 2;1;0;Create;True;0;0;0;False;0;False;0.1,0.5,0.1,0.5;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;640,16;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;3;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
@@ -2828,74 +2733,98 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;5;0,0;Float;False;False;-1;
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;6;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;34;752,128;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;1152,-64;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;VFX_PoumfCapa2_Crack;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;0;Surface;1;638082707622198830;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;0;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;0;8;False;True;True;True;True;True;True;True;False;;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;1152,-64;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;VFX_PoumfCapa2_CrackSide;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;0;Surface;1;638082707622198830;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;0;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;0;8;False;True;True;True;True;True;True;True;False;;False;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;53;144,0;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;55;32,128;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;56;-192,224;Inherit;False;Property;_IntensityRChannel;Intensity R Channel;1;0;Create;True;0;0;0;False;0;False;10;10;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;19;336,0;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.VertexColorNode;32;368,-256;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;33;656,-208;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;57;912,-224;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.ColorNode;58;592,-416;Inherit;False;Property;_TintColor;Tint Color;2;1;[HDR];Create;True;0;0;0;False;0;False;1,1,1,0;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TextureCoordinatesNode;44;-2436.967,-14.76147;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RotatorNode;59;-2192,-16;Inherit;True;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.RotatorNode;60;-1504,0;Inherit;True;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.PiNode;62;-2448,-192;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.WireNode;64;-1683.252,-140.7173;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.WireNode;63;-1739.252,-167.7173;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;61;-2832,-192;Inherit;False;Property;_FlipTexture;FlipTexture?;3;1;[IntRange];Create;True;0;0;0;False;0;False;1;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.DynamicAppendNode;41;-2213.098,255.1628;Inherit;True;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;48;-2624,256;Inherit;False;1;-1;4;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-WireConnection;8;1;60;0
-WireConnection;20;0;18;0
-WireConnection;21;0;22;0
+Node;AmplifyShaderEditor.RangedFloatNode;61;-2832,-192;Inherit;False;Property;_FlipTexture;FlipTexture?;3;1;[IntRange];Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.DynamicAppendNode;30;-1640.703,1025.824;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;45;-1720.703,897.8243;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector4Node;25;-2072.702,993.8243;Inherit;False;Constant;_Vector4;Vector 2;1;0;Create;True;0;0;0;False;0;False;0.1,0.5,0.1,0.5;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;52;-2120.702,1425.824;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;27;-1864.703,1425.824;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;28;-1864.703,1297.824;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;51;-2392.702,1441.824;Inherit;False;Constant;_Float0;Float 0;1;0;Create;True;0;0;0;False;0;False;5;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;47;-1200,896;Inherit;True;ASF_UVMasking;-1;;4;ad643ee8a2854804a93b5315764532a5;0;4;7;FLOAT2;0,0;False;12;FLOAT4;0,0,0,0;False;23;FLOAT4;0,0,0,0;False;4;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;31;-624,896;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;22;-368,896;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SaturateNode;21;-112,896;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.Vector4Node;26;-1424,1152;Inherit;False;Constant;_Vector5;Vector 3;1;0;Create;True;0;0;0;False;0;False;0,1,0,1;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;55;32,128;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;1;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;48;-3123.199,232.6;Inherit;False;1;-1;4;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;-0.29,0;False;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;8;-1168,0;Inherit;True;Property;_MainCrackTexture;Main Crack Texture;0;0;Create;True;0;0;0;False;0;False;-1;0139374ceb9162c40b0010439d4fc893;90b4085a806edf1459309d5472bb3def;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TexCoordVertexDataNode;69;-3159.061,48.76248;Inherit;False;1;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RotatorNode;76;-2269.118,-73.38523;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;78;-1981.039,116.961;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;75;-2514.085,-72.1467;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TextureCoordinatesNode;79;-2496,256;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleAddOpNode;80;-1888,256;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.DynamicAppendNode;41;-2416,128;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.DynamicAppendNode;81;-2416,512;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RotatorNode;77;-2256,256;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.Vector2Node;83;-1792,512;Inherit;False;Constant;_Vector6;Vector 6;4;0;Create;True;0;0;0;False;0;False;0.5,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;82;-1648,256;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.Vector4Node;17;-1465.593,308.0566;Inherit;False;Constant;_Vector3;Vector 3;1;0;Create;True;0;0;0;False;0;False;-1,4,1,0;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SaturateNode;20;-368,32;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;46;-1111,238.5;Inherit;True;ASF_UVMasking;-1;;3;ad643ee8a2854804a93b5315764532a5;0;4;7;FLOAT2;0,0;False;12;FLOAT4;0,0,0,0;False;23;FLOAT4;0,0,0,0;False;4;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;84;-1105.334,569.8135;Inherit;False;Constant;_Float1;Float 1;4;0;Create;True;0;0;0;False;0;False;6;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.Vector4Node;16;-1476.083,483.5178;Inherit;False;Constant;_Vector2;Vector 2;1;0;Create;True;0;0;0;False;0;False;0,0.02,0,0.02;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 WireConnection;18;0;8;1
 WireConnection;18;1;46;0
-WireConnection;22;0;8;2
-WireConnection;22;1;31;0
-WireConnection;27;0;25;3
-WireConnection;27;1;52;0
-WireConnection;30;0;28;0
-WireConnection;30;1;25;2
-WireConnection;30;2;27;0
-WireConnection;30;3;25;4
-WireConnection;31;0;46;0
-WireConnection;31;1;47;0
-WireConnection;43;0;59;0
-WireConnection;43;1;41;0
-WireConnection;46;7;43;0
-WireConnection;46;12;16;0
-WireConnection;46;23;17;0
-WireConnection;47;7;45;0
-WireConnection;47;12;30;0
-WireConnection;47;23;26;0
-WireConnection;52;0;48;2
-WireConnection;52;1;51;0
-WireConnection;28;0;25;1
-WireConnection;28;1;52;0
 WireConnection;34;0;32;4
-WireConnection;34;1;19;0
+WireConnection;34;1;53;0
 WireConnection;1;0;57;0
 WireConnection;1;6;34;0
 WireConnection;53;0;20;0
 WireConnection;53;1;55;0
-WireConnection;55;0;20;0
-WireConnection;55;1;48;3
-WireConnection;55;2;56;0
-WireConnection;19;0;53;0
-WireConnection;19;1;21;0
 WireConnection;33;0;32;0
-WireConnection;33;1;19;0
+WireConnection;33;1;53;0
 WireConnection;57;0;58;0
 WireConnection;57;1;33;0
-WireConnection;59;0;44;0
-WireConnection;59;2;62;0
-WireConnection;60;0;44;0
-WireConnection;60;2;64;0
 WireConnection;62;0;61;0
-WireConnection;64;0;63;0
-WireConnection;63;0;62;0
-WireConnection;41;0;48;4
-WireConnection;41;1;48;1
+WireConnection;30;0;28;0
+WireConnection;30;1;25;2
+WireConnection;30;2;27;0
+WireConnection;30;3;25;4
+WireConnection;52;0;48;2
+WireConnection;52;1;51;0
+WireConnection;27;0;25;3
+WireConnection;27;1;52;0
+WireConnection;28;0;25;1
+WireConnection;28;1;52;0
+WireConnection;47;7;45;0
+WireConnection;47;12;30;0
+WireConnection;47;23;26;0
+WireConnection;31;0;46;0
+WireConnection;31;1;47;0
+WireConnection;22;0;8;2
+WireConnection;22;1;31;0
+WireConnection;21;0;22;0
+WireConnection;55;0;20;0
+WireConnection;55;2;56;0
+WireConnection;8;1;78;0
+WireConnection;76;0;75;0
+WireConnection;76;2;62;0
+WireConnection;78;0;76;0
+WireConnection;78;1;41;0
+WireConnection;80;0;77;0
+WireConnection;80;1;81;0
+WireConnection;41;0;69;1
+WireConnection;41;1;69;2
+WireConnection;81;0;69;3
+WireConnection;81;1;69;4
+WireConnection;77;0;79;0
+WireConnection;77;2;62;0
+WireConnection;82;0;80;0
+WireConnection;82;1;83;0
+WireConnection;20;0;18;0
+WireConnection;46;7;82;0
+WireConnection;46;12;17;0
+WireConnection;46;23;16;0
+WireConnection;46;4;84;0
 ASEEND*/
-//CHKSM=ED0002FE906AECD1F4D55B688E3E5529F8714D1B
+//CHKSM=3F567177567EE6CDC6B58B6B39D294B92B620C32
