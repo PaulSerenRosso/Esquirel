@@ -15,12 +15,13 @@ MonoBehaviour:
   referenceName: PassivePerseveranceSO
   descriptionName: Perseverance
   icon: {fileID: 21300000, guid: da07ff3398264c34f89cd68eb8d3eac8, type: 3}
+  fxPrefab: {fileID: 0}
   description: If has not recently been struck by damage or enemy abilities, he regenerates
     a percentage of his total health each second.
   stackable: 0
   types: 0000000002000000
   indexInCollection: 0
-  percentage: 0.054
+  percentage: 0.001
   timeBetweenHealTick: 1
-  timeBeforeHealAfterDamage: 0
+  timeBeforeHealAfterDamage: 5
   healEffectPrefab: {fileID: 3248323131726062708, guid: 1e116510708295e4fa641f6ab0c260c1, type: 3}
