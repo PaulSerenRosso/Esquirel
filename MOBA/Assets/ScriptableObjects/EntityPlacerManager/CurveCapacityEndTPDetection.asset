@@ -22,7 +22,7 @@ MonoBehaviour:
   - factorRadius: 4
     precisionCircleDetector: 0.75
   - factorRadius: 5
-    precisionCircleDetector: 0.5
+    precisionCircleDetector: 0.47
   - factorRadius: 6
     precisionCircleDetector: 0.5
   layerMaskColliderAvoider:

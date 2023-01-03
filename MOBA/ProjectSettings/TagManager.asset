@@ -33,7 +33,7 @@ TagManager:
   - ObjectPlacerAvoiderCollider
   - EntityCapacityCollider
   - CollisionBlocker
-  - 
+  - EntityClicker
   - 
   - 
   - 

@@ -181,7 +181,6 @@ namespace Entities.Champion
         public void RequestSetCurrentMoveSpeed(float value)
         {
             photonView.RPC("SetCurrentMoveSpeedRPC", RpcTarget.All, value);
-
             OnSetCurrentMoveSpeed?.Invoke(value);
         }
 

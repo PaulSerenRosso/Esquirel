@@ -43,7 +43,9 @@ namespace Entities.Capacities
         {
             isDrawing = true;
             InputManager.PlayerMap.MoveMouse.MousePos.performed += RotateDraw;
-            previsualisableCurveMovementObjectForward = champion.rotateParent.transform.forward;
+            previsualisableCurveMovementObjectForward = InputManager.inputMouseWorldPosition - champion.transform.position;
+            previsualisableCurveMovementObjectForward.y = 0;
+            previsualisableCurveMovementObjectForward.Normalize();
             _previsualisableCurveMovementObject.gameObject.SetActive(true);
             _previsualisableCurveMovementObject.transform.forward = previsualisableCurveMovementObjectForward;
         }

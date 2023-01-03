@@ -22,7 +22,7 @@ namespace Controllers.Inputs
         private Camera cam;
         private bool isActivebuttonPress;
         [SerializeField] private LayerMask layerForDetectMovePosition;
-
+        [SerializeField] private LayerMask layerForDetectEntity;
         private Catapult catapultTarget;
         private Catapult catapultDetected;
         [SerializeField] private float movePositionDetectionDistance;
@@ -123,29 +123,50 @@ namespace Controllers.Inputs
         {
             if (!inputsAreLinked) return;
             var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(mouseRay, out var hit, movePositionDetectionDistance,
+
+            if (!Physics.Raycast(mouseRay, out RaycastHit hit, movePositionDetectionDistance,
                     layerForDetectMovePosition)) return;
+
             cursorWorldPos[0] = hit.point;
             targetEntity[0] = -1;
             InputManager.inputMouseWorldPosition = hit.point;
             InputManager.inputMouseHit = hit;
-            //Debug.Log("hit"+hit.collider.gameObject.name);
-            var ent = hit.transform.GetComponent<Entity>();
-            //    if (ent == null && hit.transform.parent != null) hit.transform.parent.GetComponent<Entity>();
-            if (ent != null)
+            var hits = Physics.RaycastAll(mouseRay, movePositionDetectionDistance,
+                layerForDetectEntity);
+            if (hits.Length != 0)
             {
-                // Debug.Log("hitentity");
-                if (ent is ITargetable)
+                //Debug.Log("hit"+hit.collider.gameObject.name);
+
+                var closerEnt = hits[0].collider.GetComponent<EntityClicker>().GetEntity;
+                float distanceBetweenCloserEntityAndControlledEntity =
+                    (controlledEntity.transform.position - closerEnt.transform.position).sqrMagnitude;
+                for (int i = 1; i < hits.Length; i++)
                 {
-                    ITargetable entTarget = (ITargetable)ent;
+                    var currentEntity = hits[i].collider.GetComponent<EntityClicker>().GetEntity;
+                    float distanceBetweenCurrentEntityAndControlledEntity =
+                        (controlledEntity.transform.position - currentEntity.transform.position).sqrMagnitude;
+                    if (distanceBetweenCurrentEntityAndControlledEntity <
+                        distanceBetweenCloserEntityAndControlledEntity)
+                    {
+                        closerEnt = currentEntity;
+                        distanceBetweenCloserEntityAndControlledEntity =
+                            distanceBetweenCurrentEntityAndControlledEntity;
+                    }
+                }
+                //    if (ent == null && hit.transform.parent != null) hit.transform.parent.GetComponent<Entity>();
+
+                // Debug.Log("hitentity");
+                if (closerEnt is ITargetable)
+                {
+                    ITargetable entTarget = (ITargetable)closerEnt;
                     if (entTarget.CanBeTargeted())
                     {
                         // Debug.Log("set list input");
-                        targetEntity[0] = ent.entityIndex;
-                        cursorWorldPos[0] = ent.transform.position;
+                        targetEntity[0] = closerEnt.entityIndex;
+                        cursorWorldPos[0] = closerEnt.transform.position;
                     }
                 }
-                else if (ent is Catapult catapult)
+                else if (closerEnt is Catapult catapult)
                 {
                     catapultDetected = catapult;
                 }
@@ -155,7 +176,6 @@ namespace Controllers.Inputs
                 catapultDetected = null;
                 targetEntity[0] = -1;
             }
-
             if (isActivebuttonPress)
             {
                 SelectMoveTarget();
@@ -163,16 +183,17 @@ namespace Controllers.Inputs
 
             if (catapultTarget != null)
             {
-
                 if (catapultTarget.requestSended)
                 {
+                    catapultTarget.requestSended = false;
                     catapultTarget = null;
                     return;
                 }
+
                 if (champion.isAlive)
                 {
                     catapultTarget.RequestCast(0, new int[] { champion.entityIndex },
-                    new Vector3[] { champion.transform.position });
+                        new Vector3[] { champion.transform.position });
                 }
             }
         }
@@ -189,7 +210,7 @@ namespace Controllers.Inputs
 
         public void SelectMoveTarget()
         {
-            if (catapultDetected!= null)
+            if (catapultDetected != null)
             {
                 catapultTarget = catapultDetected;
                 champion.MoveToPosition(cursorWorldPos[0]);

@@ -14,7 +14,9 @@ namespace Entities.Capacities
         {
             base.EnableDrawing();
             InputManager.PlayerMap.MoveMouse.MousePos.performed += RotateDraw;
-            previsualisableObjectForward = champion.rotateParent.transform.forward;
+            previsualisableObjectForward = InputManager.inputMouseWorldPosition - champion.transform.position;
+            previsualisableObjectForward.y = 0;
+            previsualisableObjectForward.Normalize();
             previsualisableObject.transform.forward = previsualisableObjectForward;
             previsualisableObject.transform.position =
                 champion.transform.position + previsualisableObjectForward * so.offsetAttack;
