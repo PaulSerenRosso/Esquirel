@@ -17,7 +17,7 @@ namespace Entities.Capacities
 
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
-            Debug.Log("trycast");
+   
             if (useCount == 0)
             {
                 if (base.TryCast(targetsEntityIndexes, targetPositions))
@@ -28,7 +28,6 @@ namespace Entities.Capacities
             }
             else if (useCount == 1)
             {
-                Debug.Log("trycast bonsoir");
                 useCount = 2;
                 return true;
             }
@@ -41,7 +40,6 @@ namespace Entities.Capacities
             params object[] customParameters)
         {
             useCount = (int)customParameters[2];
-            Debug.Log(useCount);
             if (useCount == 1)
             {
                 SetCanSkipDrawing(true);
@@ -74,7 +72,7 @@ namespace Entities.Capacities
             {
                 champion.RequestMoveChampion(
                     ChampionPlacerManager.instance.GetLauncher.LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(curveObject
-                            .transform.position, champion.pointPlacerDistanceAvoidance, champion.agent.radius,
+                            .transform.position, champion.pointPlacerDistanceAvoidance, champion.pointPlacerColliderRadius,
                        tpCapacitySo.secondDetectionSo,  champion.championPlacerDistanceAvoider.pointAvoider).point);
             }
         }

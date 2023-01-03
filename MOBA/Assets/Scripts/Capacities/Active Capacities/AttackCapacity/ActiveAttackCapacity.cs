@@ -20,7 +20,6 @@ namespace Entities.Capacities
         private GameObject DamageObject;
         private TimerOneCount beginDamageTimer;
         private TimerOneCount damageTimer;
-
         protected Quaternion rotationFx;
      
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)

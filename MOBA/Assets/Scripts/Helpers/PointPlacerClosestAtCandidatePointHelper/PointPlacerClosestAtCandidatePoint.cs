@@ -57,7 +57,11 @@ namespace PointPlacerClosestAtCandidatePointHelper
             SetUp(referencePoint, minRadiusWithNoAvoiderNeededToPlacePoint, minRadiusWithNoCollisionNeededToPlacePoint, so,
                 currentAvoider);
 
-            if (CheckReferencePointIsValided()) return (referencePoint, true);
+            if (CheckReferencePointIsValided())
+            {
+                Debug.Log("reference Point");
+                return (referencePoint, true);
+            }
 
             SetUpCandidatePointIteration();
 
@@ -106,7 +110,11 @@ namespace PointPlacerClosestAtCandidatePointHelper
 
                 currentCircularDetectorCount++;
                 if (currentCircularDetectorCount == so.circularDetectors.Count)
+                {
+                
+                    Debug.Log("false detection");
                     return (Vector3.zero, false);
+                }
             }
         }
 
