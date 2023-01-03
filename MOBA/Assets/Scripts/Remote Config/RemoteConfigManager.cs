@@ -63,13 +63,14 @@ namespace RemoteConfig {
             
             //AUTO-ATTACK
             variables.CHAMP01_AutoAttack.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Cooldown");
-            variables.CHAMP01_AutoAttack.maxRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_MaxRange");
-            variables.CHAMP01_AutoAttack.height = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Height");
-            variables.CHAMP01_AutoAttack.width = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Width");
-            variables.CHAMP01_AutoAttack.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Damage");
+            variables.CHAMP01_AutoAttack.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_FxTime");
             variables.CHAMP01_AutoAttack.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_DamageBeginTime");
             variables.CHAMP01_AutoAttack.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_DamageTime");
-            variables.CHAMP01_AutoAttack.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_FxTime");
+            variables.CHAMP01_AutoAttack.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Damage");
+            variables.CHAMP01_AutoAttack.width = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Width");
+            variables.CHAMP01_AutoAttack.height = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Height");
+            variables.CHAMP01_AutoAttack.maxRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_MaxRange");
+            variables.CHAMP01_AutoAttack.offsetAttack = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_AA_Offset");
             
             //TRINKET
             variables.CHAMP01_Trinket.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_TRINKET_Cooldown");
@@ -80,10 +81,12 @@ namespace RemoteConfig {
             variables.CHAMP01_Trinket.trinketDetectionDistance = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_TRINKET_DetectionDistance");
             
             //CAPACITY 01
-           // variables.CHAMP01_CAPA01.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_Cooldown");
-           // variables.CHAMP01_CAPA01.tpObjectCurveYPosition = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_YPosition");
-           // variables.CHAMP01_CAPA01.tpObjectCurveTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_TimeLength");
-           // variables.CHAMP01_CAPA01.referenceRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_ReferenceRange");
+            variables.CHAMP01_CAPA01.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_Cooldown");
+            variables.CHAMP01_CAPA01.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_FxTime");
+            variables.CHAMP01_CAPA01.curveMovementMaxYPosition = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_YPosition");
+            variables.CHAMP01_CAPA01.curveMovementTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_TimeLength");
+            variables.CHAMP01_CAPA01.referenceRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_ReferenceRange");
+            variables.CHAMP01_CAPA01.smokeDuration = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_SmokeDuration");
             
             //CAPACITY 02
             variables.CHAMP01_CAPA02.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_Cooldown");
@@ -94,8 +97,6 @@ namespace RemoteConfig {
             variables.CHAMP01_CAPA02.offsetAttack = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_OffsetAttack");
             variables.CHAMP01_CAPA02.height = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_Height");
             variables.CHAMP01_CAPA02.width = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_Width");
-
-            //ULTIMATE
         }
 
         /// <summary>
@@ -108,16 +109,6 @@ namespace RemoteConfig {
             variables.CHAMP02_BaseVariables.viewRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_BASE_ViewRange");
             variables.CHAMP02_BaseVariables.referenceMoveSpeed = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_BASE_MoveSpeed");
             
-            //AUTO-ATTACK
-            variables.CHAMP02_AutoAttack.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Cooldown");
-            variables.CHAMP02_AutoAttack.maxRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_MaxRange");
-            variables.CHAMP02_AutoAttack.height = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Height");
-            variables.CHAMP02_AutoAttack.width = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Width");
-            variables.CHAMP02_AutoAttack.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Damage");
-            variables.CHAMP02_AutoAttack.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_DamageBeginTime");
-            variables.CHAMP02_AutoAttack.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_DamageTime");
-            variables.CHAMP02_AutoAttack.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_FxTime");
-            
             //TRINKET
             variables.CHAMP02_Trinket.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_TRINKET_Cooldown");
             variables.CHAMP02_Trinket.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_TRINKET_FxTime");
@@ -126,8 +117,33 @@ namespace RemoteConfig {
             variables.CHAMP02_Trinket.trinketViewAngle = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_TRINKET_ViewAngle");
             variables.CHAMP02_Trinket.trinketDetectionDistance = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_TRINKET_DetectionDistance");
             
-            //CAPACITY 01
+            //AUTO-ATTACK
+            variables.CHAMP02_AutoAttack.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Cooldown");
+            variables.CHAMP02_AutoAttack.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_FxTime");
+            variables.CHAMP02_AutoAttack.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_DamageBeginTime");
+            variables.CHAMP02_AutoAttack.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_DamageTime");
+            variables.CHAMP02_AutoAttack.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Damage");
+            variables.CHAMP02_AutoAttack.width = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Width");
+            variables.CHAMP02_AutoAttack.height = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Height");
+            variables.CHAMP02_AutoAttack.maxRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_MaxRange");
+            variables.CHAMP02_AutoAttack.offsetAttack = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_AA_Offset");
 
+            //CAPACITY 01
+            variables.CHAMP02_CAPA01.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_Cooldown");
+            variables.CHAMP02_CAPA01.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_FxTime");
+            variables.CHAMP02_CAPA01.curveMovementMaxYPosition = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_YPosition");
+            variables.CHAMP02_CAPA01.curveMovementTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_TimeLength");
+            variables.CHAMP02_CAPA01.referenceRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_ReferenceRange");
+            variables.CHAMP02_CAPA01_SLOW.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Cooldown");
+            variables.CHAMP02_CAPA01_SLOW.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_FxTime");
+            variables.CHAMP02_CAPA01_SLOW.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_DamageBeginTime");
+            variables.CHAMP02_CAPA01_SLOW.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_DamageTime");
+            variables.CHAMP02_CAPA01_SLOW.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Damage");
+            variables.CHAMP02_CAPA01_SLOW.offsetAttack = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Offset");
+            variables.CHAMP02_CAPA01_SLOW.radiusArea = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Radius");
+            variables.CHAMP02_CAPA01_SLOWEFFECT.speedFactor = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_SpeedFactor");
+            variables.CHAMP02_CAPA01_SLOWEFFECT.time = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_SlowDuration");
+            
             //CAPACITY 02
             variables.CHAMP02_CAPA02.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA02_Cooldown");
             variables.CHAMP02_CAPA02.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA02_FxTime");
