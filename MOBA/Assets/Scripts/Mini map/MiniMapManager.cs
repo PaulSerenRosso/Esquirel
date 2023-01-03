@@ -66,7 +66,6 @@ namespace MiniMap
         public Vector2 GetMiniMapPos(Vector2 worldPos)
         {
             Vector2 ratioPos = ((worldPos)-minWorldMapPosition)/substractionBetweenMaxAndMinWorldPos;
-            Debug.Log(ratioPos);
             return (ratioPos-Vector2.one/2)*miniMapSize;
         }
        

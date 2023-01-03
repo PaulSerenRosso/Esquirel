@@ -8,7 +8,13 @@
         public float GetCurrentHp();
         /// <returns>The percentage of currentHp on maxHp of the entity</returns>
         public float GetCurrentHpPercent();
+
+        public bool GetCanDecreaseCurrentHp();
         
+        public void RequestSetCanDecreaseCurrentHp(bool value);
+        
+        
+        public void SyncSetCanDecreaseCurrentHpRPC(bool value);
         /// /// <summary>
         /// Sends an RPC to the master to set the entity's maxHp.
         /// </summary>

@@ -11,13 +11,13 @@ namespace Entities
 
         private static PhotonView view;
 
-        private void Start()
+        private void Awake()
         {
             view = GetComponent<PhotonView>();
             allEntitiesDict.Clear();
         }
 
-        
+
         /// <summary>
         /// Returns the entity corresponding to the index.
         /// </summary>
@@ -35,6 +35,7 @@ namespace Entities
         public static void AddEntity(Entity entity)
         {
             var index = entity.entityIndex;
+
             if (allEntitiesDict.ContainsKey(index))
             {
                 allEntitiesDict[index] = entity;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entities;
+using GameStates;
 using Photon.Pun;
 using UnityEngine;
 
@@ -8,67 +9,51 @@ namespace Entities.Capacities
 {
     public class TpObject : Entity
     {
-        private TpCapacity tpCapacity;
-        private TpCapacitySO tpCapacitySo;
-        private float currentTimer;
+        [SerializeField] private Collider collider;
         [SerializeField] private MeshRenderer renderer;
-        private float tpObjectCurveTime;
-        private float tpObjectCurveTimeRatio;
-        AnimationCurve tpObjectCurve ;
-        private float tpObjectCurveYPosition;
         private bool isActive;
-        private Vector3 startPosition;
-        private Champion.Champion champion;
-        private Vector3 endPosition;
-        public void RequestSetupRPC(byte capacityIndex, int championIndex, Vector3 endPos)
+
+
+        protected override void OnStart()
         {
-            photonView.RPC("SetUpRPC", RpcTarget.All, capacityIndex, championIndex, endPos);
-        }
-        [PunRPC] 
-        void SetUpRPC(byte capacityIndex, int championIndex, Vector3 endPos)
-        {
-            champion =(Champion.Champion) EntityCollectionManager.GetEntityByIndex(championIndex);
-            this.tpCapacity =(TpCapacity) champion.activeCapacities[capacityIndex];
-            this.tpCapacitySo = tpCapacity.tpCapacitySo;
-            SyncChangeTeamRPC((byte)champion.team);
-            endPosition = endPos;
-            currentTimer = 0;
-            tpObjectCurve = tpCapacitySo.tpObjectCurve;
-            tpObjectCurveTime = tpCapacitySo.tpObjectCurveTime;
-            tpObjectCurveYPosition = tpCapacitySo.tpObjectCurveYPosition;
-            ActivateRPC(champion.transform.position);
-                renderer.enabled =true;
-                
-            if (champion.photonView.IsMine)
-            {
-                ShowElements();
-            }
-            else
-            {
-                HideElements();
-            }
+            base.OnStart();
+            DeactivateTpObject();
         }
 
-        public void RequestActivate()
+        public void RequestActivate(Vector3 startPos)
         {
-            photonView.RPC("ActivateRPC", RpcTarget.All, tpCapacity.startPosition);
+            photonView.RPC("ActivateRPC", RpcTarget.All, startPos);
+        }
+
+        public bool GetIsActive()
+        {
+            return
+                isActive;
         }
 
         public void RequestDeactivate()
         {
             photonView.RPC("DeactivateRPC", RpcTarget.All);
         }
+
         [PunRPC]
-        public void ActivateRPC(Vector3 startPos)
+        public void ActivateRPC(Vector3 startPos, Enums.Team team)
         {
-            ActivateTpObject(startPos);
+            ActivateTpObject(startPos, team);
         }
 
-       public  void ActivateTpObject(Vector3 startPos)
+        public void ActivateTpObject(Vector3 startPos, Enums.Team team)
         {
             isActive = true;
-            startPosition = startPos;
-            transform.position = startPos;
+            collider.enabled = true;
+               this.team = team;
+             
+           if(GameStateMachine.Instance.GetPlayerTeam() == team)
+               ShowElements();
+           else
+           {
+               HideElements();
+           }
         }
 
         [PunRPC]
@@ -77,43 +62,11 @@ namespace Entities.Capacities
             DeactivateTpObject();
         }
 
-       public void DeactivateTpObject()
+        public void DeactivateTpObject()
         {
+            collider.enabled = false;
             isActive = false;
             HideElements();
-            renderer.enabled =false;
-        }
-
-        protected override void OnUpdate()
-        {
-        
-            // je vois le problème lol le time deltatime ça quelle plaisir
-            if(!isActive) return;
-            if (currentTimer < tpObjectCurveTime)
-                currentTimer += Time.deltaTime;
-            else 
-            {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                tpCapacity.InitiateCooldown();
-                
-                }
-                champion.MoveChampionRPC(transform.position);
-                champion.CancelCurrentCapacity();
-                
-                DeactivateTpObject();
-            }
-
-            tpObjectCurveTimeRatio = currentTimer / tpObjectCurveTime;
-            transform.position = Vector3.Lerp(startPosition, endPosition,
-                tpObjectCurveTimeRatio);
-            var transformPosition = renderer.transform.position;
-            var tpObjectCurve = tpCapacitySo.tpObjectCurve;
-            var tpObjectCurveYPosition = tpCapacitySo.tpObjectCurveYPosition;
-            transformPosition.y = tpObjectCurve.Evaluate(tpObjectCurveTimeRatio) *
-                                  tpObjectCurveYPosition;
-            renderer.transform.position = transformPosition;
-            base.OnUpdate();
         }
     }
 }

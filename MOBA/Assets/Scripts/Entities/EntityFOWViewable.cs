@@ -8,11 +8,9 @@ using UnityEngine.Rendering;
 
 namespace Entities
 {
-    
     public abstract partial class Entity : IFOWViewable
     {
-        [Header("FOW Viewable")]
-        public bool canChangeTeam;
+        [Header("FOW Viewable")] public bool canChangeTeam;
         public Enums.Team team;
 
         public float baseViewRange;
@@ -22,6 +20,7 @@ namespace Entities
         public List<IFOWShowable> seenShowables = new List<IFOWShowable>();
         public MeshFilter meshFilterFoV;
 
+        public bool viewObstructedByObstacle = true;
         public Enums.Team GetTeam()
         {
             return team;
@@ -61,6 +60,15 @@ namespace Entities
         public bool CanView() => canView;
         public float GetFOWViewRange() => viewRange;
         public float GetFOWBaseViewRange() => baseViewRange;
+        public void SetViewObstructedByObstacle(bool value)
+        {
+            viewObstructedByObstacle = value;
+        }
+
+        public bool GetViewObstructedByObstacle()
+        {
+            return viewObstructedByObstacle;
+        }
 
         public List<IFOWShowable> SeenShowables() => seenShowables;
 
@@ -121,6 +129,7 @@ namespace Entities
             viewAngle = value;
             OnSetViewAngleFeedback?.Invoke(value);
         }
+
         [PunRPC]
         public void SetViewAngleRPC(float value)
         {
@@ -159,16 +168,16 @@ namespace Entities
         {
             var entity = EntityCollectionManager.GetEntityByIndex(seenEntityIndex);
             if (entity == null) return;
-         
+
 
             AddShowable(entity);
         }
 
-        
+
         public void AddShowable(Entity showable)
         {
             if (seenShowables.Contains(showable)) return;
-            if(!CheckBushCondition(showable)) return;
+            if (!CheckViewEntitySeeShowableEntityInBush(showable)) return;
             seenShowables.Add(showable);
             //Debug.Log("seen Showable Add");
             showable.TryAddFOWViewable(this);
@@ -177,9 +186,9 @@ namespace Entities
             //Debug.Log("Entity index : " + seenEntityIndex);
             OnAddShowableFeedback?.Invoke(seenEntityIndex);
 
-            
-         //   if (!PhotonNetwork.IsMasterClient) return;
-           // OnAddShowable?.Invoke(seenEntityIndex);
+
+            //   if (!PhotonNetwork.IsMasterClient) return;
+            // OnAddShowable?.Invoke(seenEntityIndex);
             //photonView.RPC("SyncAddShowableRPC", RpcTarget.All, seenEntityIndex);
         }
 
@@ -195,16 +204,29 @@ namespace Entities
 
             seenShowables.Add(showable);
             OnAddShowableFeedback?.Invoke(seenEntityIndex);
-         //    if (!PhotonNetwork.IsMasterClient) showable.TryAddFOWViewable(this);
+            //    if (!PhotonNetwork.IsMasterClient) showable.TryAddFOWViewable(this);
         }
 
-        public bool CheckBushCondition(Entity showable)
+        public bool CheckViewEntitySeeShowableEntityInBush(Entity showable)
         {
-            if (showable.currentBush != null)
+            if (showable.bushes.Count != 0)
             {
-            if(this.currentBush == null) return false;
-            if(currentBush != showable.currentBush) return false;
-            return true;
+              
+                for (int i = 0; i < showable.bushes.Count; i++)
+                {
+                    Bush currentShowableBush = showable.bushes[i];
+
+                    if (currentShowableBush.IsNeededToViewEntityInsideBushForSeeShowableEntity(this, showable))
+                    {
+                        if (bushes.Count == 0) return false;
+                    for (int j = 0; j < bushes.Count; j++)
+                    {
+                        Bush currentBush = bushes[i];
+                        if (currentBush != currentShowableBush) return false;
+                    }
+                    }
+
+                }
             }
             return true;
         }
@@ -231,7 +253,7 @@ namespace Entities
             //Debug.Log("Remove Showable");
             showable.TryRemoveFOWViewable(this);
             //Debug.Log("TryRemoveFOWViewable");
-            
+
             var seenEntityIndex = ((Entity)showable).entityIndex;
             //Debug.Log("Entity Index : " + ((Entity)showable).entityIndex);
             OnRemoveShowableFeedback?.Invoke(seenEntityIndex);
@@ -258,7 +280,5 @@ namespace Entities
 
         public event GlobalDelegates.OneParameterDelegate<int> OnRemoveShowable;
         public event GlobalDelegates.OneParameterDelegate<int> OnRemoveShowableFeedback;
-
-  
     }
 }

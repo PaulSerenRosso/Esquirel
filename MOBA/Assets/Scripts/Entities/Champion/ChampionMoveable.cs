@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using Entities.Capacities;
 using ExitGames.Client.Photon.StructWrapping;
+using GameStates;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.AI;
@@ -20,6 +22,7 @@ namespace Entities.Champion
             set
             {
                 currentMoveSpeed = value;
+                animator.SetFloat("speedRatio", currentMoveSpeed/referenceMoveSpeed);
                 if (photonView.IsMine)
                     agent.speed = currentMoveSpeed;
             }
@@ -46,6 +49,7 @@ namespace Entities.Champion
 
         private bool isMoved;
 
+
         // === League Of Legends
         private int mouseTargetIndex;
         private bool isFollowing;
@@ -59,8 +63,7 @@ namespace Entities.Champion
         public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent;
 
         //NavMesh
-
-        [SerializeField] private NavMeshAgent agent;
+        [SerializeField] public NavMeshAgent agent;
 
 
         public bool CanMove()
@@ -82,8 +85,6 @@ namespace Entities.Champion
                 agent.enabled = true;
                 moveDestination = transform.position;
                 agent.speed = currentMoveSpeed;
-                
-             
             }
             //NavMeshBuilder.ClearAllNavMeshes();
             //NavMeshBuilder.BuildNavMesh();
@@ -101,17 +102,20 @@ namespace Entities.Champion
 
         public void RequestSetCanMove(bool value)
         {
-            
         }
 
         [PunRPC]
         public void SyncSetCanMoveRPC(bool value)
         {
             canMove = value;
+            if (photonView.IsMine)
+            {
+                moveDestination = transform.position;
+                agent.enabled = value;
+            }
+
             if (!value)
             {
-                if (photonView.IsMine)
-                    agent.SetDestination(transform.position);
                 IsMoved = false;
             }
         }
@@ -200,7 +204,8 @@ namespace Entities.Champion
 
         [PunRPC]
         public void IncreaseCurrentMoveSpeedRPC(float amount)
-        { CurrentMoveSpeed += amount;
+        {
+            CurrentMoveSpeed += amount;
             OnIncreaseCurrentMoveSpeedFeedback?.Invoke(amount);
         }
 
@@ -341,23 +346,69 @@ namespace Entities.Champion
 
         public void RequestMoveChampion(Vector3 newPos)
         {
-            photonView.RPC("MoveChampionRPC", RpcTarget.All, newPos);
+            receiveMoveChampionCount = 0;
+            receiveStartMoveChampionCount = 0;
+            photonView.RPC("StartMoveChampionRPC", RpcTarget.All, newPos);
         }
+
+        [PunRPC]
+        public void StartMoveChampionRPC(Vector3 newPos)
+        {
+            OnStartMoveChampion?.Invoke();
+            transformView.enabled = false;
+        
+            photonView.RPC("WaitForAllReceiveStartMoveChampion", RpcTarget.MasterClient, newPos);
+           if (!photonView.IsMine)
+            {
+                obstacle.enabled = false;
+            }
+        }
+
+        private int receiveStartMoveChampionCount = 0;
+
+        [PunRPC]
+        void WaitForAllReceiveStartMoveChampion(Vector3 pos)
+        {
+            receiveStartMoveChampionCount++;
+     
+            if(receiveStartMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
+            photonView.RPC("MoveChampionRPC", RpcTarget.All, pos);
+        }
+
+        private int receiveMoveChampionCount = 0;
 
         [PunRPC]
         public void MoveChampionRPC(Vector3 newPos)
         {
-            if (photonView.IsMine)
-            {
-                agent.enabled = false;
-                transform.position = newPos;
-                agent.enabled = true;
-            }
-            else
-            {
-                transform.position = newPos;
-            }
+        
+            transform.position = newPos;
+            moveDestination = newPos;
+            photonView.RPC("WaitForAllReceiveMoveChampion", RpcTarget.MasterClient);
         }
+        [PunRPC]
+        void WaitForAllReceiveMoveChampion()
+        {
+    
+            receiveMoveChampionCount++;
+            if(receiveMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
+                photonView.RPC("EndMoveChampion", RpcTarget.All);
+        }
+        
+        [PunRPC]
+        void EndMoveChampion()
+        {
+       
+            transformView.enabled = true;
+            if (!photonView.IsMine)
+            {
+                obstacle.enabled = true;
+            }
+
+            OnEndMoveChampion?.Invoke();
+        }
+
+        public event GlobalDelegates.NoParameterDelegate OnStartMoveChampion;
+        public event GlobalDelegates.NoParameterDelegate OnEndMoveChampion;
 
         private void CheckMoveDistance()
         {

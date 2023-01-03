@@ -278,8 +278,12 @@ namespace Entities.FogOfWar
                 {
                     Debug.Log(hits[i].collider.gameObject.name);
                     Bush bush = hits[i].collider.GetComponent<Bush>();
-                    if (bush && entity.currentBush == bush) continue;
-
+                    if (bush)
+                    {
+                        if(!bush.CheckBushMaskView(entity)) continue;
+                    }
+                    else  if(!entity.GetViewObstructedByObstacle()) continue;
+                        fieldOfViewObstacles.Add(hits[i]);
                     return new ViewCastInfo(true, hits[i].point, hits[i].distance, globalAngle);
                 }
             }
@@ -290,7 +294,7 @@ namespace Entities.FogOfWar
 
 
         private List<RaycastHit> fieldOfViewObstacles = new List<RaycastHit>();
-        private List<Entity> fieldOfViewEntities = new List<Entity>();
+  
 
         ViewCastInfo ViewCastEntity(float globalAngle, Entity entity)
         {
@@ -310,7 +314,14 @@ namespace Entities.FogOfWar
                     if (IsInLayerMask(hits[i].collider.gameObject, layerObstacleFogOfWar))
                     {
                         Bush bush = hits[i].collider.GetComponent<Bush>();
-                        if (bush && entity.currentBush == bush) continue;
+                        if (bush)
+                        {
+                            if(!bush.CheckBushMaskView(entity)) continue;
+                        }
+                        else
+                        {
+                            if(!entity.GetViewObstructedByObstacle()) continue;
+                        }
                         fieldOfViewObstacles.Add(hits[i]);
                     }
                 }
@@ -330,12 +341,14 @@ namespace Entities.FogOfWar
                     for (int i = 0; i < hits.Length; i++)
                     {
                         Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
+                   
                         if (candidateEntity != null)
                         {
                             if (hits[i].distance <= closerHit.distance)
                             {
                                 entity.AddShowable(candidateEntity);
-                                if (entity.CheckBushCondition(candidateEntity))
+                                ;
+                                if (entity.CheckViewEntitySeeShowableEntityInBush(candidateEntity))
                                     currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
                             }
                         }
@@ -347,10 +360,12 @@ namespace Entities.FogOfWar
                 for (int i = 0; i < hits.Length; i++)
                 {
                     Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
+                  
+           
                     if (candidateEntity != null)
                     {
                         entity.AddShowable(candidateEntity);
-                        if (entity.CheckBushCondition(candidateEntity))
+                        if (entity.CheckViewEntitySeeShowableEntityInBush(candidateEntity))
                             currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
                     }
                 }

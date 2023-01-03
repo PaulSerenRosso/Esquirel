@@ -88,7 +88,17 @@ namespace Entities.Capacities
         {
             return new []{(object) canSpawn, spawnPosition};
         }
-    
+
+        public bool GetCanSkipDrawing()
+        {
+            return false; 
+        }
+
+        public void SetCanSkipDrawing(bool value)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void SetUpActiveCapacity(byte soIndex, Entity caster)
         {
             base.SetUpActiveCapacity(soIndex, caster);

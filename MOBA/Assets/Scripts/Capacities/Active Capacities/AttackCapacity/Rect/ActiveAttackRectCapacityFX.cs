@@ -26,7 +26,6 @@ namespace Entities.Capacities
     new Coordinate(CoordinateType.X, activeAttackRectCapacitySo.width),
     new Coordinate(CoordinateType.Z, activeAttackRectCapacitySo.height)
    });
-  Debug.Log("bonsoir àt ous je suis lu ici");
    var boxCollider = fogDetection;
    var boxColliderCenter = boxCollider.center;
    var boxColliderSize = boxCollider.size;

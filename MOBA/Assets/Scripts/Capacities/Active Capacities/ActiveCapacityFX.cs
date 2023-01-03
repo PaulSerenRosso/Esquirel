@@ -17,10 +17,9 @@ public class ActiveCapacityFX : Entity
     }
     public virtual void InitCapacityFX(int entityIndex, byte capacityIndex)
     {
-
         team = EntityCollectionManager.GetEntityByIndex(entityIndex).team;
     }
-
+ 
     public void RequestInitCapacityFX(int entityIndex, byte capacityIndex)
     {
         photonView.RPC("StartInitCapacityFX", RpcTarget.All, entityIndex, capacityIndex  );

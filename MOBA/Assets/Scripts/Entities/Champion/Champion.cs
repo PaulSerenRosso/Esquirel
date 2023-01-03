@@ -15,20 +15,25 @@ namespace Entities.Champion
 {
     public partial class Champion : Entity
     {
+
+        public CatapultMovment catapultMovment;
+        public PhotonTransformView transformView;
         public ChampionSO championSo;
         public Transform rotateParent;
         public Transform championMesh;
         private Vector3 respawnPos;
-
+        [SerializeField]
+        public float pointPlacerDistanceAvoidance;
         private FogOfWarManager fowm;
         private CapacitySOCollectionManager capacityCollection;
         private UIManager uiManager;
         public Camera camera;
         public Rigidbody rb;
+        public ChampionPlacerDistanceAvoider championPlacerDistanceAvoider;
 
         public Animator animator;
         public CollisionBlocker blocker;
-        [SerializeField] private NavMeshObstacle obstacle;
+        [SerializeField] public NavMeshObstacle obstacle;
 
         public ActiveCapacity attackBase;
         public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
@@ -36,7 +41,12 @@ namespace Entities.Champion
         
         public IAimable autoAttack;
 
- 
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, pointPlacerDistanceAvoidance);
+        }
 
         protected override void OnStart()
         {
@@ -154,6 +164,9 @@ namespace Entities.Champion
             for (int i = 0; i < so.activeCapacities.Length; i++)
             {
                 activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.activeCapacities[i].indexInCollection,this));
+            }
+            for (int i = 0; i < so.activeCapacities.Length; i++)
+            {
                 activeCapacities[i].SetUpActiveCapacity(so.activeCapacities[i].indexInCollection, this);
             }
             activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.ultimateAbility.indexInCollection,this));

@@ -12,6 +12,8 @@ namespace Entities.FogOfWar
         /// <returns>The base view range of the entity</returns>
         public float GetFOWBaseViewRange();
 
+        public void SetViewObstructedByObstacle(bool value);
+        public bool GetViewObstructedByObstacle();
         public List<IFOWShowable> SeenShowables();
 
         public void RequestSetCanView(bool value);
@@ -74,7 +76,7 @@ namespace Entities.FogOfWar
         public void AddShowable(Entity showable);
         public void SyncAddShowableRPC(int showableIndex);
 
-        public bool CheckBushCondition(Entity showable);
+        public bool CheckViewEntitySeeShowableEntityInBush(Entity showable);
         public event GlobalDelegates.OneParameterDelegate<int> OnAddShowable;
         public event GlobalDelegates.OneParameterDelegate<int> OnAddShowableFeedback;
         

@@ -41,6 +41,8 @@ public class ActiveAttackWithPrevisualisableCapacity : ActiveAttackCapacity, IPr
     {
         canDraw = value;
     }
+    
+    
 
     public virtual bool TryCastWithPrevisualisableData(int[] targetsEntityIndexes, Vector3[] targetPositions,
         params object[] previsualisableParameters)
@@ -52,6 +54,16 @@ public class ActiveAttackWithPrevisualisableCapacity : ActiveAttackCapacity, IPr
     public virtual object[] GetPrevisualisableData()
     {
         return null;
+    }
+
+    public bool GetCanSkipDrawing()
+    {
+        return false;
+    }
+
+    public void SetCanSkipDrawing(bool value)
+    {
+        throw new System.NotImplementedException();
     }
 
     public override void SetUpActiveCapacity(byte soIndex, Entity caster)
