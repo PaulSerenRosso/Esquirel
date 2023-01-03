@@ -389,7 +389,9 @@ MonoBehaviour:
   CHAMP02_BaseVariables: {fileID: 11400000, guid: 2c32bd83db976c344a82bd0dbb225626, type: 2}
   CHAMP02_AutoAttack: {fileID: 11400000, guid: 21c7c14e005d4cc4f8470bf9a61776e2, type: 2}
   CHAMP02_Trinket: {fileID: 11400000, guid: aad87c277a071be459b9251985d0be77, type: 2}
-  CHAMP02_CAPA01: {fileID: 0}
+  CHAMP02_CAPA01: {fileID: 11400000, guid: 242aadcd426718e43ae6bb3fec70cfc8, type: 2}
+  CHAMP02_CAPA01_SLOW: {fileID: 11400000, guid: 7b777685e7c5c344ca741b124e656fef, type: 2}
+  CHAMP02_CAPA01_SLOWEFFECT: {fileID: 11400000, guid: e2a0726a715287e4db0f94ee538f1871, type: 2}
   CHAMP02_CAPA02: {fileID: 11400000, guid: ad595481d827f564e92f1c7118532bda, type: 2}
 --- !u!114 &366040051
 MonoBehaviour:
