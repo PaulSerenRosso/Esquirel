@@ -59,13 +59,15 @@ Material:
     - _AddVertexPaintingToMask: 0
     - _AlphaCutoff: 0.5
     - _EnvironmentReflections: 1
+    - _FlipSymetryVertexPaint: 1
     - _GrayscaleDebug: 0
     - _IntensityColorMap: 1
     - _NormalDebug: 0
     - _ReceiveShadows: 1
+    - _RotateVertexPaintMask: 0
     - _Smoothness: 0
     - _SpecularHighlights: 1
-    - _SymetryVertexPaint: 0
+    - _SymetryVertexPaint: 1
     - _T1_ProceduralTiling1: 1
     - _T1_Tiling1: 10
     - _T2_ProceduralTiling1: 0

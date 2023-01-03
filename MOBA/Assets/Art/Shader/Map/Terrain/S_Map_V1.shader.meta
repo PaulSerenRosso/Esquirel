@@ -2,7 +2,8 @@ fileFormatVersion: 2
 guid: 5e1dcfbe47865964cab9fff5cae1f258
 ShaderImporter:
   externalObjects: {}
-  defaultTextures: []
+  defaultTextures:
+  - _TerrainMask_VertexPaint: {fileID: 2800000, guid: 61bcabd8649009f41850e63708dd1066, type: 3}
   nonModifiableTextures: []
   preprocessorOverride: 0
   userData: 
