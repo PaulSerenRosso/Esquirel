@@ -45,6 +45,9 @@ namespace RemoteConfig {
         private void ApplySettings(ConfigResponse configResponse) {
             if (configResponse.requestOrigin != ConfigOrigin.Remote) return;
 
+            variables.perseveranceSo.percentage = RemoteConfigService.Instance.appConfig.GetFloat("HEAL_Percentage");
+            variables.perseveranceSo.timeBeforeHealAfterDamage = RemoteConfigService.Instance.appConfig.GetFloat("HEAL_TimeAfterDamage");
+            
             SetChampion01Variables();
             SetChampion02Variables();
             SetGeneratorVariables();
