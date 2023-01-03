@@ -12,6 +12,8 @@ Shader "S_Map_V1"
 		_NormalDebug("NormalDebug", Range( 0 , 1)) = 0
 		_VertexPaintDebug("VertexPaintDebug", Range( 0 , 1)) = 0
 		[Header(Mask Vertex Painting)][IntRange]_SymetryVertexPaint("Symetry Vertex Paint", Range( 0 , 1)) = 1
+		[IntRange]_FlipSymetryVertexPaint("Flip Symetry Vertex Paint", Range( 0 , 1)) = 0
+		_RotateVertexPaintMask("Rotate Vertex Paint Mask", Range( 0 , 1)) = 0
 		_TerrainMask_VertexPaint("TerrainMask_VertexPaint", 2D) = "white" {}
 		[Header(Texture 1 Vertex Paint Black)]_T1_Terrain("T1_Terrain", 2D) = "white" {}
 		_T1_TerrainNAOH("T1_Terrain NAOH", 2D) = "white" {}
@@ -283,18 +285,20 @@ Shader "S_Map_V1"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TerrainMask_VertexPaint_ST;
 			float _T1_Tiling1;
-			float _T1_ProceduralTiling1;
-			float _GrayscaleDebug;
-			float _VertexPaintDebug;
-			float _SymetryVertexPaint;
-			float _T2_Tilling1;
-			float _T2_ProceduralTiling1;
-			float _T3_Tilling1;
-			float _T3_ProceduralTiling1;
-			float _T4_Tilling1;
-			float _T4_ProceduralTiling1;
-			float _AddVertexPaintingToMask;
 			float _IntensityColorMap;
+			float _AddVertexPaintingToMask;
+			float _T4_ProceduralTiling1;
+			float _T4_Tilling1;
+			float _T3_ProceduralTiling1;
+			float _T3_Tilling1;
+			float _T2_ProceduralTiling1;
+			float _T2_Tilling1;
+			float _SymetryVertexPaint;
+			float _FlipSymetryVertexPaint;
+			float _RotateVertexPaintMask;
+			float _VertexPaintDebug;
+			float _GrayscaleDebug;
+			float _T1_ProceduralTiling1;
 			float _NormalDebug;
 			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
@@ -643,8 +647,15 @@ Shader "S_Map_V1"
 				float DebugVertexPainting46 = _VertexPaintDebug;
 				float4 lerpResult147 = lerp( T1_RGB71 , DebugColor151 , DebugVertexPainting46);
 				float2 uv_TerrainMask_VertexPaint = IN.ase_texcoord7.xy * _TerrainMask_VertexPaint_ST.xy + _TerrainMask_VertexPaint_ST.zw;
-				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, uv_TerrainMask_VertexPaint );
+				float RotateVertexPaintMask523 = _RotateVertexPaintMask;
+				float cos540 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float sin540 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float2 rotator540 = mul( uv_TerrainMask_VertexPaint - float2( 0.5,0.5 ) , float2x2( cos540 , -sin540 , sin540 , cos540 )) + float2( 0.5,0.5 );
+				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, rotator540 );
 				float2 texCoord485 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos524 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float sin524 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float2 rotator524 = mul( texCoord485 - float2( 0.5,0.5 ) , float2x2( cos524 , -sin524 , sin524 , cos524 )) + float2( 0.5,0.5 );
 				float2 temp_output_17_0_g23 = float2( 1,1 );
 				float2 temp_output_19_0_g23 = float2( -0.5,-0.5 );
 				float2 texCoord1_g23 = IN.ase_texcoord7.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
@@ -665,8 +676,10 @@ Shader "S_Map_V1"
 				float2 lerpResult15_g23 = lerp( lerpResult14_g23 , texCoord8_g23 , (float)temp_output_18_0_g23);
 				float2 temp_output_6_0_g22 = lerpResult15_g23;
 				float temp_output_7_0_g22 = ceil( saturate( (temp_output_6_0_g22).x ) );
+				float FlipSymetryVertexPaint520 = _FlipSymetryVertexPaint;
+				float2 lerpResult535 = lerp( float2( -2,1 ) , float2( -2,-1 ) , FlipSymetryVertexPaint520);
 				float SymetryVertexPaint498 = _SymetryVertexPaint;
-				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( texCoord485 * float2( 2,1 ) ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( texCoord485 * float2( -2,1 ) ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
+				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
 				float4 MaskVertexPaint500 = lerpResult492;
 				float4 break494 = MaskVertexPaint500;
 				float T2_Tilling363 = _T2_Tilling1;
@@ -1069,18 +1082,20 @@ Shader "S_Map_V1"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TerrainMask_VertexPaint_ST;
 			float _T1_Tiling1;
-			float _T1_ProceduralTiling1;
-			float _GrayscaleDebug;
-			float _VertexPaintDebug;
-			float _SymetryVertexPaint;
-			float _T2_Tilling1;
-			float _T2_ProceduralTiling1;
-			float _T3_Tilling1;
-			float _T3_ProceduralTiling1;
-			float _T4_Tilling1;
-			float _T4_ProceduralTiling1;
-			float _AddVertexPaintingToMask;
 			float _IntensityColorMap;
+			float _AddVertexPaintingToMask;
+			float _T4_ProceduralTiling1;
+			float _T4_Tilling1;
+			float _T3_ProceduralTiling1;
+			float _T3_Tilling1;
+			float _T2_ProceduralTiling1;
+			float _T2_Tilling1;
+			float _SymetryVertexPaint;
+			float _FlipSymetryVertexPaint;
+			float _RotateVertexPaintMask;
+			float _VertexPaintDebug;
+			float _GrayscaleDebug;
+			float _T1_ProceduralTiling1;
 			float _NormalDebug;
 			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
@@ -1388,18 +1403,20 @@ Shader "S_Map_V1"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TerrainMask_VertexPaint_ST;
 			float _T1_Tiling1;
-			float _T1_ProceduralTiling1;
-			float _GrayscaleDebug;
-			float _VertexPaintDebug;
-			float _SymetryVertexPaint;
-			float _T2_Tilling1;
-			float _T2_ProceduralTiling1;
-			float _T3_Tilling1;
-			float _T3_ProceduralTiling1;
-			float _T4_Tilling1;
-			float _T4_ProceduralTiling1;
-			float _AddVertexPaintingToMask;
 			float _IntensityColorMap;
+			float _AddVertexPaintingToMask;
+			float _T4_ProceduralTiling1;
+			float _T4_Tilling1;
+			float _T3_ProceduralTiling1;
+			float _T3_Tilling1;
+			float _T2_ProceduralTiling1;
+			float _T2_Tilling1;
+			float _SymetryVertexPaint;
+			float _FlipSymetryVertexPaint;
+			float _RotateVertexPaintMask;
+			float _VertexPaintDebug;
+			float _GrayscaleDebug;
+			float _T1_ProceduralTiling1;
 			float _NormalDebug;
 			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
@@ -1683,18 +1700,20 @@ Shader "S_Map_V1"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TerrainMask_VertexPaint_ST;
 			float _T1_Tiling1;
-			float _T1_ProceduralTiling1;
-			float _GrayscaleDebug;
-			float _VertexPaintDebug;
-			float _SymetryVertexPaint;
-			float _T2_Tilling1;
-			float _T2_ProceduralTiling1;
-			float _T3_Tilling1;
-			float _T3_ProceduralTiling1;
-			float _T4_Tilling1;
-			float _T4_ProceduralTiling1;
-			float _AddVertexPaintingToMask;
 			float _IntensityColorMap;
+			float _AddVertexPaintingToMask;
+			float _T4_ProceduralTiling1;
+			float _T4_Tilling1;
+			float _T3_ProceduralTiling1;
+			float _T3_Tilling1;
+			float _T2_ProceduralTiling1;
+			float _T2_Tilling1;
+			float _SymetryVertexPaint;
+			float _FlipSymetryVertexPaint;
+			float _RotateVertexPaintMask;
+			float _VertexPaintDebug;
+			float _GrayscaleDebug;
+			float _T1_ProceduralTiling1;
 			float _NormalDebug;
 			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
@@ -1980,8 +1999,15 @@ Shader "S_Map_V1"
 				float DebugVertexPainting46 = _VertexPaintDebug;
 				float4 lerpResult147 = lerp( T1_RGB71 , DebugColor151 , DebugVertexPainting46);
 				float2 uv_TerrainMask_VertexPaint = IN.ase_texcoord2.xy * _TerrainMask_VertexPaint_ST.xy + _TerrainMask_VertexPaint_ST.zw;
-				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, uv_TerrainMask_VertexPaint );
+				float RotateVertexPaintMask523 = _RotateVertexPaintMask;
+				float cos540 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float sin540 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float2 rotator540 = mul( uv_TerrainMask_VertexPaint - float2( 0.5,0.5 ) , float2x2( cos540 , -sin540 , sin540 , cos540 )) + float2( 0.5,0.5 );
+				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, rotator540 );
 				float2 texCoord485 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos524 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float sin524 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float2 rotator524 = mul( texCoord485 - float2( 0.5,0.5 ) , float2x2( cos524 , -sin524 , sin524 , cos524 )) + float2( 0.5,0.5 );
 				float2 temp_output_17_0_g23 = float2( 1,1 );
 				float2 temp_output_19_0_g23 = float2( -0.5,-0.5 );
 				float2 texCoord1_g23 = IN.ase_texcoord2.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
@@ -2002,8 +2028,10 @@ Shader "S_Map_V1"
 				float2 lerpResult15_g23 = lerp( lerpResult14_g23 , texCoord8_g23 , (float)temp_output_18_0_g23);
 				float2 temp_output_6_0_g22 = lerpResult15_g23;
 				float temp_output_7_0_g22 = ceil( saturate( (temp_output_6_0_g22).x ) );
+				float FlipSymetryVertexPaint520 = _FlipSymetryVertexPaint;
+				float2 lerpResult535 = lerp( float2( -2,1 ) , float2( -2,-1 ) , FlipSymetryVertexPaint520);
 				float SymetryVertexPaint498 = _SymetryVertexPaint;
-				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( texCoord485 * float2( 2,1 ) ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( texCoord485 * float2( -2,1 ) ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
+				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
 				float4 MaskVertexPaint500 = lerpResult492;
 				float4 break494 = MaskVertexPaint500;
 				float T2_Tilling363 = _T2_Tilling1;
@@ -2267,18 +2295,20 @@ Shader "S_Map_V1"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TerrainMask_VertexPaint_ST;
 			float _T1_Tiling1;
-			float _T1_ProceduralTiling1;
-			float _GrayscaleDebug;
-			float _VertexPaintDebug;
-			float _SymetryVertexPaint;
-			float _T2_Tilling1;
-			float _T2_ProceduralTiling1;
-			float _T3_Tilling1;
-			float _T3_ProceduralTiling1;
-			float _T4_Tilling1;
-			float _T4_ProceduralTiling1;
-			float _AddVertexPaintingToMask;
 			float _IntensityColorMap;
+			float _AddVertexPaintingToMask;
+			float _T4_ProceduralTiling1;
+			float _T4_Tilling1;
+			float _T3_ProceduralTiling1;
+			float _T3_Tilling1;
+			float _T2_ProceduralTiling1;
+			float _T2_Tilling1;
+			float _SymetryVertexPaint;
+			float _FlipSymetryVertexPaint;
+			float _RotateVertexPaintMask;
+			float _VertexPaintDebug;
+			float _GrayscaleDebug;
+			float _T1_ProceduralTiling1;
 			float _NormalDebug;
 			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
@@ -2565,8 +2595,15 @@ Shader "S_Map_V1"
 				float DebugVertexPainting46 = _VertexPaintDebug;
 				float4 lerpResult147 = lerp( T1_RGB71 , DebugColor151 , DebugVertexPainting46);
 				float2 uv_TerrainMask_VertexPaint = IN.ase_texcoord2.xy * _TerrainMask_VertexPaint_ST.xy + _TerrainMask_VertexPaint_ST.zw;
-				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, uv_TerrainMask_VertexPaint );
+				float RotateVertexPaintMask523 = _RotateVertexPaintMask;
+				float cos540 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float sin540 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float2 rotator540 = mul( uv_TerrainMask_VertexPaint - float2( 0.5,0.5 ) , float2x2( cos540 , -sin540 , sin540 , cos540 )) + float2( 0.5,0.5 );
+				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, rotator540 );
 				float2 texCoord485 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos524 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float sin524 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float2 rotator524 = mul( texCoord485 - float2( 0.5,0.5 ) , float2x2( cos524 , -sin524 , sin524 , cos524 )) + float2( 0.5,0.5 );
 				float2 temp_output_17_0_g23 = float2( 1,1 );
 				float2 temp_output_19_0_g23 = float2( -0.5,-0.5 );
 				float2 texCoord1_g23 = IN.ase_texcoord2.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
@@ -2587,8 +2624,10 @@ Shader "S_Map_V1"
 				float2 lerpResult15_g23 = lerp( lerpResult14_g23 , texCoord8_g23 , (float)temp_output_18_0_g23);
 				float2 temp_output_6_0_g22 = lerpResult15_g23;
 				float temp_output_7_0_g22 = ceil( saturate( (temp_output_6_0_g22).x ) );
+				float FlipSymetryVertexPaint520 = _FlipSymetryVertexPaint;
+				float2 lerpResult535 = lerp( float2( -2,1 ) , float2( -2,-1 ) , FlipSymetryVertexPaint520);
 				float SymetryVertexPaint498 = _SymetryVertexPaint;
-				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( texCoord485 * float2( 2,1 ) ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( texCoord485 * float2( -2,1 ) ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
+				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
 				float4 MaskVertexPaint500 = lerpResult492;
 				float4 break494 = MaskVertexPaint500;
 				float T2_Tilling363 = _T2_Tilling1;
@@ -2837,18 +2876,20 @@ Shader "S_Map_V1"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TerrainMask_VertexPaint_ST;
 			float _T1_Tiling1;
-			float _T1_ProceduralTiling1;
-			float _GrayscaleDebug;
-			float _VertexPaintDebug;
-			float _SymetryVertexPaint;
-			float _T2_Tilling1;
-			float _T2_ProceduralTiling1;
-			float _T3_Tilling1;
-			float _T3_ProceduralTiling1;
-			float _T4_Tilling1;
-			float _T4_ProceduralTiling1;
-			float _AddVertexPaintingToMask;
 			float _IntensityColorMap;
+			float _AddVertexPaintingToMask;
+			float _T4_ProceduralTiling1;
+			float _T4_Tilling1;
+			float _T3_ProceduralTiling1;
+			float _T3_Tilling1;
+			float _T2_ProceduralTiling1;
+			float _T2_Tilling1;
+			float _SymetryVertexPaint;
+			float _FlipSymetryVertexPaint;
+			float _RotateVertexPaintMask;
+			float _VertexPaintDebug;
+			float _GrayscaleDebug;
+			float _T1_ProceduralTiling1;
 			float _NormalDebug;
 			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
@@ -3175,18 +3216,20 @@ Shader "S_Map_V1"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TerrainMask_VertexPaint_ST;
 			float _T1_Tiling1;
-			float _T1_ProceduralTiling1;
-			float _GrayscaleDebug;
-			float _VertexPaintDebug;
-			float _SymetryVertexPaint;
-			float _T2_Tilling1;
-			float _T2_ProceduralTiling1;
-			float _T3_Tilling1;
-			float _T3_ProceduralTiling1;
-			float _T4_Tilling1;
-			float _T4_ProceduralTiling1;
-			float _AddVertexPaintingToMask;
 			float _IntensityColorMap;
+			float _AddVertexPaintingToMask;
+			float _T4_ProceduralTiling1;
+			float _T4_Tilling1;
+			float _T3_ProceduralTiling1;
+			float _T3_Tilling1;
+			float _T2_ProceduralTiling1;
+			float _T2_Tilling1;
+			float _SymetryVertexPaint;
+			float _FlipSymetryVertexPaint;
+			float _RotateVertexPaintMask;
+			float _VertexPaintDebug;
+			float _GrayscaleDebug;
+			float _T1_ProceduralTiling1;
 			float _NormalDebug;
 			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
@@ -3537,8 +3580,15 @@ Shader "S_Map_V1"
 				float DebugVertexPainting46 = _VertexPaintDebug;
 				float4 lerpResult147 = lerp( T1_RGB71 , DebugColor151 , DebugVertexPainting46);
 				float2 uv_TerrainMask_VertexPaint = IN.ase_texcoord7.xy * _TerrainMask_VertexPaint_ST.xy + _TerrainMask_VertexPaint_ST.zw;
-				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, uv_TerrainMask_VertexPaint );
+				float RotateVertexPaintMask523 = _RotateVertexPaintMask;
+				float cos540 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float sin540 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float2 rotator540 = mul( uv_TerrainMask_VertexPaint - float2( 0.5,0.5 ) , float2x2( cos540 , -sin540 , sin540 , cos540 )) + float2( 0.5,0.5 );
+				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, rotator540 );
 				float2 texCoord485 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
+				float cos524 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float sin524 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float2 rotator524 = mul( texCoord485 - float2( 0.5,0.5 ) , float2x2( cos524 , -sin524 , sin524 , cos524 )) + float2( 0.5,0.5 );
 				float2 temp_output_17_0_g23 = float2( 1,1 );
 				float2 temp_output_19_0_g23 = float2( -0.5,-0.5 );
 				float2 texCoord1_g23 = IN.ase_texcoord7.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
@@ -3559,8 +3609,10 @@ Shader "S_Map_V1"
 				float2 lerpResult15_g23 = lerp( lerpResult14_g23 , texCoord8_g23 , (float)temp_output_18_0_g23);
 				float2 temp_output_6_0_g22 = lerpResult15_g23;
 				float temp_output_7_0_g22 = ceil( saturate( (temp_output_6_0_g22).x ) );
+				float FlipSymetryVertexPaint520 = _FlipSymetryVertexPaint;
+				float2 lerpResult535 = lerp( float2( -2,1 ) , float2( -2,-1 ) , FlipSymetryVertexPaint520);
 				float SymetryVertexPaint498 = _SymetryVertexPaint;
-				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( texCoord485 * float2( 2,1 ) ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( texCoord485 * float2( -2,1 ) ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
+				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
 				float4 MaskVertexPaint500 = lerpResult492;
 				float4 break494 = MaskVertexPaint500;
 				float T2_Tilling363 = _T2_Tilling1;
@@ -3835,9 +3887,9 @@ Shader "S_Map_V1"
 }
 /*ASEBEGIN
 Version=19102
-Node;AmplifyShaderEditor.CommentaryNode;511;-8877.416,-2496;Inherit;False;1237.294;385.9338;Mask Vertex Painting;5;517;508;518;516;507;;1,0,0,1;0;0
-Node;AmplifyShaderEditor.CommentaryNode;495;-5024,384;Inherit;False;1953;1055;Symetry MaskParameter;16;500;499;492;491;483;484;482;480;479;486;488;490;485;487;513;519;;0.09534144,1,0,1;0;0
-Node;AmplifyShaderEditor.CommentaryNode;369;-6960,1200;Inherit;False;627.8311;1036.844;Tiling Controller Texture;18;497;498;354;356;365;366;368;353;355;367;364;363;357;358;359;360;361;362;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;511;-8982.416,-2496;Inherit;False;1342.294;577.9338;Mask Vertex Painting;9;539;538;537;540;517;508;518;516;507;;1,0,0,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;495;-5487,384;Inherit;False;2416;1072;Symetry MaskParameter;23;526;528;527;499;524;485;492;519;513;479;487;500;491;483;484;482;480;486;488;490;534;535;536;;0.09534144,1,0,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;369;-6960,1200;Inherit;False;659.8311;1204.044;Tiling Controller Texture;22;522;523;520;521;497;498;354;356;365;366;368;353;355;367;364;363;357;358;359;360;361;362;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;308;-4274,-2482;Inherit;False;3709.769;2808;Texture RGBA;8;72;16;23;29;35;102;117;131;;1,0.4661931,0,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;307;-7498.852,-2491.554;Inherit;False;3081.05;2439.487;NAOH NormalMap Ambiant Occlusion Height;8;264;171;265;266;279;280;292;293;;0.1278601,0.1179245,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;264;-6154.443,-2441.554;Inherit;False;1683.34;546.8347;NAOH Texture 1;8;255;257;259;256;260;262;378;379;;1,1,1,1;0;0
@@ -3871,7 +3923,7 @@ Node;AmplifyShaderEditor.FunctionNode;256;-5545.709,-2385.979;Inherit;False;Proc
 Node;AmplifyShaderEditor.LerpOp;267;-4905.483,-1776.179;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;274;-5803.143,-1648.698;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.FunctionNode;277;-5542.408,-1777.958;Inherit;False;Procedural Sample;-1;;11;f5379ff72769e2b4495e5ce2f004d8d4;2,157,0,315,0;7;82;SAMPLER2D;0;False;158;SAMPLER2DARRAY;0;False;183;FLOAT;0;False;5;FLOAT2;0,0;False;80;FLOAT3;0,0,0;False;104;FLOAT2;1,1;False;74;SAMPLERSTATE;0;False;5;COLOR;0;FLOAT;32;FLOAT;33;FLOAT;34;FLOAT;35
-Node;AmplifyShaderEditor.TexturePropertyNode;271;-7388.889,-1767.406;Inherit;True;Property;_T2_TerrainNAOH;T2_Terrain NAOH;13;0;Create;True;0;0;0;False;0;False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;271;-7388.889,-1767.406;Inherit;True;Property;_T2_TerrainNAOH;T2_Terrain NAOH;15;0;Create;True;0;0;0;False;0;False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.SamplerNode;270;-6876.883,-1767.406;Inherit;True;Property;_T_2__NAOH_TextureSample;T_2__NAOH_Texture Sample;1;0;Create;True;0;0;0;False;0;False;10;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RegisterLocalVarNode;272;-7100.887,-1767.406;Inherit;False;T2_NAOH_Textures;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.GetLocalVarNode;273;-6060.894,-1783.533;Inherit;False;272;T2_NAOH_Textures;1;0;OBJECT;;False;1;SAMPLER2D;0
@@ -3892,8 +3944,8 @@ Node;AmplifyShaderEditor.SamplerNode;302;-6885.547,-532.7753;Inherit;True;Proper
 Node;AmplifyShaderEditor.TextureCoordinatesNode;269;-7380.492,-1563.958;Inherit;False;0;10;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;276;-5551.225,-1574.465;Inherit;True;Property;_TextureSample29;Texture Sample 24;7;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RegisterLocalVarNode;285;-7112.852,-1140.796;Inherit;False;T3_NAOH_Textures;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
-Node;AmplifyShaderEditor.TexturePropertyNode;284;-7400.852,-1140.796;Inherit;True;Property;_T3_TerrainNAOH;T3_Terrain NAOH;17;0;Create;True;0;0;0;False;0;False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.TexturePropertyNode;301;-7397.556,-532.7753;Inherit;True;Property;_T4_TerrainNAOH;T4_Terrain NAOH;21;0;Create;True;0;0;0;False;0;False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;284;-7400.852,-1140.796;Inherit;True;Property;_T3_TerrainNAOH;T3_Terrain NAOH;19;0;Create;True;0;0;0;False;0;False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;301;-7397.556,-532.7753;Inherit;True;Property;_T4_TerrainNAOH;T4_Terrain NAOH;23;0;Create;True;0;0;0;False;0;False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.RegisterLocalVarNode;303;-7109.554,-532.7753;Inherit;False;T4_NAOH_Textures;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.GetLocalVarNode;304;-6069.559,-548.9022;Inherit;False;303;T4_NAOH_Textures;1;0;OBJECT;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.GetLocalVarNode;286;-6072.859,-1156.923;Inherit;False;285;T3_NAOH_Textures;1;0;OBJECT;;False;1;SAMPLER2D;0
@@ -3908,7 +3960,7 @@ Node;AmplifyShaderEditor.LerpOp;69;-1120,-2368;Inherit;False;3;0;COLOR;0,0,0,0;F
 Node;AmplifyShaderEditor.GetLocalVarNode;58;-2880,-2352;Inherit;False;11;T1_Textures;1;0;OBJECT;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.SamplerNode;12;-3664,-2368;Inherit;True;Property;_T_1_TextureSample;T_1_Texture Sample;1;0;Create;True;0;0;0;False;0;False;10;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RegisterLocalVarNode;11;-3888,-2368;Inherit;False;T1_Textures;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
-Node;AmplifyShaderEditor.TexturePropertyNode;10;-4176,-2368;Inherit;True;Property;_T1_Terrain;T1_Terrain;8;1;[Header];Create;True;1;Texture 1 Vertex Paint Black;0;0;False;0;False;None;53dbbb28d566466438ccca8793669096;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;10;-4176,-2368;Inherit;True;Property;_T1_Terrain;T1_Terrain;10;1;[Header];Create;True;1;Texture 1 Vertex Paint Black;0;0;False;0;False;None;53dbbb28d566466438ccca8793669096;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.SamplerNode;63;-2352,-2000;Inherit;True;Property;_TextureSample24;Texture Sample 24;7;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;26;-3648,-1696;Inherit;True;Property;_T_2_TextureSample;T_2_Texture Sample;1;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;34;-3648,-976;Inherit;True;Property;_T_3_TextureSample;T_3_Texture Sample;1;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -3949,9 +4001,9 @@ Node;AmplifyShaderEditor.GetLocalVarNode;138;-1376,-112;Inherit;False;45;DebugGr
 Node;AmplifyShaderEditor.LerpOp;139;-1120,-288;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.FunctionNode;140;-2304,-256;Inherit;True;Procedural Sample;-1;;15;f5379ff72769e2b4495e5ce2f004d8d4;2,157,0,315,0;7;82;SAMPLER2D;0;False;158;SAMPLER2DARRAY;0;False;183;FLOAT;0;False;5;FLOAT2;0,0;False;80;FLOAT3;0,0,0;False;104;FLOAT2;1,1;False;74;SAMPLERSTATE;0;False;5;COLOR;0;FLOAT;32;FLOAT;33;FLOAT;34;FLOAT;35
 Node;AmplifyShaderEditor.RegisterLocalVarNode;144;-848,-288;Inherit;True;T4_RGB;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.TexturePropertyNode;24;-4160,-1696;Inherit;True;Property;_T2_Terrain;T2_Terrain;12;1;[Header];Create;True;1;Texture 2 Vertex Paint Red;0;0;False;0;False;None;84508b93f15f2b64386ec07486afc7a3;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.TexturePropertyNode;33;-4160,-976;Inherit;True;Property;_T3_Terrain;T3_Terrain;16;1;[Header];Create;True;1;Texture 3 Vertex Paint Green;0;0;False;0;False;None;b297077dae62c1944ba14cad801cddf5;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.TexturePropertyNode;38;-4176,-288;Inherit;True;Property;_T4_Terrain;T4_Terrain;20;1;[Header];Create;True;1;Texture 4 Vertex Paint Blue;0;0;False;0;False;None;59b3de376c11d60448521197df3abecd;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;24;-4160,-1696;Inherit;True;Property;_T2_Terrain;T2_Terrain;14;1;[Header];Create;True;1;Texture 2 Vertex Paint Red;0;0;False;0;False;None;84508b93f15f2b64386ec07486afc7a3;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;33;-4160,-976;Inherit;True;Property;_T3_Terrain;T3_Terrain;18;1;[Header];Create;True;1;Texture 3 Vertex Paint Green;0;0;False;0;False;None;b297077dae62c1944ba14cad801cddf5;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;38;-4176,-288;Inherit;True;Property;_T4_Terrain;T4_Terrain;22;1;[Header];Create;True;1;Texture 4 Vertex Paint Blue;0;0;False;0;False;None;59b3de376c11d60448521197df3abecd;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.FunctionNode;129;-2288,-960;Inherit;True;Procedural Sample;-1;;16;f5379ff72769e2b4495e5ce2f004d8d4;2,157,0,315,0;7;82;SAMPLER2D;0;False;158;SAMPLER2DARRAY;0;False;183;FLOAT;0;False;5;FLOAT2;0,0;False;80;FLOAT3;0,0,0;False;104;FLOAT2;1,1;False;74;SAMPLERSTATE;0;False;5;COLOR;0;FLOAT;32;FLOAT;33;FLOAT;34;FLOAT;35
 Node;AmplifyShaderEditor.FunctionNode;105;-2304,-1664;Inherit;True;Procedural Sample;-1;;17;f5379ff72769e2b4495e5ce2f004d8d4;2,157,0,315,0;7;82;SAMPLER2D;0;False;158;SAMPLER2DARRAY;0;False;183;FLOAT;0;False;5;FLOAT2;0,0;False;80;FLOAT3;0,0,0;False;104;FLOAT2;1,1;False;74;SAMPLERSTATE;0;False;5;COLOR;0;FLOAT;32;FLOAT;33;FLOAT;34;FLOAT;35
 Node;AmplifyShaderEditor.RegisterLocalVarNode;27;-3248,-1696;Inherit;False;T2_Albedo_Texture;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
@@ -4022,19 +4074,19 @@ Node;AmplifyShaderEditor.GetLocalVarNode;351;1616,-1424;Inherit;False;43;DebugNo
 Node;AmplifyShaderEditor.BlendOpsNode;254;1008,-1792;Inherit;False;Overlay;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;1;False;1;COLOR;0
 Node;AmplifyShaderEditor.LerpOp;446;1024,-1920;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;449;1296,-1920;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;1;False;1;COLOR;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;451;2176,-1904;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;453;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;454;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;455;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;456;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;457;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;458;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;451;2176,-1904;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;453;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;454;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;455;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;456;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;457;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;458;1538.501,-1918.614;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;452;2176,-1904;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;S_Map_V1;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;0;Surface;0;0;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;0;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;0;8;False;True;True;True;True;True;True;True;False;;False;0
 Node;AmplifyShaderEditor.GetLocalVarNode;349;1584,-1520;Inherit;False;321;AllNormal_Combined;1;0;OBJECT;;False;1;COLOR;0
 Node;AmplifyShaderEditor.DynamicAppendNode;464;1664,-1264;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.BreakToComponentsNode;462;1536,-1264;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
 Node;AmplifyShaderEditor.FunctionNode;463;1840,-1264;Inherit;False;Normal Reconstruct Z;-1;;18;63ba85b764ae0c84ab3d698b86364ae9;0;1;1;FLOAT2;0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.RangedFloatNode;459;1856,-1760;Inherit;False;Property;_Smoothness;Smoothness;24;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;459;1856,-1760;Inherit;False;Property;_Smoothness;Smoothness;26;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.NormalVertexDataNode;465;1872,-1424;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleAddOpNode;467;2080,-1376;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RangedFloatNode;450;1248,-1728;Inherit;False;Property;_IntensityColorMap;IntensityColorMap;1;0;Create;True;0;0;0;False;0;False;2;1;0;2;0;1;FLOAT;0
@@ -4072,15 +4124,12 @@ Node;AmplifyShaderEditor.GetLocalVarNode;436;-2032,2288;Inherit;False;54;DebugCo
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;195;-1456,2080;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;190;-2864,2240;Inherit;False;Constant;_Float4;Float 0;0;0;Create;True;0;0;0;False;0;False;2;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;208;-752,2176;Inherit;False;AllAlbedoVertexPaint;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.Vector2Node;490;-4864,944;Inherit;False;Constant;_Vector1;Vector 1;26;0;Create;True;0;0;0;False;0;False;-2,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;488;-4592,928;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;486;-4592,672;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.SamplerNode;480;-4352,928;Inherit;True;Property;_TerrainMask_VertexPaint3;TerrainMask_VertexPaint;8;1;[Header];Create;True;1;Terrain Mask;0;0;False;0;False;-1;61bcabd8649009f41850e63708dd1066;61bcabd8649009f41850e63708dd1066;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.FunctionNode;482;-4288,1184;Inherit;False;ASF_UVSplit2;-1;;22;cf8f6cda4b80530479e6cfa16a50c155;0;0;4;FLOAT;0;FLOAT;14;FLOAT;15;FLOAT;16
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;484;-3952,928;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;483;-3952,672;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;491;-3808,800;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.LerpOp;492;-3584,800;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;491;-3808,800;Inherit;True;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;335;-5898.759,919.7325;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;54;-7280,2240;Inherit;False;DebugColor3;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.ColorNode;55;-7552,2240;Inherit;False;Constant;_DebugColor3;DebugColor3;7;0;Create;True;0;0;0;False;0;False;0,1,0.002223969,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -4102,21 +4151,20 @@ Node;AmplifyShaderEditor.RegisterLocalVarNode;445;-7264,1552;Inherit;False;UseVe
 Node;AmplifyShaderEditor.RangedFloatNode;444;-7568,1552;Inherit;False;Property;_UseVertexPainting;UseVertexPainting;2;1;[Header];Create;True;1;UseVertexPainting;0;0;False;0;False;1;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;362;-6576,1376;Inherit;False;T1_ProceduralTiling;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;361;-6576,1280;Inherit;False;T1_Tiling;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;360;-6912,1376;Inherit;False;Property;_T1_ProceduralTiling1;T1_ProceduralTiling;11;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;359;-6912,1280;Inherit;False;Property;_T1_Tiling1;T1_Tiling;10;0;Create;True;0;0;0;False;0;False;10;10;1;100;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;358;-6912,1600;Inherit;False;Property;_T2_ProceduralTiling1;T2_ProceduralTiling;15;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;357;-6912,1504;Inherit;False;Property;_T2_Tilling1;T2_Tilling;14;0;Create;True;0;0;0;False;0;False;10;10;1;100;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;360;-6912,1376;Inherit;False;Property;_T1_ProceduralTiling1;T1_ProceduralTiling;13;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;359;-6912,1280;Inherit;False;Property;_T1_Tiling1;T1_Tiling;12;0;Create;True;0;0;0;False;0;False;10;10;1;100;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;358;-6912,1600;Inherit;False;Property;_T2_ProceduralTiling1;T2_ProceduralTiling;17;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;357;-6912,1504;Inherit;False;Property;_T2_Tilling1;T2_Tilling;16;0;Create;True;0;0;0;False;0;False;10;10;1;100;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;363;-6576,1504;Inherit;False;T2_Tilling;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;364;-6576,1600;Inherit;False;T2_ProceduralTiling;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;367;-6576,1952;Inherit;False;T4_ProceduralTiling;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;355;-6912,1952;Inherit;False;Property;_T4_ProceduralTiling1;T4_ProceduralTiling;23;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;353;-6912,2048;Inherit;False;Property;_T4_Tilling1;T4_Tilling;22;0;Create;True;0;0;0;False;0;False;10;10;0;100;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;355;-6912,1952;Inherit;False;Property;_T4_ProceduralTiling1;T4_ProceduralTiling;25;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;353;-6912,2048;Inherit;False;Property;_T4_Tilling1;T4_Tilling;24;0;Create;True;0;0;0;False;0;False;10;10;0;100;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;368;-6576,2048;Inherit;False;T4_Tilling;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;366;-6576,1824;Inherit;False;T3_ProceduralTiling;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;365;-6576,1728;Inherit;False;T3_Tilling;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;356;-6912,1824;Inherit;False;Property;_T3_ProceduralTiling1;T3_ProceduralTiling;19;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;354;-6912,1728;Inherit;False;Property;_T3_Tilling1;T3_Tilling;18;0;Create;True;0;0;0;False;0;False;10;10;1;100;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;498;-6576,2160;Inherit;False;SymetryVertexPaint;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;356;-6912,1824;Inherit;False;Property;_T3_ProceduralTiling1;T3_ProceduralTiling;21;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;354;-6912,1728;Inherit;False;Property;_T3_Tilling1;T3_Tilling;20;0;Create;True;0;0;0;False;0;False;10;10;1;100;0;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;461;1264,-1264;Inherit;False;321;AllNormal_Combined;1;0;OBJECT;;False;1;COLOR;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;500;-3376,800;Inherit;False;MaskVertexPaint;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.BreakToComponentsNode;494;-2672,1280;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
@@ -4124,22 +4172,41 @@ Node;AmplifyShaderEditor.GetLocalVarNode;501;-2928,1280;Inherit;False;500;MaskVe
 Node;AmplifyShaderEditor.GetLocalVarNode;503;-7488,768;Inherit;False;500;MaskVertexPaint;1;0;OBJECT;;False;1;COLOR;0
 Node;AmplifyShaderEditor.BreakToComponentsNode;502;-7280,768;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
 Node;AmplifyShaderEditor.Vector2Node;487;-4864,672;Inherit;False;Constant;_Vector0;Vector 0;26;0;Create;True;0;0;0;False;0;False;2,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
-Node;AmplifyShaderEditor.TextureCoordinatesNode;485;-4928,816;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RegisterLocalVarNode;175;-7104.185,-2375.427;Inherit;False;T1_NAOH_Textures;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;172;-7376.185,-2167.427;Inherit;False;0;10;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TexturePropertyNode;173;-7392.185,-2375.427;Inherit;True;Property;_T1_TerrainNAOH;T1_Terrain NAOH;9;0;Create;True;0;0;0;False;0;False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;173;-7392.185,-2375.427;Inherit;True;Property;_T1_TerrainNAOH;T1_Terrain NAOH;11;0;Create;True;0;0;0;False;0;False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.SamplerNode;479;-4368,672;Inherit;True;Property;_TerrainMask_VertexPaint2;TerrainMask_VertexPaint;9;1;[Header];Create;True;1;Terrain Mask;0;0;False;0;False;-1;61bcabd8649009f41850e63708dd1066;61bcabd8649009f41850e63708dd1066;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TextureCoordinatesNode;22;-4160,-2160;Inherit;False;0;10;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RegisterLocalVarNode;507;-8589.416,-2448;Inherit;False;TerrainMask_VertexPaint;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;516;-8861.416,-2240;Inherit;False;0;508;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;518;-8285.416,-2448;Inherit;True;Property;_TerrainMask_VertexPaintSample;TerrainMask_VertexPaint Sample;27;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TexturePropertyNode;508;-8845.416,-2448;Inherit;True;Property;_TerrainMask_VertexPaint;TerrainMask_VertexPaint;7;0;Create;True;0;0;0;False;0;False;None;61bcabd8649009f41850e63708dd1066;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;508;-8845.416,-2448;Inherit;True;Property;_TerrainMask_VertexPaint;TerrainMask_VertexPaint;9;0;Create;True;0;0;0;False;0;False;61bcabd8649009f41850e63708dd1066;61bcabd8649009f41850e63708dd1066;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.RegisterLocalVarNode;517;-7917.416,-2448;Inherit;False;TerrainMask_VertexPaintAlbedo;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.GetLocalVarNode;513;-4704,576;Inherit;False;507;TerrainMask_VertexPaint;1;0;OBJECT;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.GetLocalVarNode;519;-3984,512;Inherit;False;517;TerrainMask_VertexPaintAlbedo;1;0;OBJECT;;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;405;-7104,704;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;2;False;1;FLOAT;0
-Node;AmplifyShaderEditor.GetLocalVarNode;499;-3792,960;Inherit;False;498;SymetryVertexPaint;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;498;-6576,2160;Inherit;False;SymetryVertexPaint;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;520;-6576,2240;Inherit;False;FlipSymetryVertexPaint;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;492;-3584,800;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;523;-6576,2320;Inherit;False;RotateVertexPaintMask;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;485;-5312,816;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.GetLocalVarNode;499;-3820,1026;Inherit;False;498;SymetryVertexPaint;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;488;-4592,944;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.LerpOp;535;-4752,1024;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.Vector2Node;490;-4992,1024;Inherit;False;Constant;_Vector1;Vector 1;26;0;Create;True;0;0;0;False;0;False;-2,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+Node;AmplifyShaderEditor.Vector2Node;534;-4992,1152;Inherit;False;Constant;_Vector2;Vector 1;26;0;Create;True;0;0;0;False;0;False;-2,-1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+Node;AmplifyShaderEditor.GetLocalVarNode;536;-5072,1280;Inherit;False;520;FlipSymetryVertexPaint;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;497;-6912,2160;Inherit;False;Property;_SymetryVertexPaint;Symetry Vertex Paint;6;2;[Header];[IntRange];Create;True;1;Mask Vertex Painting;0;0;False;0;False;1;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;521;-6912,2240;Inherit;False;Property;_FlipSymetryVertexPaint;Flip Symetry Vertex Paint;7;1;[IntRange];Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;522;-6912,2320;Inherit;False;Property;_RotateVertexPaintMask;Rotate Vertex Paint Mask;8;0;Create;True;1;Mask Vertex Painting;0;0;False;0;False;0;0.657;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TauNode;527;-5344,1040;Inherit;False;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;528;-5232,960;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;526;-5472,959;Inherit;False;523;RotateVertexPaintMask;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RotatorNode;524;-5024,816;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RotatorNode;540;-8560,-2240;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TauNode;537;-8848,-2000;Inherit;False;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;538;-8736,-2080;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;539;-8976,-2080;Inherit;False;523;RotateVertexPaintMask;1;0;OBJECT;;False;1;FLOAT;0
 WireConnection;260;0;256;0
 WireConnection;260;1;259;0
 WireConnection;260;2;379;0
@@ -4364,10 +4431,8 @@ WireConnection;434;2;437;0
 WireConnection;195;0;187;1
 WireConnection;195;1;434;0
 WireConnection;208;0;410;0
-WireConnection;488;0;485;0
-WireConnection;488;1;490;0
-WireConnection;486;0;485;0
-WireConnection;486;1;487;0
+WireConnection;486;0;487;0
+WireConnection;486;1;524;0
 WireConnection;480;0;513;0
 WireConnection;480;1;488;0
 WireConnection;484;0;480;0
@@ -4376,9 +4441,6 @@ WireConnection;483;0;479;0
 WireConnection;483;1;482;0
 WireConnection;491;0;483;0
 WireConnection;491;1;484;0
-WireConnection;492;0;519;0
-WireConnection;492;1;491;0
-WireConnection;492;2;499;0
 WireConnection;335;1;333;0
 WireConnection;54;0;55;0
 WireConnection;51;0;50;0
@@ -4397,7 +4459,6 @@ WireConnection;367;0;355;0
 WireConnection;368;0;353;0
 WireConnection;366;0;356;0
 WireConnection;365;0;354;0
-WireConnection;498;0;497;0
 WireConnection;500;0;492;0
 WireConnection;494;0;501;0
 WireConnection;502;0;503;0
@@ -4406,8 +4467,27 @@ WireConnection;479;0;513;0
 WireConnection;479;1;486;0
 WireConnection;507;0;508;0
 WireConnection;518;0;507;0
-WireConnection;518;1;516;0
+WireConnection;518;1;540;0
 WireConnection;517;0;518;0
 WireConnection;405;0;502;0
+WireConnection;498;0;497;0
+WireConnection;520;0;521;0
+WireConnection;492;0;519;0
+WireConnection;492;1;491;0
+WireConnection;492;2;499;0
+WireConnection;523;0;522;0
+WireConnection;488;0;524;0
+WireConnection;488;1;535;0
+WireConnection;535;0;490;0
+WireConnection;535;1;534;0
+WireConnection;535;2;536;0
+WireConnection;528;0;526;0
+WireConnection;528;1;527;0
+WireConnection;524;0;485;0
+WireConnection;524;2;528;0
+WireConnection;540;0;516;0
+WireConnection;540;2;538;0
+WireConnection;538;0;539;0
+WireConnection;538;1;537;0
 ASEEND*/
-//CHKSM=2DED99CDECB4864C4688F137C05E895E4A1A310F
+//CHKSM=A64B4E5D0A788F79008EA552906140BB85BD538A
