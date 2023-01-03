@@ -24,7 +24,9 @@ namespace RemoteConfig {
         public ChampionSO CHAMP02_BaseVariables = null;
         public ActiveAutoAttackSO CHAMP02_AutoAttack = null;
         public ActiveTrinketCapacitySO CHAMP02_Trinket = null;
-        public TailAttackSO CHAMP02_CAPA01 = null;
+        public JumpWithSlowCapacityCapacitySO CHAMP02_CAPA01 = null;
+        public ActiveAttackSlowAreaCapacitySO CHAMP02_CAPA01_SLOW = null;
+        public PassiveSpeedSO CHAMP02_CAPA01_SLOWEFFECT = null;
         public TailAttackSO CHAMP02_CAPA02 = null;
     }
 }
