@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class ChampionHUD : MonoBehaviour
 {
     [SerializeField] private Image healthBar;
-    [SerializeField] private Image resourceBar;
+  //  [SerializeField] private Image resourceBar;
     [SerializeField] private Image spellPassive;
     [SerializeField] private Image spellOne;
     [SerializeField] private Image spellTwo;
@@ -105,7 +105,7 @@ public class ChampionHUD : MonoBehaviour
         castable = champion.GetComponent<ICastable>();
 
         healthBar.fillAmount = lifeable.GetCurrentHpPercent();
-        resourceBar.fillAmount = resourceable.GetCurrentResourcePercent();
+     //   resourceBar.fillAmount = resourceable.GetCurrentResourcePercent();
         LinkToEvents();
         UpdateIcons(champion);
     }
@@ -221,11 +221,11 @@ public class ChampionHUD : MonoBehaviour
 
     private void UpdateFillPercentByPercentResource(float value)
     {
-        resourceBar.fillAmount = value;
+      //  resourceBar.fillAmount = value;
     }
 
     private void UpdateFillPercentResource(float value)
     {
-        resourceBar.fillAmount = resourceable.GetCurrentResource();
+      //  resourceBar.fillAmount = resourceable.GetCurrentResource();
     }
 }

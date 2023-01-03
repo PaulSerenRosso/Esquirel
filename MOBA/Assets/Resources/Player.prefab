@@ -107,6 +107,66 @@ MonoBehaviour:
     avoiderPosition: {x: 0, y: 0, z: 0}
   avoidanceDistance: 0.8
   avoiderTransform: {fileID: 8536129822885057302}
+--- !u!1 &3444849054306942111
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4465515611955225792}
+  - component: {fileID: 1483949052106310070}
+  - component: {fileID: 2979760961583772186}
+  m_Layer: 23
+  m_Name: EntityClickableCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4465515611955225792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3444849054306942111}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3480681341667345171}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1483949052106310070
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3444849054306942111}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &2979760961583772186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3444849054306942111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b1d73d963036164fb92a83066c56e86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 3480681341667345175}
+  collider: {fileID: 1483949052106310070}
 --- !u!1 &3480681341152264626
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +340,7 @@ Transform:
   - {fileID: 5301993725596540669}
   - {fileID: 8536129822885057302}
   - {fileID: 6353342283375603229}
+  - {fileID: 4465515611955225792}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -297,7 +358,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerForDetectMovePosition:
     serializedVersion: 2
-    m_Bits: 1744831543
+    m_Bits: 1207960631
+  layerForDetectEntity:
+    serializedVersion: 2
+    m_Bits: 8388608
   movePositionDetectionDistance: 50
 --- !u!195 &3480681341667345173
 NavMeshAgent:
@@ -361,7 +425,7 @@ MonoBehaviour:
   canAddPassiveCapacity: 1
   canRemovePassiveCapacity: 1
   uiTransform: {fileID: 3480681342087303708}
-  offset: {x: 0, y: 4, z: 0}
+  offset: {x: 0, y: 3, z: 0}
   entityCapacityCollider: {fileID: 8672636153213381105}
   canShow: 0
   canHide: 0
@@ -389,6 +453,7 @@ MonoBehaviour:
   camera: {fileID: 0}
   rb: {fileID: 6530865356692434526}
   championPlacerDistanceAvoider: {fileID: 6760293774000135336}
+  entityClicker: {fileID: 0}
   animator: {fileID: 0}
   blocker: {fileID: 3711244289653556686}
   obstacle: {fileID: 7728234700033618375}

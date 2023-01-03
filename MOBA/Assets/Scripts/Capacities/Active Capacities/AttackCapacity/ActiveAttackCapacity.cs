@@ -36,7 +36,6 @@ namespace Entities.Capacities
         {
             DamageObject = PoolLocalManager.Instance.PoolInstantiate(so.damagePrefab.gameObject,
                 champion.transform.position, champion.rotateParent.rotation);
-            Debug.Log(DamageObject);
             var activeCapacityCollider = DamageObject.transform.GetComponent<ActiveCapacityCollider>();
             activeCapacityCollider.InitCapacityCollider(this);
         }

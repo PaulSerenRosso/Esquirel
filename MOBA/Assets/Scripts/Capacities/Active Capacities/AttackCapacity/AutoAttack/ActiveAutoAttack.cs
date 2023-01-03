@@ -33,7 +33,6 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
     {
         base.CancelDamagePrefab();
         champion.SetCanMoveRPC(true);
-        champion.RequestCurrentResetCapacityUsed();
     }
 
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -43,15 +42,18 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
             InitiateCooldown();
             rotationFx = Quaternion.LookRotation((targetPositions[0] - caster.transform.position).normalized, Vector3.up);
             InitiateFXTimer();
+            return true;
         }
 
-        return true;
+        Debug.Log("false");
+        return false;
+
     }
 
     public override void CancelCapacity()
     {
-        base.CancelCapacity();
-        champion.RequestCurrentResetCapacityUsed();
+        base.CancelCapacity(); 
+        Debug.Log("bonsoir je test le cancel capacity");
     }
 
 

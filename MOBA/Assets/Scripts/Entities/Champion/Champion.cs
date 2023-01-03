@@ -31,6 +31,7 @@ namespace Entities.Champion
         public Rigidbody rb;
         public ChampionPlacerDistanceAvoider championPlacerDistanceAvoider;
 
+        [SerializeField] public EntityClicker entityClicker;
         public Animator animator;
         public CollisionBlocker blocker;
         [SerializeField] public NavMeshObstacle obstacle;
@@ -157,7 +158,7 @@ namespace Entities.Champion
             if (uiManager != null)
             {
                 uiManager.InstantiateHealthBarForEntity(entityIndex);
-                uiManager.InstantiateResourceBarForEntity(entityIndex);
+             //   uiManager.InstantiateResourceBarForEntity(entityIndex);
             }
             so.SetIndexes();
           
@@ -224,17 +225,7 @@ namespace Entities.Champion
         {
             currentCapacityUsed = attackBase;
         }
-        public void RequestCurrentResetCapacityUsed()
-        {
-            photonView.RPC("ResetCurrentCapacityUsed", RpcTarget.All);
-        }
-
-        [PunRPC]
-        void ResetCurrentCapacityUsed()
-        {
-            currentCapacityUsed = null;
-        }
-
+  
         public void RequestIncreaseHealAmountOfPerseverance(float amount)
         {
             photonView.RPC("IncreaseHealAmountOfPerseverance", RpcTarget.MasterClient, amount);

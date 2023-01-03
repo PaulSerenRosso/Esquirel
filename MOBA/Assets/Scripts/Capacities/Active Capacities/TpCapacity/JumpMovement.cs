@@ -55,7 +55,8 @@ namespace Entities.Capacities
                     InputManager.PlayerMap.Capacity.Enable();
                     InputManager.PlayerMap.MoveMouse.Enable();
                 }
-                champion.entityCapacityCollider.DisableEntityCollider();
+                champion.entityCapacityCollider.EnableEntityCollider();
+                champion.entityClicker.EnableCollider = true;
             }
         protected virtual void  DeactivateController()
         {
@@ -73,6 +74,7 @@ namespace Entities.Capacities
             champion.entityCapacityCollider.DisableEntityCollider();
             champion.SyncSetCanMoveRPC(false);
             champion.blocker.characterColliderBlocker.enabled = false;
+            champion.entityClicker.EnableCollider = false;
         }
 
 

@@ -19,8 +19,7 @@ namespace Entities.Capacities
         public Vector3 endPosition;
         public CurveMovement curveObject;
         protected ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
-
-
+        
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
             if (onCooldown) return false;
