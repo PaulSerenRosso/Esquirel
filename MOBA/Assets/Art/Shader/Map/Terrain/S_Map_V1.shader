@@ -653,33 +653,36 @@ Shader "S_Map_V1"
 				float2 rotator540 = mul( uv_TerrainMask_VertexPaint - float2( 0.5,0.5 ) , float2x2( cos540 , -sin540 , sin540 , cos540 )) + float2( 0.5,0.5 );
 				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, rotator540 );
 				float2 texCoord485 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos524 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
-				float sin524 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float temp_output_528_0 = ( RotateVertexPaintMask523 * TWO_PI );
+				float cos524 = cos( temp_output_528_0 );
+				float sin524 = sin( temp_output_528_0 );
 				float2 rotator524 = mul( texCoord485 - float2( 0.5,0.5 ) , float2x2( cos524 , -sin524 , sin524 , cos524 )) + float2( 0.5,0.5 );
-				float2 temp_output_17_0_g23 = float2( 1,1 );
-				float2 temp_output_19_0_g23 = float2( -0.5,-0.5 );
-				float2 texCoord1_g23 = IN.ase_texcoord7.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 texCoord2_g23 = IN.ase_texcoord7.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				int temp_output_18_0_g23 = 0;
-				float2 lerpResult9_g23 = lerp( texCoord1_g23 , texCoord2_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord3_g23 = IN.ase_texcoord8.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult10_g23 = lerp( lerpResult9_g23 , texCoord3_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord4_g23 = IN.ase_texcoord8.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult11_g23 = lerp( lerpResult10_g23 , texCoord4_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord5_g23 = IN.ase_texcoord9.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult12_g23 = lerp( lerpResult11_g23 , texCoord5_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord6_g23 = IN.ase_texcoord9.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult13_g23 = lerp( lerpResult12_g23 , texCoord6_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord7_g23 = IN.ase_texcoord10.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult14_g23 = lerp( lerpResult13_g23 , texCoord7_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord8_g23 = IN.ase_texcoord10.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult15_g23 = lerp( lerpResult14_g23 , texCoord8_g23 , (float)temp_output_18_0_g23);
-				float2 temp_output_6_0_g22 = lerpResult15_g23;
-				float temp_output_7_0_g22 = ceil( saturate( (temp_output_6_0_g22).x ) );
+				float2 temp_output_17_0_g35 = float2( 1,1 );
+				float2 temp_output_19_0_g35 = float2( -0.5,-0.5 );
+				float2 texCoord1_g35 = IN.ase_texcoord7.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 texCoord2_g35 = IN.ase_texcoord7.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				int temp_output_18_0_g35 = 0;
+				float2 lerpResult9_g35 = lerp( texCoord1_g35 , texCoord2_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord3_g35 = IN.ase_texcoord8.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult10_g35 = lerp( lerpResult9_g35 , texCoord3_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord4_g35 = IN.ase_texcoord8.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult11_g35 = lerp( lerpResult10_g35 , texCoord4_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord5_g35 = IN.ase_texcoord9.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult12_g35 = lerp( lerpResult11_g35 , texCoord5_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord6_g35 = IN.ase_texcoord9.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult13_g35 = lerp( lerpResult12_g35 , texCoord6_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord7_g35 = IN.ase_texcoord10.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult14_g35 = lerp( lerpResult13_g35 , texCoord7_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord8_g35 = IN.ase_texcoord10.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult15_g35 = lerp( lerpResult14_g35 , texCoord8_g35 , (float)temp_output_18_0_g35);
+				float cos18_g34 = cos( temp_output_528_0 );
+				float sin18_g34 = sin( temp_output_528_0 );
+				float2 rotator18_g34 = mul( lerpResult15_g35 - float2( 0,0 ) , float2x2( cos18_g34 , -sin18_g34 , sin18_g34 , cos18_g34 )) + float2( 0,0 );
+				float temp_output_7_0_g34 = ceil( saturate( (rotator18_g34).x ) );
 				float FlipSymetryVertexPaint520 = _FlipSymetryVertexPaint;
 				float2 lerpResult535 = lerp( float2( -2,1 ) , float2( -2,-1 ) , FlipSymetryVertexPaint520);
 				float SymetryVertexPaint498 = _SymetryVertexPaint;
-				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
+				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g34 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g34 ) ) , SymetryVertexPaint498);
 				float4 MaskVertexPaint500 = lerpResult492;
 				float4 break494 = MaskVertexPaint500;
 				float T2_Tilling363 = _T2_Tilling1;
@@ -2005,33 +2008,36 @@ Shader "S_Map_V1"
 				float2 rotator540 = mul( uv_TerrainMask_VertexPaint - float2( 0.5,0.5 ) , float2x2( cos540 , -sin540 , sin540 , cos540 )) + float2( 0.5,0.5 );
 				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, rotator540 );
 				float2 texCoord485 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos524 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
-				float sin524 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float temp_output_528_0 = ( RotateVertexPaintMask523 * TWO_PI );
+				float cos524 = cos( temp_output_528_0 );
+				float sin524 = sin( temp_output_528_0 );
 				float2 rotator524 = mul( texCoord485 - float2( 0.5,0.5 ) , float2x2( cos524 , -sin524 , sin524 , cos524 )) + float2( 0.5,0.5 );
-				float2 temp_output_17_0_g23 = float2( 1,1 );
-				float2 temp_output_19_0_g23 = float2( -0.5,-0.5 );
-				float2 texCoord1_g23 = IN.ase_texcoord2.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 texCoord2_g23 = IN.ase_texcoord2.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				int temp_output_18_0_g23 = 0;
-				float2 lerpResult9_g23 = lerp( texCoord1_g23 , texCoord2_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord3_g23 = IN.ase_texcoord3.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult10_g23 = lerp( lerpResult9_g23 , texCoord3_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord4_g23 = IN.ase_texcoord3.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult11_g23 = lerp( lerpResult10_g23 , texCoord4_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord5_g23 = IN.ase_texcoord4.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult12_g23 = lerp( lerpResult11_g23 , texCoord5_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord6_g23 = IN.ase_texcoord4.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult13_g23 = lerp( lerpResult12_g23 , texCoord6_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord7_g23 = IN.ase_texcoord5.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult14_g23 = lerp( lerpResult13_g23 , texCoord7_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord8_g23 = IN.ase_texcoord5.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult15_g23 = lerp( lerpResult14_g23 , texCoord8_g23 , (float)temp_output_18_0_g23);
-				float2 temp_output_6_0_g22 = lerpResult15_g23;
-				float temp_output_7_0_g22 = ceil( saturate( (temp_output_6_0_g22).x ) );
+				float2 temp_output_17_0_g35 = float2( 1,1 );
+				float2 temp_output_19_0_g35 = float2( -0.5,-0.5 );
+				float2 texCoord1_g35 = IN.ase_texcoord2.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 texCoord2_g35 = IN.ase_texcoord2.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				int temp_output_18_0_g35 = 0;
+				float2 lerpResult9_g35 = lerp( texCoord1_g35 , texCoord2_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord3_g35 = IN.ase_texcoord3.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult10_g35 = lerp( lerpResult9_g35 , texCoord3_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord4_g35 = IN.ase_texcoord3.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult11_g35 = lerp( lerpResult10_g35 , texCoord4_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord5_g35 = IN.ase_texcoord4.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult12_g35 = lerp( lerpResult11_g35 , texCoord5_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord6_g35 = IN.ase_texcoord4.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult13_g35 = lerp( lerpResult12_g35 , texCoord6_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord7_g35 = IN.ase_texcoord5.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult14_g35 = lerp( lerpResult13_g35 , texCoord7_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord8_g35 = IN.ase_texcoord5.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult15_g35 = lerp( lerpResult14_g35 , texCoord8_g35 , (float)temp_output_18_0_g35);
+				float cos18_g34 = cos( temp_output_528_0 );
+				float sin18_g34 = sin( temp_output_528_0 );
+				float2 rotator18_g34 = mul( lerpResult15_g35 - float2( 0,0 ) , float2x2( cos18_g34 , -sin18_g34 , sin18_g34 , cos18_g34 )) + float2( 0,0 );
+				float temp_output_7_0_g34 = ceil( saturate( (rotator18_g34).x ) );
 				float FlipSymetryVertexPaint520 = _FlipSymetryVertexPaint;
 				float2 lerpResult535 = lerp( float2( -2,1 ) , float2( -2,-1 ) , FlipSymetryVertexPaint520);
 				float SymetryVertexPaint498 = _SymetryVertexPaint;
-				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
+				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g34 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g34 ) ) , SymetryVertexPaint498);
 				float4 MaskVertexPaint500 = lerpResult492;
 				float4 break494 = MaskVertexPaint500;
 				float T2_Tilling363 = _T2_Tilling1;
@@ -2601,33 +2607,36 @@ Shader "S_Map_V1"
 				float2 rotator540 = mul( uv_TerrainMask_VertexPaint - float2( 0.5,0.5 ) , float2x2( cos540 , -sin540 , sin540 , cos540 )) + float2( 0.5,0.5 );
 				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, rotator540 );
 				float2 texCoord485 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos524 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
-				float sin524 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float temp_output_528_0 = ( RotateVertexPaintMask523 * TWO_PI );
+				float cos524 = cos( temp_output_528_0 );
+				float sin524 = sin( temp_output_528_0 );
 				float2 rotator524 = mul( texCoord485 - float2( 0.5,0.5 ) , float2x2( cos524 , -sin524 , sin524 , cos524 )) + float2( 0.5,0.5 );
-				float2 temp_output_17_0_g23 = float2( 1,1 );
-				float2 temp_output_19_0_g23 = float2( -0.5,-0.5 );
-				float2 texCoord1_g23 = IN.ase_texcoord2.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 texCoord2_g23 = IN.ase_texcoord2.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				int temp_output_18_0_g23 = 0;
-				float2 lerpResult9_g23 = lerp( texCoord1_g23 , texCoord2_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord3_g23 = IN.ase_texcoord3.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult10_g23 = lerp( lerpResult9_g23 , texCoord3_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord4_g23 = IN.ase_texcoord3.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult11_g23 = lerp( lerpResult10_g23 , texCoord4_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord5_g23 = IN.ase_texcoord4.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult12_g23 = lerp( lerpResult11_g23 , texCoord5_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord6_g23 = IN.ase_texcoord4.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult13_g23 = lerp( lerpResult12_g23 , texCoord6_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord7_g23 = IN.ase_texcoord5.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult14_g23 = lerp( lerpResult13_g23 , texCoord7_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord8_g23 = IN.ase_texcoord5.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult15_g23 = lerp( lerpResult14_g23 , texCoord8_g23 , (float)temp_output_18_0_g23);
-				float2 temp_output_6_0_g22 = lerpResult15_g23;
-				float temp_output_7_0_g22 = ceil( saturate( (temp_output_6_0_g22).x ) );
+				float2 temp_output_17_0_g35 = float2( 1,1 );
+				float2 temp_output_19_0_g35 = float2( -0.5,-0.5 );
+				float2 texCoord1_g35 = IN.ase_texcoord2.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 texCoord2_g35 = IN.ase_texcoord2.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				int temp_output_18_0_g35 = 0;
+				float2 lerpResult9_g35 = lerp( texCoord1_g35 , texCoord2_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord3_g35 = IN.ase_texcoord3.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult10_g35 = lerp( lerpResult9_g35 , texCoord3_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord4_g35 = IN.ase_texcoord3.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult11_g35 = lerp( lerpResult10_g35 , texCoord4_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord5_g35 = IN.ase_texcoord4.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult12_g35 = lerp( lerpResult11_g35 , texCoord5_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord6_g35 = IN.ase_texcoord4.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult13_g35 = lerp( lerpResult12_g35 , texCoord6_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord7_g35 = IN.ase_texcoord5.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult14_g35 = lerp( lerpResult13_g35 , texCoord7_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord8_g35 = IN.ase_texcoord5.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult15_g35 = lerp( lerpResult14_g35 , texCoord8_g35 , (float)temp_output_18_0_g35);
+				float cos18_g34 = cos( temp_output_528_0 );
+				float sin18_g34 = sin( temp_output_528_0 );
+				float2 rotator18_g34 = mul( lerpResult15_g35 - float2( 0,0 ) , float2x2( cos18_g34 , -sin18_g34 , sin18_g34 , cos18_g34 )) + float2( 0,0 );
+				float temp_output_7_0_g34 = ceil( saturate( (rotator18_g34).x ) );
 				float FlipSymetryVertexPaint520 = _FlipSymetryVertexPaint;
 				float2 lerpResult535 = lerp( float2( -2,1 ) , float2( -2,-1 ) , FlipSymetryVertexPaint520);
 				float SymetryVertexPaint498 = _SymetryVertexPaint;
-				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
+				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g34 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g34 ) ) , SymetryVertexPaint498);
 				float4 MaskVertexPaint500 = lerpResult492;
 				float4 break494 = MaskVertexPaint500;
 				float T2_Tilling363 = _T2_Tilling1;
@@ -3586,33 +3595,36 @@ Shader "S_Map_V1"
 				float2 rotator540 = mul( uv_TerrainMask_VertexPaint - float2( 0.5,0.5 ) , float2x2( cos540 , -sin540 , sin540 , cos540 )) + float2( 0.5,0.5 );
 				float4 TerrainMask_VertexPaintAlbedo517 = tex2D( _TerrainMask_VertexPaint, rotator540 );
 				float2 texCoord485 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos524 = cos( ( RotateVertexPaintMask523 * TWO_PI ) );
-				float sin524 = sin( ( RotateVertexPaintMask523 * TWO_PI ) );
+				float temp_output_528_0 = ( RotateVertexPaintMask523 * TWO_PI );
+				float cos524 = cos( temp_output_528_0 );
+				float sin524 = sin( temp_output_528_0 );
 				float2 rotator524 = mul( texCoord485 - float2( 0.5,0.5 ) , float2x2( cos524 , -sin524 , sin524 , cos524 )) + float2( 0.5,0.5 );
-				float2 temp_output_17_0_g23 = float2( 1,1 );
-				float2 temp_output_19_0_g23 = float2( -0.5,-0.5 );
-				float2 texCoord1_g23 = IN.ase_texcoord7.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 texCoord2_g23 = IN.ase_texcoord7.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				int temp_output_18_0_g23 = 0;
-				float2 lerpResult9_g23 = lerp( texCoord1_g23 , texCoord2_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord3_g23 = IN.ase_texcoord8.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult10_g23 = lerp( lerpResult9_g23 , texCoord3_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord4_g23 = IN.ase_texcoord8.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult11_g23 = lerp( lerpResult10_g23 , texCoord4_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord5_g23 = IN.ase_texcoord9.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult12_g23 = lerp( lerpResult11_g23 , texCoord5_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord6_g23 = IN.ase_texcoord9.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult13_g23 = lerp( lerpResult12_g23 , texCoord6_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord7_g23 = IN.ase_texcoord10.xy * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult14_g23 = lerp( lerpResult13_g23 , texCoord7_g23 , (float)temp_output_18_0_g23);
-				float2 texCoord8_g23 = IN.ase_texcoord10.zw * temp_output_17_0_g23 + temp_output_19_0_g23;
-				float2 lerpResult15_g23 = lerp( lerpResult14_g23 , texCoord8_g23 , (float)temp_output_18_0_g23);
-				float2 temp_output_6_0_g22 = lerpResult15_g23;
-				float temp_output_7_0_g22 = ceil( saturate( (temp_output_6_0_g22).x ) );
+				float2 temp_output_17_0_g35 = float2( 1,1 );
+				float2 temp_output_19_0_g35 = float2( -0.5,-0.5 );
+				float2 texCoord1_g35 = IN.ase_texcoord7.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 texCoord2_g35 = IN.ase_texcoord7.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				int temp_output_18_0_g35 = 0;
+				float2 lerpResult9_g35 = lerp( texCoord1_g35 , texCoord2_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord3_g35 = IN.ase_texcoord8.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult10_g35 = lerp( lerpResult9_g35 , texCoord3_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord4_g35 = IN.ase_texcoord8.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult11_g35 = lerp( lerpResult10_g35 , texCoord4_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord5_g35 = IN.ase_texcoord9.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult12_g35 = lerp( lerpResult11_g35 , texCoord5_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord6_g35 = IN.ase_texcoord9.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult13_g35 = lerp( lerpResult12_g35 , texCoord6_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord7_g35 = IN.ase_texcoord10.xy * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult14_g35 = lerp( lerpResult13_g35 , texCoord7_g35 , (float)temp_output_18_0_g35);
+				float2 texCoord8_g35 = IN.ase_texcoord10.zw * temp_output_17_0_g35 + temp_output_19_0_g35;
+				float2 lerpResult15_g35 = lerp( lerpResult14_g35 , texCoord8_g35 , (float)temp_output_18_0_g35);
+				float cos18_g34 = cos( temp_output_528_0 );
+				float sin18_g34 = sin( temp_output_528_0 );
+				float2 rotator18_g34 = mul( lerpResult15_g35 - float2( 0,0 ) , float2x2( cos18_g34 , -sin18_g34 , sin18_g34 , cos18_g34 )) + float2( 0,0 );
+				float temp_output_7_0_g34 = ceil( saturate( (rotator18_g34).x ) );
 				float FlipSymetryVertexPaint520 = _FlipSymetryVertexPaint;
 				float2 lerpResult535 = lerp( float2( -2,1 ) , float2( -2,-1 ) , FlipSymetryVertexPaint520);
 				float SymetryVertexPaint498 = _SymetryVertexPaint;
-				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g22 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g22 ) ) , SymetryVertexPaint498);
+				float4 lerpResult492 = lerp( TerrainMask_VertexPaintAlbedo517 , ( ( tex2D( _TerrainMask_VertexPaint, ( float2( 2,1 ) * rotator524 ) ) * ( 1.0 - temp_output_7_0_g34 ) ) + ( tex2D( _TerrainMask_VertexPaint, ( rotator524 * lerpResult535 ) ) * temp_output_7_0_g34 ) ) , SymetryVertexPaint498);
 				float4 MaskVertexPaint500 = lerpResult492;
 				float4 break494 = MaskVertexPaint500;
 				float T2_Tilling363 = _T2_Tilling1;
@@ -3888,7 +3900,7 @@ Shader "S_Map_V1"
 /*ASEBEGIN
 Version=19102
 Node;AmplifyShaderEditor.CommentaryNode;511;-8982.416,-2496;Inherit;False;1342.294;577.9338;Mask Vertex Painting;9;539;538;537;540;517;508;518;516;507;;1,0,0,1;0;0
-Node;AmplifyShaderEditor.CommentaryNode;495;-5487,384;Inherit;False;2416;1072;Symetry MaskParameter;23;526;528;527;499;524;485;492;519;513;479;487;500;491;483;484;482;480;486;488;490;534;535;536;;0.09534144,1,0,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;495;-5506.5,384;Inherit;False;2435.5;1152.6;Symetry MaskParameter;24;544;542;524;526;528;527;536;534;490;535;488;499;485;492;519;513;479;487;500;491;483;484;480;486;;0.09534144,1,0,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;369;-6960,1200;Inherit;False;659.8311;1204.044;Tiling Controller Texture;22;522;523;520;521;497;498;354;356;365;366;368;353;355;367;364;363;357;358;359;360;361;362;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;308;-4274,-2482;Inherit;False;3709.769;2808;Texture RGBA;8;72;16;23;29;35;102;117;131;;1,0.4661931,0,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;307;-7498.852,-2491.554;Inherit;False;3081.05;2439.487;NAOH NormalMap Ambiant Occlusion Height;8;264;171;265;266;279;280;292;293;;0.1278601,0.1179245,1,1;0;0
@@ -4126,8 +4138,6 @@ Node;AmplifyShaderEditor.RangedFloatNode;190;-2864,2240;Inherit;False;Constant;_
 Node;AmplifyShaderEditor.RegisterLocalVarNode;208;-752,2176;Inherit;False;AllAlbedoVertexPaint;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;486;-4592,672;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.SamplerNode;480;-4352,928;Inherit;True;Property;_TerrainMask_VertexPaint3;TerrainMask_VertexPaint;8;1;[Header];Create;True;1;Terrain Mask;0;0;False;0;False;-1;61bcabd8649009f41850e63708dd1066;61bcabd8649009f41850e63708dd1066;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.FunctionNode;482;-4288,1184;Inherit;False;ASF_UVSplit2;-1;;22;cf8f6cda4b80530479e6cfa16a50c155;0;0;4;FLOAT;0;FLOAT;14;FLOAT;15;FLOAT;16
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;484;-3952,928;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;483;-3952,672;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;491;-3808,800;Inherit;True;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;335;-5898.759,919.7325;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
@@ -4195,18 +4205,22 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;488;-4592,944;Inherit;False;2;2;0;
 Node;AmplifyShaderEditor.LerpOp;535;-4752,1024;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.Vector2Node;490;-4992,1024;Inherit;False;Constant;_Vector1;Vector 1;26;0;Create;True;0;0;0;False;0;False;-2,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.Vector2Node;534;-4992,1152;Inherit;False;Constant;_Vector2;Vector 1;26;0;Create;True;0;0;0;False;0;False;-2,-1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
-Node;AmplifyShaderEditor.GetLocalVarNode;536;-5072,1280;Inherit;False;520;FlipSymetryVertexPaint;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;497;-6912,2160;Inherit;False;Property;_SymetryVertexPaint;Symetry Vertex Paint;6;2;[Header];[IntRange];Create;True;1;Mask Vertex Painting;0;0;False;0;False;1;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;521;-6912,2240;Inherit;False;Property;_FlipSymetryVertexPaint;Flip Symetry Vertex Paint;7;1;[IntRange];Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;522;-6912,2320;Inherit;False;Property;_RotateVertexPaintMask;Rotate Vertex Paint Mask;8;0;Create;True;1;Mask Vertex Painting;0;0;False;0;False;0;0.657;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;497;-6912,2160;Inherit;False;Property;_SymetryVertexPaint;Symetry Vertex Paint;6;2;[Header];[IntRange];Create;True;1;Mask Vertex Painting;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;521;-6912,2240;Inherit;False;Property;_FlipSymetryVertexPaint;Flip Symetry Vertex Paint;7;1;[IntRange];Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TauNode;527;-5344,1040;Inherit;False;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;528;-5232,960;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.GetLocalVarNode;526;-5472,959;Inherit;False;523;RotateVertexPaintMask;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RotatorNode;524;-5024,816;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;1;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.RotatorNode;540;-8560,-2240;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;1;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.TauNode;537;-8848,-2000;Inherit;False;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;538;-8736,-2080;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;539;-8976,-2080;Inherit;False;523;RotateVertexPaintMask;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.WireNode;542;-5104,1392;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.WireNode;544;-5072,1408;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;526;-5472,959;Inherit;False;523;RotateVertexPaintMask;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RotatorNode;524;-5024,816;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;484;-3952,928;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.FunctionNode;549;-4352,1392;Inherit;True;ASF_UVSplit2;-1;;34;cf8f6cda4b80530479e6cfa16a50c155;0;1;19;FLOAT;0;False;4;FLOAT;0;FLOAT;14;FLOAT;15;FLOAT;16
+Node;AmplifyShaderEditor.GetLocalVarNode;536;-5072,1280;Inherit;False;520;FlipSymetryVertexPaint;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;522;-6878.048,2320;Inherit;False;Property;_RotateVertexPaintMask;Rotate Vertex Paint Mask;8;0;Create;True;1;Mask Vertex Painting;0;0;False;0;False;0;0.7233878;0;1;0;1;FLOAT;0
 WireConnection;260;0;256;0
 WireConnection;260;1;259;0
 WireConnection;260;2;379;0
@@ -4435,10 +4449,8 @@ WireConnection;486;0;487;0
 WireConnection;486;1;524;0
 WireConnection;480;0;513;0
 WireConnection;480;1;488;0
-WireConnection;484;0;480;0
-WireConnection;484;1;482;14
 WireConnection;483;0;479;0
-WireConnection;483;1;482;0
+WireConnection;483;1;549;0
 WireConnection;491;0;483;0
 WireConnection;491;1;484;0
 WireConnection;335;1;333;0
@@ -4483,11 +4495,16 @@ WireConnection;535;1;534;0
 WireConnection;535;2;536;0
 WireConnection;528;0;526;0
 WireConnection;528;1;527;0
-WireConnection;524;0;485;0
-WireConnection;524;2;528;0
 WireConnection;540;0;516;0
 WireConnection;540;2;538;0
 WireConnection;538;0;539;0
 WireConnection;538;1;537;0
+WireConnection;542;0;528;0
+WireConnection;544;0;542;0
+WireConnection;524;0;485;0
+WireConnection;524;2;528;0
+WireConnection;484;0;480;0
+WireConnection;484;1;549;14
+WireConnection;549;19;544;0
 ASEEND*/
-//CHKSM=A64B4E5D0A788F79008EA552906140BB85BD538A
+//CHKSM=CBCCB63760ADF97B90639717AAFCCB1FCA647661
