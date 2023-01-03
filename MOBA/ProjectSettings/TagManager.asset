@@ -30,8 +30,8 @@ TagManager:
   - BushEntity
   - Previsualisable
   - InvisibleToCamera
-  - 
-  - 
+  - ObjectPlacerAvoiderCollider
+  - EntityCapacityCollider
   - CollisionBlocker
   - 
   - 

@@ -13,6 +13,7 @@ public class ActiveAttackCapacityCollider :ActiveCapacityCollider
         IActiveLifeable lifeable = (IActiveLifeable)entityCollided;
         if (lifeable != null)
         {
+            Debug.Log(team + "  " +entityCollided.team);
             if(entityCollided.team != team)
                 lifeable.DecreaseCurrentHpRPC(damage);
         }
@@ -24,7 +25,7 @@ public class ActiveAttackCapacityCollider :ActiveCapacityCollider
         ActiveAttackCapacity activeAttackCapacity = (ActiveAttackCapacity)activeCapacity;
         damage = so.damage;
         team = activeCapacity.caster.team;
-        transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up*2;
+        transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up;
         
     }
 }

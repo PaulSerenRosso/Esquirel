@@ -233,6 +233,18 @@ MonoBehaviour:
   - SetViewAngleRPC
   - SyncSetViewAngleRPC
   - SetCanDrawCapacityRPC
+  - LaunchSetUpRPC
+  - SetSkipDrawingCapacityRPC
+  - PlaceSmokeRPC
+  - LaunchStartCurveMovementRPC
+  - SyncSetCanDecreaseCurrentHpRPC
+  - ActivateObstacle
+  - UpdateClientReadyForTP
+  - ActivateTransformView
+  - EndMoveChampion
+  - StartMoveChampionRPC
+  - WaitForAllReceiveMoveChampion
+  - WaitForAllReceiveStartMoveChampion
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

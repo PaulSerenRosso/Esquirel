@@ -80,10 +80,10 @@ namespace RemoteConfig {
             variables.CHAMP01_Trinket.trinketDetectionDistance = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_TRINKET_DetectionDistance");
             
             //CAPACITY 01
-            variables.CHAMP01_CAPA01.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_Cooldown");
-            variables.CHAMP01_CAPA01.tpObjectCurveYPosition = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_YPosition");
-            variables.CHAMP01_CAPA01.tpObjectCurveTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_TimeLength");
-            variables.CHAMP01_CAPA01.referenceRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_ReferenceRange");
+           // variables.CHAMP01_CAPA01.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_Cooldown");
+           // variables.CHAMP01_CAPA01.tpObjectCurveYPosition = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_YPosition");
+           // variables.CHAMP01_CAPA01.tpObjectCurveTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_TimeLength");
+           // variables.CHAMP01_CAPA01.referenceRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA01_ReferenceRange");
             
             //CAPACITY 02
             variables.CHAMP01_CAPA02.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP01_CAPA02_Cooldown");

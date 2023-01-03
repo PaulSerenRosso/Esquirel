@@ -39,12 +39,13 @@ namespace Entities
         /// The transform of the UI of the entity.
         /// </summary>
         public Transform uiTransform;
-
+        
         /// <summary>
         /// The offset of the UI of the entity.
         /// </summary>
         public Vector3 offset = new Vector3(0, 2f, 0);
 
+        public EntityCapacityCollider entityCapacityCollider;
         private void Start()
         {
             entityIndex = photonView.ViewID;
@@ -127,7 +128,9 @@ namespace Entities
         {
             if (other.tag == "Bush")
             {
-                currentBush = other.GetComponent<Bush>();
+                Bush bush = other.GetComponent<Bush>();
+                bush.entitiesInside.Add(this);
+                bushes.Add(bush);
             }
         }
 
@@ -135,7 +138,9 @@ namespace Entities
         {
             if (other.tag == "Bush")
             {
-                currentBush = null;
+                Bush bush = other.GetComponent<Bush>();
+                bush.entitiesInside.Remove(this);
+                bushes.Remove(bush);
             }
         }
 
@@ -208,10 +213,10 @@ namespace Entities
             var passiveCapacitySo = CapacitySOCollectionManager.Instance.GetPassiveCapacitySOByIndex(index);
             if (!canAddPassiveCapacity || !passiveCapacitySo.TryAdded(this)) return;
             var capacity = CapacitySOCollectionManager.Instance.CreatePassiveCapacity(index, this);
-
             if (!passiveCapacitiesList.Contains(capacity)) passiveCapacitiesList.Add(capacity);
             photonView.RPC("SyncAddPassiveCapacityRPC", RpcTarget.Others, index);
             capacity.OnAdded(this);
+            capacity.SyncOnAdded(this);
             OnPassiveCapacityAdded?.Invoke(index);
         }
 
@@ -219,8 +224,9 @@ namespace Entities
         public void SyncAddPassiveCapacityRPC(byte index)
         {
             var capacity = CapacitySOCollectionManager.Instance.CreatePassiveCapacity(index, this);
-            passiveCapacitiesList.Add(capacity);
-          
+            if (!passiveCapacitiesList.Contains(capacity)) passiveCapacitiesList.Add(capacity);
+            capacity.SyncOnAdded(this);
+         
             OnPassiveCapacityAddedFeedbacks?.Invoke(index);
         }
 
@@ -228,15 +234,16 @@ namespace Entities
         {
             if (index >= passiveCapacitiesList.Count) return;
             var capacity = passiveCapacitiesList[index];
-            passiveCapacitiesList.Remove(capacity);
+       
             capacity.OnRemoved(this);
             OnPassiveCapacityRemoved?.Invoke(index);
-            photonView.RPC("SyncRemovePassiveCapacityRPC", RpcTarget.Others, index);
+            photonView.RPC("SyncRemovePassiveCapacityRPC", RpcTarget.All, index);
         }
 
         [PunRPC]
         public void SyncRemovePassiveCapacityRPC(byte index)
         {
+            passiveCapacitiesList[index].SyncOnRemoved(this);
             passiveCapacitiesList.RemoveAt(index);
             OnPassiveCapacityRemovedFeedbacks?.Invoke(index);
         }

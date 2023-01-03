@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GlobalDelegates : MonoBehaviour
 {
+    public delegate bool OneParameterWithBoolReturnDelegate<P>(P parameter);
+    
     public delegate void NoParameterDelegate();
 
     public delegate void OneParameterDelegate<P>(P parameter);

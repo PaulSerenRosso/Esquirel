@@ -18,5 +18,9 @@ namespace Entities.Capacities
         public bool TryCastWithPrevisualisableData(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] previsualisableData);
 
         public object[] GetPrevisualisableData();
+
+        public bool GetCanSkipDrawing();
+
+        public void SetCanSkipDrawing(bool value);
     }
 }

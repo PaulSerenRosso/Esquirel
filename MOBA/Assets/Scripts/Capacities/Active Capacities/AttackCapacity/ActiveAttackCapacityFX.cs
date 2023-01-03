@@ -8,11 +8,11 @@ namespace Entities.Capacities
 public class ActiveAttackCapacityFX : ActiveCapacityFX
 {
   protected Champion.Champion champion;
+  protected  ActiveAttackCapacity activeAttackCapacity;
   public override void InitCapacityFX(int entityIndex, byte capacityIndex)
   {
     base.InitCapacityFX(entityIndex, capacityIndex);
     champion =(Champion.Champion) EntityCollectionManager.GetEntityByIndex(entityIndex);
-    ActiveAttackCapacity activeAttackCapacity;
     if (capacityIndex == 255)
       activeAttackCapacity = (ActiveAttackCapacity) champion.attackBase;
       else
@@ -20,7 +20,7 @@ public class ActiveAttackCapacityFX : ActiveCapacityFX
       
     activeAttackCapacity = (ActiveAttackCapacity) champion.activeCapacities[capacityIndex];
     }
-    transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up*2;
+    transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up;
     
     for (int i = 0; i < allParticleSystems.Length; i++)
     {

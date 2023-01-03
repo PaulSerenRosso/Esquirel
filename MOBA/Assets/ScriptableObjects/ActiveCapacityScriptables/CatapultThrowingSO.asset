@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ff99b3229a40a4ab7635b2802656f3, type: 3}
+  m_Name: CatapultThrowingSO
+  m_EditorClassIdentifier: 
+  referenceName: 
+  descriptionName: 
+  icon: {fileID: 0}
+  description: 
+  cooldown: 2
+  types: 
+  fxPrefab: {fileID: 0}
+  fxTime: 0
+  indexInCollection: 10
+  heightJumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.0168066
+      outSlope: 2.0168066
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.49583334
+      value: 1
+      inSlope: 0.016667783
+      outSlope: 0.016667783
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.983471
+      outSlope: -1.983471
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  widthJumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.4348681
+      outSlope: 1.4348681
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.27397645
+      value: 0.39312005
+      inSlope: 0.40199107
+      outSlope: 0.40199107
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.43729955
+      outWeight: 0.3543844
+    - serializedVersion: 3
+      time: 0.6880192
+      value: 0.57420534
+      inSlope: 0.6429799
+      outSlope: 0.6429799
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23271166
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.3648106
+      outSlope: 1.3648106
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveMovementMaxYPosition: 30
+  curveMovementTime: 10
+  referenceRange: 10
+  activeCapacityAnimationLauncherInfo:
+    animationTime: 0
+    animatorParameterName: 
+  firstDetectionSo: {fileID: 11400000, guid: 02469eb0e3f69de4fbc666a38c64d6c4, type: 2}
+  secondDetectionSo: {fileID: 11400000, guid: 81e76e5d8d4f0d84ab64d32b6d79163a, type: 2}
+  firstDetectionLayerMask:
+    serializedVersion: 2
+    m_Bits: 3221225472

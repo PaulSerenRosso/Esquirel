@@ -333,7 +333,7 @@ MonoBehaviour:
   - {fileID: 7954460223274673725}
   - {fileID: 5089217156572151424}
   - {fileID: 6460674949673320369}
-  images: []
+  graphics: []
 --- !u!1 &4173804162070088880
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +358,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4173804162070088880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8843158543749201542}

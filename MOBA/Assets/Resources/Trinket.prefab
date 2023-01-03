@@ -90,6 +90,7 @@ MonoBehaviour:
   canRemovePassiveCapacity: 1
   uiTransform: {fileID: 0}
   offset: {x: 0, y: 2, z: 0}
+  entityCapacityCollider: {fileID: 0}
   canShow: 0
   canHide: 0
   meshRenderersToShow:
@@ -100,7 +101,7 @@ MonoBehaviour:
   particleSystemsToShowAlpha: []
   graphicsToShow: []
   graphicsToShowAlpha: []
-  currentBush: {fileID: 0}
+  bushes: []
   canChangeTeam: 0
   team: 0
   baseViewRange: 0
@@ -108,6 +109,7 @@ MonoBehaviour:
   viewAngle: 0
   canView: 1
   meshFilterFoV: {fileID: 736488405490680133}
+  viewObstructedByObstacle: 1
   duration: 0
 --- !u!54 &3169168769462684903
 Rigidbody:
