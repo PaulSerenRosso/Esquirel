@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ActiveAttackCapacityRectPrevizualisable : ActiveAttackCapacityPrevizualisable
 {
-   public override void UpdatePrevisualisation(ActiveAttackWithPrevisualisableCapacity activeAttackCapacity) 
+   public override void UpdatePrevisualisation(ActiveAttackWithColliderWithPrevisualisableCapacity activeAttackCapacity) 
    {
       ActiveAttackRectCapacitySO activeAttackRectCapacitySo =(ActiveAttackRectCapacitySO) activeAttackCapacity.so;
       ActiveAttackRectCapacity attackRectCapacity = (ActiveAttackRectCapacity)activeAttackCapacity;

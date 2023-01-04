@@ -111,10 +111,12 @@ namespace Entities.Capacities
         #endregion
 
         #region Feedback
+
+
+
+
+
         
-
-
-
         public abstract void CancelCapacity();
         
 

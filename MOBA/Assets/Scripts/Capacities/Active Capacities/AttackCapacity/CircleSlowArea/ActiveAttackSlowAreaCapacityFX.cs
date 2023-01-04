@@ -12,13 +12,13 @@ namespace Entities.Capacities
         public override void InitCapacityFX(int entityIndex, byte capacityIndex)
         {
             base.InitCapacityFX(entityIndex, capacityIndex);
-            ActiveAttackSlowAreaCapacity activeAttackSlowAreaCapacity =
-                (ActiveAttackSlowAreaCapacity)activeAttackCapacity;
-            ActiveAttackSlowAreaCapacitySO activeAttackSlowAreaCapacitySo =
-                (ActiveAttackSlowAreaCapacitySO)activeAttackSlowAreaCapacity.so;
-            fxObject.transform.SetGlobalScale(new Vector3(1, 0, 1) * activeAttackSlowAreaCapacitySo.radiusArea +
+            ActiveAttackWithColliderSlowAreaCapacity activeAttackWithColliderSlowAreaCapacity =
+                (ActiveAttackWithColliderSlowAreaCapacity)ActiveAttackCapacity;
+            ActiveAttackWithColliderSlowAreaCapacitySo activeAttackWithColliderSlowAreaCapacitySo =
+                (ActiveAttackWithColliderSlowAreaCapacitySo)activeAttackWithColliderSlowAreaCapacity.so;
+            fxObject.transform.SetGlobalScale(new Vector3(1, 0, 1) * activeAttackWithColliderSlowAreaCapacitySo.radiusArea +
                                               Vector3.up * transform.lossyScale.y);
-            fogCollider.radius = activeAttackSlowAreaCapacitySo.radiusArea/2;
+            fogCollider.radius = activeAttackWithColliderSlowAreaCapacitySo.radiusArea/2;
         }
     }
 }

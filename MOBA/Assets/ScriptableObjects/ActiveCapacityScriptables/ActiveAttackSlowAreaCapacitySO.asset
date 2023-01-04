@@ -24,10 +24,11 @@ MonoBehaviour:
   activeCapacityAnimationLauncherInfo:
     animationTime: 0
     animatorParameterName: 
+  damage: 200
+  offsetAttack: 0
   damageBeginTime: 0.5
   damageTime: 1
-  damage: 200
+  attackCapacityImpactFx: {fileID: 8110421565520617150, guid: e9492d85934383045af08345034315d9, type: 3}
   damagePrefab: {fileID: 3623394139957654841, guid: 1cf099b1be515e94181d7fe7fefc4e9c, type: 3}
-  offsetAttack: 0
   passiveSpeed: {fileID: 11400000, guid: e2a0726a715287e4db0f94ee538f1871, type: 2}
   radiusArea: 6

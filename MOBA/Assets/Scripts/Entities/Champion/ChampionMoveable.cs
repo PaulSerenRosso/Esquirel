@@ -283,7 +283,7 @@ namespace Entities.Champion
                         if (currentCapacityUsed == null)
                         {
                             if ((this.transform.position - entityFollow.transform.position).sqrMagnitude >
-                                currentIAimable.GetSqrtMaxRange())
+                                currentIAimable.GetSqrMaxRange())
                             {
                                 //Debug.Log("not distance");
                                 moveDestination = entityFollow.transform.position;

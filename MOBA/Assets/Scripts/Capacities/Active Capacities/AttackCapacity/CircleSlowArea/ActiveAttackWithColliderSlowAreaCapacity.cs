@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Entities.Capacities
 {
     
-    public class ActiveAttackSlowAreaCapacity: ActiveAttackCapacity
+    public class ActiveAttackWithColliderSlowAreaCapacity: ActiveAttackWithColliderCapacity
     {
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {

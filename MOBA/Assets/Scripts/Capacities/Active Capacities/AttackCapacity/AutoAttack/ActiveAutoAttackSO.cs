@@ -6,6 +6,7 @@ using UnityEngine;
 public class ActiveAutoAttackSO : ActiveAttackRectCapacitySO
 {
     public float maxRange;
+    public float rangeForDamage;
     public override Type AssociatedType()
     {
         return typeof(ActiveAutoAttack);

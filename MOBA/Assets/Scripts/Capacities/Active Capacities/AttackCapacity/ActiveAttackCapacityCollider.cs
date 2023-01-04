@@ -20,12 +20,12 @@ public class ActiveAttackCapacityCollider :ActiveCapacityCollider
     }
     public override void InitCapacityCollider(ActiveCapacity activeCapacity)
     {
-        ActiveAttackCapacitySO so =(ActiveAttackCapacitySO)
+        ActiveAttackWithColliderCapacitySO so =(ActiveAttackWithColliderCapacitySO)
             CapacitySOCollectionManager.GetActiveCapacitySOByIndex(activeCapacity.indexOfSOInCollection);
-        ActiveAttackCapacity activeAttackCapacity = (ActiveAttackCapacity)activeCapacity;
+        ActiveAttackWithColliderCapacity activeAttackWithColliderCapacity = (ActiveAttackWithColliderCapacity)activeCapacity;
         damage = so.damage;
         team = activeCapacity.caster.team;
-        transform.position += activeAttackCapacity.champion.rotateParent.forward*activeAttackCapacity.so.offsetAttack+Vector3.up;
+        transform.position += activeAttackWithColliderCapacity.champion.rotateParent.forward*activeAttackWithColliderCapacity.so.offsetAttack+Vector3.up;
         
     }
 }

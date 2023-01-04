@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace Entities.Capacities
 {
-    public class ActiveAttackRectCapacity : ActiveAttackWithPrevisualisableCapacity
+    public class ActiveAttackRectCapacity : ActiveAttackWithColliderWithPrevisualisableCapacity
     {
        public  Vector3 previsualisableObjectForward;
        

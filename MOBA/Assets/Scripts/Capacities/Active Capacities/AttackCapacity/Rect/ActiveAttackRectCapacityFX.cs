@@ -19,8 +19,6 @@ namespace Entities.Capacities
     capacity =champion.attackBase;
    else   capacity = champion.activeCapacities[capacityIndex];
    ActiveAttackRectCapacitySO activeAttackRectCapacitySo =(ActiveAttackRectCapacitySO) CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacity.indexOfSOInCollection);
- 
- 
    fxObject.transform.SetGlobalScale(new Coordinate[]
    {
     new Coordinate(CoordinateType.X, activeAttackRectCapacitySo.width),

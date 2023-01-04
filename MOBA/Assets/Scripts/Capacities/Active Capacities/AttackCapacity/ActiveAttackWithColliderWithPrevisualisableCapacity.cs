@@ -4,7 +4,7 @@ using Entities;
 using Entities.Capacities;
 using UnityEngine;
 
-public class ActiveAttackWithPrevisualisableCapacity : ActiveAttackCapacity, IPrevisualisable
+public class ActiveAttackWithColliderWithPrevisualisableCapacity : ActiveAttackWithColliderCapacity, IPrevisualisable
 {
     private bool canDraw = true;
     private bool isDrawing = false;
@@ -41,8 +41,8 @@ public class ActiveAttackWithPrevisualisableCapacity : ActiveAttackCapacity, IPr
     {
         canDraw = value;
     }
-    
-    
+
+
 
     public virtual bool TryCastWithPrevisualisableData(int[] targetsEntityIndexes, Vector3[] targetPositions,
         params object[] previsualisableParameters)
@@ -71,9 +71,9 @@ public class ActiveAttackWithPrevisualisableCapacity : ActiveAttackCapacity, IPr
         base.SetUpActiveCapacity(soIndex, caster);
         if (champion.photonView.IsMine)
         {
-            ActiveAttackWithPrevisualisableSO attackWithPrevisualisableSo = (ActiveAttackWithPrevisualisableSO)so; 
+            ActiveAttackWithColliderWithPrevisualisableSo attackWithColliderWithPrevisualisableSo = (ActiveAttackWithColliderWithPrevisualisableSo)so; 
             previsualisableObject =
-                Object.Instantiate(attackWithPrevisualisableSo.previsualisablePrefab, champion.transform)
+                Object.Instantiate(attackWithColliderWithPrevisualisableSo.previsualisablePrefab, champion.transform)
                     .GetComponent<ActiveAttackCapacityPrevizualisable>();
             previsualisableObject.gameObject.SetActive(false);
             previsualisableObject.UpdatePrevisualisation(this);
