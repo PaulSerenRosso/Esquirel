@@ -14,9 +14,9 @@ namespace Entities.Capacities
     {
         public ActiveAttackCapacitySO so;
         public Champion.Champion champion;
+        private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
 
         private ActiveAttackCapacityCollider _capacityColliderObject;
-        private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
         private GameObject DamageObject;
         private TimerOneCount beginDamageTimer;
         private TimerOneCount damageTimer;

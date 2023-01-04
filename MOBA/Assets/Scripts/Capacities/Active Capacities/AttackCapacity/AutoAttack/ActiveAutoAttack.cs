@@ -6,64 +6,67 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
-public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
+public class ActiveAutoAttack : ActiveCapacity, IAimable
 {
     private ActiveAutoAttackSO activeAutoAttackSO;
-
-
     private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
-
+    public Champion champion;
     public float range;
     public float rangeSqrt;
+    protected Quaternion rotationFx;
+    
+    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
+    {
+        if (onCooldown) return false;
+        activeCapacityAnimationLauncher.InitiateAnimationTimer();
+        InitiateCooldown();
+        activeCapacityAnimationLauncher.InitiateAnimationTimer();
+        rotationFx = Quaternion.LookRotation((targetPositions[0] - caster.transform.position).normalized, Vector3.up);
+        InitiateFXTimer();
+        
+        return true;
+    }
+
+
+    public override void CancelCapacity()
+    {
+        activeCapacityAnimationLauncher.CancelAnimationTimer();
+        CancelFXTimer();
+    }
 
     public override void InitiateCooldown()
     {
         base.InitiateCooldown();
-        Debug.Log("bonsoir je suis tout le temps lu aussi");
+        if (champion.activeCapacities.Contains(this))
+            champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, true);
     }
 
     public override void EndCooldown()
     {
-        Debug.Log("bonsoir je suis tout le temps lu");
+        champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, false);
         base.EndCooldown();
     }
 
-
-    protected override void CancelDamagePrefab()
+    protected override void InitiateFXTimer()
     {
-        base.CancelDamagePrefab();
-        champion.SetCanMoveRPC(true);
-    }
-
-    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
-    {
-        if (base.TryCast(targetsEntityIndexes, targetPositions))
-        {
-            InitiateCooldown();
-            rotationFx = Quaternion.LookRotation((targetPositions[0] - caster.transform.position).normalized, Vector3.up);
-            InitiateFXTimer();
-            return true;
-        }
-
-        Debug.Log("false");
-        return false;
-
-    }
-
-    public override void CancelCapacity()
-    {
-        base.CancelCapacity(); 
-        Debug.Log("bonsoir je test le cancel capacity");
+        base.InitiateFXTimer();
+        fxObject = PoolNetworkManager.Instance.PoolInstantiate(activeAutoAttackSO.fxPrefab, champion.transform.position, rotationFx);
+        ActiveAttackCapacityFX attackCapacityFX = (ActiveAttackCapacityFX)fxObject;
+        attackCapacityFX.RequestInitCapacityFX(caster.entityIndex, (byte)champion.activeCapacities.IndexOf(this));
     }
 
 
     public override void SetUpActiveCapacity(byte soIndex, Entity caster)
     {
         base.SetUpActiveCapacity(soIndex, caster);
-        activeAutoAttackSO = (ActiveAutoAttackSO) AssociatedActiveCapacitySO();
+        activeAutoAttackSO = (ActiveAutoAttackSO)CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
+        champion = (Champion)caster;
+        activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
+        activeCapacityAnimationLauncher.Setup(activeAutoAttackSO.activeCapacityAnimationLauncherInfo, champion);
         range = activeAutoAttackSO.maxRange;
         rangeSqrt = range * range;
     }
+
 
     public float GetMaxRange()
     {
@@ -75,7 +78,8 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
         return rangeSqrt;
     }
 
-    public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
+    public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions,
+        params object[] customParameters)
     {
         champion.RotateMeshChampionRPC((targetPositions[0] - caster.transform.position).normalized);
         champion.SyncSetCanMoveRPC(false);
@@ -91,7 +95,6 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
         {
             return true;
         }
-
         return false;
     }
 }
