@@ -11,16 +11,16 @@ namespace Entities.Capacities
 
   [SerializeField] protected GameObject fxObject;
  [SerializeField] private BoxCollider fogDetection;
-  public override void InitCapacityFX(int entityIndex, byte capacityIndex)
+  public override void InitCapacityFX(int entityIndex, byte capacityIndex, Vector3 direction)
   {
-   base.InitCapacityFX( entityIndex, capacityIndex);
+   base.InitCapacityFX( entityIndex, capacityIndex, direction);
    ActiveCapacity capacity;
    if (capacityIndex == 255)
     capacity =champion.attackBase;
    else   capacity = champion.activeCapacities[capacityIndex];
+  
+   
    ActiveAttackRectCapacitySO activeAttackRectCapacitySo =(ActiveAttackRectCapacitySO) CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacity.indexOfSOInCollection);
- 
- 
    fxObject.transform.SetGlobalScale(new Coordinate[]
    {
     new Coordinate(CoordinateType.X, activeAttackRectCapacitySo.width),
@@ -34,6 +34,7 @@ namespace Entities.Capacities
    boxColliderCenter.z = activeAttackRectCapacitySo.height / 2;
    boxCollider.center = boxColliderCenter;
    boxCollider.size = boxColliderSize;
+  
   }
   
 

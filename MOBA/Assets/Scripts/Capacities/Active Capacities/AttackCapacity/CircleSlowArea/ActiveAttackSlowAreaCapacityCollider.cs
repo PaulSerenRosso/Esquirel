@@ -14,11 +14,11 @@ namespace Entities.Capacities
         {
             base.InitCapacityCollider(activeCapacity);
            
-            ActiveAttackSlowAreaCapacity activeAttackSlowAreaCapacity = (ActiveAttackSlowAreaCapacity)activeCapacity;
-            ActiveAttackSlowAreaCapacitySO activeAttackSlowAreaCapacitySo =
-                (ActiveAttackSlowAreaCapacitySO)activeAttackSlowAreaCapacity.so;
-            passiveSpeedSo = activeAttackSlowAreaCapacitySo.passiveSpeed;
-            sphereCollider.radius = activeAttackSlowAreaCapacitySo.radiusArea/2;
+            ActiveAttackWithColliderSlowAreaCapacity activeAttackWithColliderSlowAreaCapacity = (ActiveAttackWithColliderSlowAreaCapacity)activeCapacity;
+            ActiveAttackWithColliderSlowAreaCapacitySo activeAttackWithColliderSlowAreaCapacitySo =
+                (ActiveAttackWithColliderSlowAreaCapacitySo)activeAttackWithColliderSlowAreaCapacity.so;
+            passiveSpeedSo = activeAttackWithColliderSlowAreaCapacitySo.passiveSpeed;
+            sphereCollider.radius = activeAttackWithColliderSlowAreaCapacitySo.radiusArea/2;
         }
 
         public override void CollideWithEntity(Entity entityCollided)

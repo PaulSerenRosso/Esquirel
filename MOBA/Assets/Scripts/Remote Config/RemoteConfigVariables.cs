@@ -4,6 +4,7 @@ using Entities.Champion;
 using Entities.FogOfWar;
 using RessourceProduction;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RemoteConfig {
     public class RemoteConfigVariables : MonoBehaviour {
@@ -27,7 +28,7 @@ namespace RemoteConfig {
         public ActiveAutoAttackSO CHAMP02_AutoAttack = null;
         public ActiveTrinketCapacitySO CHAMP02_Trinket = null;
         public JumpWithSlowCapacityCapacitySO CHAMP02_CAPA01 = null;
-        public ActiveAttackSlowAreaCapacitySO CHAMP02_CAPA01_SLOW = null;
+        [FormerlySerializedAs("CHAMP02_CAPA01_SLOW")] public ActiveAttackWithColliderSlowAreaCapacitySo champ02Capa01WithColliderSlow = null;
         public PassiveSpeedSO CHAMP02_CAPA01_SLOWEFFECT = null;
         public TailAttackSO CHAMP02_CAPA02 = null;
     }

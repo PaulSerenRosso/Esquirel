@@ -12,6 +12,7 @@ public class Smoke : Entity
     
     private TimerOneCount smokeTimer;
     private Entity smokeRef;
+    [SerializeField] private ParticleSystem particleSystem;
     protected override void OnStart()
     {
         base.OnStart();
@@ -28,16 +29,17 @@ public class Smoke : Entity
         smokeTimer.time = duration;
         smokeTimer.InitiateTimer();
         this.smokeRef = smokeRef;
-        RequestSmoke(pos);
+        RequestSmoke(pos, duration);
         
     }
 
-    void RequestSmoke(Vector3 pos) => photonView.RPC("PlaceSmokeRPC", RpcTarget.All, pos);
+    void RequestSmoke(Vector3 pos, float time) => photonView.RPC("PlaceSmokeRPC", RpcTarget.All, pos, time );
 
     [PunRPC]
-     void PlaceSmokeRPC(Vector3 pos)
+     void PlaceSmokeRPC(Vector3 pos, float time)
     {
-        
+        var mainModule = particleSystem.main;
+        mainModule.simulationSpeed = 1/time;
     }
 
     

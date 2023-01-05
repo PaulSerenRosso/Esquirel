@@ -31,6 +31,7 @@ namespace Entities.Champion
         public Rigidbody rb;
         public ChampionPlacerDistanceAvoider championPlacerDistanceAvoider;
 
+        public float pointPlacerColliderRadius;
         [SerializeField] public EntityClicker entityClicker;
         public Animator animator;
         public CollisionBlocker blocker;
@@ -39,7 +40,6 @@ namespace Entities.Champion
         public ActiveCapacity attackBase;
         public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
         public ActiveCapacity currentCapacityUsed;
-        
         public IAimable autoAttack;
 
 

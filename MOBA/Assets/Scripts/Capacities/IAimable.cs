@@ -7,6 +7,6 @@ public interface IAimable
 
   public float GetMaxRange();
   
-  public float GetSqrtMaxRange();
+  public float GetSqrMaxRange();
   public bool  TryAim(int casterIndex, int targetsEntityIndex, Vector3 targetPosition);
 }

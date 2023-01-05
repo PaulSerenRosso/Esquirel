@@ -7,7 +7,7 @@ namespace Entities.Capacities
 {
     public class JumpWithSlowCapacityMovement : JumpMovement
     {
-        private ActiveAttackSlowAreaCapacity activeAttackSlowAreaCapacity;
+        private ActiveAttackWithColliderSlowAreaCapacity _activeAttackWithColliderSlowAreaCapacity;
 
         public override void SetUp(byte capacityIndex, int championIndex)
         {
@@ -16,12 +16,12 @@ namespace Entities.Capacities
             this.curveCapacitySo = curveMovementCapacity.curveMovementCapacitySo;
             base.SetUp(capacityIndex, championIndex);
             JumpWithSlowCapacity jumpWithSlowCapacity = (JumpWithSlowCapacity)champion.activeCapacities[capacityIndex];
-            activeAttackSlowAreaCapacity = jumpWithSlowCapacity.activeAttackSlowAreaCapacity;
+            _activeAttackWithColliderSlowAreaCapacity = jumpWithSlowCapacity.ActiveAttackWithColliderSlowAreaCapacity;
             endCurveEvent += () =>
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    champion.CastRPC((byte)champion.activeCapacities.IndexOf(activeAttackSlowAreaCapacity), null, null,
+                    champion.CastRPC((byte)champion.activeCapacities.IndexOf(_activeAttackWithColliderSlowAreaCapacity), null, null,
                         null);
                 }
             };

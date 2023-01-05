@@ -453,7 +453,8 @@ MonoBehaviour:
   camera: {fileID: 0}
   rb: {fileID: 6530865356692434526}
   championPlacerDistanceAvoider: {fileID: 6760293774000135336}
-  entityClicker: {fileID: 0}
+  pointPlacerColliderRadius: 0.8
+  entityClicker: {fileID: 2979760961583772186}
   animator: {fileID: 0}
   blocker: {fileID: 3711244289653556686}
   obstacle: {fileID: 7728234700033618375}

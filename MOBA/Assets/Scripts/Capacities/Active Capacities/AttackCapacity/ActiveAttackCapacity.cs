@@ -1,68 +1,45 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Entities.Capacities;
-using GameStates;
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Object = UnityEngine.Object;
 
 namespace Entities.Capacities
 {
     public class ActiveAttackCapacity : ActiveCapacity
     {
-        public ActiveAttackCapacitySO so;
-        public Champion.Champion champion;
-
-        private ActiveAttackCapacityCollider _capacityColliderObject;
-        private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
-        private GameObject DamageObject;
         private TimerOneCount beginDamageTimer;
-        private TimerOneCount damageTimer;
+        protected TimerOneCount damageTimer;
+        public Champion.Champion champion;
+        protected ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
+        public TimerFX impactFxTimer;
+        public TimerFxInfo impactFxTimerInfo;
+        public ActiveAttackCapacitySO so;
 
-        protected Quaternion rotationFx;
-     
+        public Vector3 directionAttack;
+
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
             if (onCooldown) return false;
-            activeCapacityAnimationLauncher.InitiateAnimationTimer();
             beginDamageTimer.InitiateTimer();
+            activeCapacityAnimationLauncher.InitiateAnimationTimer();
+            InitFX(targetsEntityIndexes, targetPositions);
             return true;
         }
-        
-        
-        void InitiateDamagePrefab()
-        {
-            DamageObject = PoolLocalManager.Instance.PoolInstantiate(so.damagePrefab.gameObject,
-                champion.transform.position, champion.rotateParent.rotation);
-            var activeCapacityCollider = DamageObject.transform.GetComponent<ActiveCapacityCollider>();
-            activeCapacityCollider.InitCapacityCollider(this);
-        }
-        
-        protected virtual void CancelDamagePrefab()
-        {
-            if (DamageObject != null)
-            {
-                PoolLocalManager.Instance.EnqueuePool(so.damagePrefab.gameObject, DamageObject);
-                DamageObject = null;
-            }
-            
-        }
 
-        public override void CancelCapacity()
+        protected virtual void InitFX(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
-            beginDamageTimer.CancelTimer();
-            activeCapacityAnimationLauncher.CancelAnimationTimer();
-            damageTimer.CancelTimer();
-            CancelFXTimer();
+            fxInfo.fxPos = champion.transform.position;
+            fxTimer.InitiateTimer();
+            ActiveAttackCapacityFX activeAttackCapacityFX = (ActiveAttackCapacityFX)fxTimer.fxObject;
+            activeAttackCapacityFX.RequestInitCapacityFX(caster.entityIndex,
+                (byte)champion.activeCapacities.IndexOf(this), directionAttack);
         }
 
         public override void InitiateCooldown()
         {
             base.InitiateCooldown();
-            if(champion.activeCapacities.Contains(this))
-            champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, true);
+            if (champion.activeCapacities.Contains(this))
+                champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, true);
         }
 
         public override void EndCooldown()
@@ -71,38 +48,33 @@ namespace Entities.Capacities
             base.EndCooldown();
         }
 
-        protected override void InitiateFXTimer()
+        public override void CancelCapacity()
         {
-            base.InitiateFXTimer();
-            fxObject=  PoolNetworkManager.Instance.PoolInstantiate(so.fxPrefab, champion.transform.position, rotationFx);
-            ActiveAttackCapacityFX attackCapacityFX = (ActiveAttackCapacityFX)fxObject;
-            attackCapacityFX.RequestInitCapacityFX(caster.entityIndex, (byte)champion.activeCapacities.IndexOf(this));
+            activeCapacityAnimationLauncher.CancelAnimationTimer();
+            fxTimer.CancelTimer();
+            beginDamageTimer.CancelTimer();
+            damageTimer.CancelTimer();
         }
 
 
         public override void SetUpActiveCapacity(byte soIndex, Entity caster)
         {
+            so = (ActiveAttackWithColliderCapacitySO)CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
             base.SetUpActiveCapacity(soIndex, caster);
-            so =(ActiveAttackCapacitySO) CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
             champion = (Champion.Champion)caster;
-
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                damageTimer = new TimerOneCount(so.damageTime);
-                beginDamageTimer = new TimerOneCount(so.damageBeginTime);
-                damageTimer.InitiateTimerEvent += InitiateDamagePrefab;
-                beginDamageTimer.TickTimerEvent += damageTimer.InitiateTimer;
-                damageTimer.CancelTimerEvent += CancelDamagePrefab;
-                damageTimer.TickTimerEvent += CancelDamagePrefab;
-            }
-
-            
-
             activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
             activeCapacityAnimationLauncher.Setup(so.activeCapacityAnimationLauncherInfo, champion);
         }
-        
+
+        public override void SetUpActiveCapacityForMasterClient(byte soIndex, Entity caster)
+        {
+            base.SetUpActiveCapacityForMasterClient(soIndex, caster);
+            damageTimer = new TimerOneCount(so.damageTime);
+            beginDamageTimer = new TimerOneCount(so.damageBeginTime);
+            impactFxTimerInfo = new TimerFxInfo(so.attackCapacityImpactFx);
+            
+            impactFxTimer = new TimerFX(so.impactFxTime, impactFxTimerInfo);
+            beginDamageTimer.TickTimerEvent += damageTimer.InitiateTimer;
+        }
     }
 }
-

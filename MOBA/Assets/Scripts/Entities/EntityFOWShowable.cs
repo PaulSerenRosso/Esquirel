@@ -143,7 +143,7 @@ namespace  Entities
             for (int i = 0; i < particleSystemsToShow.Count; i++)
             {
                 var materialColor = particleSystemsToShow[i].startColor;
-                materialColor.a = meshRenderersToShowAlpha[i];
+                materialColor.a = particleSystemsToShowAlpha[i];
                 particleSystemsToShow[i].startColor = materialColor;
             }
             

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
-    public  class ActiveAttackRectCapacitySO : ActiveAttackWithPrevisualisableSO
+    public  class ActiveAttackRectCapacitySO : ActiveAttackWithColliderWithPrevisualisableSo
 {
     public float height;
     public float width;

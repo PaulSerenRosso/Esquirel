@@ -10,7 +10,7 @@ namespace Entities.Capacities
     {
         private JumpMovement _jumpMovement;
 
-        public ActiveAttackSlowAreaCapacity activeAttackSlowAreaCapacity;
+        public ActiveAttackWithColliderSlowAreaCapacity ActiveAttackWithColliderSlowAreaCapacity;
 
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
@@ -38,9 +38,9 @@ namespace Entities.Capacities
             curveObject.endCurveEvent += InitiateCooldown;
             for (int i = 0; i < champion.activeCapacities.Count; i++)
             {
-                if (champion.activeCapacities[i] is ActiveAttackSlowAreaCapacity)
+                if (champion.activeCapacities[i] is ActiveAttackWithColliderSlowAreaCapacity)
                 {
-                    activeAttackSlowAreaCapacity = (ActiveAttackSlowAreaCapacity)champion.activeCapacities[i];
+                    ActiveAttackWithColliderSlowAreaCapacity = (ActiveAttackWithColliderSlowAreaCapacity)champion.activeCapacities[i];
 
                     break;
                 }
