@@ -11,8 +11,7 @@ namespace Entities.Capacities
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
             if (base.TryCast(targetsEntityIndexes, targetPositions))
-            {
-                InitiateFXTimer();
+            { 
                 return true;
             }
             return false;

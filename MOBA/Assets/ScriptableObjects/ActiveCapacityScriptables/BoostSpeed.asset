@@ -19,6 +19,6 @@ MonoBehaviour:
   cooldown: 3
   types: 
   fxPrefab: {fileID: 0}
-  fxTime: 0
+  fxTime: 0.5
   indexInCollection: 3
   passiveSpeedSo: {fileID: 11400000, guid: 8109af73a64f37748b19a869b5a0cc90, type: 2}

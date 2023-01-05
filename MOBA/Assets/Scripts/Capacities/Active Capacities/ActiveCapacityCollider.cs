@@ -14,6 +14,7 @@ namespace Entities.Capacities
             Entity entity = other.GetComponent<EntityCapacityCollider>().GetEntity;
             if (entity != null)
             {
+                
                 CollideWithEntity(entity);
             }
         }

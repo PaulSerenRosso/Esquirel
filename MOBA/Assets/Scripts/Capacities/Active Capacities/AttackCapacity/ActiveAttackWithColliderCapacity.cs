@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
-    public class ActiveAttackWithColliderCapacity : ActiveAttackCapacity
+    public class ActiveAttackWithColliderCapacity : ActiveAttackCapacity 
     {
         public ActiveAttackWithColliderCapacitySO attackWithColliderCapacitySo;
         
         private ActiveAttackCapacityCollider _capacityColliderObject;
         private GameObject DamageObject;
         
-        void InitiateDamagePrefab()
+       protected virtual void InitiateDamagePrefab()
         {
             DamageObject = PoolLocalManager.Instance.PoolInstantiate(attackWithColliderCapacitySo.damagePrefab.gameObject,
                 champion.transform.position, champion.rotateParent.rotation);
@@ -40,10 +40,6 @@ namespace Entities.Capacities
                 damageTimer.CancelTimerEvent += CancelDamagePrefab;
                 damageTimer.TickTimerEvent += CancelDamagePrefab;
             }
-
-            
-
-       
         }
         
     }

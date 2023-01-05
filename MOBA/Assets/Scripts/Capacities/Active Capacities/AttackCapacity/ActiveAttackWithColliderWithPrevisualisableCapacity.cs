@@ -9,13 +9,12 @@ public class ActiveAttackWithColliderWithPrevisualisableCapacity : ActiveAttackW
     private bool canDraw = true;
     private bool isDrawing = false;
     protected ActiveAttackCapacityPrevizualisable previsualisableObject;
-    
     public virtual void EnableDrawing()
     {
         isDrawing = true;
         previsualisableObject.gameObject.SetActive(true);
     }
-        
+    
     public virtual void DisableDrawing()
     {
         isDrawing = false;
@@ -41,9 +40,6 @@ public class ActiveAttackWithColliderWithPrevisualisableCapacity : ActiveAttackW
     {
         canDraw = value;
     }
-
-
-
     public virtual bool TryCastWithPrevisualisableData(int[] targetsEntityIndexes, Vector3[] targetPositions,
         params object[] previsualisableParameters)
     {

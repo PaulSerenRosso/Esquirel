@@ -9,9 +9,9 @@ namespace Entities.Capacities
         [SerializeField] protected GameObject fxObject;
         [SerializeField] private SphereCollider fogCollider;
 
-        public override void InitCapacityFX(int entityIndex, byte capacityIndex)
+        public override void InitCapacityFX(int entityIndex, byte capacityIndex, Vector3 direction)
         {
-            base.InitCapacityFX(entityIndex, capacityIndex);
+            base.InitCapacityFX(entityIndex, capacityIndex, direction);
             ActiveAttackWithColliderSlowAreaCapacity activeAttackWithColliderSlowAreaCapacity =
                 (ActiveAttackWithColliderSlowAreaCapacity)ActiveAttackCapacity;
             ActiveAttackWithColliderSlowAreaCapacitySo activeAttackWithColliderSlowAreaCapacitySo =

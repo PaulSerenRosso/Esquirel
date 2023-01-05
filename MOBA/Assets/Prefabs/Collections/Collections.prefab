@@ -131,8 +131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   launcher:
+    placer:
+      candidatesPoint: []
     distanceAvoiders: []
-  so: {fileID: 11400000, guid: 81e76e5d8d4f0d84ab64d32b6d79163a, type: 2}
 --- !u!1 &5530495516819103724
 GameObject:
   m_ObjectHideFlags: 0

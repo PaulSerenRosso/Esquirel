@@ -9,8 +9,32 @@ namespace Entities.Capacities
     public class ActiveAttackRectCapacity : ActiveAttackWithColliderWithPrevisualisableCapacity
     {
        public  Vector3 previsualisableObjectForward;
-       
-        public override void EnableDrawing()
+
+       public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
+       {
+           if (base.TryCast(targetsEntityIndexes, targetPositions))
+           {
+               return true;
+           }
+
+           return false;
+       }
+
+       protected override void InitiateDamagePrefab()
+       {
+         
+           base.InitiateDamagePrefab();
+       }
+       protected override void InitFX(int[] targetsEntityIndexes, Vector3[] targetPositions)
+       {
+           directionAttack = previsualisableObjectForward;
+           Debug.Log(directionAttack);
+           fxInfo.fxRotation = Quaternion.LookRotation(directionAttack, Vector3.up);
+          base.InitFX(targetsEntityIndexes, targetPositions);
+       }
+
+
+       public override void EnableDrawing()
         {
             base.EnableDrawing();
             InputManager.PlayerMap.MoveMouse.MousePos.performed += RotateDraw;
@@ -47,7 +71,7 @@ namespace Entities.Capacities
             params object[] previsualisableParameters)
         {
             previsualisableObjectForward = (Vector3)previsualisableParameters[0];
-            rotationFx = Quaternion.LookRotation(previsualisableObjectForward, Vector3.up);
+            
             return base.TryCastWithPrevisualisableData(targetsEntityIndexes, targetPositions,
                 previsualisableParameters);
         }
