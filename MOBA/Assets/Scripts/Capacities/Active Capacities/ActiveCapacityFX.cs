@@ -11,18 +11,19 @@ public class ActiveCapacityFX : Entity
     [SerializeField]
     protected ParticleSystem[] allParticleSystems;
     [PunRPC]
-    public void StartInitCapacityFX(int entityIndex, byte capacityIndex)
+    public void StartInitCapacityFX(int entityIndex, byte capacityIndex, Vector3 direction)
     {
-        InitCapacityFX(entityIndex, capacityIndex);
+        InitCapacityFX(entityIndex, capacityIndex,  direction);
     }
-    public virtual void InitCapacityFX(int entityIndex, byte capacityIndex)
+    public virtual void InitCapacityFX(int entityIndex, byte capacityIndex, Vector3 direction)
     {
         team = EntityCollectionManager.GetEntityByIndex(entityIndex).team;
+        
     }
  
-    public void RequestInitCapacityFX(int entityIndex, byte capacityIndex)
+    public void RequestInitCapacityFX(int entityIndex, byte capacityIndex, Vector3 direction)
     {
-        photonView.RPC("StartInitCapacityFX", RpcTarget.All, entityIndex, capacityIndex  );
+        photonView.RPC("StartInitCapacityFX", RpcTarget.All, entityIndex, capacityIndex, direction  );
     }
     
 }

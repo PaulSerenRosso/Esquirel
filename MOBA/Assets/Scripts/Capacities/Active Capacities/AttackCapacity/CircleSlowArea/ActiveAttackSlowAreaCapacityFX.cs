@@ -9,16 +9,16 @@ namespace Entities.Capacities
         [SerializeField] protected GameObject fxObject;
         [SerializeField] private SphereCollider fogCollider;
 
-        public override void InitCapacityFX(int entityIndex, byte capacityIndex)
+        public override void InitCapacityFX(int entityIndex, byte capacityIndex, Vector3 direction)
         {
-            base.InitCapacityFX(entityIndex, capacityIndex);
-            ActiveAttackSlowAreaCapacity activeAttackSlowAreaCapacity =
-                (ActiveAttackSlowAreaCapacity)activeAttackCapacity;
-            ActiveAttackSlowAreaCapacitySO activeAttackSlowAreaCapacitySo =
-                (ActiveAttackSlowAreaCapacitySO)activeAttackSlowAreaCapacity.so;
-            fxObject.transform.SetGlobalScale(new Vector3(1, 0, 1) * activeAttackSlowAreaCapacitySo.radiusArea +
+            base.InitCapacityFX(entityIndex, capacityIndex, direction);
+            ActiveAttackWithColliderSlowAreaCapacity activeAttackWithColliderSlowAreaCapacity =
+                (ActiveAttackWithColliderSlowAreaCapacity)ActiveAttackCapacity;
+            ActiveAttackWithColliderSlowAreaCapacitySo activeAttackWithColliderSlowAreaCapacitySo =
+                (ActiveAttackWithColliderSlowAreaCapacitySo)activeAttackWithColliderSlowAreaCapacity.so;
+            fxObject.transform.SetGlobalScale(new Vector3(1, 0, 1) * activeAttackWithColliderSlowAreaCapacitySo.radiusArea +
                                               Vector3.up * transform.lossyScale.y);
-            fogCollider.radius = activeAttackSlowAreaCapacitySo.radiusArea/2;
+            fogCollider.radius = activeAttackWithColliderSlowAreaCapacitySo.radiusArea/2;
         }
     }
 }

@@ -1,4 +1,5 @@
 using GameStates;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Entities.Capacities
@@ -9,51 +10,27 @@ namespace Entities.Capacities
         public Entity caster;
         public double cooldownTimer;
         public bool onCooldown;
-        private double fxTimer;
-       public Entity fxObject;
-        
+        public Entity fxObject;
+        protected TimerFX fxTimer;
+
         public GameObject instantiateFeedbackObj;
 
         protected int target;
+        protected TimerFxInfo fxInfo;
         
-     
-       protected virtual void InitiateFXTimer()
+        public virtual void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions,
+            params object[] customParameters)
         {
-            fxTimer = AssociatedActiveCapacitySO().fxTime;
-            GameStateMachine.Instance.OnTick += TickFxTimer;
             
         }
-       protected void TickFxTimer()
+        
+
+        public virtual object[] GetCustomSyncParameters()
         {
-            fxTimer -= 1.0 / GameStateMachine.Instance.tickRate;
-            if (fxTimer <= 0)
-            {
-                CancelFXTimer();
-            }
+            return null;
         }
-
-       public virtual void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
-       {
-           
-       }
-
-       public virtual object[] GetCustomSyncParameters()
-       {
-           return null;
-       }
-
-       protected virtual void CancelFXTimer()
-       {
-           if (fxObject != null)
-           {
-           PoolNetworkManager.Instance.PoolRequeue(AssociatedActiveCapacitySO().fxPrefab, fxObject);
-           fxObject = null;
-           }
-           GameStateMachine.Instance.OnTick -= TickFxTimer;
-       }
-
-
-       protected ActiveCapacitySO AssociatedActiveCapacitySO()
+        
+        protected ActiveCapacitySO AssociatedActiveCapacitySO()
         {
             return CapacitySOCollectionManager.GetActiveCapacitySOByIndex(indexOfSOInCollection);
         }
@@ -62,11 +39,20 @@ namespace Entities.Capacities
         {
             indexOfSOInCollection = soIndex;
             this.caster = caster;
+            if (PhotonNetwork.IsMasterClient)
+            {
+              SetUpActiveCapacityForMasterClient(soIndex, caster);
+            }
+        }
+
+       public virtual void SetUpActiveCapacityForMasterClient(byte soIndex, Entity caster)
+        {
+            fxInfo = new TimerFxInfo(AssociatedActiveCapacitySO().fxPrefab);
+            fxTimer = new TimerFX(AssociatedActiveCapacitySO().fxTime, fxInfo);
         }
 
         #region Cast
 
-    
         /// <returns></returns>
         /// <summary>
         /// Initialize the cooldown of the capacity when used.
@@ -84,7 +70,7 @@ namespace Entities.Capacities
         protected virtual void CooldownTimer()
         {
             cooldownTimer -= 1.0 / GameStateMachine.Instance.tickRate;
-            
+
             if (cooldownTimer <= 0)
             {
                 onCooldown = false;
@@ -95,7 +81,6 @@ namespace Entities.Capacities
 
         public virtual void EndCooldown()
         {
-            
         }
 
 
@@ -111,14 +96,8 @@ namespace Entities.Capacities
         #endregion
 
         #region Feedback
-        
-
-
 
         public abstract void CancelCapacity();
-        
-
-    
 
         #endregion
     }

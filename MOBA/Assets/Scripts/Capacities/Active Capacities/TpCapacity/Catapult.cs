@@ -18,7 +18,7 @@ namespace Entities
         public bool requestSended;
         private float distanceForUseCatapult;
 
-        private float distanceSqrtForUseCatapult;
+        private float distanceSqrForUseCatapult;
 
         public float DistanceForUseCatapult
         {
@@ -26,7 +26,7 @@ namespace Entities
             set
             {
                 distanceForUseCatapult = value;
-                distanceSqrtForUseCatapult = value * value;
+                distanceSqrForUseCatapult = value * value;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Entities
         {
             requestSended = false;
             if (activeCapacities[capacityIndex].onCooldown) return;
-            if ((transform.position - targetedPositions[0]).sqrMagnitude > distanceSqrtForUseCatapult) return;
+            if ((transform.position - targetedPositions[0]).sqrMagnitude > distanceSqrForUseCatapult) return;
             photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities, targetedPositions,
                 otherParameters);
             requestSended = true;

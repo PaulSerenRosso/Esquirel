@@ -6,8 +6,10 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
-public abstract class ActiveAttackWithPrevisualisableSO : ActiveAttackCapacitySO
+public abstract class ActiveAttackWithColliderCapacitySO : ActiveAttackCapacitySO
 {
-    public ActiveAttackCapacityPrevizualisable previsualisablePrefab;
+    public ActiveAttackCapacityCollider damagePrefab;
+
+    
 }
 }

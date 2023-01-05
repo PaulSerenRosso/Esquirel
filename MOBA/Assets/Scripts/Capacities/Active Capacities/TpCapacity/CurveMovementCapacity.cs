@@ -30,7 +30,7 @@ namespace Entities.Capacities
         {
             var pointPlacerResult =
                 ChampionPlacerManager.instance.GetLauncher
-                    .LaunchPlacePointClosestAtCandidatePointWithoutDistanceAvoider(endPosition, champion.agent.radius,
+                    .LaunchPlacePointClosestAtCandidatePointWithoutDistanceAvoider(endPosition, champion.pointPlacerColliderRadius,
                         curveMovementCapacitySo.firstDetectionSo);
             if (pointPlacerResult.isValided)
             {
@@ -45,7 +45,7 @@ namespace Entities.Capacities
                 {
                  endPosition=  ChampionPlacerManager.instance.GetLauncher
                         .LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(hit.point,
-                            champion.pointPlacerDistanceAvoidance, champion.agent.radius, 
+                            champion.pointPlacerDistanceAvoidance, champion.pointPlacerColliderRadius, 
                             curveMovementCapacitySo.firstDetectionSo, champion.championPlacerDistanceAvoider.pointAvoider).point;
                 }
             }

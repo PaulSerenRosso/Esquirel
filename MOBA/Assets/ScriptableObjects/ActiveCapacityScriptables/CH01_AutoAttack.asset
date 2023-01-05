@@ -16,20 +16,23 @@ MonoBehaviour:
   descriptionName: Auto attack
   icon: {fileID: 21300000, guid: 80765a06dc799714bbe0733e2152d564, type: 3}
   description: 
-  cooldown: 3
+  cooldown: 1
   types: 
   fxPrefab: {fileID: 8402012246838916218, guid: a635c22fc9b904143bdd6b16713d8896, type: 3}
-  fxTime: 2
+  fxTime: 0.2
   indexInCollection: 2
   activeCapacityAnimationLauncherInfo:
     animationTime: 0.7
     animatorParameterName: autoAttack
-  damageBeginTime: 1
-  damageTime: 1
-  damage: 2
-  damagePrefab: {fileID: 2270094352552985727, guid: ac8cee8679279af4785446d42c8f12d5, type: 3}
+  damage: 50
   offsetAttack: 0
+  damageBeginTime: 0.05
+  impactFxTime: 0.5
+  damageTime: 0.02
+  attackCapacityImpactFx: {fileID: 8110421565520617150, guid: e9492d85934383045af08345034315d9, type: 3}
+  damagePrefab: {fileID: 2270094352552985727, guid: ac8cee8679279af4785446d42c8f12d5, type: 3}
   previsualisablePrefab: {fileID: 0}
-  height: 2
-  width: 5
-  maxRange: 6
+  height: 6
+  width: 1
+  maxRange: 5
+  rangeForDamage: 3

@@ -10,6 +10,7 @@ public class EntityCapacityCollider : MonoBehaviour
     [SerializeField] private Entity entity;
     [SerializeField] private Collider collider;
 
+    public Collider GetCollider => collider;
     public void EnableEntityCollider()
     {
         collider.enabled = true;

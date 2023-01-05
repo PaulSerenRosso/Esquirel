@@ -137,13 +137,13 @@ namespace RemoteConfig {
             variables.CHAMP02_CAPA01.curveMovementMaxYPosition = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_YPosition");
             variables.CHAMP02_CAPA01.curveMovementTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_TimeLength");
             variables.CHAMP02_CAPA01.referenceRange = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_ReferenceRange");
-            variables.CHAMP02_CAPA01_SLOW.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Cooldown");
-            variables.CHAMP02_CAPA01_SLOW.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_FxTime");
-            variables.CHAMP02_CAPA01_SLOW.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_DamageBeginTime");
-            variables.CHAMP02_CAPA01_SLOW.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_DamageTime");
-            variables.CHAMP02_CAPA01_SLOW.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Damage");
-            variables.CHAMP02_CAPA01_SLOW.offsetAttack = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Offset");
-            variables.CHAMP02_CAPA01_SLOW.radiusArea = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Radius");
+            variables.champ02Capa01WithColliderSlow.cooldown = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Cooldown");
+            variables.champ02Capa01WithColliderSlow.fxTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_FxTime");
+            variables.champ02Capa01WithColliderSlow.damageBeginTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_DamageBeginTime");
+            variables.champ02Capa01WithColliderSlow.damageTime = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_DamageTime");
+            variables.champ02Capa01WithColliderSlow.damage = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Damage");
+            variables.champ02Capa01WithColliderSlow.offsetAttack = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Offset");
+            variables.champ02Capa01WithColliderSlow.radiusArea = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_Radius");
             variables.CHAMP02_CAPA01_SLOWEFFECT.speedFactor = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_SpeedFactor");
             variables.CHAMP02_CAPA01_SLOWEFFECT.time = RemoteConfigService.Instance.appConfig.GetFloat("CHAMP02_CAPA01_SLOW_SlowDuration");
             

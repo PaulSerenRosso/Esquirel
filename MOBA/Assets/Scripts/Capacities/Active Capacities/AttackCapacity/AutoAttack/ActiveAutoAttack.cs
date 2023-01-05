@@ -2,6 +2,7 @@ using Entities;
 using Entities.Capacities;
 using Entities.Champion;
 using GameStates;
+using Photon.Pun;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -10,75 +11,92 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
 {
     private ActiveAutoAttackSO activeAutoAttackSO;
 
-
-    private ActiveCapacityAnimationLauncher activeCapacityAnimationLauncher;
-
+    public float sqrRangeForDamage;
     public float range;
-    public float rangeSqrt;
+    public float rangeSqr;
+    private bool targetEntityIsLifeable;
 
-    public override void InitiateCooldown()
-    {
-        base.InitiateCooldown();
-        Debug.Log("bonsoir je suis tout le temps lu aussi");
-    }
-
-    public override void EndCooldown()
-    {
-        Debug.Log("bonsoir je suis tout le temps lu");
-        base.EndCooldown();
-    }
-
-
-    protected override void CancelDamagePrefab()
-    {
-        base.CancelDamagePrefab();
-        champion.SetCanMoveRPC(true);
-    }
+    private IActiveLifeable lifeableTarget;
+    private Entity targetEntity;
 
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if (base.TryCast(targetsEntityIndexes, targetPositions))
         {
             InitiateCooldown();
-            rotationFx = Quaternion.LookRotation((targetPositions[0] - caster.transform.position).normalized, Vector3.up);
-            InitiateFXTimer();
+            damageTimer.InitiateTimerEvent -= TryMakeDamageToTargetEntity;
+            targetEntity = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
+            if (targetEntity is IActiveLifeable lifeable)
+            {
+                lifeableTarget = lifeable;
+                targetEntityIsLifeable = true;
+                damageTimer.InitiateTimerEvent += TryMakeDamageToTargetEntity;
+            }
+            else
+            {
+                targetEntityIsLifeable = false;
+            }
+
             return true;
         }
 
-        Debug.Log("false");
         return false;
-
     }
 
-    public override void CancelCapacity()
+    protected override void InitFX(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        base.CancelCapacity(); 
-        Debug.Log("bonsoir je test le cancel capacity");
+        directionAttack = (targetPositions[0] - caster.transform.position).normalized;
+        fxInfo.fxRotation =
+            Quaternion.LookRotation((targetPositions[0] - caster.transform.position).normalized, Vector3.up);
+        base.InitFX(targetsEntityIndexes, targetPositions);
     }
 
+    private void TryMakeDamageToTargetEntity()
+    {
+        if ((champion.transform.position - targetEntity.transform.position).sqrMagnitude < sqrRangeForDamage)
+        {
+            targetEntityIsLifeable = true;
+            impactFxTimerInfo.fxPos =targetEntity.entityCapacityCollider.GetCollider.ClosestPoint(champion.transform.position);
+            impactFxTimerInfo.fxRotation =
+                Quaternion.LookRotation((impactFxTimerInfo.fxPos-champion.transform.position).normalized, Vector3.up);
+            impactFxTimer.InitiateTimer();
+            lifeableTarget.DecreaseCurrentHpRPC(activeAutoAttackSO.damage);
+        }
+        damageTimer.CancelTimer();
+    }
+
+    private void CancelDamage()
+    {
+        champion.SetCanMoveRPC(true);
+    }
+
+    public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions,
+        params object[] customParameters)
+    {
+        champion.RotateMeshChampionRPC((targetPositions[0] - caster.transform.position).normalized);
+        champion.SyncSetCanMoveRPC(false);
+    }
 
     public override void SetUpActiveCapacity(byte soIndex, Entity caster)
     {
         base.SetUpActiveCapacity(soIndex, caster);
-        activeAutoAttackSO = (ActiveAutoAttackSO) AssociatedActiveCapacitySO();
+        activeAutoAttackSO = (ActiveAutoAttackSO)CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
         range = activeAutoAttackSO.maxRange;
-        rangeSqrt = range * range;
+        sqrRangeForDamage = activeAutoAttackSO.rangeForDamage * activeAutoAttackSO.rangeForDamage;
+        rangeSqr = range * range;
+        if (PhotonNetwork.IsMasterClient)
+            damageTimer.CancelTimerEvent += CancelDamage;
     }
+
 
     public float GetMaxRange()
     {
         return range;
     }
 
-    public float GetSqrtMaxRange()
+    public float GetSqrMaxRange()
     {
-        return rangeSqrt;
-    }
-
-    public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
-    {
-        champion.RotateMeshChampionRPC((targetPositions[0] - caster.transform.position).normalized);
-        champion.SyncSetCanMoveRPC(false);
+        return rangeSqr;
     }
 
     /// <summary>
@@ -88,9 +106,7 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
     {
         if (EntityCollectionManager.GetEntityByIndex(casterIndex).team !=
             EntityCollectionManager.GetEntityByIndex(targetsEntityIndex).team)
-        {
             return true;
-        }
 
         return false;
     }

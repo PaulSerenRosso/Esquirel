@@ -42,7 +42,6 @@ namespace Entities.Capacities
 
         protected virtual void EndJump()
         {
-            champion.SyncSetCanMoveRPC(true);
             champion.OnEndMoveChampion -= EndJump;
             ActivateController();
         }
@@ -86,7 +85,7 @@ namespace Entities.Capacities
                     ChampionPlacerManager.instance.GetLauncher
                         .LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(
                             transform.position, champion.pointPlacerDistanceAvoidance,
-                            champion.agent.radius, curveCapacitySo.secondDetectionSo, champion.championPlacerDistanceAvoider.pointAvoider).point);
+                            champion.pointPlacerColliderRadius, curveCapacitySo.secondDetectionSo, champion.championPlacerDistanceAvoider.pointAvoider).point);
                 Debug.Log(champion+"bonsoir à tous ");
                 
             }

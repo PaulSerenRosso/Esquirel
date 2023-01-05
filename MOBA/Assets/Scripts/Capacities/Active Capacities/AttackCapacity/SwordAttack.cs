@@ -11,10 +11,8 @@ public class SwordAttack : ActiveAttackRectCapacity
         if (base.TryCast(targetsEntityIndexes, targetPositions))
         {
             InitiateCooldown();
-            InitiateFXTimer();
             return true;
         }
-
         return false;
     }
 
