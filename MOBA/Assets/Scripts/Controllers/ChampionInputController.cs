@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Entities;
@@ -135,40 +136,56 @@ namespace Controllers.Inputs
                 layerForDetectEntity);
             if (hits.Length != 0)
             {
+                int firstCandidateCloserEntIndex = -1;
                 //Debug.Log("hit"+hit.collider.gameObject.name);
-
-                var closerEnt = hits[0].collider.GetComponent<EntityClicker>().GetEntity;
-                float distanceBetweenCloserEntityAndControlledEntity =
-                    (controlledEntity.transform.position - closerEnt.transform.position).sqrMagnitude;
-                for (int i = 1; i < hits.Length; i++)
+                List<Entity> entitiesTargetedAndValided = new List<Entity>();
+                for (int i = 0; i < hits.Length; i++)
                 {
-                    var currentEntity = hits[i].collider.GetComponent<EntityClicker>().GetEntity;
-                    float distanceBetweenCurrentEntityAndControlledEntity =
-                        (controlledEntity.transform.position - currentEntity.transform.position).sqrMagnitude;
-                    if (distanceBetweenCurrentEntityAndControlledEntity <
-                        distanceBetweenCloserEntityAndControlledEntity)
+                    Entity currentEnt = hits[i].collider.GetComponent<EntityClicker>().GetEntity;
+                    if (currentEnt.team == controlledEntity.team) continue;
+                    entitiesTargetedAndValided.Add(currentEnt);
+                }
+
+                if (entitiesTargetedAndValided.Count != 0)
+                {
+                    var closerEnt = entitiesTargetedAndValided[0];
+                    float distanceBetweenCloserEntityAndControlledEntity =
+                        (controlledEntity.transform.position - closerEnt.transform.position).sqrMagnitude;
+                    for (int i = 1; i < entitiesTargetedAndValided.Count; i++)
                     {
-                        closerEnt = currentEntity;
-                        distanceBetweenCloserEntityAndControlledEntity =
-                            distanceBetweenCurrentEntityAndControlledEntity;
+                        var currentEntity = entitiesTargetedAndValided[i] ;
+                        float distanceBetweenCurrentEntityAndControlledEntity =
+                            (controlledEntity.transform.position - currentEntity.transform.position).sqrMagnitude;
+                        if (distanceBetweenCurrentEntityAndControlledEntity <
+                            distanceBetweenCloserEntityAndControlledEntity)
+                        {
+                            closerEnt = currentEntity;
+                            distanceBetweenCloserEntityAndControlledEntity =
+                                distanceBetweenCurrentEntityAndControlledEntity;
+                        }
+                    }
+                    //    if (ent == null && hit.transform.parent != null) hit.transform.parent.GetComponent<Entity>();
+
+                    // Debug.Log("hitentity");
+                    if (closerEnt is ITargetable)
+                    {
+                        ITargetable entTarget = (ITargetable)closerEnt;
+                        if (entTarget.CanBeTargeted())
+                        {
+                            // Debug.Log("set list input");
+                            targetEntity[0] = closerEnt.entityIndex;
+                            cursorWorldPos[0] = closerEnt.transform.position;
+                        }
+                    }
+                    else if (closerEnt is Catapult catapult)
+                    {
+                        catapultDetected = catapult;
                     }
                 }
-                //    if (ent == null && hit.transform.parent != null) hit.transform.parent.GetComponent<Entity>();
-
-                // Debug.Log("hitentity");
-                if (closerEnt is ITargetable)
+                else
                 {
-                    ITargetable entTarget = (ITargetable)closerEnt;
-                    if (entTarget.CanBeTargeted())
-                    {
-                        // Debug.Log("set list input");
-                        targetEntity[0] = closerEnt.entityIndex;
-                        cursorWorldPos[0] = closerEnt.transform.position;
-                    }
-                }
-                else if (closerEnt is Catapult catapult)
-                {
-                    catapultDetected = catapult;
+                    catapultDetected = null;
+                    targetEntity[0] = -1;
                 }
             }
             else
@@ -176,6 +193,7 @@ namespace Controllers.Inputs
                 catapultDetected = null;
                 targetEntity[0] = -1;
             }
+
             if (isActivebuttonPress)
             {
                 SelectMoveTarget();
