@@ -1,17 +1,23 @@
 // Made with Amplify Shader Editor v1.9.1.2
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "VFX_Additive_Particle_DepthFade"
+Shader "VFX_Particles_Alpha_TwoTex"
 {
 	Properties
 	{
 		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
-		[ASEBegin]_DepthFade("Depth Fade", Float) = 0
-		_MainTexture("Main Texture", 2D) = "white" {}
-		_Main_Pow("Main_Pow", Range( 1 , 20)) = 1
-		_Main_Ins("Main_Ins", Range( 1 , 20)) = 1
-		[ASEEnd][HDR]_Tint_Color("Tint_Color", Color) = (0,0,0,0)
-		[HideInInspector] _texcoord( "", 2D ) = "white" {}
+		[ASEBegin][Header(Rendering Parameter)][Enum(TwoSided,0,Back,1,Front,2)]_TwoSide("TwoSide", Float) = 0
+		_Texture_Intensity("Texture_Intensity", Range( 1 , 10)) = 10
+		[Header(Main Texture)]_Texture_01("Texture_01", 2D) = "white" {}
+		_Panner_Tex_01_Offset_Y("Panner_Tex_01_Offset_Y", Float) = 0
+		_Panner_Tex_01_Offset_X("Panner_Tex_01_Offset_X", Float) = 0
+		_Texture_02("Texture_02", 2D) = "white" {}
+		[IntRange]_Channel("Channel", Range( 0 , 3)) = 0
+		_Panner_Tex_02_Offset_X("Panner_Tex_02_Offset_X", Float) = 0
+		_Panner_Tex_02_Offset_Y("Panner_Tex_02_Offset_Y", Float) = 0
+		[Header(Dissolve Tex)]_DissolveTex("Dissolve Tex", 2D) = "white" {}
+		_Panner_DissolveTex_Offset_X("Panner_DissolveTex_Offset_X", Float) = 0
+		[ASEEnd]_Panner_DissolveTex_Offset_Y("Panner_DissolveTex_Offset_Y", Float) = 0
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -150,7 +156,7 @@ Shader "VFX_Additive_Particle_DepthFade"
 			Name "Forward"
 			Tags { "LightMode"="UniversalForward" }
 
-			Blend One One, One OneMinusSrcAlpha
+			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
 			ZWrite Off
 			ZTest LEqual
 			Offset 0 , 0
@@ -163,7 +169,6 @@ Shader "VFX_Additive_Particle_DepthFade"
 			#pragma multi_compile_instancing
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define ASE_SRP_VERSION 101001
-			#define REQUIRE_DEPTH_TEXTURE 1
 
 
 			#pragma vertex vert
@@ -182,8 +187,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_texcoord1 : TEXCOORD1;
 				float4 ase_color : COLOR;
+				float4 ase_texcoord : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -207,11 +213,17 @@ Shader "VFX_Additive_Particle_DepthFade"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _MainTexture_ST;
-			float4 _Tint_Color;
-			float _Main_Pow;
-			float _Main_Ins;
-			float _DepthFade;
+			float4 _Texture_01_ST;
+			float4 _DissolveTex_ST;
+			float _TwoSide;
+			float _Texture_Intensity;
+			float _Panner_Tex_01_Offset_X;
+			float _Panner_Tex_01_Offset_Y;
+			float _Panner_Tex_02_Offset_X;
+			float _Panner_Tex_02_Offset_Y;
+			float _Channel;
+			float _Panner_DissolveTex_Offset_X;
+			float _Panner_DissolveTex_Offset_Y;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
 				float _TessValue;
@@ -222,8 +234,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 			#endif
 			CBUFFER_END
 
-			sampler2D _MainTexture;
-			uniform float4 _CameraDepthTexture_TexelSize;
+			sampler2D _Texture_01;
+			sampler2D _Texture_02;
+			sampler2D _DissolveTex;
 
 
 			
@@ -234,15 +247,12 @@ Shader "VFX_Additive_Particle_DepthFade"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
-				float4 screenPos = ComputeScreenPos(ase_clipPos);
-				o.ase_texcoord4 = screenPos;
-				
-				o.ase_texcoord3.xy = v.ase_texcoord.xy;
+				o.ase_texcoord3 = v.ase_texcoord1;
 				o.ase_color = v.ase_color;
+				o.ase_texcoord4.xy = v.ase_texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord3.zw = 0;
+				o.ase_texcoord4.zw = 0;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -288,8 +298,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_texcoord1 : TEXCOORD1;
 				float4 ase_color : COLOR;
+				float4 ase_texcoord : TEXCOORD0;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -307,8 +318,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
+				o.ase_texcoord1 = v.ase_texcoord1;
 				o.ase_color = v.ase_color;
+				o.ase_texcoord = v.ase_texcoord;
 				return o;
 			}
 
@@ -347,8 +359,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				o.ase_texcoord1 = patch[0].ase_texcoord1 * bary.x + patch[1].ase_texcoord1 * bary.y + patch[2].ase_texcoord1 * bary.z;
 				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
+				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -385,19 +398,30 @@ Shader "VFX_Additive_Particle_DepthFade"
 					#endif
 				#endif
 
-				float2 uv_MainTexture = IN.ase_texcoord3.xy * _MainTexture_ST.xy + _MainTexture_ST.zw;
-				float4 temp_cast_0 = (_Main_Pow).xxxx;
+				float2 appendResult42 = (float2(_Panner_Tex_01_Offset_X , _Panner_Tex_01_Offset_Y));
+				float2 uv_Texture_01 = IN.ase_texcoord4.xy * _Texture_01_ST.xy + _Texture_01_ST.zw;
+				float2 panner15 = ( 1.0 * _Time.y * appendResult42 + uv_Texture_01);
+				float2 appendResult47 = (float2(_Panner_Tex_02_Offset_X , _Panner_Tex_02_Offset_Y));
+				float2 texCoord18 = IN.ase_texcoord4.xy * float2( 1,1 ) + float2( 0,0 );
+				float2 panner19 = ( 1.0 * _Time.y * appendResult47 + texCoord18);
+				float4 tex2DNode5_g5 = tex2D( _Texture_02, panner19 );
+				float temp_output_6_0_g5 = _Channel;
+				float lerpResult1_g5 = lerp( tex2DNode5_g5.r , tex2DNode5_g5.g , temp_output_6_0_g5);
+				float lerpResult2_g5 = lerp( lerpResult1_g5 , tex2DNode5_g5.b , temp_output_6_0_g5);
+				float lerpResult3_g5 = lerp( lerpResult2_g5 , tex2DNode5_g5.a , temp_output_6_0_g5);
+				float4 temp_output_24_0 = ( IN.ase_texcoord3.x * IN.ase_color * ( tex2D( _Texture_01, panner15 ) * lerpResult3_g5 ) );
 				
-				float4 screenPos = IN.ase_texcoord4;
-				float4 ase_screenPosNorm = screenPos / screenPos.w;
-				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float screenDepth17 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth17 = abs( ( screenDepth17 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFade ) );
+				float4 temp_cast_1 = (IN.ase_texcoord3.z).xxxx;
+				float4 temp_cast_2 = (( IN.ase_texcoord3.z + IN.ase_texcoord3.w )).xxxx;
+				float2 appendResult50 = (float2(_Panner_DissolveTex_Offset_X , _Panner_DissolveTex_Offset_Y));
+				float2 uv_DissolveTex = IN.ase_texcoord4.xy * _DissolveTex_ST.xy + _DissolveTex_ST.zw;
+				float2 panner31 = ( 1.0 * _Time.y * appendResult50 + uv_DissolveTex);
+				float4 smoothstepResult34 = smoothstep( temp_cast_1 , temp_cast_2 , tex2D( _DissolveTex, panner31 ));
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( pow( tex2D( _MainTexture, uv_MainTexture ) , temp_cast_0 ) * IN.ase_color * _Main_Ins * _Tint_Color ).rgb;
-				float Alpha = ( IN.ase_color.a * saturate( distanceDepth17 ) );
+				float3 Color = ( _Texture_Intensity * temp_output_24_0 ).rgb;
+				float Alpha = ( saturate( temp_output_24_0.a ) * saturate( smoothstepResult34 ) ).r;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -435,7 +459,6 @@ Shader "VFX_Additive_Particle_DepthFade"
 			#pragma multi_compile_instancing
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define ASE_SRP_VERSION 101001
-			#define REQUIRE_DEPTH_TEXTURE 1
 
 
 			#pragma vertex vert
@@ -456,7 +479,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
+				float4 ase_texcoord1 : TEXCOORD1;
 				float4 ase_color : COLOR;
+				float4 ase_texcoord : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -469,18 +494,25 @@ Shader "VFX_Additive_Particle_DepthFade"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 					float4 shadowCoord : TEXCOORD1;
 				#endif
-				float4 ase_color : COLOR;
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_color : COLOR;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _MainTexture_ST;
-			float4 _Tint_Color;
-			float _Main_Pow;
-			float _Main_Ins;
-			float _DepthFade;
+			float4 _Texture_01_ST;
+			float4 _DissolveTex_ST;
+			float _TwoSide;
+			float _Texture_Intensity;
+			float _Panner_Tex_01_Offset_X;
+			float _Panner_Tex_01_Offset_Y;
+			float _Panner_Tex_02_Offset_X;
+			float _Panner_Tex_02_Offset_Y;
+			float _Channel;
+			float _Panner_DissolveTex_Offset_X;
+			float _Panner_DissolveTex_Offset_Y;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
 				float _TessValue;
@@ -491,7 +523,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 			#endif
 			CBUFFER_END
 
-			uniform float4 _CameraDepthTexture_TexelSize;
+			sampler2D _Texture_01;
+			sampler2D _Texture_02;
+			sampler2D _DissolveTex;
 
 
 			
@@ -507,11 +541,12 @@ Shader "VFX_Additive_Particle_DepthFade"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
-				float4 screenPos = ComputeScreenPos(ase_clipPos);
-				o.ase_texcoord2 = screenPos;
-				
+				o.ase_texcoord2 = v.ase_texcoord1;
 				o.ase_color = v.ase_color;
+				o.ase_texcoord3.xy = v.ase_texcoord.xy;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord3.zw = 0;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -578,7 +613,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
+				float4 ase_texcoord1 : TEXCOORD1;
 				float4 ase_color : COLOR;
+				float4 ase_texcoord : TEXCOORD0;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -596,7 +633,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
+				o.ase_texcoord1 = v.ase_texcoord1;
 				o.ase_color = v.ase_color;
+				o.ase_texcoord = v.ase_texcoord;
 				return o;
 			}
 
@@ -635,7 +674,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
+				o.ase_texcoord1 = patch[0].ase_texcoord1 * bary.x + patch[1].ase_texcoord1 * bary.y + patch[2].ase_texcoord1 * bary.z;
 				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
+				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -672,14 +713,27 @@ Shader "VFX_Additive_Particle_DepthFade"
 					#endif
 				#endif
 
-				float4 screenPos = IN.ase_texcoord2;
-				float4 ase_screenPosNorm = screenPos / screenPos.w;
-				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float screenDepth17 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth17 = abs( ( screenDepth17 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFade ) );
+				float2 appendResult42 = (float2(_Panner_Tex_01_Offset_X , _Panner_Tex_01_Offset_Y));
+				float2 uv_Texture_01 = IN.ase_texcoord3.xy * _Texture_01_ST.xy + _Texture_01_ST.zw;
+				float2 panner15 = ( 1.0 * _Time.y * appendResult42 + uv_Texture_01);
+				float2 appendResult47 = (float2(_Panner_Tex_02_Offset_X , _Panner_Tex_02_Offset_Y));
+				float2 texCoord18 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
+				float2 panner19 = ( 1.0 * _Time.y * appendResult47 + texCoord18);
+				float4 tex2DNode5_g5 = tex2D( _Texture_02, panner19 );
+				float temp_output_6_0_g5 = _Channel;
+				float lerpResult1_g5 = lerp( tex2DNode5_g5.r , tex2DNode5_g5.g , temp_output_6_0_g5);
+				float lerpResult2_g5 = lerp( lerpResult1_g5 , tex2DNode5_g5.b , temp_output_6_0_g5);
+				float lerpResult3_g5 = lerp( lerpResult2_g5 , tex2DNode5_g5.a , temp_output_6_0_g5);
+				float4 temp_output_24_0 = ( IN.ase_texcoord2.x * IN.ase_color * ( tex2D( _Texture_01, panner15 ) * lerpResult3_g5 ) );
+				float4 temp_cast_0 = (IN.ase_texcoord2.z).xxxx;
+				float4 temp_cast_1 = (( IN.ase_texcoord2.z + IN.ase_texcoord2.w )).xxxx;
+				float2 appendResult50 = (float2(_Panner_DissolveTex_Offset_X , _Panner_DissolveTex_Offset_Y));
+				float2 uv_DissolveTex = IN.ase_texcoord3.xy * _DissolveTex_ST.xy + _DissolveTex_ST.zw;
+				float2 panner31 = ( 1.0 * _Time.y * appendResult50 + uv_DissolveTex);
+				float4 smoothstepResult34 = smoothstep( temp_cast_0 , temp_cast_1 , tex2D( _DissolveTex, panner31 ));
 				
 
-				float Alpha = ( IN.ase_color.a * saturate( distanceDepth17 ) );
+				float Alpha = ( saturate( temp_output_24_0.a ) * saturate( smoothstepResult34 ) ).r;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -715,7 +769,6 @@ Shader "VFX_Additive_Particle_DepthFade"
 			#pragma multi_compile_instancing
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define ASE_SRP_VERSION 101001
-			#define REQUIRE_DEPTH_TEXTURE 1
 
 
 			#pragma vertex vert
@@ -732,7 +785,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
+				float4 ase_texcoord1 : TEXCOORD1;
 				float4 ase_color : COLOR;
+				float4 ase_texcoord : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -745,18 +800,25 @@ Shader "VFX_Additive_Particle_DepthFade"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 				float4 shadowCoord : TEXCOORD1;
 				#endif
-				float4 ase_color : COLOR;
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_color : COLOR;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _MainTexture_ST;
-			float4 _Tint_Color;
-			float _Main_Pow;
-			float _Main_Ins;
-			float _DepthFade;
+			float4 _Texture_01_ST;
+			float4 _DissolveTex_ST;
+			float _TwoSide;
+			float _Texture_Intensity;
+			float _Panner_Tex_01_Offset_X;
+			float _Panner_Tex_01_Offset_Y;
+			float _Panner_Tex_02_Offset_X;
+			float _Panner_Tex_02_Offset_Y;
+			float _Channel;
+			float _Panner_DissolveTex_Offset_X;
+			float _Panner_DissolveTex_Offset_Y;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
 				float _TessValue;
@@ -767,7 +829,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 			#endif
 			CBUFFER_END
 
-			uniform float4 _CameraDepthTexture_TexelSize;
+			sampler2D _Texture_01;
+			sampler2D _Texture_02;
+			sampler2D _DissolveTex;
 
 
 			
@@ -778,11 +842,12 @@ Shader "VFX_Additive_Particle_DepthFade"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
-				float4 screenPos = ComputeScreenPos(ase_clipPos);
-				o.ase_texcoord2 = screenPos;
-				
+				o.ase_texcoord2 = v.ase_texcoord1;
 				o.ase_color = v.ase_color;
+				o.ase_texcoord3.xy = v.ase_texcoord.xy;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord3.zw = 0;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -822,7 +887,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
+				float4 ase_texcoord1 : TEXCOORD1;
 				float4 ase_color : COLOR;
+				float4 ase_texcoord : TEXCOORD0;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -840,7 +907,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
+				o.ase_texcoord1 = v.ase_texcoord1;
 				o.ase_color = v.ase_color;
+				o.ase_texcoord = v.ase_texcoord;
 				return o;
 			}
 
@@ -879,7 +948,9 @@ Shader "VFX_Additive_Particle_DepthFade"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
+				o.ase_texcoord1 = patch[0].ase_texcoord1 * bary.x + patch[1].ase_texcoord1 * bary.y + patch[2].ase_texcoord1 * bary.z;
 				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
+				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -916,14 +987,27 @@ Shader "VFX_Additive_Particle_DepthFade"
 					#endif
 				#endif
 
-				float4 screenPos = IN.ase_texcoord2;
-				float4 ase_screenPosNorm = screenPos / screenPos.w;
-				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float screenDepth17 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth17 = abs( ( screenDepth17 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFade ) );
+				float2 appendResult42 = (float2(_Panner_Tex_01_Offset_X , _Panner_Tex_01_Offset_Y));
+				float2 uv_Texture_01 = IN.ase_texcoord3.xy * _Texture_01_ST.xy + _Texture_01_ST.zw;
+				float2 panner15 = ( 1.0 * _Time.y * appendResult42 + uv_Texture_01);
+				float2 appendResult47 = (float2(_Panner_Tex_02_Offset_X , _Panner_Tex_02_Offset_Y));
+				float2 texCoord18 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
+				float2 panner19 = ( 1.0 * _Time.y * appendResult47 + texCoord18);
+				float4 tex2DNode5_g5 = tex2D( _Texture_02, panner19 );
+				float temp_output_6_0_g5 = _Channel;
+				float lerpResult1_g5 = lerp( tex2DNode5_g5.r , tex2DNode5_g5.g , temp_output_6_0_g5);
+				float lerpResult2_g5 = lerp( lerpResult1_g5 , tex2DNode5_g5.b , temp_output_6_0_g5);
+				float lerpResult3_g5 = lerp( lerpResult2_g5 , tex2DNode5_g5.a , temp_output_6_0_g5);
+				float4 temp_output_24_0 = ( IN.ase_texcoord2.x * IN.ase_color * ( tex2D( _Texture_01, panner15 ) * lerpResult3_g5 ) );
+				float4 temp_cast_0 = (IN.ase_texcoord2.z).xxxx;
+				float4 temp_cast_1 = (( IN.ase_texcoord2.z + IN.ase_texcoord2.w )).xxxx;
+				float2 appendResult50 = (float2(_Panner_DissolveTex_Offset_X , _Panner_DissolveTex_Offset_Y));
+				float2 uv_DissolveTex = IN.ase_texcoord3.xy * _DissolveTex_ST.xy + _DissolveTex_ST.zw;
+				float2 panner31 = ( 1.0 * _Time.y * appendResult50 + uv_DissolveTex);
+				float4 smoothstepResult34 = smoothstep( temp_cast_0 , temp_cast_1 , tex2D( _DissolveTex, panner31 ));
 				
 
-				float Alpha = ( IN.ase_color.a * saturate( distanceDepth17 ) );
+				float Alpha = ( saturate( temp_output_24_0.a ) * saturate( smoothstepResult34 ) ).r;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -948,32 +1032,79 @@ Shader "VFX_Additive_Particle_DepthFade"
 /*ASEBEGIN
 Version=19102
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;9;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;10;0,0;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_Additive_Particle_DepthFade;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;1;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638083287255026710;  Blend;2;638084848343505278;Two Sided;1;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;11;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;12;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;13;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;8;-240,0;Inherit;False;4;4;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;3;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.VertexColorNode;14;-656,256;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;15;-240,384;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SaturateNode;16;-496,512;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.DepthFade;17;-848,512;Inherit;False;True;False;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;19;-1008,576;Inherit;False;Property;_DepthFade;Depth Fade;0;0;Create;True;0;0;0;False;0;False;0;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;20;-1040,-128;Inherit;True;Property;_MainTexture;Main Texture;1;0;Create;True;0;0;0;False;0;False;-1;None;9ea091eaf22759a4192850c0dfa2604c;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.PowerNode;21;-640,-128;Inherit;False;False;2;0;COLOR;0,0,0,0;False;1;FLOAT;1;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;22;-1152,128;Inherit;False;Property;_Main_Pow;Main_Pow;2;0;Create;True;0;0;0;False;0;False;1;1;1;20;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;24;-768,128;Inherit;False;Property;_Main_Ins;Main_Ins;3;0;Create;True;0;0;0;False;0;False;1;1;1;20;0;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;23;-688,-320;Inherit;False;Property;_Tint_Color;Tint_Color;4;1;[HDR];Create;True;0;0;0;False;0;False;0,0,0,0;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-WireConnection;10;2;8;0
-WireConnection;10;3;15;0
-WireConnection;8;0;21;0
-WireConnection;8;1;14;0
-WireConnection;8;2;24;0
-WireConnection;8;3;23;0
-WireConnection;15;0;14;4
-WireConnection;15;1;16;0
-WireConnection;16;0;17;0
-WireConnection;17;0;19;0
-WireConnection;21;0;20;0
-WireConnection;21;1;22;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;23;-496,-176;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;24;-240,-224;Inherit;False;3;3;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.VertexColorNode;25;-528,-384;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;28;144,-256;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.RangedFloatNode;29;-176,-384;Inherit;False;Property;_Texture_Intensity;Texture_Intensity;1;0;Create;True;0;0;0;False;0;False;10;1;1;10;0;1;FLOAT;0
+Node;AmplifyShaderEditor.PannerNode;15;-1184,-512;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;14;-1472,-640;Inherit;False;0;21;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleAddOpNode;37;-608,816;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;10;512,-256;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_Particles_Alpha_TwoTex;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;_TwoSide;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638084679718313844;  Blend;0;638084848160053340;Two Sided;1;638084845790314526;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
+Node;AmplifyShaderEditor.TexCoordVertexDataNode;36;-816,608;Inherit;False;1;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TexCoordVertexDataNode;27;-544,-640;Inherit;False;1;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.PannerNode;31;-1184,416;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;32;-1472,384;Inherit;False;0;30;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;8;-1790,-281;Inherit;False;Property;_TwoSide;TwoSide;0;2;[Header];[Enum];Create;True;1;Rendering Parameter;3;TwoSided;0;Back;1;Front;2;0;True;0;False;0;2;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.DynamicAppendNode;42;-1392,-480;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RangedFloatNode;44;-1760,-432;Inherit;False;Property;_Panner_Tex_01_Offset_Y;Panner_Tex_01_Offset_Y;5;0;Create;True;0;0;0;False;0;False;0;-1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;46;-1759,-512;Inherit;False;Property;_Panner_Tex_01_Offset_X;Panner_Tex_01_Offset_X;6;0;Create;True;0;0;0;False;0;False;0;0.1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.DynamicAppendNode;50;-1392,544;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RangedFloatNode;51;-1760,512;Inherit;False;Property;_Panner_DissolveTex_Offset_X;Panner_DissolveTex_Offset_X;12;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;52;-1760,592;Inherit;False;Property;_Panner_DissolveTex_Offset_Y;Panner_DissolveTex_Offset_Y;13;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;30;-896,385;Inherit;True;Property;_DissolveTex;Dissolve Tex;11;1;[Header];Create;True;1;Dissolve Tex;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.PannerNode;19;-1184,-128;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;18;-1472,-256;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.DynamicAppendNode;47;-1392,-96;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RangedFloatNode;48;-1760,-128;Inherit;False;Property;_Panner_Tex_02_Offset_X;Panner_Tex_02_Offset_X;9;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;49;-1760,-48;Inherit;False;Property;_Panner_Tex_02_Offset_Y;Panner_Tex_02_Offset_Y;10;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;58;-848,-176;Inherit;False;ASF_ChoseChannel;2;;5;4821157d1879152449ad3b87e45543db;0;3;10;SAMPLER2D;;False;9;FLOAT2;0,0;False;6;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;21;-896,-544;Inherit;True;Property;_Texture_01;Texture_01;4;1;[Header];Create;True;1;Main Texture;0;0;False;0;False;-1;None;f631fa6989759d848bb4c1c5d67a6cc4;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TexturePropertyNode;59;-1200,-320;Inherit;True;Property;_Texture_02;Texture_02;7;0;Create;True;0;0;0;False;0;False;None;56797fdbe9ac6c84f9cff1c9b70cdb9f;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.RangedFloatNode;60;-1152,0;Inherit;False;Property;_Channel;Channel;8;1;[IntRange];Create;True;0;0;0;False;0;False;0;1;0;3;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SmoothstepOpNode;34;-402,649;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;COLOR;1,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SaturateNode;66;24.06348,654.4673;Inherit;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;41;238.6361,112.0656;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.BreakToComponentsNode;40;-111,-64;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
+Node;AmplifyShaderEditor.SaturateNode;38;11,14;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+WireConnection;23;0;21;0
+WireConnection;23;1;58;0
+WireConnection;24;0;27;1
+WireConnection;24;1;25;0
+WireConnection;24;2;23;0
+WireConnection;28;0;29;0
+WireConnection;28;1;24;0
+WireConnection;15;0;14;0
+WireConnection;15;2;42;0
+WireConnection;37;0;36;3
+WireConnection;37;1;36;4
+WireConnection;10;2;28;0
+WireConnection;10;3;41;0
+WireConnection;31;0;32;0
+WireConnection;31;2;50;0
+WireConnection;42;0;46;0
+WireConnection;42;1;44;0
+WireConnection;50;0;51;0
+WireConnection;50;1;52;0
+WireConnection;30;1;31;0
+WireConnection;19;0;18;0
+WireConnection;19;2;47;0
+WireConnection;47;0;48;0
+WireConnection;47;1;49;0
+WireConnection;58;10;59;0
+WireConnection;58;9;19;0
+WireConnection;58;6;60;0
+WireConnection;21;1;15;0
+WireConnection;34;0;30;0
+WireConnection;34;1;36;3
+WireConnection;34;2;37;0
+WireConnection;66;0;34;0
+WireConnection;41;0;38;0
+WireConnection;41;1;66;0
+WireConnection;40;0;24;0
+WireConnection;38;0;40;3
 ASEEND*/
-//CHKSM=473BF631ED62903564E3A82C28720D3313745645
+//CHKSM=A291B34153852897E59A0E82AE43F1890BA3F191
