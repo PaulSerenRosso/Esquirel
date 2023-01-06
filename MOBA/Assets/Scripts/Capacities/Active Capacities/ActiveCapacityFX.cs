@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entities;
+using GameStates;
 using Photon.Pun;
 using UnityEngine;
 
@@ -15,10 +16,16 @@ public class ActiveCapacityFX : Entity
     {
         InitCapacityFX(entityIndex, capacityIndex,  direction);
     }
+    
     public virtual void InitCapacityFX(int entityIndex, byte capacityIndex, Vector3 direction)
     {
         team = EntityCollectionManager.GetEntityByIndex(entityIndex).team;
-        
+        if(GameStateMachine.Instance.GetPlayerTeam() == team)
+            ShowElements();
+        else
+        {
+            HideElements();
+        }
     }
  
     public void RequestInitCapacityFX(int entityIndex, byte capacityIndex, Vector3 direction)

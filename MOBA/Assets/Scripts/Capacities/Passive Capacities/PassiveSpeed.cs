@@ -46,6 +46,8 @@ public class PassiveSpeed : PassiveCapacity
          }   
 
         base.SyncOnAdded(target);
+        target.particleSystemsToShow.Add(fxObject.GetComponent<ParticleSystem>());
+        target.particleSystemsToShowAlpha.Add(1);
     }
 
     public override void SyncOnRemoved(Entity target)
@@ -60,6 +62,9 @@ public class PassiveSpeed : PassiveCapacity
                 };
         }
        base.SyncOnRemoved(target);
+       var particleSystem = fxObject.GetComponent<ParticleSystem>();
+       target.particleSystemsToShowAlpha.RemoveAt(target.particleSystemsToShow.IndexOf(particleSystem));
+       target.particleSystemsToShow.Remove(particleSystem);
     }
 
     private void EndMove()

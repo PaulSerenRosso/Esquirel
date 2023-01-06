@@ -40,6 +40,12 @@ public class Smoke : Entity
     {
         var mainModule = particleSystem.main;
         mainModule.simulationSpeed = 1/time;
+        if(GameStateMachine.Instance.GetPlayerTeam() == team)
+            ShowElements();
+        else
+        {
+            HideElements();
+        }
     }
 
     

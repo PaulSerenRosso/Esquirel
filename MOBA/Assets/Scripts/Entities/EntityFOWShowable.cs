@@ -20,6 +20,7 @@ namespace  Entities
         public List<Graphic> graphicsToShow;
         public List<float> graphicsToShowAlpha;
         public List<Bush> bushes;
+        
 
         private void OnValidate()
         {
