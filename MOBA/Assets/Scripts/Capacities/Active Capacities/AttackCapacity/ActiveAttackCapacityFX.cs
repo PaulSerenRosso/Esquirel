@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entities.Capacities;
+using Entities.FogOfWar;
 using UnityEngine;
 
 namespace Entities.Capacities
@@ -21,8 +22,7 @@ namespace Entities.Capacities
                 ActiveAttackCapacity = (ActiveAttackCapacity)champion.activeCapacities[capacityIndex];
             }
             transform.position +=
-                direction* ActiveAttackCapacity.so.offsetAttack + Vector3.up;
-Debug.Log(ActiveAttackCapacity.directionAttack);
+                direction* ActiveAttackCapacity.so.offsetAttack + Vector3.up*FogOfWarManager.Instance.startYPositionRay;
             for (int i = 0; i < allParticleSystems.Length; i++)
             {
                 var mainModule = allParticleSystems[i].main;

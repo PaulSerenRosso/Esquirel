@@ -386,7 +386,6 @@ namespace Entities.Champion
         
             transform.position = newPos;
             moveDestination = newPos;
-            Debug.Log("moveDestination");
             photonView.RPC("WaitForAllReceiveMoveChampion", RpcTarget.MasterClient);
         }
         [PunRPC]

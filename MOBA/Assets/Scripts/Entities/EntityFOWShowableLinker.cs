@@ -17,7 +17,8 @@ public class EntityFOWShowableLinker : MonoBehaviour
         for (int i = 0; i < particleSystems.Length; i++)
         {
             entity.particleSystemsToShow.Add(particleSystems[i]);
-            entity.particleSystemsToShowAlpha.Add(1);
+            entity.meshRenderersToShowAlpha.Add(1);
+            entity.meshRenderersToShow.Add(particleSystems[i].GetComponent<ParticleSystemRenderer>());
         }
 
        

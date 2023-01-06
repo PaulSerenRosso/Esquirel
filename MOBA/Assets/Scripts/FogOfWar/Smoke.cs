@@ -21,6 +21,7 @@ public class Smoke : Entity
             smokeTimer = new TimerOneCount(0);
             smokeTimer.TickTimerEvent += DeactivateSmoke;  
         }
+        
     }
 
     public IEnumerator SetUp(float duration, Entity smokeRef, Vector3 pos)
@@ -38,8 +39,18 @@ public class Smoke : Entity
     [PunRPC]
      void PlaceSmokeRPC(Vector3 pos, float time)
     {
+        //AddFOWViewable
         var mainModule = particleSystem.main;
         mainModule.simulationSpeed = 1/time;
+        if(GameStateMachine.Instance.GetPlayerTeam() == team)
+            ShowElements();
+        else
+        {
+            if(enemiesThatCanSeeMe.Count == 0)
+            HideElements();
+        }
+
+        
     }
 
     

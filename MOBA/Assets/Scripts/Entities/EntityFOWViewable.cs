@@ -170,6 +170,7 @@ namespace Entities
             if (entity == null) return;
 
 
+            Debug.Log(entity.gameObject.name);
             AddShowable(entity);
         }
 

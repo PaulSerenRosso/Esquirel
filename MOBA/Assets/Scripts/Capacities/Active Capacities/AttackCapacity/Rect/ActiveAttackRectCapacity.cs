@@ -28,7 +28,6 @@ namespace Entities.Capacities
        protected override void InitFX(int[] targetsEntityIndexes, Vector3[] targetPositions)
        {
            directionAttack = previsualisableObjectForward;
-           Debug.Log(directionAttack);
            fxInfo.fxRotation = Quaternion.LookRotation(directionAttack, Vector3.up);
           base.InitFX(targetsEntityIndexes, targetPositions);
        }

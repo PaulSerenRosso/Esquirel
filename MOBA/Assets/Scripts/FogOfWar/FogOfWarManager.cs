@@ -41,7 +41,7 @@ namespace Entities.FogOfWar
         [Header("Camera and Scene Setup")] public Camera cameraFog;
         public List<string> sceneToRenderFog;
 
-        [SerializeField] private float startYPositionRay;
+        public float startYPositionRay;
         [Header("Fog Of War Parameter")] [Tooltip("Color for the area where the player can't see")]
         public Color fogColor = new Color(0.25f, 0.25f, 0.25f, 1f);
 
@@ -341,7 +341,7 @@ namespace Entities.FogOfWar
                     for (int i = 0; i < hits.Length; i++)
                     {
                         Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
-                   
+                        
                         if (candidateEntity != null)
                         {
                             if (hits[i].distance <= closerHit.distance)
@@ -360,8 +360,7 @@ namespace Entities.FogOfWar
                 for (int i = 0; i < hits.Length; i++)
                 {
                     Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
-                  
-           
+
                     if (candidateEntity != null)
                     {
                         entity.AddShowable(candidateEntity);

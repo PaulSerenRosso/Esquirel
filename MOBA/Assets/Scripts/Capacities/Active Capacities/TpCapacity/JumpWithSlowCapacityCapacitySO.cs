@@ -9,6 +9,7 @@ namespace Entities.Capacities
     [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/JumpCapacity", fileName = "JumpCapacitySO")]   
 public class JumpWithSlowCapacityCapacitySO : CurveMovementWithPrevisualisableCapacitySO
 {
+    public TrailRenderer jumpTrail;
     public override Type AssociatedType()
     {
         return typeof(JumpWithSlowCapacity);

@@ -137,7 +137,7 @@ namespace Entities.Champion
         public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
             params object[] otherParameters)
         {
-            Debug.Log(capacityIndex);
+            
             if (activeCapacities[capacityIndex] is IPrevisualisable)
             {
                 IPrevisualisable previsualisable = (IPrevisualisable)activeCapacities[capacityIndex];
