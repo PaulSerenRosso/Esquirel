@@ -98,7 +98,6 @@ MonoBehaviour:
   meshRenderersToShowAlpha:
   - 1
   particleSystemsToShow: []
-  particleSystemsToShowAlpha: []
   graphicsToShow: []
   graphicsToShowAlpha: []
   bushes: []

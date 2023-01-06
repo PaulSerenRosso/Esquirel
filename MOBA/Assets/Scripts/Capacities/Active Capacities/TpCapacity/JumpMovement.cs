@@ -27,7 +27,6 @@ namespace Entities.Capacities
         protected override void StartCurveMovementRPC(Vector3 startPos, Vector3 endPos)
         {
             base.StartCurveMovementRPC(startPos, endPos);
-            Debug.Log(champion);
             champion.OnStartMoveChampion += ActivateChampionMove;
             champion.OnEndMoveChampion += EndJump;
             isActive = true;

@@ -39,15 +39,13 @@ public class PassiveSpeed : PassiveCapacity
              if (target.passiveCapacitiesList[i].indexOfSo == indexOfSo)
                  if (target.passiveCapacitiesList[i] != this)
                  {
-                     Debug.Log(indexOfSo);
-                     Debug.Log("freeze");
                      return;
                  };
-         }   
-
-        base.SyncOnAdded(target);
+         }
+         base.SyncOnAdded(target);
         target.particleSystemsToShow.Add(fxObject.GetComponent<ParticleSystem>());
-        target.particleSystemsToShowAlpha.Add(1);
+        target.meshRenderersToShow.Add(fxObject.GetComponent<ParticleSystemRenderer>());
+        target.meshRenderersToShowAlpha.Add(1);
     }
 
     public override void SyncOnRemoved(Entity target)
@@ -57,14 +55,15 @@ public class PassiveSpeed : PassiveCapacity
             if (target.passiveCapacitiesList[i].indexOfSo == indexOfSo)
                 if (target.passiveCapacitiesList[i] != this)
                 {
-                    Debug.Log("freeze");
                     return;
                 };
         }
        base.SyncOnRemoved(target);
        var particleSystem = fxObject.GetComponent<ParticleSystem>();
-       target.particleSystemsToShowAlpha.RemoveAt(target.particleSystemsToShow.IndexOf(particleSystem));
+       var particleSystemRenderer = fxObject.GetComponent<ParticleSystemRenderer>();
+       target.meshRenderersToShowAlpha.RemoveAt(target.meshRenderersToShow.IndexOf(particleSystemRenderer));
        target.particleSystemsToShow.Remove(particleSystem);
+       target.meshRenderersToShow.Remove(particleSystemRenderer);
     }
 
     private void EndMove()

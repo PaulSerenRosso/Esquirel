@@ -166,7 +166,6 @@ MonoBehaviour:
   - 1
   - 1
   particleSystemsToShow: []
-  particleSystemsToShowAlpha: []
   graphicsToShow: []
   graphicsToShowAlpha: []
   bushes: []

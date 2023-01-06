@@ -108,12 +108,44 @@ MonoBehaviour:
   entityCapacityCollider: {fileID: 0}
   canShow: 0
   canHide: 0
-  meshRenderersToShow: []
-  meshRenderersToShowAlpha: []
+  meshRenderersToShow:
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  - {fileID: 3991804994127536469}
+  meshRenderersToShowAlpha:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   particleSystemsToShow:
   - {fileID: 3991804994127536468}
-  particleSystemsToShowAlpha:
-  - 1
   graphicsToShow: []
   graphicsToShowAlpha: []
   bushes: []

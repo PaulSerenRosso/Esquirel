@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entities;
+using Entities.FogOfWar;
 using GameStates;
 using Photon.Pun;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class ActiveCapacityFX : Entity
             ShowElements();
         else
         {
+            //tendencer
+            if(enemiesThatCanSeeMe.Count == 0)
             HideElements();
         }
     }

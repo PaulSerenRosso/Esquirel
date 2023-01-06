@@ -111,8 +111,7 @@ namespace PointPlacerClosestAtCandidatePointHelper
                 currentCircularDetectorCount++;
                 if (currentCircularDetectorCount == so.circularDetectors.Count)
                 {
-                
-                    Debug.Log("false detection");
+                    
                     return (Vector3.zero, false);
                 }
             }
