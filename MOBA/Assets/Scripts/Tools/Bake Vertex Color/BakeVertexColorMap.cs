@@ -7,6 +7,7 @@ public class BakeVertexColorMap : MonoBehaviour
     Mesh SourceMesh;
     public Shader BakeVertexColorMapShader;
     public int Resolution = 2048;
+    public bool UseScaleOfObject = false;
 
     private void Awake()
     {
@@ -22,7 +23,11 @@ public class BakeVertexColorMap : MonoBehaviour
     {
         if (SourceMesh != null)
         {
-            RenderTexture renderTexture = new RenderTexture(Resolution, Resolution, 0);
+            
+            RenderTexture renderTexture = new RenderTexture( 
+                UseScaleOfObject ? Resolution * (int)gameObject.transform.localScale.x : Resolution,  
+                UseScaleOfObject ? Resolution * (int)gameObject.transform.localScale.y : Resolution, 
+                0);
             renderTexture.Create();
             Material material = new Material(BakeVertexColorMapShader);
             RenderTexture currentTexture = RenderTexture.active;
@@ -30,8 +35,14 @@ public class BakeVertexColorMap : MonoBehaviour
             GL.Clear(false, true, Color.black, 1.0f);
             material.SetPass(0);
             Graphics.DrawMeshNow(SourceMesh, Vector3.zero, Quaternion.identity);
-            Texture2D texture = new Texture2D(Resolution, Resolution, TextureFormat.ARGB32, false);
-            texture.ReadPixels( new Rect(0, 0, Resolution, Resolution), 0, 0);
+            Texture2D texture = new Texture2D( 
+                UseScaleOfObject ? Resolution * (int)gameObject.transform.localScale.x : Resolution,  
+                UseScaleOfObject ? Resolution * (int)gameObject.transform.localScale.y : Resolution, 
+                TextureFormat.ARGB32, false);
+            texture.ReadPixels( new Rect(0, 0, 
+                UseScaleOfObject ? Resolution * (int)gameObject.transform.localScale.x : Resolution, 
+                UseScaleOfObject ? Resolution * (int)gameObject.transform.localScale.y : Resolution), 
+                0, 0);
             RenderTexture.active = currentTexture;
             byte[] bytes = texture.EncodeToPNG();
             System.IO.File.WriteAllBytes(System.IO.Path.Combine(Application.dataPath, "Map Data Vertex Color.png"), bytes);
