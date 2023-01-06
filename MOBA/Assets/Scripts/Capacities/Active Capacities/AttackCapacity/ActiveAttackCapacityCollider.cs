@@ -16,7 +16,6 @@ namespace Entities.Capacities
             IActiveLifeable lifeable = (IActiveLifeable)entityCollided;
             if (lifeable != null)
             {
-                Debug.Log(team + "  " + entityCollided.team);
                 if (entityCollided.team != team)
                     lifeable.DecreaseCurrentHpRPC(damage);
             }

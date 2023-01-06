@@ -18,7 +18,6 @@ public class TimerFX : TimerOneCount
     protected  void InitiateFxTimer()
     {
        fxObject =  PoolNetworkManager.Instance.PoolInstantiate(info.fxRef, info.fxPos, info.fxRotation);
-
     }
 
     protected  void EndFxTimer()

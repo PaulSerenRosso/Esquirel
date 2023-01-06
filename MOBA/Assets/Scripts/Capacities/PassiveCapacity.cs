@@ -44,14 +44,13 @@ namespace Entities.Capacities
         {
             entity = target;
             CreateFx();
-            Debug.Log("synconadded");
+          
         }
 
         private void CreateFx()
         {
             if(AssociatedPassiveCapacitySO().fxPrefab == null) return;
-            Debug.Log("fxobject");
-           fxObject = PoolLocalManager.Instance.PoolInstantiate(AssociatedPassiveCapacitySO().fxPrefab, entity.transform.position,
+            fxObject = PoolLocalManager.Instance.PoolInstantiate(AssociatedPassiveCapacitySO().fxPrefab, entity.transform.position,
                 quaternion.identity, entity.transform);
         }
 

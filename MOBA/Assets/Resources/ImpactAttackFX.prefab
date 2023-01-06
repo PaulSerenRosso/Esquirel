@@ -4816,7 +4816,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: fd93a27cfd7d3324a860e6375ec79558, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4951,12 +4951,44 @@ MonoBehaviour:
   entityCapacityCollider: {fileID: 0}
   canShow: 1
   canHide: 1
-  meshRenderersToShow: []
-  meshRenderersToShowAlpha: []
+  meshRenderersToShow:
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  - {fileID: 2779714049642991590}
+  meshRenderersToShowAlpha:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   particleSystemsToShow:
   - {fileID: 2779714049642991591}
-  particleSystemsToShowAlpha:
-  - 1
   graphicsToShow: []
   graphicsToShowAlpha: []
   bushes: []

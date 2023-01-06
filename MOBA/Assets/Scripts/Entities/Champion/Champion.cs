@@ -15,7 +15,6 @@ namespace Entities.Champion
 {
     public partial class Champion : Entity
     {
-
         public CatapultMovment catapultMovment;
         public PhotonTransformView transformView;
         public ChampionSO championSo;
@@ -61,7 +60,7 @@ namespace Entities.Champion
             obstacle = GetComponent<NavMeshObstacle>();
             fowm.AddFOWViewable(this );
             blocker.SetUpBlocker();
-            
+            Instantiate(new GameObject());
         }
 
         protected override void OnUpdate()

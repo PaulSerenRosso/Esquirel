@@ -16,7 +16,8 @@ namespace Entities.Capacities
         AnimationCurve heightCurve;
         private AnimationCurve widthCurve;
         private float curveYMaxPosition;
-
+      public TrailRenderer trail;
+        
         private bool isEndCurve = true;
         private Vector3 startPosition;
     
@@ -61,6 +62,8 @@ namespace Entities.Capacities
             currentTimer = 0;
             startPosition = startPos;
             transform.position = startPos;
+            trail.enabled = true;
+            trail.Clear();
             isEndCurve = false;
         }
 
@@ -72,6 +75,7 @@ namespace Entities.Capacities
             else if(!isEndCurve)
             {
                 isEndCurve = true;
+                trail.enabled = false;
                 endCurveEvent?.Invoke();
             }
             else

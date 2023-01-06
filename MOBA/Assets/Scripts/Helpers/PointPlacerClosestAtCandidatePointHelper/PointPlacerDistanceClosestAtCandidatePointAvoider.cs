@@ -25,9 +25,7 @@ namespace PointPlacerClosestAtCandidatePointHelper
 
         public bool IsInAvoidanceRange(Vector3 candidatePoint, float minRadiusForAvoiderNeededToPlacePoint)
         {
-            Debug.Log(candidatePoint + "dir" + (candidatePoint - avoiderPosition) + "testdistance" +
-                      Vector3.Distance(candidatePoint, avoiderPosition) + "distance" + avoidanceDistance +
-                      " ce qui est donnée  " + minRadiusForAvoiderNeededToPlacePoint);
+          
             if (Vector3.Distance(candidatePoint, avoiderPosition) <=
                avoidanceDistance + minRadiusForAvoiderNeededToPlacePoint)
                 return true;

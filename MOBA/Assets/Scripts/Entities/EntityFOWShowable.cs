@@ -16,23 +16,25 @@ namespace  Entities
         public List<Renderer> meshRenderersToShow;
         public List<float> meshRenderersToShowAlpha;
         public List<ParticleSystem> particleSystemsToShow;
-        public List<float> particleSystemsToShowAlpha;
+       
+      
         public List<Graphic> graphicsToShow;
         public List<float> graphicsToShowAlpha;
         public List<Bush> bushes;
+        
 
         private void OnValidate()
         {
             meshRenderersToShowAlpha.Clear();
             graphicsToShowAlpha.Clear();
-            particleSystemsToShowAlpha.Clear();
             for (int i = 0; i <meshRenderersToShow.Count ; i++)
             {
                 meshRenderersToShowAlpha.Add(1);
             }
             for (int i = 0; i <particleSystemsToShow.Count ; i++)
             {
-                particleSystemsToShowAlpha.Add(1);
+                meshRenderersToShowAlpha.Add(1);
+                meshRenderersToShow.Add(particleSystemsToShow[i].gameObject.GetComponent<ParticleSystemRenderer>());
             }
             for (int i = 0; i <graphicsToShow.Count ; i++)
             {
@@ -98,19 +100,19 @@ namespace  Entities
         public void TryAddFOWViewable(int viewableIndex)
         {
             var entity = EntityCollectionManager.GetEntityByIndex(viewableIndex);
-            Debug.Log("Get Entity By Index" + entity);
+       
             if(entity == null) return;
 
             if (entity != null) TryAddFOWViewable(entity);
-            Debug.Log("Try Add FOW ");
+       
         }
 
         public void TryAddFOWViewable(Entity viewable)
         {
+         
             if (!GetEnemyTeams().Contains(viewable.GetTeam()) || enemiesThatCanSeeMe.Contains(viewable) ) return;
-
             var show = enemiesThatCanSeeMe.Count == 0;
-            
+        
             enemiesThatCanSeeMe.Add(viewable);
             if (show) ShowElements();
             
@@ -127,26 +129,20 @@ namespace  Entities
             if (enemiesThatCanSeeMe.Contains(viewable)) return;
             
             enemiesThatCanSeeMe.Add(viewable);
+           
             if (show) ShowElements();
         }
 
         public void ShowElements()
         {
     
+            Debug.Log(gameObject.name);
             for (int i = 0; i < meshRenderersToShow.Count; i++)
             {
                 var materialColor = meshRenderersToShow[i].material.color;
                 materialColor.a = meshRenderersToShowAlpha[i];
                 meshRenderersToShow[i].material.color = materialColor;
             }
-            
-            for (int i = 0; i < particleSystemsToShow.Count; i++)
-            {
-                var materialColor = particleSystemsToShow[i].startColor;
-                materialColor.a = particleSystemsToShowAlpha[i];
-                particleSystemsToShow[i].startColor = materialColor;
-            }
-            
             for (int i = 0; i < graphicsToShow.Count; i++)
             {
                 var materialColor = graphicsToShow[i].color;
@@ -203,13 +199,6 @@ namespace  Entities
                 var materialColor = meshRenderersToShow[i].material.color;
                 materialColor.a = 0;
                 meshRenderersToShow[i].material.color = materialColor;
-            }
-            
-            for (int i = 0; i < particleSystemsToShow.Count; i++)
-            {
-                var materialColor = particleSystemsToShow[i].startColor;
-                materialColor.a = 0;
-                particleSystemsToShow[i].startColor = materialColor;
             }
             
             for (int i = 0; i < graphicsToShow.Count; i++)
