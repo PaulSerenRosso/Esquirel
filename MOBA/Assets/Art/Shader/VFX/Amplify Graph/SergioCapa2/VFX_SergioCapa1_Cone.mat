@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTexCone:
+        m_Texture: {fileID: 2800000, guid: f631fa6989759d848bb4c1c5d67a6cc4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _TextureSample0:
         m_Texture: {fileID: 2800000, guid: 91e5a5de1601d7441a12bfbd27ae58ab, type: 3}
         m_Scale: {x: 1, y: 1}
