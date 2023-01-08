@@ -11,7 +11,8 @@ Shader "VFX_Particles_AmbiantFog"
 		_FogLayer2TilingandOffset("Fog Layer 2 Tiling and Offset", Vector) = (0.7,0.5,0,-0.04)
 		_FogLayer3TilingandOffset("Fog Layer 3 Tiling and Offset", Vector) = (1,1.2,-0.02,-0.07)
 		_FogPower("Fog Power", Float) = 0.3
-		[ASEEnd]_LuminosityIntensity("Luminosity Intensity", Float) = 0.3
+		_LuminosityIntensity("Luminosity Intensity", Float) = 0.3
+		[ASEEnd]_Color("Color", Color) = (1,1,1,1)
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 
@@ -210,6 +211,7 @@ Shader "VFX_Particles_AmbiantFog"
 			float4 _FogLayer1TilingandOffset1;
 			float4 _FogLayer2TilingandOffset;
 			float4 _FogLayer3TilingandOffset;
+			float4 _Color;
 			float4 _FogTexture_ST;
 			float _FogPower;
 			float _LuminosityIntensity;
@@ -398,8 +400,8 @@ Shader "VFX_Particles_AmbiantFog"
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( temp_output_60_0 * appendResult80 );
-				float Alpha = saturate( temp_output_71_0 );
+				float3 Color = ( float4( ( temp_output_60_0 * appendResult80 ) , 0.0 ) * _Color ).rgb;
+				float Alpha = saturate( ( temp_output_71_0 * _Color.a ) );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -477,6 +479,7 @@ Shader "VFX_Particles_AmbiantFog"
 			float4 _FogLayer1TilingandOffset1;
 			float4 _FogLayer2TilingandOffset;
 			float4 _FogLayer3TilingandOffset;
+			float4 _Color;
 			float4 _FogTexture_ST;
 			float _FogPower;
 			float _LuminosityIntensity;
@@ -656,7 +659,7 @@ Shader "VFX_Particles_AmbiantFog"
 				float temp_output_71_0 = ( ( temp_output_60_0 * IN.ase_color.a ) * tex2D( _FogTexture, uv_FogTexture ).g );
 				
 
-				float Alpha = saturate( temp_output_71_0 );
+				float Alpha = saturate( ( temp_output_71_0 * _Color.a ) );
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -727,7 +730,6 @@ Node;AmplifyShaderEditor.GetLocalVarNode;74;-416,1152;Inherit;False;19;FogTextur
 Node;AmplifyShaderEditor.SamplerNode;75;-128,1152;Inherit;True;Property;_TextureSample3;Texture Sample 3;7;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.DepthFade;76;432,1152;Inherit;False;True;False;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;78;192,1216;Inherit;False;Property;_DepthFadeDistance;Depth Fade Distance;4;0;Create;True;0;0;0;False;0;False;1;0.001;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;1024,512;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_Particles_AmbiantFog;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638087045757370337;  Blend;0;638087048519433446;Two Sided;1;638087051559222791;Cast Shadows;0;638087046863691071;  Use Shadow Threshold;0;0;Receive Shadows;0;638087046871988892;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;False;True;False;False;;False;0
 Node;AmplifyShaderEditor.SamplerNode;40;-1744,512;Inherit;True;Property;_TextureSample1;Texture Sample 0;2;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;16;-1744,-240;Inherit;True;Property;_TextureSample0;Texture Sample 0;4;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;56;-823,731;Inherit;False;Property;_FogPower;Fog Power;5;0;Create;True;0;0;0;False;0;False;0.3;0.3;0;0;0;1;FLOAT;0
@@ -735,6 +737,10 @@ Node;AmplifyShaderEditor.SaturateNode;60;-112,512;Inherit;False;1;0;FLOAT;0;Fals
 Node;AmplifyShaderEditor.DynamicAppendNode;80;16,736;Inherit;False;FLOAT3;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;77;661,1016;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;79;816,896;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;1312,512;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_Particles_AmbiantFog;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638087045757370337;  Blend;0;638087048519433446;Two Sided;1;638087051559222791;Cast Shadows;0;638087046863691071;  Use Shadow Threshold;0;0;Receive Shadows;0;638087046871988892;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;False;True;False;False;;False;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;82;656,512;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;81;657.0156,895.5777;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;83;320,257.1339;Inherit;False;Property;_Color;Color;7;0;Create;True;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 WireConnection;19;0;17;0
 WireConnection;7;0;24;3
 WireConnection;7;1;6;0
@@ -784,8 +790,6 @@ WireConnection;71;0;63;0
 WireConnection;71;1;75;2
 WireConnection;75;0;74;0
 WireConnection;76;0;78;0
-WireConnection;1;2;62;0
-WireConnection;1;3;79;0
 WireConnection;40;0;41;0
 WireConnection;40;1;39;0
 WireConnection;16;0;73;0
@@ -796,6 +800,12 @@ WireConnection;80;1;61;2
 WireConnection;80;2;61;3
 WireConnection;77;0;71;0
 WireConnection;77;1;76;0
-WireConnection;79;0;71;0
+WireConnection;79;0;81;0
+WireConnection;1;2;82;0
+WireConnection;1;3;79;0
+WireConnection;82;0;62;0
+WireConnection;82;1;83;0
+WireConnection;81;0;71;0
+WireConnection;81;1;83;4
 ASEEND*/
-//CHKSM=BB7F71BCD2720A23B10FEBDB9E570FFCC8608AB1
+//CHKSM=16AE15E5B7193D1579EBEC81B977D263B759AC88

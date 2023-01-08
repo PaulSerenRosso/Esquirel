@@ -26,7 +26,8 @@ Shader "VFX/Additive_Shokewave"
 		_Diss_VPanner("Diss_VPanner", Float) = 0
 		[Toggle(_USE_CUSTOM_ON)] _Use_Custom("Use_Custom", Float) = 0
 		[Toggle(_USE_STEP_DISSIOVE_ON)] _Use_Step_Dissiove("Use_Step_Dissiove", Float) = 0
-		[ASEEnd][Enum(UnityEngine.Rendering.CullMode)]_Cullmode("Cullmode", Float) = 0
+		[Enum(UnityEngine.Rendering.CullMode)]_Cullmode("Cullmode", Float) = 0
+		[ASEEnd]_Color("Color", Color) = (1,1,1,1)
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -224,23 +225,24 @@ Shader "VFX/Additive_Shokewave"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _Main_Texture_ST;
 			float4 _Main_Color;
 			float4 _Dissolve_Texture_ST;
 			float4 _Noise_Texture_ST;
+			float4 _Color;
+			float4 _Main_Texture_ST;
+			float _Cullmode;
 			float _Diss_VPanner;
 			float _Diss_UPanner;
 			float _Opacity;
 			float _Main_Ins;
-			float _Main_Pow;
-			float _Cullmode;
+			float _Main_UVPow;
 			float _Dissolve;
 			float _Noise_Val;
 			float _Noise_VPanner;
 			float _Noise_UPanner;
 			float _Main_VPanner;
 			float _Main_UPanner;
-			float _Main_UVPow;
+			float _Main_Pow;
 			float _Mask_Range;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -450,8 +452,8 @@ Shader "VFX/Additive_Shokewave"
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( IN.ase_color * ( _Main_Color * ( pow( tex2DNode1.r , _Main_Pow ) * staticSwitch71 ) ) ).rgb;
-				float Alpha = ( IN.ase_color.a * ( ( ( tex2DNode1.r * _Opacity ) * staticSwitch76 ) * saturate( pow( tex2D( _Mask_Texture, texCoord29 ) , temp_cast_1 ) ) ) ).r;
+				float3 Color = ( ( IN.ase_color * ( _Main_Color * ( pow( tex2DNode1.r , _Main_Pow ) * staticSwitch71 ) ) ) * _Color ).rgb;
+				float Alpha = ( _Color.a * ( IN.ase_color.a * ( ( ( tex2DNode1.r * _Opacity ) * staticSwitch76 ) * saturate( pow( tex2D( _Mask_Texture, texCoord29 ) , temp_cast_1 ) ) ) ) ).r;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -534,23 +536,24 @@ Shader "VFX/Additive_Shokewave"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _Main_Texture_ST;
 			float4 _Main_Color;
 			float4 _Dissolve_Texture_ST;
 			float4 _Noise_Texture_ST;
+			float4 _Color;
+			float4 _Main_Texture_ST;
+			float _Cullmode;
 			float _Diss_VPanner;
 			float _Diss_UPanner;
 			float _Opacity;
 			float _Main_Ins;
-			float _Main_Pow;
-			float _Cullmode;
+			float _Main_UVPow;
 			float _Dissolve;
 			float _Noise_Val;
 			float _Noise_VPanner;
 			float _Noise_UPanner;
 			float _Main_VPanner;
 			float _Main_UPanner;
-			float _Main_UVPow;
+			float _Main_Pow;
 			float _Mask_Range;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -779,7 +782,7 @@ Shader "VFX/Additive_Shokewave"
 				float4 temp_cast_0 = (_Mask_Range).xxxx;
 				
 
-				float Alpha = ( IN.ase_color.a * ( ( ( tex2DNode1.r * _Opacity ) * staticSwitch76 ) * saturate( pow( tex2D( _Mask_Texture, texCoord29 ) , temp_cast_0 ) ) ) ).r;
+				float Alpha = ( _Color.a * ( IN.ase_color.a * ( ( ( tex2DNode1.r * _Opacity ) * staticSwitch76 ) * saturate( pow( tex2D( _Mask_Texture, texCoord29 ) , temp_cast_0 ) ) ) ) ).r;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -856,23 +859,24 @@ Shader "VFX/Additive_Shokewave"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _Main_Texture_ST;
 			float4 _Main_Color;
 			float4 _Dissolve_Texture_ST;
 			float4 _Noise_Texture_ST;
+			float4 _Color;
+			float4 _Main_Texture_ST;
+			float _Cullmode;
 			float _Diss_VPanner;
 			float _Diss_UPanner;
 			float _Opacity;
 			float _Main_Ins;
-			float _Main_Pow;
-			float _Cullmode;
+			float _Main_UVPow;
 			float _Dissolve;
 			float _Noise_Val;
 			float _Noise_VPanner;
 			float _Noise_UPanner;
 			float _Main_VPanner;
 			float _Main_UPanner;
-			float _Main_UVPow;
+			float _Main_Pow;
 			float _Mask_Range;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -1069,7 +1073,7 @@ Shader "VFX/Additive_Shokewave"
 				float4 temp_cast_0 = (_Mask_Range).xxxx;
 				
 
-				float Alpha = ( IN.ase_color.a * ( ( ( tex2DNode1.r * _Opacity ) * staticSwitch76 ) * saturate( pow( tex2D( _Mask_Texture, texCoord29 ) , temp_cast_0 ) ) ) ).r;
+				float Alpha = ( _Color.a * ( IN.ase_color.a * ( ( ( tex2DNode1.r * _Opacity ) * staticSwitch76 ) * saturate( pow( tex2D( _Mask_Texture, texCoord29 ) , temp_cast_0 ) ) ) ) ).r;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1142,7 +1146,6 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;23;126.1011,-465.3614;Inherit;True
 Node;AmplifyShaderEditor.VertexColorNode;64;400.7034,-755.7206;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;25;334.1011,-563.3614;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;65;621.7034,-680.7206;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;79;1246.315,-683.431;Float;False;Property;_Cullmode;Cullmode;20;1;[Enum];Create;True;0;0;1;UnityEngine.Rendering.CullMode;True;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;66;723.7034,-338.7206;Inherit;True;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.StaticSwitch;73;-1448.117,198.1531;Float;False;Property;_Use_Custom;Use_Custom;19;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;80;942.0999,-510.8;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
@@ -1155,9 +1158,12 @@ Node;AmplifyShaderEditor.TextureCoordinatesNode;29;-864,1168;Inherit;False;0;-1;
 Node;AmplifyShaderEditor.RangedFloatNode;20;-548.5563,1143.145;Float;False;Property;_Mask_Range;Mask_Range;9;0;Create;True;0;0;0;False;0;False;1;1;1;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;22;637.1655,65.93478;Inherit;True;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;54;336,48;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;81;942.0999,-510.8;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX/Additive_Shokewave;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638084842294698193;  Blend;0;638084842342013845;Two Sided;1;638084841853701035;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
-Node;AmplifyShaderEditor.RangedFloatNode;90;809.6918,-410.9017;Inherit;False;Constant;_Float1;Float 1;25;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SamplerNode;89;-592,976;Inherit;True;Property;_TextureSample1;Texture Sample 1;25;0;Create;True;0;0;0;False;0;False;-1;000619f4b2ebfeb46b2a91c5c51fa122;000619f4b2ebfeb46b2a91c5c51fa122;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;81;1296,-512;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX/Additive_Shokewave;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638084842294698193;  Blend;0;638084842342013845;Two Sided;1;638084841853701035;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
+Node;AmplifyShaderEditor.RangedFloatNode;79;1403.315,-656.431;Float;False;Property;_Cullmode;Cullmode;20;1;[Enum];Create;True;0;0;1;UnityEngine.Rendering.CullMode;True;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;91;1040,-688;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;93;1040,-368;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.ColorNode;92;704,-1024;Inherit;False;Property;_Color;Color;21;0;Create;True;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 WireConnection;49;0;47;0
 WireConnection;49;1;48;0
 WireConnection;45;0;46;0
@@ -1214,9 +1220,13 @@ WireConnection;22;0;54;0
 WireConnection;22;1;17;0
 WireConnection;54;0;9;0
 WireConnection;54;1;76;0
-WireConnection;81;2;65;0
-WireConnection;81;3;66;0
 WireConnection;89;0;86;0
 WireConnection;89;1;29;0
+WireConnection;81;2;91;0
+WireConnection;81;3;93;0
+WireConnection;91;0;65;0
+WireConnection;91;1;92;0
+WireConnection;93;0;92;4
+WireConnection;93;1;66;0
 ASEEND*/
-//CHKSM=9BF441DA49958E80DF0EFB5565E33CCFFC316233
+//CHKSM=856E9214F9945B7AAA8E0AC10426E13350F1DB41

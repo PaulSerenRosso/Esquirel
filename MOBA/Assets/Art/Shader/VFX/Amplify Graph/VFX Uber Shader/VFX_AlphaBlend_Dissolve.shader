@@ -4,13 +4,13 @@ Shader "VFX/AplhaBlend_Dissolve"
 {
 	Properties
 	{
-		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
+		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[ASEBegin]_Main_Texture("Main_Texture", 2D) = "white" {}
 		_TintColor("Tint Color", Color) = (1,0.6941177,0,1)
 		_Main_UOffset("Main_UOffset", Range( -1 , 1)) = 0
-		[Toggle(_USE_CUSTOM_ON)] _Use_Custom("Use_Custom", Float) = 0
 		_Main_VOffset("Main_VOffset", Range( -1 , 1)) = 0
+		[Toggle(_USE_CUSTOM_ON)] _Use_Custom("Use_Custom", Float) = 0
 		_Intensity("Intensity", Range( 1 , 10)) = 1
 		_Rotator("Rotator", Float) = 0.5
 		_DissolveTexture("Dissolve Texture", 2D) = "white" {}
@@ -19,7 +19,8 @@ Shader "VFX/AplhaBlend_Dissolve"
 		_Dissolve_Tex_VPanner("Dissolve_Tex_VPanner", Float) = 0
 		_Main_Power("Main_Power", Float) = 0
 		_Depth_Fade("Depth_Fade", Float) = 2
-		[ASEEnd][Toggle(_BLURTEXTURE_ON)] _BlurTexture("Blur Texture", Float) = 0
+		[Toggle(_BLURTEXTURE_ON)] _BlurTexture("Blur Texture", Float) = 0
+		[ASEEnd]_Color("Color", Color) = (1,1,1,1)
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -218,6 +219,7 @@ Shader "VFX/AplhaBlend_Dissolve"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TintColor;
+			float4 _Color;
 			float _Intensity;
 			float _Main_UOffset;
 			float _Main_VOffset;
@@ -442,8 +444,8 @@ Shader "VFX/AplhaBlend_Dissolve"
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( IN.ase_color * ( _TintColor * staticSwitch30 ) ).rgb;
-				float Alpha = ( ( IN.ase_color.a * staticSwitch41 ) * saturate( distanceDepth60 ) );
+				float3 Color = ( ( IN.ase_color * ( _TintColor * staticSwitch30 ) ) * _Color ).rgb;
+				float Alpha = ( _Color.a * ( ( IN.ase_color.a * staticSwitch41 ) * saturate( distanceDepth60 ) ) );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -527,6 +529,7 @@ Shader "VFX/AplhaBlend_Dissolve"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TintColor;
+			float4 _Color;
 			float _Intensity;
 			float _Main_UOffset;
 			float _Main_VOffset;
@@ -770,7 +773,7 @@ Shader "VFX/AplhaBlend_Dissolve"
 				float distanceDepth60 = abs( ( screenDepth60 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _Depth_Fade ) );
 				
 
-				float Alpha = ( ( IN.ase_color.a * staticSwitch41 ) * saturate( distanceDepth60 ) );
+				float Alpha = ( _Color.a * ( ( IN.ase_color.a * staticSwitch41 ) * saturate( distanceDepth60 ) ) );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -848,6 +851,7 @@ Shader "VFX/AplhaBlend_Dissolve"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TintColor;
+			float4 _Color;
 			float _Intensity;
 			float _Main_UOffset;
 			float _Main_VOffset;
@@ -1059,7 +1063,7 @@ Shader "VFX/AplhaBlend_Dissolve"
 				float distanceDepth60 = abs( ( screenDepth60 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _Depth_Fade ) );
 				
 
-				float Alpha = ( ( IN.ase_color.a * staticSwitch41 ) * saturate( distanceDepth60 ) );
+				float Alpha = ( _Color.a * ( ( IN.ase_color.a * staticSwitch41 ) * saturate( distanceDepth60 ) ) );
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1123,12 +1127,15 @@ Node;AmplifyShaderEditor.RangedFloatNode;27;112,-640;Inherit;False;Property;_Mai
 Node;AmplifyShaderEditor.SaturateNode;35;1184,-768;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;42;912,-640;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.StaticSwitch;41;1297.125,-671.249;Inherit;False;Property;_BlurTexture;Blur Texture;13;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;2080,-816;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX/AplhaBlend_Dissolve;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638080926786304546;  Blend;0;638080929616299392;Two Sided;1;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;36;1552,-768;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;62;1808,-768;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;61;1232,-480;Inherit;False;Property;_Depth_Fade;Depth_Fade;12;0;Create;True;0;0;0;False;0;False;2;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.DepthFade;60;1408,-512;Inherit;False;True;False;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;63;1664,-512;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;66;2064,-768;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;64;2064,-1280;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;2336,-1280;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX/AplhaBlend_Dissolve;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638080926786304546;  Blend;0;638080929616299392;Two Sided;1;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
+Node;AmplifyShaderEditor.ColorNode;65;1728,-1536;Inherit;False;Property;_Color;Color;14;0;Create;True;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 WireConnection;6;0;5;0
 WireConnection;6;2;7;0
 WireConnection;7;0;8;0
@@ -1167,13 +1174,17 @@ WireConnection;35;0;34;0
 WireConnection;42;0;28;0
 WireConnection;41;1;35;0
 WireConnection;41;0;42;0
-WireConnection;1;2;38;0
-WireConnection;1;3;62;0
 WireConnection;36;0;37;4
 WireConnection;36;1;41;0
 WireConnection;62;0;36;0
 WireConnection;62;1;63;0
 WireConnection;60;0;61;0
 WireConnection;63;0;60;0
+WireConnection;66;0;65;4
+WireConnection;66;1;62;0
+WireConnection;64;0;38;0
+WireConnection;64;1;65;0
+WireConnection;1;2;64;0
+WireConnection;1;3;66;0
 ASEEND*/
-//CHKSM=2CBEEF6D9B398443BA6D172FC35DAE07ECF1FEB9
+//CHKSM=E5EC9F407D04790EBD4747483C51E8116794AEEF

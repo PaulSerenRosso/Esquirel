@@ -7,7 +7,8 @@ Shader "VFX_SergioCapa1_Cone"
 		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[ASEBegin]_MainTexCone("MainTex Cone", 2D) = "white" {}
-		[ASEEnd]_MainIns("MainIns", Float) = 5
+		_MainIns("MainIns", Float) = 5
+		[ASEEnd]_Color("Color", Color) = (1,1,1,1)
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -201,6 +202,7 @@ Shader "VFX_SergioCapa1_Cone"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
+			float4 _Color;
 			float _MainIns;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -377,8 +379,8 @@ Shader "VFX_SergioCapa1_Cone"
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( ( IN.ase_color * temp_output_13_0 ) * _MainIns ).rgb;
-				float Alpha = ( IN.ase_color.a * temp_output_13_0 ).r;
+				float3 Color = ( _Color * ( ( IN.ase_color * temp_output_13_0 ) * _MainIns ) ).rgb;
+				float Alpha = ( _Color.a * ( IN.ase_color.a * temp_output_13_0 ) ).r;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -457,6 +459,7 @@ Shader "VFX_SergioCapa1_Cone"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
+			float4 _Color;
 			float _MainIns;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -658,7 +661,7 @@ Shader "VFX_SergioCapa1_Cone"
 				float4 temp_output_13_0 = ( pow( texCoord8.y , 1.0 ) * tex2D( _MainTexCone, texCoord14 ) );
 				
 
-				float Alpha = ( IN.ase_color.a * temp_output_13_0 ).r;
+				float Alpha = ( _Color.a * ( IN.ase_color.a * temp_output_13_0 ) ).r;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -731,6 +734,7 @@ Shader "VFX_SergioCapa1_Cone"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
+			float4 _Color;
 			float _MainIns;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -900,7 +904,7 @@ Shader "VFX_SergioCapa1_Cone"
 				float4 temp_output_13_0 = ( pow( texCoord8.y , 1.0 ) * tex2D( _MainTexCone, texCoord14 ) );
 				
 
-				float Alpha = ( IN.ase_color.a * temp_output_13_0 ).r;
+				float Alpha = ( _Color.a * ( IN.ase_color.a * temp_output_13_0 ) ).r;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -931,29 +935,36 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;
 Node;AmplifyShaderEditor.BreakToComponentsNode;10;-1376,-128;Inherit;False;FLOAT2;1;0;FLOAT2;0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
 Node;AmplifyShaderEditor.PowerNode;12;-1152,-112;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;8;-1600,-128;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;0,0;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_SergioCapa1_Cone;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638077732750844459;  Blend;0;638087843887102010;Two Sided;0;638077729355040072;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
 Node;AmplifyShaderEditor.PannerNode;18;-1808,256;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;-0.05,-0.2;False;1;FLOAT;1;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.SamplerNode;7;-1296,125;Inherit;True;Property;_MainTexCone;MainTex Cone;0;0;Create;True;0;0;0;False;0;False;-1;91e5a5de1601d7441a12bfbd27ae58ab;f631fa6989759d848bb4c1c5d67a6cc4;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TextureCoordinatesNode;14;-1600,128;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,0.5;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;6;-624,0;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;16;-240,-80;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;17;-368,0;Inherit;False;Property;_MainIns;MainIns;1;0;Create;True;0;0;0;False;0;False;5;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.VertexColorNode;5;-912,-256;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;13;-880,80;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;19;-624,128;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.VertexColorNode;5;-912,-256;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;16;-240,-80;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;21;32,-96;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;23;16,112;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;384,-128;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_SergioCapa1_Cone;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638077732750844459;  Blend;0;638087843887102010;Two Sided;0;638077729355040072;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
+Node;AmplifyShaderEditor.ColorNode;20;-304,-256;Inherit;False;Property;_Color;Color;2;0;Create;True;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 WireConnection;10;0;8;0
 WireConnection;12;0;10;1
-WireConnection;1;2;16;0
-WireConnection;1;3;19;0
 WireConnection;7;1;14;0
 WireConnection;14;1;18;0
 WireConnection;6;0;5;0
 WireConnection;6;1;13;0
-WireConnection;16;0;6;0
-WireConnection;16;1;17;0
 WireConnection;13;0;12;0
 WireConnection;13;1;7;0
 WireConnection;19;0;5;4
 WireConnection;19;1;13;0
+WireConnection;16;0;6;0
+WireConnection;16;1;17;0
+WireConnection;21;0;20;0
+WireConnection;21;1;16;0
+WireConnection;23;0;20;4
+WireConnection;23;1;19;0
+WireConnection;1;2;21;0
+WireConnection;1;3;23;0
 ASEEND*/
-//CHKSM=88533F9399BC63872FE76EF50E5E7B49E922E232
+//CHKSM=96571C24AD08383E0E9D05E411BA23000B645752

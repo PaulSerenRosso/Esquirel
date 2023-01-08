@@ -17,7 +17,8 @@ Shader "VFX_Particles_Alpha_TwoTex"
 		_Panner_Tex_02_Offset_Y("Panner_Tex_02_Offset_Y", Float) = 0
 		[Header(Dissolve Tex)]_DissolveTex("Dissolve Tex", 2D) = "white" {}
 		_Panner_DissolveTex_Offset_X("Panner_DissolveTex_Offset_X", Float) = 0
-		[ASEEnd]_Panner_DissolveTex_Offset_Y("Panner_DissolveTex_Offset_Y", Float) = 0
+		_Panner_DissolveTex_Offset_Y("Panner_DissolveTex_Offset_Y", Float) = 0
+		[ASEEnd]_Color("Color", Color) = (1,1,1,1)
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -214,6 +215,7 @@ Shader "VFX_Particles_Alpha_TwoTex"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Texture_01_ST;
+			float4 _Color;
 			float4 _DissolveTex_ST;
 			float _TwoSide;
 			float _Texture_Intensity;
@@ -420,8 +422,8 @@ Shader "VFX_Particles_Alpha_TwoTex"
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( _Texture_Intensity * temp_output_24_0 ).rgb;
-				float Alpha = ( saturate( temp_output_24_0.a ) * saturate( smoothstepResult34 ) ).r;
+				float3 Color = ( ( _Texture_Intensity * temp_output_24_0 ) * _Color ).rgb;
+				float Alpha = ( ( saturate( temp_output_24_0.a ) * saturate( smoothstepResult34 ) ) * _Color.a ).r;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -503,6 +505,7 @@ Shader "VFX_Particles_Alpha_TwoTex"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Texture_01_ST;
+			float4 _Color;
 			float4 _DissolveTex_ST;
 			float _TwoSide;
 			float _Texture_Intensity;
@@ -733,7 +736,7 @@ Shader "VFX_Particles_Alpha_TwoTex"
 				float4 smoothstepResult34 = smoothstep( temp_cast_0 , temp_cast_1 , tex2D( _DissolveTex, panner31 ));
 				
 
-				float Alpha = ( saturate( temp_output_24_0.a ) * saturate( smoothstepResult34 ) ).r;
+				float Alpha = ( ( saturate( temp_output_24_0.a ) * saturate( smoothstepResult34 ) ) * _Color.a ).r;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -809,6 +812,7 @@ Shader "VFX_Particles_Alpha_TwoTex"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Texture_01_ST;
+			float4 _Color;
 			float4 _DissolveTex_ST;
 			float _TwoSide;
 			float _Texture_Intensity;
@@ -1007,7 +1011,7 @@ Shader "VFX_Particles_Alpha_TwoTex"
 				float4 smoothstepResult34 = smoothstep( temp_cast_0 , temp_cast_1 , tex2D( _DissolveTex, panner31 ));
 				
 
-				float Alpha = ( saturate( temp_output_24_0.a ) * saturate( smoothstepResult34 ) ).r;
+				float Alpha = ( ( saturate( temp_output_24_0.a ) * saturate( smoothstepResult34 ) ) * _Color.a ).r;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1043,7 +1047,6 @@ Node;AmplifyShaderEditor.RangedFloatNode;29;-176,-384;Inherit;False;Property;_Te
 Node;AmplifyShaderEditor.PannerNode;15;-1184,-512;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;14;-1472,-640;Inherit;False;0;21;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleAddOpNode;37;-608,816;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;10;512,-256;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_Particles_Alpha_TwoTex;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;_TwoSide;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638084679718313844;  Blend;0;638084848160053340;Two Sided;1;638084845790314526;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
 Node;AmplifyShaderEditor.TexCoordVertexDataNode;36;-816,608;Inherit;False;1;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TexCoordVertexDataNode;27;-544,-640;Inherit;False;1;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.PannerNode;31;-1184,416;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
@@ -1070,6 +1073,10 @@ Node;AmplifyShaderEditor.SaturateNode;66;24.06348,654.4673;Inherit;False;1;0;COL
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;41;238.6361,112.0656;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.BreakToComponentsNode;40;-111,-64;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
 Node;AmplifyShaderEditor.SaturateNode;38;11,14;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;10;912,-256;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_Particles_Alpha_TwoTex;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;_TwoSide;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638084679718313844;  Blend;0;638084848160053340;Two Sided;1;638084845790314526;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;68;528,112;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;67;528,-256;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.ColorNode;69;208,-512;Inherit;False;Property;_Color;Color;14;0;Create;True;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 WireConnection;23;0;21;0
 WireConnection;23;1;58;0
 WireConnection;24;0;27;1
@@ -1081,8 +1088,6 @@ WireConnection;15;0;14;0
 WireConnection;15;2;42;0
 WireConnection;37;0;36;3
 WireConnection;37;1;36;4
-WireConnection;10;2;28;0
-WireConnection;10;3;41;0
 WireConnection;31;0;32;0
 WireConnection;31;2;50;0
 WireConnection;42;0;46;0
@@ -1106,5 +1111,11 @@ WireConnection;41;0;38;0
 WireConnection;41;1;66;0
 WireConnection;40;0;24;0
 WireConnection;38;0;40;3
+WireConnection;10;2;67;0
+WireConnection;10;3;68;0
+WireConnection;68;0;41;0
+WireConnection;68;1;69;4
+WireConnection;67;0;28;0
+WireConnection;67;1;69;0
 ASEEND*/
-//CHKSM=A291B34153852897E59A0E82AE43F1890BA3F191
+//CHKSM=BAAC334FAFC30C96DB7228BE4580C121F8A03AC1

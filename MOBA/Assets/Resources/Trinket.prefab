@@ -97,7 +97,6 @@ MonoBehaviour:
   - {fileID: 6972348336917520873}
   meshRenderersToShowAlpha:
   - 1
-  particleSystemsToShow: []
   graphicsToShow: []
   graphicsToShowAlpha: []
   bushes: []
