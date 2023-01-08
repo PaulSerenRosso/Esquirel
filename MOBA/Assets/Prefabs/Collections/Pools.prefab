@@ -76,6 +76,8 @@ MonoBehaviour:
     amount: 5
   - Element: {fileID: 3248323131726062708, guid: 29cf9654b48db8e4f901827093e197f6, type: 3}
     amount: 5
+  - Element: {fileID: 3248323131726062708, guid: b773e4e6ca4f2c64eb11478903e58f15, type: 3}
+    amount: 5
 --- !u!114 &4154794844745012401
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,9 +12,13 @@ namespace Entities.Capacities
 
        public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
        {
+           if (champion.CheckCurrentCapacityForCastableCapacity())
+           {
            if (base.TryCast(targetsEntityIndexes, targetPositions))
            {
+               
                return true;
+           }
            }
 
            return false;
@@ -22,7 +26,7 @@ namespace Entities.Capacities
 
        protected override void InitiateDamagePrefab()
        {
-         
+           champion.RequestResetCapacityRPC();
            base.InitiateDamagePrefab();
        }
        protected override void InitFX(int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -58,6 +62,7 @@ namespace Entities.Capacities
         public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
         {
             champion.RotateMeshChampionRPC(previsualisableObjectForward);
+            champion.SetCurrentCapacityUsed((byte)champion.activeCapacities.IndexOf(this));
         }
 
         public override void DisableDrawing()

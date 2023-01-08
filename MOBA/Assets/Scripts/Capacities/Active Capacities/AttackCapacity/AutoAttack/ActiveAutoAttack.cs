@@ -19,11 +19,15 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
     private IActiveLifeable lifeableTarget;
     private Entity targetEntity;
 
-    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions){
+    
+        if(champion.currentCapacityUsed == null)
     {
         if (base.TryCast(targetsEntityIndexes, targetPositions))
         {
             InitiateCooldown();
+            Debug.Log(onCooldown);
+            Debug.Log(champion.currentCapacityUsed);
             damageTimer.InitiateTimerEvent -= TryMakeDamageToTargetEntity;
             targetEntity = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
             if (targetEntity is IActiveLifeable lifeable)
@@ -36,11 +40,11 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
             {
                 targetEntityIsLifeable = false;
             }
-
             return true;
         }
+    }
 
-        return false;
+    return false;
     }
 
     protected override void InitFX(int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -62,6 +66,7 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
             impactFxTimer.InitiateTimer();
             lifeableTarget.DecreaseCurrentHpRPC(activeAutoAttackSO.damage);
         }
+        champion.CancelCurrentCapacity();
         damageTimer.CancelTimer();
     }
 
@@ -75,6 +80,7 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
     {
         champion.RotateMeshChampionRPC((targetPositions[0] - caster.transform.position).normalized);
         champion.SyncSetCanMoveRPC(false);
+      
     }
 
     public override void SetUpActiveCapacity(byte soIndex, Entity caster)

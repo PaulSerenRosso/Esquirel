@@ -67,10 +67,9 @@ namespace Entities.Champion
         public void AttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
             if(attackBase.onCooldown) return;
+            
                 if ( attackBase.TryCast( targetedEntities, targetedPositions))
             {
-                
-                RequestSetCurrentCapacityUsedEqualToAttackBase();
                 photonView.RPC("SyncAttackRPC",RpcTarget.All,capacityIndex,targetedEntities,targetedPositions);
                 OnAttack?.Invoke(capacityIndex, targetedEntities, targetedPositions);
             }
@@ -91,6 +90,7 @@ namespace Entities.Champion
         [PunRPC]
         public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
+            SetCurrentCapacityUsedEqualToAttackBase();
             attackBase.SyncCapacity(targetedEntities, targetedPositions);
             OnAttackFeedback?.Invoke(capacityIndex,targetedEntities,targetedPositions);
         }

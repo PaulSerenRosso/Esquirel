@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities.Capacities;
 using Entities.FogOfWar;
+using GameStates;
 using UnityEngine;
 
 namespace Entities
@@ -37,20 +38,26 @@ public class Trinket : Entity
         SetupDespawnTimer();
        duration = activeTrinketCapacity.so.trinketDuration;
        ChangeTeamRPC((byte)activeTrinketCapacity.caster.team);
-       despawnTimer.time = duration;
        SetViewRangeRPC(activeTrinketCapacity.so.trinketViewRadius);
        SetBaseViewRangeRPC(activeTrinketCapacity.so.trinketViewRadius);
        SetViewAngleRPC(activeTrinketCapacity.so.trinketViewAngle);
+       if(GameStateMachine.Instance.GetPlayerTeam() == activeTrinketCapacity.caster.team)
+           RequestShowElements();
+       else
+       {
+           RequestHideElements();
+       }
+
+       despawnTimer.time = duration;
        trinketCapacity = activeTrinketCapacity;
        despawnTimer.InitiateTimer();
+       
       
    }
 
    public void TickDespawnTimer()
    {
-     
        PoolNetworkManager.Instance.PoolRequeue(trinketCapacity.so.trinketPrefab, this);
-       
    }
 
    public override void OnInstantiatedFeedback()
