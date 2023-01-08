@@ -8,7 +8,7 @@ Shader "VFX_PoumfCapa2_Crack"
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[ASEBegin]_MainCrackTexture("Main Crack Texture", 2D) = "white" {}
 		_IntensityRChannel("Intensity R Channel", Float) = 10
-		[HDR]_TintColor("Tint Color", Color) = (1,1,1,0)
+		[HDR]_Color("Color", Color) = (1,1,1,0)
 		[ASEEnd][IntRange]_FlipTexture("FlipTexture?", Range( 0 , 1)) = 1
 
 
@@ -253,7 +253,7 @@ Shader "VFX_PoumfCapa2_Crack"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _TintColor;
+			float4 _Color;
 			float _FlipTexture;
 			float _IntensityRChannel;
 			#ifdef ASE_TRANSMISSION
@@ -539,14 +539,14 @@ Shader "VFX_PoumfCapa2_Crack"
 				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
 				
 
-				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_19_0 ) ).rgb;
+				float3 BaseColor = ( _Color * ( IN.ase_color * temp_output_19_0 ) ).rgb;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
 				float Occlusion = 1;
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( _Color.a * ( IN.ase_color.a * temp_output_19_0 ) );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -764,7 +764,7 @@ Shader "VFX_PoumfCapa2_Crack"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _TintColor;
+			float4 _Color;
 			float _FlipTexture;
 			float _IntensityRChannel;
 			#ifdef ASE_TRANSMISSION
@@ -1029,7 +1029,7 @@ Shader "VFX_PoumfCapa2_Crack"
 				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
 				
 
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( _Color.a * ( IN.ase_color.a * temp_output_19_0 ) );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -1119,7 +1119,7 @@ Shader "VFX_PoumfCapa2_Crack"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _TintColor;
+			float4 _Color;
 			float _FlipTexture;
 			float _IntensityRChannel;
 			#ifdef ASE_TRANSMISSION
@@ -1355,7 +1355,7 @@ Shader "VFX_PoumfCapa2_Crack"
 				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
 				
 
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( _Color.a * ( IN.ase_color.a * temp_output_19_0 ) );
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 					float DepthValue = 0;
@@ -1440,7 +1440,7 @@ Shader "VFX_PoumfCapa2_Crack"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _TintColor;
+			float4 _Color;
 			float _FlipTexture;
 			float _IntensityRChannel;
 			#ifdef ASE_TRANSMISSION
@@ -1669,9 +1669,9 @@ Shader "VFX_PoumfCapa2_Crack"
 				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
 				
 
-				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_19_0 ) ).rgb;
+				float3 BaseColor = ( _Color * ( IN.ase_color * temp_output_19_0 ) ).rgb;
 				float3 Emission = 0;
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( _Color.a * ( IN.ase_color.a * temp_output_19_0 ) );
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1751,7 +1751,7 @@ Shader "VFX_PoumfCapa2_Crack"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _TintColor;
+			float4 _Color;
 			float _FlipTexture;
 			float _IntensityRChannel;
 			#ifdef ASE_TRANSMISSION
@@ -1978,8 +1978,8 @@ Shader "VFX_PoumfCapa2_Crack"
 				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
 				
 
-				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_19_0 ) ).rgb;
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float3 BaseColor = ( _Color * ( IN.ase_color * temp_output_19_0 ) ).rgb;
+				float Alpha = ( _Color.a * ( IN.ase_color.a * temp_output_19_0 ) );
 				float AlphaClipThreshold = 0.5;
 
 				half4 color = half4(BaseColor, Alpha );
@@ -2056,7 +2056,7 @@ Shader "VFX_PoumfCapa2_Crack"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _TintColor;
+			float4 _Color;
 			float _FlipTexture;
 			float _IntensityRChannel;
 			#ifdef ASE_TRANSMISSION
@@ -2294,7 +2294,7 @@ Shader "VFX_PoumfCapa2_Crack"
 				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
 				
 
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( _Color.a * ( IN.ase_color.a * temp_output_19_0 ) );
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 					float DepthValue = 0;
@@ -2418,7 +2418,7 @@ Shader "VFX_PoumfCapa2_Crack"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _TintColor;
+			float4 _Color;
 			float _FlipTexture;
 			float _IntensityRChannel;
 			#ifdef ASE_TRANSMISSION
@@ -2706,14 +2706,14 @@ Shader "VFX_PoumfCapa2_Crack"
 				float temp_output_19_0 = ( ( temp_output_20_0 * ( temp_output_20_0 * texCoord48.z * _IntensityRChannel ) ) + saturate( ( tex2DNode8.g * ( temp_output_46_0 * saturate( ( ( ( smoothstepResult11_g4 * smoothstepResult14_g4 ) * ( smoothstepResult19_g4 * smoothstepResult20_g4 ) ) * 10.0 ) ) ) ) ) );
 				
 
-				float3 BaseColor = ( _TintColor * ( IN.ase_color * temp_output_19_0 ) ).rgb;
+				float3 BaseColor = ( _Color * ( IN.ase_color * temp_output_19_0 ) ).rgb;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
 				float Occlusion = 1;
-				float Alpha = ( IN.ase_color.a * temp_output_19_0 );
+				float Alpha = ( _Color.a * ( IN.ase_color.a * temp_output_19_0 ) );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -2827,7 +2827,6 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;5;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;False;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;6;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;34;752,128;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;1152,-64;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;VFX_PoumfCapa2_Crack;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;0;Surface;1;638082707622198830;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;0;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;0;8;False;True;True;True;True;True;True;True;False;;False;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;53;144,0;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;55;32,128;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
@@ -2836,7 +2835,6 @@ Node;AmplifyShaderEditor.SimpleAddOpNode;19;336,0;Inherit;True;2;2;0;FLOAT;0;Fal
 Node;AmplifyShaderEditor.VertexColorNode;32;368,-256;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;33;656,-208;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;57;912,-224;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.ColorNode;58;592,-416;Inherit;False;Property;_TintColor;Tint Color;2;1;[HDR];Create;True;0;0;0;False;0;False;1,1,1,0;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TextureCoordinatesNode;44;-2436.967,-14.76147;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RotatorNode;59;-2192,-16;Inherit;True;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.RotatorNode;60;-1504,0;Inherit;True;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;0;False;1;FLOAT2;0
@@ -2846,6 +2844,9 @@ Node;AmplifyShaderEditor.WireNode;63;-1739.252,-167.7173;Inherit;False;1;0;FLOAT
 Node;AmplifyShaderEditor.RangedFloatNode;61;-2832,-192;Inherit;False;Property;_FlipTexture;FlipTexture?;3;1;[IntRange];Create;True;0;0;0;False;0;False;1;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.DynamicAppendNode;41;-2213.098,255.1628;Inherit;True;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;48;-2624,256;Inherit;False;1;-1;4;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;34;656,80;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;65;912,80;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;58;592,-415;Inherit;False;Property;_Color;Color;2;1;[HDR];Create;True;0;0;0;False;0;False;1,1,1,0;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 WireConnection;8;1;60;0
 WireConnection;20;0;18;0
 WireConnection;21;0;22;0
@@ -2873,10 +2874,8 @@ WireConnection;52;0;48;2
 WireConnection;52;1;51;0
 WireConnection;28;0;25;1
 WireConnection;28;1;52;0
-WireConnection;34;0;32;4
-WireConnection;34;1;19;0
 WireConnection;1;0;57;0
-WireConnection;1;6;34;0
+WireConnection;1;6;65;0
 WireConnection;53;0;20;0
 WireConnection;53;1;55;0
 WireConnection;55;0;20;0
@@ -2897,5 +2896,9 @@ WireConnection;64;0;63;0
 WireConnection;63;0;62;0
 WireConnection;41;0;48;4
 WireConnection;41;1;48;1
+WireConnection;34;0;32;4
+WireConnection;34;1;19;0
+WireConnection;65;0;58;4
+WireConnection;65;1;34;0
 ASEEND*/
-//CHKSM=ED0002FE906AECD1F4D55B688E3E5529F8714D1B
+//CHKSM=D07B3E4229086E33B4D0D31A078F09BB78B938A5

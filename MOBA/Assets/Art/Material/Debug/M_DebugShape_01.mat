@@ -36,6 +36,7 @@ Material:
     - Vector1_b9b741ac9c1f4f7eb3b36ab45b2e7106: 0.052
     - _ShapeSize: 1
     m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutColor: {r: 0.091252565, g: 1, b: 0, a: 0}
     - _OutColor_1: {r: 1, g: 0, b: 0, a: 0}
