@@ -15,12 +15,16 @@ namespace  Entities
         public bool canHide;
         public List<Renderer> meshRenderersToShow;
         public List<float> meshRenderersToShowAlpha;
-
+        
 
         public List<Graphic> graphicsToShow;
         public List<float> graphicsToShowAlpha;
         public List<Bush> bushes;
         
+        public class alpha
+        {
+            
+        }
 
         private void OnValidate()
         {
@@ -134,9 +138,12 @@ namespace  Entities
             Debug.Log(gameObject.name);
             for (int i = 0; i < meshRenderersToShow.Count; i++)
             {
-                var materialColor = meshRenderersToShow[i].material.color;
+                for (int j = 0; j < meshRenderersToShow[i].materials.Length; j++)
+                {
+                var materialColor = meshRenderersToShow[i].materials[j].color;
                 materialColor.a = meshRenderersToShowAlpha[i];
                 meshRenderersToShow[i].material.color = materialColor;
+                }
             }
             for (int i = 0; i < graphicsToShow.Count; i++)
             {

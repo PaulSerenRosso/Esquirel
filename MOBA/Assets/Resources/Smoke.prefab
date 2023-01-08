@@ -287,6 +287,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PS_SandBag_Impact
       objectReference: {fileID: 0}
+    - target: {fileID: 4096398909928003682, guid: 43a298db1928b4c4295a157b07098006, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4096398909928003684, guid: 43a298db1928b4c4295a157b07098006, type: 3}
       propertyPath: m_RootOrder
       value: 1

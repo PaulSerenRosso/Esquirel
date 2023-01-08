@@ -176,6 +176,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4479656363672658500, guid: f5f581bbfd3148b468594007460bd452, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4479656363672658503, guid: f5f581bbfd3148b468594007460bd452, type: 3}
       propertyPath: m_Name
       value: PS_AutoAttack
