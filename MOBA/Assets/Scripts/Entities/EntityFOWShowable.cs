@@ -15,9 +15,8 @@ namespace  Entities
         public bool canHide;
         public List<Renderer> meshRenderersToShow;
         public List<float> meshRenderersToShowAlpha;
-        public List<ParticleSystem> particleSystemsToShow;
-       
-      
+
+
         public List<Graphic> graphicsToShow;
         public List<float> graphicsToShowAlpha;
         public List<Bush> bushes;
@@ -30,11 +29,6 @@ namespace  Entities
             for (int i = 0; i <meshRenderersToShow.Count ; i++)
             {
                 meshRenderersToShowAlpha.Add(1);
-            }
-            for (int i = 0; i <particleSystemsToShow.Count ; i++)
-            {
-                meshRenderersToShowAlpha.Add(1);
-                meshRenderersToShow.Add(particleSystemsToShow[i].gameObject.GetComponent<ParticleSystemRenderer>());
             }
             for (int i = 0; i <graphicsToShow.Count ; i++)
             {

@@ -45,8 +45,7 @@ public class PassiveSpeed : PassiveCapacity
          }*/
          CreateFx();
          Debug.Log(fxObject);
-        target.particleSystemsToShow.Add(fxObject.GetComponent<ParticleSystem>());
-        target.meshRenderersToShow.Add(fxObject.GetComponent<ParticleSystemRenderer>());
+         target.meshRenderersToShow.Add(fxObject.GetComponent<ParticleSystemRenderer>());
         target.meshRenderersToShowAlpha.Add(1);
     }
 
@@ -63,13 +62,10 @@ public class PassiveSpeed : PassiveCapacity
          }*/
        base.SyncOnRemoved(target);
        Debug.Log(fxObject);
-        var particleSystem = fxObject.GetComponent<ParticleSystem>();
-        Debug.Log(particleSystem);
        var particleSystemRenderer = fxObject.GetComponent<ParticleSystemRenderer>();
        Debug.Log(particleSystemRenderer);
        Debug.Log(target);
        target.meshRenderersToShowAlpha.RemoveAt(target.meshRenderersToShow.IndexOf(particleSystemRenderer));
-       target.particleSystemsToShow.Remove(particleSystem);
        target.meshRenderersToShow.Remove(particleSystemRenderer);
         RequeueFx();
     }
