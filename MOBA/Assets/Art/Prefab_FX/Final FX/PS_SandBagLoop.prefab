@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6513039730203943665}
   - component: {fileID: 6513039730203943667}
   - component: {fileID: 6513039730203943666}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: PS_SmokeFog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6513039730203943664}
   serializedVersion: 7
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -115,8 +115,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.8
+      scalar: 0.5
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4815,7 +4815,7 @@ GameObject:
   - component: {fileID: 6513039730235128239}
   - component: {fileID: 6513039730235128241}
   - component: {fileID: 6513039730235128240}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Smoke_Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9860,7 +9860,7 @@ GameObject:
   - component: {fileID: 6513039730296265141}
   - component: {fileID: 6513039730296265143}
   - component: {fileID: 6513039730296265142}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Shockwave_Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9889,7 +9889,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6513039730296265140}
   serializedVersion: 7
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -9964,7 +9964,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14758,7 +14758,7 @@ GameObject:
   - component: {fileID: 6513039730309985755}
   - component: {fileID: 6513039730309985757}
   - component: {fileID: 6513039730309985756}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: PS_GlowImpact_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14787,7 +14787,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6513039730309985754}
   serializedVersion: 7
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -14862,7 +14862,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -19629,7 +19629,7 @@ GameObject:
   - component: {fileID: 6513039730778216475}
   - component: {fileID: 6513039730778216477}
   - component: {fileID: 6513039730778216476}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: PS_SmokeBurst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19658,7 +19658,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6513039730778216474}
   serializedVersion: 7
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -19733,8 +19733,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 1.5
+      scalar: 0.5
+      minScalar: 0.75
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -24491,7 +24491,7 @@ GameObject:
   - component: {fileID: 6513039731312247684}
   - component: {fileID: 6513039731312247686}
   - component: {fileID: 6513039731312247685}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: LoopingSmoke_Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29389,7 +29389,7 @@ GameObject:
   - component: {fileID: 6513039731319554071}
   - component: {fileID: 6513039731319554073}
   - component: {fileID: 6513039731319554072}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Smoke_Plan_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29418,7 +29418,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6513039731319554070}
   serializedVersion: 7
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -29493,8 +29493,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.4
+      scalar: 0.25
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -34251,7 +34251,7 @@ GameObject:
   - component: {fileID: 6513039731695251784}
   - component: {fileID: 6513039731695251783}
   - component: {fileID: 6513039731695251782}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: PS_SandBagLoop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34266,8 +34266,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6513039731695251781}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.3, y: 0, z: -30.3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.099999994, y: 1, z: 0.099999994}
   m_Children:
   - {fileID: 6513039731319554071}
   - {fileID: 6513039730778216475}
@@ -34289,7 +34289,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6513039731695251781}
   serializedVersion: 7
-  lengthInSec: 5
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -39064,7 +39064,7 @@ GameObject:
   - component: {fileID: 6513039731696437282}
   - component: {fileID: 6513039731696437284}
   - component: {fileID: 6513039731696437283}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: PS_SmokeBurst _Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43868,7 +43868,7 @@ GameObject:
   - component: {fileID: 6513039731753450090}
   - component: {fileID: 6513039731753450092}
   - component: {fileID: 6513039731753450091}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Shockwave_Dust_Delimitation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43897,7 +43897,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6513039731753450089}
   serializedVersion: 7
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -43972,7 +43972,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
