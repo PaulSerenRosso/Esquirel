@@ -126,6 +126,8 @@ namespace Entities.Capacities
             return false;
         }
 
+
+
         public override void InitiateCooldown()
         {
             base.InitiateCooldown();

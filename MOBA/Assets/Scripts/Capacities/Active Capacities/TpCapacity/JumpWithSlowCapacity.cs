@@ -15,7 +15,7 @@ namespace Entities.Capacities
 
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
-            if (base.TryCast(targetsEntityIndexes, targetPositions))
+            if (base.TryCast(targetsEntityIndexes, targetPositions) )
             {
                 return true;
             }
@@ -23,11 +23,7 @@ namespace Entities.Capacities
             return false;
         }
 
-        public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions,
-            params object[] customParameters)
-        {
-            base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);
-        }
+      
 
         public override void SetUpActiveCapacity(byte soIndex, Entity caster)
         {

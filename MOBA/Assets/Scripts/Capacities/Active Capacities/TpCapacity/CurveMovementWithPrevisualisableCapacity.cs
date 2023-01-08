@@ -17,7 +17,9 @@ namespace Entities.Capacities
 
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
-        
+
+            if (champion.CheckCurrentCapacityForCastableCapacity())
+            {
             if (base.TryCast(targetsEntityIndexes, targetPositions))
             {
                 activeCapacityAnimationLauncher.InitiateAnimationTimer();
@@ -27,13 +29,14 @@ namespace Entities.Capacities
                 SearchEndPositionAvailable();
                 return true;
             }
-            
+            }
 
             return false;
         }
 
         public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
         {
+           
             base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);
             champion.RotateMeshChampionRPC(previsualisableCurveMovementObjectForward);
             
@@ -90,6 +93,7 @@ namespace Entities.Capacities
 
         public bool GetCanDraw()
         {
+            if (champion.currentCapacityUsed != null) return false;
             return canDraw;
         }
 

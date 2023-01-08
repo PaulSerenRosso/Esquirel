@@ -22,8 +22,8 @@ MonoBehaviour:
   fxTime: 0.5
   indexInCollection: 4
   activeCapacityAnimationLauncherInfo:
-    animationTime: 0
-    animatorParameterName: 
+    animationTime: 1.128
+    animatorParameterName: Comp2
   damage: 200
   offsetAttack: 0.3
   damageBeginTime: 1
