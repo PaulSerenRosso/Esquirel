@@ -13,8 +13,7 @@ namespace Entities.Champion
         public bool canCast;
         private IPunObservable _punObservableImplementation;
         private IPrevisualisable currentPrevisualisable;
-
-
+        
         public void CancelPrevisualisable()
         {
             if (currentPrevisualisable != null)
@@ -31,6 +30,7 @@ namespace Entities.Champion
 
         public void RequestCancelCurrentCapacity()
         {
+            if(attackBase != currentCapacityUsed) return;
             if (currentCapacityUsed != null)
             {
                 photonView.RPC("CancelCurrentCapacity", RpcTarget.MasterClient);
@@ -44,12 +44,16 @@ namespace Entities.Champion
             if (currentCapacityUsed != null)
             {
                 currentCapacityUsed.CancelCapacity();
-                photonView.RPC("SyncCurrentCapacityRPC", RpcTarget.All);
+                photonView.RPC("ResetCurrentCapacityRPC", RpcTarget.All);
             }
         }
 
+        public void RequestResetCapacityRPC()
+        {
+            photonView.RPC("ResetCurrentCapacityRPC", RpcTarget.All);
+        }
         [PunRPC]
-        public void SyncCurrentCapacityRPC()
+        public void ResetCurrentCapacityRPC()
         {
             currentCapacityUsed = null;
         }
@@ -133,6 +137,17 @@ namespace Entities.Champion
             }
         }
 
+        public bool CheckCurrentCapacityForCastableCapacity()
+        {
+            if (currentCapacityUsed == null) return true;
+            if (attackBase == currentCapacityUsed)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         [PunRPC]
         public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
             params object[] otherParameters)
@@ -148,7 +163,7 @@ namespace Entities.Champion
             {
                 if (!activeCapacities[capacityIndex].TryCast(targetedEntities, targetedPositions)) return;
             }
-            CancelCurrentCapacity();
+         
             OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions, otherParameters);
             photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions,
                 activeCapacities[capacityIndex].GetCustomSyncParameters());
@@ -159,7 +174,6 @@ namespace Entities.Champion
             params object[] customParameters)
         {
             activeCapacities[capacityIndex].SyncCapacity(targetedEntities, targetedPositions, customParameters);
-
             OnCastSync?.Invoke(capacityIndex, targetedEntities, targetedPositions, customParameters);
             // play feedback
         }

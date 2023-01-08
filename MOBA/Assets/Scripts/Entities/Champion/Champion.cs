@@ -210,7 +210,7 @@ namespace Entities.Champion
         }
 
         [PunRPC]
-        void SetCurrentCapacityUsed(byte index)
+        public void SetCurrentCapacityUsed(byte index)
         {
             currentCapacityUsed = activeCapacities[index];
         }
@@ -220,7 +220,7 @@ namespace Entities.Champion
             photonView.RPC("SetCurrentCapacityUsedEqualToAttackBase", RpcTarget.All);
         }
         [PunRPC]
-        void SetCurrentCapacityUsedEqualToAttackBase()
+        public void SetCurrentCapacityUsedEqualToAttackBase()
         {
             currentCapacityUsed = attackBase;
         }

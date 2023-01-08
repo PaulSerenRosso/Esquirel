@@ -18,8 +18,20 @@ namespace Entities.Capacities
         protected Entity entity;
 
 
+        public GameObject fxObject
+        {
+            set
+            {
+                _fxObject = value;
+                Debug.Log(value);
+            }
+            get
+            {
+                return _fxObject;
+            }
+        }
 
-        protected GameObject fxObject;
+        protected GameObject _fxObject;
 
         // sur le master 
         // si tu peux le add alors 
@@ -43,18 +55,19 @@ namespace Entities.Capacities
         public virtual void SyncOnAdded(Entity target)
         {
             entity = target;
-            CreateFx();
+          
           
         }
 
-        private void CreateFx()
+        protected void CreateFx()
         {
             if(AssociatedPassiveCapacitySO().fxPrefab == null) return;
             fxObject = PoolLocalManager.Instance.PoolInstantiate(AssociatedPassiveCapacitySO().fxPrefab, entity.transform.position,
                 quaternion.identity, entity.transform);
+            Debug.Log("create fx"+ fxObject);
         }
 
-        private void RequeueFx()
+        protected void RequeueFx()
         {
             
             if(AssociatedPassiveCapacitySO().fxPrefab == null) return;
@@ -63,7 +76,7 @@ namespace Entities.Capacities
 
         public virtual void SyncOnRemoved(Entity target)
         {
-            RequeueFx();
+          
         }
 
         /// <summary>

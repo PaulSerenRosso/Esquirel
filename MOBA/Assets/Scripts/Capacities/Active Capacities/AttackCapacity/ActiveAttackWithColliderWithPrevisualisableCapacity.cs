@@ -33,6 +33,7 @@ public class ActiveAttackWithColliderWithPrevisualisableCapacity : ActiveAttackW
 
     public bool GetCanDraw()
     {
+        if (champion.currentCapacityUsed != null) return false;
         return canDraw;
     }
 

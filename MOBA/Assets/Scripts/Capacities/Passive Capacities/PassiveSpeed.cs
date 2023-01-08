@@ -34,15 +34,17 @@ public class PassiveSpeed : PassiveCapacity
     }
 
     public override void SyncOnAdded(Entity target){
-         for (int i = 0; i < target.passiveCapacitiesList.Count; i++)
+         base.SyncOnAdded(target);
+/*         for (int i = 0; i < target.passiveCapacitiesList.Count; i++)
          { 
              if (target.passiveCapacitiesList[i].indexOfSo == indexOfSo)
                  if (target.passiveCapacitiesList[i] != this)
                  {
                      return;
                  };
-         }
-         base.SyncOnAdded(target);
+         }*/
+         CreateFx();
+         Debug.Log(fxObject);
         target.particleSystemsToShow.Add(fxObject.GetComponent<ParticleSystem>());
         target.meshRenderersToShow.Add(fxObject.GetComponent<ParticleSystemRenderer>());
         target.meshRenderersToShowAlpha.Add(1);
@@ -50,20 +52,26 @@ public class PassiveSpeed : PassiveCapacity
 
     public override void SyncOnRemoved(Entity target)
     {
-        for (int i = 0; i < target.passiveCapacitiesList.Count; i++)
-        { 
-            if (target.passiveCapacitiesList[i].indexOfSo == indexOfSo)
-                if (target.passiveCapacitiesList[i] != this)
-                {
-                    return;
-                };
-        }
+        
+        /*         for (int i = 0; i < target.passiveCapacitiesList.Count; i++)
+         { 
+             if (target.passiveCapacitiesList[i].indexOfSo == indexOfSo)
+                 if (target.passiveCapacitiesList[i] != this)
+                 {
+                     return;
+                 };
+         }*/
        base.SyncOnRemoved(target);
-       var particleSystem = fxObject.GetComponent<ParticleSystem>();
+       Debug.Log(fxObject);
+        var particleSystem = fxObject.GetComponent<ParticleSystem>();
+        Debug.Log(particleSystem);
        var particleSystemRenderer = fxObject.GetComponent<ParticleSystemRenderer>();
+       Debug.Log(particleSystemRenderer);
+       Debug.Log(target);
        target.meshRenderersToShowAlpha.RemoveAt(target.meshRenderersToShow.IndexOf(particleSystemRenderer));
        target.particleSystemsToShow.Remove(particleSystem);
        target.meshRenderersToShow.Remove(particleSystemRenderer);
+        RequeueFx();
     }
 
     private void EndMove()

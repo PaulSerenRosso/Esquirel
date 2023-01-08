@@ -133,6 +133,7 @@ namespace  Entities
             if (show) ShowElements();
         }
 
+        [PunRPC]
         public void ShowElements()
         {
     
@@ -151,6 +152,16 @@ namespace  Entities
             }
             
             OnShowElementFeedback?.Invoke();
+        }
+
+        public void RequestShowElements()
+        { 
+            photonView.RPC("ShowElements", RpcTarget.All);
+        }
+        
+        public void RequestHideElements()
+        { 
+            photonView.RPC("HideElements", RpcTarget.All);
         }
 
         public event GlobalDelegates.NoParameterDelegate OnShowElement;
@@ -190,6 +201,7 @@ namespace  Entities
             enemiesThatCanSeeMe.Remove(viewable);
             if(hide) HideElements();
         }
+        [PunRPC]
 
         public void HideElements()
         {

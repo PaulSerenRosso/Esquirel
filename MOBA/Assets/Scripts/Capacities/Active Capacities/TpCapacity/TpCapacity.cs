@@ -20,7 +20,7 @@ namespace Entities.Capacities
    
             if (useCount == 0)
             {
-                if (base.TryCast(targetsEntityIndexes, targetPositions))
+                if (base.TryCast(targetsEntityIndexes, targetPositions) )
                 {
                     useCount = 1;
                     return true;
@@ -61,7 +61,6 @@ namespace Entities.Capacities
         public override void InitiateCooldown()
         {
             base.InitiateCooldown();
-            champion.CancelCurrentCapacity();
             champion.RequestSetSkipDrawingCapacity(indexOfSOInCollection, false);
             useCount = 0;
         }
