@@ -32,8 +32,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|Jump-Z_60
-      takeName: Armature|Jump-Z_60
+      name: Poumf_Jump-Z_60
+      takeName: Armature|Armature|Armature|Jump-Z_60
       internalID: 7597813004342472793
       firstFrame: 0
       lastFrame: 86
@@ -62,7 +62,7 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Poumf_AutoAttack_60
-      takeName: Armature|Poumf_AutoAttack_60
+      takeName: Armature|Armature|Armature|Poumf_AutoAttack_60
       internalID: -4588489712214383742
       firstFrame: 0
       lastFrame: 50
@@ -91,7 +91,7 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Poumf_Comp1_60
-      takeName: Armature|Poumf_Comp1_60
+      takeName: Armature|Armature|Armature|Poumf_Comp1_60
       internalID: 728304642488581628
       firstFrame: 0
       lastFrame: 88
@@ -120,7 +120,7 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Poumf_Comp2_60
-      takeName: Armature|Poumf_Comp2_60
+      takeName: Armature|Armature|Armature|Poumf_Comp2_60
       internalID: -3465482555618264222
       firstFrame: 0
       lastFrame: 46
@@ -149,7 +149,7 @@ ModelImporter:
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Poumf_Walk_60
-      takeName: Armature|Poumf_Walk_60
+      takeName: Armature|Armature|Armature|Poumf_Walk_60
       internalID: 2835816241425584690
       firstFrame: 0
       lastFrame: 36
