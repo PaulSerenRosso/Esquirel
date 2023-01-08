@@ -69304,14 +69304,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1563480823856682101, guid: c59d606913783d6479575e89ec8277cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4112268114539363546, guid: c59d606913783d6479575e89ec8277cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6416919062065176304, guid: c59d606913783d6479575e89ec8277cd, type: 3}
       propertyPath: m_Name
       value: PS_HitImpact_01
@@ -74931,6 +74923,14 @@ PrefabInstance:
       value: 0.0000001013279
       objectReference: {fileID: 0}
     - target: {fileID: 8600090040247534460, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600090040247534460, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600090040247534460, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
       propertyPath: InitialModule.startRotation.scalar
       value: -1.5707963
       objectReference: {fileID: 0}
@@ -75193,6 +75193,30 @@ PrefabInstance:
     - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
       propertyPath: InitialModule.startRotationY.scalar
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
+      propertyPath: CustomDataModule.vector0_2.maxCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
+      propertyPath: CustomDataModule.vector0_2.maxCurve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
+      propertyPath: CustomDataModule.vector0_2.maxCurve.m_Curve.Array.data[2].value
+      value: 0.42138445
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
+      propertyPath: CustomDataModule.vector0_2.maxCurve.m_Curve.Array.data[1].inSlope
+      value: -0.046375267
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
+      propertyPath: CustomDataModule.vector0_2.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0.6062129
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
+      propertyPath: CustomDataModule.vector0_2.maxCurve.m_Curve.Array.data[1].outSlope
+      value: -0.046375267
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
