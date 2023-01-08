@@ -12,7 +12,7 @@ public class Smoke : Entity
     
     private TimerOneCount smokeTimer;
     private Entity smokeRef;
-    [SerializeField] private ParticleSystem particleSystem;
+    [SerializeField] private ParticleSystem[] particleSystems;
     protected override void OnStart()
     {
         base.OnStart();
@@ -40,8 +40,12 @@ public class Smoke : Entity
      void PlaceSmokeRPC(Vector3 pos, float time)
     {
         //AddFOWViewable
-        var mainModule = particleSystem.main;
+        for (int i = 0; i < particleSystems.Length; i++)
+        {
+        var mainModule = particleSystems[i].main;
         mainModule.simulationSpeed = 1/time;
+            
+        }
         if(GameStateMachine.Instance.GetPlayerTeam() == team)
             ShowElements();
         else

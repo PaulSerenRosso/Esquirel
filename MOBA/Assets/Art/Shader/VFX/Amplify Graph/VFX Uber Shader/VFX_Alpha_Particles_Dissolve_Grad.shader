@@ -8,7 +8,8 @@ Shader "VFX_Alpha_Particles_Dissolve_Grad"
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[ASEBegin]_TextureSample0("Texture Sample 0", 2D) = "white" {}
 		_MainIntensity("MainIntensity", Range( 1 , 10)) = 1
-		[ASEEnd][Toggle(_USE_CUSTOM_ON)] _USE_CUSTOM("_USE_CUSTOM", Float) = 0
+		[Toggle(_USE_CUSTOM_ON)] _USE_CUSTOM("_USE_CUSTOM", Float) = 0
+		[ASEEnd]_Color("Color", Color) = (1,1,1,1)
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 
@@ -205,6 +206,7 @@ Shader "VFX_Alpha_Particles_Dissolve_Grad"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TextureSample0_ST;
+			float4 _Color;
 			float _MainIntensity;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -382,8 +384,8 @@ Shader "VFX_Alpha_Particles_Dissolve_Grad"
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( staticSwitch28 * ( IN.ase_color * temp_output_24_0 ) ).rgb;
-				float Alpha = ( IN.ase_color.a * temp_output_24_0 );
+				float3 Color = ( ( staticSwitch28 * ( IN.ase_color * temp_output_24_0 ) ) * _Color ).rgb;
+				float Alpha = ( ( IN.ase_color.a * temp_output_24_0 ) * _Color.a );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -463,6 +465,7 @@ Shader "VFX_Alpha_Particles_Dissolve_Grad"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TextureSample0_ST;
+			float4 _Color;
 			float _MainIntensity;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -660,7 +663,7 @@ Shader "VFX_Alpha_Particles_Dissolve_Grad"
 				float temp_output_24_0 = saturate( smoothstepResult17 );
 				
 
-				float Alpha = ( IN.ase_color.a * temp_output_24_0 );
+				float Alpha = ( ( IN.ase_color.a * temp_output_24_0 ) * _Color.a );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -734,6 +737,7 @@ Shader "VFX_Alpha_Particles_Dissolve_Grad"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TextureSample0_ST;
+			float4 _Color;
 			float _MainIntensity;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -899,7 +903,7 @@ Shader "VFX_Alpha_Particles_Dissolve_Grad"
 				float temp_output_24_0 = saturate( smoothstepResult17 );
 				
 
-				float Alpha = ( IN.ase_color.a * temp_output_24_0 );
+				float Alpha = ( ( IN.ase_color.a * temp_output_24_0 ) * _Color.a );
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -945,9 +949,12 @@ Node;AmplifyShaderEditor.TexCoordVertexDataNode;20;-1072,-432;Inherit;False;0;4;
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;23;144,-512;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;22;144,-384;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;25;400,-528;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;784,-384;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_Alpha_Particles_Dissolve_Grad;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638087750311502407;  Blend;0;0;Two Sided;0;638087787613330746;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
-Node;AmplifyShaderEditor.StaticSwitch;28;192,-640;Inherit;False;Property;_USE_CUSTOM;_USE_CUSTOM;2;0;Create;True;0;0;0;False;0;False;0;0;1;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.StaticSwitch;28;192,-640;Inherit;False;Property;_USE_CUSTOM;_USE_CUSTOM;2;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;27;-128,-768;Inherit;False;Property;_MainIntensity;MainIntensity;1;0;Create;True;0;0;0;False;0;False;1;1;1;10;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;29;784,-528;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;30;784,-384;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;1024,-512;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_Alpha_Particles_Dissolve_Grad;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638087750311502407;  Blend;0;0;Two Sided;0;638087787613330746;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
+Node;AmplifyShaderEditor.ColorNode;31;576,-768;Inherit;False;Property;_Color;Color;3;0;Create;True;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 WireConnection;6;12;7;0
 WireConnection;6;23;8;0
 WireConnection;6;4;9;0
@@ -966,9 +973,13 @@ WireConnection;22;0;21;4
 WireConnection;22;1;24;0
 WireConnection;25;0;28;0
 WireConnection;25;1;23;0
-WireConnection;1;2;25;0
-WireConnection;1;3;22;0
 WireConnection;28;1;27;0
 WireConnection;28;0;20;4
+WireConnection;29;0;25;0
+WireConnection;29;1;31;0
+WireConnection;30;0;22;0
+WireConnection;30;1;31;4
+WireConnection;1;2;29;0
+WireConnection;1;3;30;0
 ASEEND*/
-//CHKSM=79ED7F38FD361803299B3D80E0B933B8A6D3E197
+//CHKSM=6888860A57ABC1AA82E00E96660D762BE4FDA4CD

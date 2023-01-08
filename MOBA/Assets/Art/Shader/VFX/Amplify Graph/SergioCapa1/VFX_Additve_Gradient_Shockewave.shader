@@ -23,7 +23,8 @@ Shader "VFX/Additive_Gradient_Shokewave"
 		_Sub_Tex_VPanner("Sub_Tex_VPanner", Float) = 0
 		_Sub_Tex_UPanner("Sub_Tex_UPanner", Float) = 0
 		[Enum(UnityEngine.Rendering.CullMode)]_CullMode("CullMode", Float) = 0
-		[ASEEnd][Toggle(_USE_CUSTOM_ON)] _Use_Custom("Use_Custom", Float) = 0
+		[Toggle(_USE_CUSTOM_ON)] _Use_Custom("Use_Custom", Float) = 0
+		[ASEEnd]_Color("Color", Color) = (0,0,0,0)
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -185,6 +186,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
+			#define ASE_NEEDS_FRAG_COLOR
 			#pragma shader_feature_local _USE_CUSTOM_ON
 
 
@@ -217,6 +219,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Gra_Color;
+			float4 _Color;
 			float4 _Sub_Texture_ST;
 			float4 _Gra_Texture_ST;
 			float4 _Sub_Color;
@@ -225,13 +228,13 @@ Shader "VFX/Additive_Gradient_Shokewave"
 			float _Chromatic_Val;
 			float _Gra_Offset;
 			float _Noise_Val;
-			float _Noise_VPanner;
 			float _Noise_UPanner;
+			float _Gra_Ins;
 			float _Sub_Tex_Ins;
 			float _Sub_Tex_Pow;
 			float _Sub_Tex_VPanner;
 			float _Sub_Tex_UPanner;
-			float _Gra_Ins;
+			float _Noise_VPanner;
 			float _CullMode;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -420,8 +423,8 @@ Shader "VFX/Additive_Gradient_Shokewave"
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( IN.ase_color * ( ( pow( ( ( ( ( pow( tex2D( _Sub_Texture, panner52 ).r , _Sub_Tex_Pow ) * _Sub_Tex_Ins ) * _Sub_Color ) + appendResult65 ) * appendResult65 ) , temp_cast_3 ) * _Gra_Ins ) * _Gra_Color ) ).rgb;
-				float Alpha = 1;
+				float3 Color = ( _Color * ( IN.ase_color * ( ( pow( ( ( ( ( pow( tex2D( _Sub_Texture, panner52 ).r , _Sub_Tex_Pow ) * _Sub_Tex_Ins ) * _Sub_Color ) + appendResult65 ) * appendResult65 ) , temp_cast_3 ) * _Gra_Ins ) * _Gra_Color ) ) ).rgb;
+				float Alpha = ( _Color.a * IN.ase_color.a );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -478,7 +481,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -491,13 +494,14 @@ Shader "VFX/Additive_Gradient_Shokewave"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 					float4 shadowCoord : TEXCOORD1;
 				#endif
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Gra_Color;
+			float4 _Color;
 			float4 _Sub_Texture_ST;
 			float4 _Gra_Texture_ST;
 			float4 _Sub_Color;
@@ -506,13 +510,13 @@ Shader "VFX/Additive_Gradient_Shokewave"
 			float _Chromatic_Val;
 			float _Gra_Offset;
 			float _Noise_Val;
-			float _Noise_VPanner;
 			float _Noise_UPanner;
+			float _Gra_Ins;
 			float _Sub_Tex_Ins;
 			float _Sub_Tex_Pow;
 			float _Sub_Tex_VPanner;
 			float _Sub_Tex_UPanner;
-			float _Gra_Ins;
+			float _Noise_VPanner;
 			float _CullMode;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -539,7 +543,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				
+				o.ase_color = v.ase_color;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -606,7 +610,8 @@ Shader "VFX/Additive_Gradient_Shokewave"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -623,7 +628,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -662,7 +667,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -701,7 +706,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 
 				
 
-				float Alpha = 1;
+				float Alpha = ( _Color.a * IN.ase_color.a );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -752,7 +757,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -765,13 +770,14 @@ Shader "VFX/Additive_Gradient_Shokewave"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 				float4 shadowCoord : TEXCOORD1;
 				#endif
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Gra_Color;
+			float4 _Color;
 			float4 _Sub_Texture_ST;
 			float4 _Gra_Texture_ST;
 			float4 _Sub_Color;
@@ -780,13 +786,13 @@ Shader "VFX/Additive_Gradient_Shokewave"
 			float _Chromatic_Val;
 			float _Gra_Offset;
 			float _Noise_Val;
-			float _Noise_VPanner;
 			float _Noise_UPanner;
+			float _Gra_Ins;
 			float _Sub_Tex_Ins;
 			float _Sub_Tex_Pow;
 			float _Sub_Tex_VPanner;
 			float _Sub_Tex_UPanner;
-			float _Gra_Ins;
+			float _Noise_VPanner;
 			float _CullMode;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -808,7 +814,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				
+				o.ase_color = v.ase_color;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -848,7 +854,8 @@ Shader "VFX/Additive_Gradient_Shokewave"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -865,7 +872,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -904,7 +911,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -943,7 +950,7 @@ Shader "VFX/Additive_Gradient_Shokewave"
 
 				
 
-				float Alpha = 1;
+				float Alpha = ( _Color.a * IN.ase_color.a );
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1017,7 +1024,6 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;10;230,-5.5;Inherit;True;2;2;0;COL
 Node;AmplifyShaderEditor.CommentaryNode;41;-789.2689,666.0665;Inherit;False;1532.36;1072.357;Mask;15;28;32;34;35;36;37;38;26;27;29;30;31;33;40;59;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.OneMinusNode;30;-129.8582,1004.95;Inherit;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;59;-335.5486,1430.083;Inherit;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;58;1385.123,-117.8984;Float;False;Property;_CullMode;CullMode;17;1;[Enum];Create;True;0;0;1;UnityEngine.Rendering.CullMode;True;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;15;513.4091,-122.8243;Inherit;True;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.PowerNode;37;147.7312,1393.424;Inherit;True;False;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;36;-168.6932,1430.946;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;4;False;1;FLOAT;0
@@ -1033,10 +1039,14 @@ Node;AmplifyShaderEditor.PowerNode;31;53.96764,1017.597;Inherit;True;False;2;0;F
 Node;AmplifyShaderEditor.AbsOpNode;29;-286.2108,1004.829;Inherit;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;32;-187.3939,1254.777;Float;False;Property;_Mask_Range;Mask_Range;10;0;Create;True;0;0;0;False;0;False;8;8;1;20;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;69;1153.025,-160.4302;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;70;1153.025,-160.4302;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX/Additive_Gradient_Shokewave;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;0;0;  Blend;0;0;Two Sided;1;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;71;1153.025,-160.4302;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;72;1153.025,-160.4302;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;73;1153.025,-160.4302;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;70;1424,-128;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX/Additive_Gradient_Shokewave;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;0;0;  Blend;0;0;Two Sided;1;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
+Node;AmplifyShaderEditor.RangedFloatNode;58;1296,128;Float;False;Property;_CullMode;CullMode;17;1;[Enum];Create;True;0;0;1;UnityEngine.Rendering.CullMode;True;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;74;913.9808,-129.3054;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.ColorNode;76;496,-512;Inherit;False;Property;_Color;Color;19;0;Create;True;0;0;0;False;0;False;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;75;912,0;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 WireConnection;25;0;23;0
 WireConnection;25;1;24;0
 WireConnection;21;0;22;0
@@ -1106,6 +1116,11 @@ WireConnection;27;1;28;0
 WireConnection;31;0;30;0
 WireConnection;31;1;32;0
 WireConnection;29;0;27;0
-WireConnection;70;2;15;0
+WireConnection;70;2;74;0
+WireConnection;70;3;75;0
+WireConnection;74;0;76;0
+WireConnection;74;1;15;0
+WireConnection;75;0;76;4
+WireConnection;75;1;14;4
 ASEEND*/
-//CHKSM=DCE45C583F13A5BB4E98CCE9E91E66D1BEE345DC
+//CHKSM=3269E9D9A91BEDA03D645E36E3376ECDAA4BE295
