@@ -29,6 +29,7 @@ MonoBehaviour:
   damageBeginTime: 0.07
   impactFxTime: 0.5
   damageTime: 0.02
+  attackTime: 0.833
   attackCapacityImpactFx: {fileID: 8110421565520617150, guid: e9492d85934383045af08345034315d9, type: 3}
   damagePrefab: {fileID: 2270094352552985727, guid: ac8cee8679279af4785446d42c8f12d5, type: 3}
   previsualisablePrefab: {fileID: 0}
