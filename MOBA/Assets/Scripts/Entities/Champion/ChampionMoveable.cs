@@ -345,7 +345,6 @@ namespace Entities.Champion
 
         public void RequestMoveChampion(Vector3 newPos)
         {
-            Debug.Log("requestMove");
             receiveMoveChampionCount = 0;
             receiveStartMoveChampionCount = 0;
             photonView.RPC("StartMoveChampionRPC", RpcTarget.All, newPos);
@@ -361,9 +360,8 @@ namespace Entities.Champion
                 obstacle.enabled = false;
             }
            SyncSetCanMoveRPC(false);
-           Debug.Log("startMove");
-           
-            photonView.RPC("WaitForAllReceiveStartMoveChampion", RpcTarget.MasterClient, newPos);
+
+           photonView.RPC("WaitForAllReceiveStartMoveChampion", RpcTarget.MasterClient, newPos);
         }
 
         private int receiveStartMoveChampionCount = 0;

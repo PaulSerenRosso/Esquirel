@@ -27,7 +27,6 @@ public class TailAttack : ActiveAttackRectCapacity
     {
         base.CancelDamagePrefab();
         champion.SetCanMoveRPC(true);
-        Debug.Log(champion.canMove);
     }
 }
     

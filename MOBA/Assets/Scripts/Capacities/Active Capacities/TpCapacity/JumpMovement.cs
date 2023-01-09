@@ -14,14 +14,14 @@ namespace Entities.Capacities
         [SerializeField] public Transform UIRoot;
 
         private bool isActive = false;
+
         public override void SetUp(byte capacityIndex, int championIndex
         )
         {
             base.SetUp(capacityIndex, championIndex);
-            
-          
-            endCurveEvent += LaunchTP;
 
+
+            endCurveEvent += LaunchTP;
         }
 
         protected override void StartCurveMovementRPC(Vector3 startPos, Vector3 endPos)
@@ -44,19 +44,22 @@ namespace Entities.Capacities
             champion.OnEndMoveChampion -= EndJump;
             ActivateController();
         }
-        protected virtual  void ActivateController()
+
+        protected virtual void ActivateController()
+        {
+            if (champion.photonView.IsMine)
             {
-                if (champion.photonView.IsMine)
-                {
-                    InputManager.PlayerMap.Movement.Enable();
-                    InputManager.PlayerMap.Attack.Enable();
-                    InputManager.PlayerMap.Capacity.Enable();
-                    InputManager.PlayerMap.MoveMouse.Enable();
-                }
-                champion.entityCapacityCollider.EnableEntityCollider();
-                champion.entityClicker.EnableCollider = true;
+                InputManager.PlayerMap.Movement.Enable();
+                InputManager.PlayerMap.Attack.Enable();
+                InputManager.PlayerMap.Capacity.Enable();
+                InputManager.PlayerMap.MoveMouse.Enable();
             }
-        protected virtual void  DeactivateController()
+
+            champion.entityCapacityCollider.EnableEntityCollider();
+            champion.entityClicker.EnableCollider = true;
+        }
+
+        protected virtual void DeactivateController()
         {
             if (champion.photonView.IsMine)
             {
@@ -69,6 +72,7 @@ namespace Entities.Capacities
             {
                 champion.obstacle.enabled = false;
             }
+
             champion.entityCapacityCollider.DisableEntityCollider();
             champion.SyncSetCanMoveRPC(false);
             champion.blocker.characterColliderBlocker.enabled = false;
@@ -84,19 +88,19 @@ namespace Entities.Capacities
                     ChampionPlacerManager.instance.GetLauncher
                         .LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(
                             transform.position, champion.pointPlacerDistanceAvoidance,
-                            champion.pointPlacerColliderRadius, curveCapacitySo.secondDetectionSo, champion.championPlacerDistanceAvoider.pointAvoider).point);
-                Debug.Log(champion+"bonsoir à tous ");
-                
+                            champion.pointPlacerColliderRadius, curveCapacitySo.secondDetectionSo,
+                            champion.championPlacerDistanceAvoider.pointAvoider).point);
             }
+
             isActive = false;
         }
 
         protected override void OnUpdate()
         {
-           // Debug.Log(transform.position);
-            if(!isActive) return;
+            // Debug.Log(transform.position);
+            if (!isActive) return;
             base.OnUpdate();
-            
+
             UIRoot.position = renderer.position;
         }
     }
