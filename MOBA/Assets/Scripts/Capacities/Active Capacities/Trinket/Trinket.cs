@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Entities.Capacities;
 using Entities.FogOfWar;
 using GameStates;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Entities
@@ -32,27 +33,33 @@ public class Trinket : Entity
        }
    }
 
-   public void InitTrinket(ActiveTrinketCapacity activeTrinketCapacity)
+   public void InitTrinket(Champion.Champion champion,ActiveTrinketCapacity activeTrinketCapacity)
    {
     if(!isSetupDespawnTimer)    
         SetupDespawnTimer();
        duration = activeTrinketCapacity.so.trinketDuration;
-       ChangeTeamRPC((byte)activeTrinketCapacity.caster.team);
-       SetViewRangeRPC(activeTrinketCapacity.so.trinketViewRadius);
-       SetBaseViewRangeRPC(activeTrinketCapacity.so.trinketViewRadius);
-       SetViewAngleRPC(activeTrinketCapacity.so.trinketViewAngle);
-       if(GameStateMachine.Instance.GetPlayerTeam() == activeTrinketCapacity.caster.team)
-           RequestShowElements();
-       else
-       {
-           RequestHideElements();
-       }
-
        despawnTimer.time = duration;
        trinketCapacity = activeTrinketCapacity;
        despawnTimer.InitiateTimer();
-       
-      
+       photonView.RPC("SyncInitTrinketRPC", RpcTarget.All, champion.entityIndex,(byte) champion.activeCapacities.IndexOf(activeTrinketCapacity));
+   }
+
+   [PunRPC]
+   public void SyncInitTrinketRPC(int entityIndex, byte capacityIndex)
+   {
+       Champion.Champion champion =(Champion.Champion) EntityCollectionManager.GetEntityByIndex(entityIndex);
+       trinketCapacity =(ActiveTrinketCapacity) champion.activeCapacities[capacityIndex];
+       team = champion.team;
+       if(GameStateMachine.Instance.GetPlayerTeam() == team)
+           ShowElements();
+       else
+       {
+           if(enemiesThatCanSeeMe.Count == 0)
+               HideElements();
+       }
+       SyncSetViewRangeRPC(trinketCapacity.so.trinketViewRadius);
+       SyncSetBaseViewRangeRPC(trinketCapacity.so.trinketViewRadius);
+       SyncSetViewAngleRPC(trinketCapacity.so.trinketViewAngle);
    }
 
    public void TickDespawnTimer()

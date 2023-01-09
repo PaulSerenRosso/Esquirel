@@ -383,7 +383,6 @@ namespace GameStates
                 Debug.LogError("This key is not valid.");
                 return;
             }
-
             playersReadyDict[photonID].playerReady = ready;
             debugList[photonID].playerReady = ready;
 
@@ -447,7 +446,6 @@ namespace GameStates
         public void LateLoad()
         {
             LinkLoadChampionData();
-
             SetupUI();
         }
 

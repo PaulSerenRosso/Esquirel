@@ -13,6 +13,7 @@ namespace Entities.Capacities
         public float damageBeginTime;
         public float impactFxTime;
         public float damageTime;
+        public float attackTime;
         public AttackCapacityImpactFx attackCapacityImpactFx;
     }
 }

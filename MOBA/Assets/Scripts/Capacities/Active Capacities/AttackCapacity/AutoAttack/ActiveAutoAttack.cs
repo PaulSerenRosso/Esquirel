@@ -26,8 +26,6 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
         if (base.TryCast(targetsEntityIndexes, targetPositions))
         {
             InitiateCooldown();
-            Debug.Log(onCooldown);
-            Debug.Log(champion.currentCapacityUsed);
             damageTimer.InitiateTimerEvent -= TryMakeDamageToTargetEntity;
             targetEntity = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
             if (targetEntity is IActiveLifeable lifeable)
@@ -66,6 +64,11 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
             impactFxTimer.InitiateTimer();
             lifeableTarget.DecreaseCurrentHpRPC(activeAutoAttackSO.damage);
         }
+ 
+    }
+
+    protected override void EndAttackTimer()
+    {
         champion.CancelCurrentCapacity();
         damageTimer.CancelTimer();
     }

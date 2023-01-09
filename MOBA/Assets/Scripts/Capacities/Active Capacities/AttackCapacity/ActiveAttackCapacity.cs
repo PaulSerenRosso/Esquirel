@@ -14,6 +14,7 @@ namespace Entities.Capacities
         public TimerFX impactFxTimer;
         public TimerFxInfo impactFxTimerInfo;
         public ActiveAttackCapacitySO so;
+        public TimerOneCount attackTimer;
 
         public Vector3 directionAttack;
 
@@ -23,7 +24,14 @@ namespace Entities.Capacities
             beginDamageTimer.InitiateTimer();
             activeCapacityAnimationLauncher.InitiateAnimationTimer();
             InitFX(targetsEntityIndexes, targetPositions);
+            attackTimer.InitiateTimer();
             return true;
+        }
+        
+        
+        protected virtual void EndAttackTimer()
+        {   
+           
         }
 
         protected virtual void InitFX(int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -54,6 +62,7 @@ namespace Entities.Capacities
             fxTimer.CancelTimer();
             beginDamageTimer.CancelTimer();
             damageTimer.CancelTimer();
+            attackTimer.CancelTimer();
         }
 
 
@@ -72,8 +81,9 @@ namespace Entities.Capacities
             damageTimer = new TimerOneCount(so.damageTime);
             beginDamageTimer = new TimerOneCount(so.damageBeginTime);
             impactFxTimerInfo = new TimerFxInfo(so.attackCapacityImpactFx);
-            
+            attackTimer = new TimerOneCount(so.attackTime);
             impactFxTimer = new TimerFX(so.impactFxTime, impactFxTimerInfo);
+            attackTimer.TickTimerEvent += EndAttackTimer;
             beginDamageTimer.TickTimerEvent += damageTimer.InitiateTimer;
         }
     }
