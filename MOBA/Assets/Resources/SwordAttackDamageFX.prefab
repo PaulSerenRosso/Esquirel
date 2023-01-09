@@ -249,11 +249,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8600090040478285702, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8600090040726372638, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
       propertyPath: m_Layer
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600090041858378473, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
       propertyPath: InitialModule.startSize.scalar
