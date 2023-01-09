@@ -17,9 +17,15 @@ namespace Entities.Capacities
             return false;
         }
 
-        public override void SetUpActiveCapacity(byte soIndex, Entity caster)
+        protected override void EndAttackTimer()
         {
-            base.SetUpActiveCapacity(soIndex, caster);
+            base.EndAttackTimer();
+        }
+
+        public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
+        {
+        
+            base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);
         }
     }
 }
