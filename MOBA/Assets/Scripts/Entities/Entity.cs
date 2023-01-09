@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Entities.Capacities;
 using Entities.FogOfWar;
+using GameStates;
 using Photon.Pun;
 using UnityEngine;
 
@@ -51,6 +52,7 @@ namespace Entities
             entityIndex = photonView.ViewID;
             EntityCollectionManager.AddEntity(this);
             OnStart();
+            
         }
 
         /// <summary>
@@ -58,6 +60,7 @@ namespace Entities
         /// </summary>
         protected virtual void OnStart()
         {
+            
         }
 
         private void Update()

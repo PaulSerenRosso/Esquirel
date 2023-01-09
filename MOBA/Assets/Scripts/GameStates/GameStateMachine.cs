@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
 using Controllers.Inputs;
 using Entities.Champion;
 using Entities.Inventory;
@@ -389,8 +390,11 @@ namespace GameStates
             if (!playersReadyDict[photonID].playerReady) return;
             if (!IsEveryPlayerReady()) return;
 
-            foreach (var key in allPlayersIDs) playersReadyDict[key].playerReady = false;
-
+            foreach (var key in allPlayersIDs)
+            {
+                playersReadyDict[key].playerReady = false;
+            }
+            
             currentState.OnAllPlayerReady();
         }
 
@@ -436,17 +440,19 @@ namespace GameStates
             ItemCollectionManager.Instance.LinkCapacityIndexes();
 
             InstantiateChampion();
-
-            SendSetToggleReady(true);
         }
+        
+        
 
         /// <summary>
         /// Executed during the exit of loading state, so after every champion is instantiated and every indexes are linked
         /// </summary>
         public void LateLoad()
         {
+            
             LinkLoadChampionData();
             SetupUI();
+            Debug.Log("link load champion data");
         }
 
         private void LinkChampionSOCapacityIndexes()
@@ -485,7 +491,7 @@ namespace GameStates
         private void LinkLoadChampionData()
         {
             foreach (var playerData in playersReadyDict.Values)
-            {
+            {   
                 ApplyChampionSoData(playerData);
             }
         }
@@ -501,6 +507,8 @@ namespace GameStates
 
         private void ApplyChampionSoData(PlayerData playerData)
         {
+            UnityEngine.Debug.Log(
+                "player so top");
             if (playerData.championSOIndex >= allChampionsSo.Length)
             {
                 Debug.LogWarning("Make sure the mesh is valid. Selects default mesh.");
@@ -511,7 +519,6 @@ namespace GameStates
 
             // We state name
             playerData.champion.name += $" / {championSo.name}";
-
             // We sync data and champion mesh
             playerData.champion.ApplyChampionSO(playerData.championSOIndex, playerData.team);
         }

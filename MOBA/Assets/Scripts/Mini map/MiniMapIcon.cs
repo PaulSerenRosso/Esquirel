@@ -15,19 +15,22 @@ namespace MiniMap
          private Image image;
         
         private MiniMapManager miniMapManager;
+        
 
-        public void Start()
+        public void InitializeIcon(Sprite sprite)
         {
             miniMapManager = MiniMapManager.instance;
             image = Instantiate(miniMapManager.iconPrefab, miniMapManager.mapObject).GetComponent<Image>();
-          
+
             image.sprite = sprite;
             SetPositionInMiniMap();
             SetSizeInMiniMap();
+            SetSprite(sprite);
         }
 
         public void SetPositionInMiniMap()
         {
+            if(image)
            image.rectTransform.anchoredPosition= miniMapManager.GetMiniMapPos(new Vector2(transform.position.x, transform.position.z));
      
         }

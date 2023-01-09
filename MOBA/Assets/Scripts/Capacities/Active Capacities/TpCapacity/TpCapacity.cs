@@ -87,7 +87,6 @@ namespace Entities.Capacities
                     Quaternion.identity).GetComponent<CurveMovement>();
                 curveObject.GetComponent<TpObject>().RequestDeactivate();
                 curveObject.endCurveEvent += InitiateCooldown;
-
                 curveObject.RequestSetupRPC((byte)champion.activeCapacities.IndexOf(this), caster.entityIndex);
             }
         }

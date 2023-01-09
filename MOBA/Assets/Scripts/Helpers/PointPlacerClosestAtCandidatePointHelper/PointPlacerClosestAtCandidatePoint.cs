@@ -59,7 +59,6 @@ namespace PointPlacerClosestAtCandidatePointHelper
 
             if (CheckReferencePointIsValided())
             {
-                Debug.Log("reference Point");
                 return (referencePoint, true);
             }
 
