@@ -7,7 +7,10 @@ Shader "S_Bush"
 		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[ASEBegin]_ColorTip("ColorTip", Color) = (0.5843138,0.7490196,0.2078432,1)
-		[ASEEnd]_ColorRoot("ColorRoot", Color) = (0.3215686,0.227451,0.1176471,1)
+		_ColorRoot("ColorRoot", Color) = (0.3215686,0.227451,0.1176471,1)
+		_DitherProperty("DitherProperty", Range( 0 , 1)) = 0
+		[ASEEnd]_TextureSample0("Texture Sample 0", 2D) = "white" {}
+		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 
 		//_TransmissionShadow( "Transmission Shadow", Range( 0, 1 ) ) = 0.5
@@ -214,7 +217,8 @@ Shader "S_Bush"
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			
+			#define ASE_NEEDS_FRAG_SCREEN_POSITION
+
 
 			struct VertexInput
 			{
@@ -249,6 +253,8 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
+			float4 _TextureSample0_ST;
+			float _DitherProperty;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -281,9 +287,21 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
+			sampler2D _TextureSample0;
+
+
+			inline float Dither4x4Bayer( int x, int y )
+			{
+				const float dither[ 16 ] = {
+			 1,  9,  3, 11,
+			13,  5, 15,  7,
+			 4, 12,  2, 10,
+			16,  8, 14,  6 };
+				int r = y * 4 + x;
+				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+			}
 			
 
-			
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -495,16 +513,23 @@ Shader "S_Bush"
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord7.xy.y ));
+				float4 ase_screenPosNorm = ScreenPos / ScreenPos.w;
+				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
+				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
+				float2 uv_TextureSample0 = IN.ase_texcoord7.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
+				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
 				
 
-				float3 BaseColor = lerpResult8.rgb;
+				float3 BaseColor = lerpResult17.rgb;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
 				float Occlusion = 1;
-				float Alpha = 1;
+				float Alpha = lerpResult17.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -698,7 +723,7 @@ Shader "S_Bush"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_texcoord : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -711,7 +736,8 @@ Shader "S_Bush"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 					float4 shadowCoord : TEXCOORD1;
 				#endif
-				
+				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -719,6 +745,8 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
+			float4 _TextureSample0_ST;
+			float _DitherProperty;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -751,9 +779,21 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
+			sampler2D _TextureSample0;
+
+
+			inline float Dither4x4Bayer( int x, int y )
+			{
+				const float dither[ 16 ] = {
+			 1,  9,  3, 11,
+			13,  5, 15,  7,
+			 4, 12,  2, 10,
+			16,  8, 14,  6 };
+				int r = y * 4 + x;
+				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+			}
 			
 
-			
 			float3 _LightDirection;
 			#if ASE_SRP_VERSION >= 110000
 				float3 _LightPosition;
@@ -766,7 +806,14 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
+				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
+				float4 screenPos = ComputeScreenPos(ase_clipPos);
+				o.ase_texcoord3 = screenPos;
 				
+				o.ase_texcoord2.xy = v.ase_texcoord.xy;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord2.zw = 0;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -831,7 +878,8 @@ Shader "S_Bush"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_texcoord : TEXCOORD0;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -848,7 +896,7 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				
+				o.ase_texcoord = v.ase_texcoord;
 				return o;
 			}
 
@@ -887,7 +935,7 @@ Shader "S_Bush"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				
+				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -934,9 +982,18 @@ Shader "S_Bush"
 					#endif
 				#endif
 
+				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord2.xy.y ));
+				float4 screenPos = IN.ase_texcoord3;
+				float4 ase_screenPosNorm = screenPos / screenPos.w;
+				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
+				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
+				float2 uv_TextureSample0 = IN.ase_texcoord2.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
+				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
 				
 
-				float Alpha = 1;
+				float Alpha = lerpResult17.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -1002,7 +1059,7 @@ Shader "S_Bush"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_texcoord : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1015,7 +1072,8 @@ Shader "S_Bush"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 				float4 shadowCoord : TEXCOORD1;
 				#endif
-				
+				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1023,6 +1081,8 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
+			float4 _TextureSample0_ST;
+			float _DitherProperty;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1055,9 +1115,21 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
+			sampler2D _TextureSample0;
+
+
+			inline float Dither4x4Bayer( int x, int y )
+			{
+				const float dither[ 16 ] = {
+			 1,  9,  3, 11,
+			13,  5, 15,  7,
+			 4, 12,  2, 10,
+			16,  8, 14,  6 };
+				int r = y * 4 + x;
+				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+			}
 			
 
-			
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1065,7 +1137,14 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
+				float4 screenPos = ComputeScreenPos(ase_clipPos);
+				o.ase_texcoord3 = screenPos;
 				
+				o.ase_texcoord2.xy = v.ase_texcoord.xy;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord2.zw = 0;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1106,7 +1185,8 @@ Shader "S_Bush"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_texcoord : TEXCOORD0;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1123,7 +1203,7 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				
+				o.ase_texcoord = v.ase_texcoord;
 				return o;
 			}
 
@@ -1162,7 +1242,7 @@ Shader "S_Bush"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				
+				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1209,9 +1289,18 @@ Shader "S_Bush"
 					#endif
 				#endif
 
+				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord2.xy.y ));
+				float4 screenPos = IN.ase_texcoord3;
+				float4 ase_screenPosNorm = screenPos / screenPos.w;
+				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
+				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
+				float2 uv_TextureSample0 = IN.ase_texcoord2.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
+				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
 				
 
-				float Alpha = 1;
+				float Alpha = lerpResult17.a;
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 					float DepthValue = 0;
@@ -1286,6 +1375,7 @@ Shader "S_Bush"
 					float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1293,6 +1383,8 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
+			float4 _TextureSample0_ST;
+			float _DitherProperty;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1325,9 +1417,21 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
+			sampler2D _TextureSample0;
+
+
+			inline float Dither4x4Bayer( int x, int y )
+			{
+				const float dither[ 16 ] = {
+			 1,  9,  3, 11,
+			13,  5, 15,  7,
+			 4, 12,  2, 10,
+			16,  8, 14,  6 };
+				int r = y * 4 + x;
+				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+			}
 			
 
-			
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1335,6 +1439,10 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
+				float4 screenPos = ComputeScreenPos(ase_clipPos);
+				o.ase_texcoord3 = screenPos;
+				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -1480,11 +1588,19 @@ Shader "S_Bush"
 				#endif
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord2.xy.y ));
+				float4 screenPos = IN.ase_texcoord3;
+				float4 ase_screenPosNorm = screenPos / screenPos.w;
+				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
+				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
+				float2 uv_TextureSample0 = IN.ase_texcoord2.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
+				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
 				
 
-				float3 BaseColor = lerpResult8.rgb;
+				float3 BaseColor = lerpResult17.rgb;
 				float3 Emission = 0;
-				float Alpha = 1;
+				float Alpha = lerpResult17.a;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1553,6 +1669,7 @@ Shader "S_Bush"
 					float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1560,6 +1677,8 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
+			float4 _TextureSample0_ST;
+			float _DitherProperty;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1592,9 +1711,21 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
+			sampler2D _TextureSample0;
+
+
+			inline float Dither4x4Bayer( int x, int y )
+			{
+				const float dither[ 16 ] = {
+			 1,  9,  3, 11,
+			13,  5, 15,  7,
+			 4, 12,  2, 10,
+			16,  8, 14,  6 };
+				int r = y * 4 + x;
+				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+			}
 			
 
-			
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1602,6 +1733,10 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID( v, o );
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
+				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
+				float4 screenPos = ComputeScreenPos(ase_clipPos);
+				o.ase_texcoord3 = screenPos;
+				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -1742,10 +1877,18 @@ Shader "S_Bush"
 				#endif
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord2.xy.y ));
+				float4 screenPos = IN.ase_texcoord3;
+				float4 ase_screenPosNorm = screenPos / screenPos.w;
+				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
+				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
+				float2 uv_TextureSample0 = IN.ase_texcoord2.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
+				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
 				
 
-				float3 BaseColor = lerpResult8.rgb;
-				float Alpha = 1;
+				float3 BaseColor = lerpResult17.rgb;
+				float Alpha = lerpResult17.a;
 				float AlphaClipThreshold = 0.5;
 
 				half4 color = half4(BaseColor, Alpha );
@@ -1797,7 +1940,7 @@ Shader "S_Bush"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_texcoord : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1811,7 +1954,8 @@ Shader "S_Bush"
 					float4 shadowCoord : TEXCOORD1;
 				#endif
 				float3 worldNormal : TEXCOORD2;
-				
+				float4 ase_texcoord3 : TEXCOORD3;
+				float4 ase_texcoord4 : TEXCOORD4;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1819,6 +1963,8 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
+			float4 _TextureSample0_ST;
+			float _DitherProperty;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1851,9 +1997,21 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
+			sampler2D _TextureSample0;
+
+
+			inline float Dither4x4Bayer( int x, int y )
+			{
+				const float dither[ 16 ] = {
+			 1,  9,  3, 11,
+			13,  5, 15,  7,
+			 4, 12,  2, 10,
+			16,  8, 14,  6 };
+				int r = y * 4 + x;
+				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+			}
 			
 
-			
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1861,7 +2019,14 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
+				float4 screenPos = ComputeScreenPos(ase_clipPos);
+				o.ase_texcoord4 = screenPos;
 				
+				o.ase_texcoord3.xy = v.ase_texcoord.xy;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord3.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1904,7 +2069,8 @@ Shader "S_Bush"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_texcoord : TEXCOORD0;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1921,7 +2087,7 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				
+				o.ase_texcoord = v.ase_texcoord;
 				return o;
 			}
 
@@ -1960,7 +2126,7 @@ Shader "S_Bush"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				
+				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -2007,9 +2173,18 @@ Shader "S_Bush"
 					#endif
 				#endif
 
+				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord3.xy.y ));
+				float4 screenPos = IN.ase_texcoord4;
+				float4 ase_screenPosNorm = screenPos / screenPos.w;
+				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
+				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
+				float2 uv_TextureSample0 = IN.ase_texcoord3.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
+				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
 				
 
-				float Alpha = 1;
+				float Alpha = lerpResult17.a;
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 					float DepthValue = 0;
@@ -2096,7 +2271,8 @@ Shader "S_Bush"
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			
+			#define ASE_NEEDS_FRAG_SCREEN_POSITION
+
 
 			struct VertexInput
 			{
@@ -2131,6 +2307,8 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
+			float4 _TextureSample0_ST;
+			float _DitherProperty;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -2163,11 +2341,23 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
-			
+			sampler2D _TextureSample0;
+
 
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
 
+			inline float Dither4x4Bayer( int x, int y )
+			{
+				const float dither[ 16 ] = {
+			 1,  9,  3, 11,
+			13,  5, 15,  7,
+			 4, 12,  2, 10,
+			16,  8, 14,  6 };
+				int r = y * 4 + x;
+				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+			}
 			
+
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -2379,16 +2569,23 @@ Shader "S_Bush"
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord7.xy.y ));
+				float4 ase_screenPosNorm = ScreenPos / ScreenPos.w;
+				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
+				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
+				float2 uv_TextureSample0 = IN.ase_texcoord7.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
+				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
 				
 
-				float3 BaseColor = lerpResult8.rgb;
+				float3 BaseColor = lerpResult17.rgb;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
 				float Occlusion = 1;
-				float Alpha = 1;
+				float Alpha = lerpResult17.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -2487,12 +2684,26 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;
 Node;AmplifyShaderEditor.TexCoordVertexDataNode;12;-944,64;Inherit;False;0;2;0;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.OneMinusNode;13;-752,112;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.LerpOp;8;-512,-128;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.ColorNode;10;-960,-384;Inherit;False;Property;_ColorTip;ColorTip;0;0;Create;True;0;0;0;False;0;False;0.5843138,0.7490196,0.2078432,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ColorNode;11;-960,-128;Inherit;False;Property;_ColorRoot;ColorRoot;1;0;Create;True;0;0;0;False;0;False;0.3215686,0.227451,0.1176471,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-WireConnection;1;0;8;0
+Node;AmplifyShaderEditor.ColorNode;10;-960,-384;Inherit;False;Property;_ColorTip;ColorTip;0;0;Create;True;0;0;0;False;0;False;0.5843138,0.7490196,0.2078432,1;0.5843138,0.7490196,0.2078431,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;11;-960,-128;Inherit;False;Property;_ColorRoot;ColorRoot;1;0;Create;True;0;0;0;False;0;False;0.3215686,0.227451,0.1176471,1;0.3215685,0.2274509,0.117647,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;18;-496,384;Inherit;False;Property;_DitherProperty;DitherProperty;2;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;19;-336,80;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.DitheringNode;14;-558,232;Inherit;False;0;False;4;0;FLOAT;0;False;1;SAMPLER2D;;False;2;FLOAT4;0,0,0,0;False;3;SAMPLERSTATE;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;21;-1024,256;Inherit;True;Property;_TextureSample0;Texture Sample 0;3;0;Create;True;0;0;0;False;0;False;-1;None;f631fa6989759d848bb4c1c5d67a6cc4;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.LerpOp;17;-176,-128;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.BreakToComponentsNode;22;-128,105.5;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
+WireConnection;1;0;17;0
+WireConnection;1;6;22;3
 WireConnection;13;0;12;2
 WireConnection;8;0;10;0
 WireConnection;8;1;11;0
 WireConnection;8;2;13;0
+WireConnection;19;0;8;0
+WireConnection;19;1;14;0
+WireConnection;14;0;21;0
+WireConnection;17;0;8;0
+WireConnection;17;1;19;0
+WireConnection;17;2;18;0
+WireConnection;22;0;17;0
 ASEEND*/
-//CHKSM=747CC16350E3D3DCA45A39F0ADBA5EF82CD22C21
+//CHKSM=82E4DB80FE54E4C539FFD494C6AF829258621D9D
