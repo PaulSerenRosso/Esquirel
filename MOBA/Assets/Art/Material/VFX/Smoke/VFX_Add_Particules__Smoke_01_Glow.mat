@@ -92,7 +92,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DepthFade: 1
+    - _DepthFade: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -100,7 +100,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Main_Ins: 1
+    - _Main_Ins: 5
     - _Main_Pow: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
