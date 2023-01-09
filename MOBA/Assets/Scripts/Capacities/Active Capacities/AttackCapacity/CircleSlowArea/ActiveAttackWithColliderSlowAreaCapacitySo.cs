@@ -16,5 +16,4 @@ public class ActiveAttackWithColliderSlowAreaCapacitySo : ActiveAttackWithCollid
         return typeof(ActiveAttackWithColliderSlowAreaCapacity);
     }
 }
-
 }

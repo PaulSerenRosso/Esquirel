@@ -118,9 +118,8 @@ namespace Entities.Capacities
                     InitiateCooldown();
                 currentTrinket = (Trinket) PoolNetworkManager.Instance.PoolInstantiate(so.trinketPrefab, spawnPosition,
                     Quaternion.identity);
-                currentTrinket.InitTrinket(this);
+                currentTrinket.InitTrinket(champion, this);
                 return true;
-
             }
 
             return false;

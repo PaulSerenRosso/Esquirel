@@ -26,9 +26,14 @@ namespace Entities.Capacities
 
        protected override void InitiateDamagePrefab()
        {
-           champion.RequestResetCapacityRPC();
            base.InitiateDamagePrefab();
        }
+
+       protected override void EndAttackTimer()
+       {
+           champion.RequestResetCapacityRPC();
+       }
+
        protected override void InitFX(int[] targetsEntityIndexes, Vector3[] targetPositions)
        {
            directionAttack = previsualisableObjectForward;

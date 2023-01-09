@@ -350,7 +350,7 @@ namespace Entities.Champion
             receiveStartMoveChampionCount = 0;
             photonView.RPC("StartMoveChampionRPC", RpcTarget.All, newPos);
         }
-
+        
         [PunRPC]
         public void StartMoveChampionRPC(Vector3 newPos)
         {
@@ -360,9 +360,7 @@ namespace Entities.Champion
             {
                 obstacle.enabled = false;
             }
-          
-               SyncSetCanMoveRPC(false);
-           
+           SyncSetCanMoveRPC(false);
            Debug.Log("startMove");
            
             photonView.RPC("WaitForAllReceiveStartMoveChampion", RpcTarget.MasterClient, newPos);
