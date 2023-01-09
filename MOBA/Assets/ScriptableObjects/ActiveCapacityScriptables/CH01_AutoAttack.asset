@@ -36,4 +36,4 @@ MonoBehaviour:
   height: 3
   width: 1
   maxRange: 5
-  rangeForDamage: 3
+  rangeForDamage: 5
