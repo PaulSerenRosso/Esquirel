@@ -60,7 +60,7 @@ namespace Entities.Champion
             obstacle = GetComponent<NavMeshObstacle>();
             fowm.AddFOWViewable(this );
             blocker.SetUpBlocker();
-            Instantiate(new GameObject());
+            MapLoaderManager.Instance.AddCountForSendIsReady();
         }
 
         protected override void OnUpdate()
@@ -99,9 +99,8 @@ namespace Entities.Champion
             var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position,
                 Quaternion.identity, rotateParent);
             championMesh.transform.localEulerAngles = Vector3.zero;
-            GetComponent<MiniMapIcon>().SetSprite(championSo.championIcon);
-          
-
+            MiniMapIcon icon = GetComponent<MiniMapIcon>();
+            icon.InitializeIcon(championSo.championIcon);
             team = newTeam;
 
             Transform pos = transform;
@@ -165,11 +164,11 @@ namespace Entities.Champion
             {
                 activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.activeCapacities[i].indexInCollection,this));
             }
+            activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.ultimateAbility.indexInCollection,this));
             for (int i = 0; i < so.activeCapacities.Length; i++)
             {
                 activeCapacities[i].SetUpActiveCapacity(so.activeCapacities[i].indexInCollection, this);
             }
-            activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.ultimateAbility.indexInCollection,this));
             activeCapacities[activeCapacities.Count-1].SetUpActiveCapacity(so.ultimateAbility.indexInCollection, this);
             attackBase =
                 CapacitySOCollectionManager.CreateActiveCapacity(so.attackAbility.indexInCollection, this);

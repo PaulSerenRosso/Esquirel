@@ -134,8 +134,6 @@ namespace  Entities
         [PunRPC]
         public void ShowElements()
         {
-    
-            Debug.Log(gameObject.name);
             for (int i = 0; i < meshRenderersToShow.Count; i++)
             {
                 for (int j = 0; j < meshRenderersToShow[i].materials.Length; j++)

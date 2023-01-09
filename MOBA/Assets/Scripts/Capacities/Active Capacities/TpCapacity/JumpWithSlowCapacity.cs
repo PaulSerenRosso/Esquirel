@@ -45,6 +45,7 @@ namespace Entities.Capacities
                     break;
                 }
             }
+            Debug.Log( (byte)champion.activeCapacities.IndexOf(this)+ "casterindex" + caster.entityIndex + "caster " + caster);
             curveObject.LaunchSetUpRPC((byte)champion.activeCapacities.IndexOf(this), caster.entityIndex);
         }
       

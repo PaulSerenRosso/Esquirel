@@ -26,7 +26,16 @@ namespace GameStates
         private void Start()
         {
             GameStateMachine.Instance.LoadMap();
-            if (PhotonNetwork.IsMasterClient) PhotonNetwork.IsMessageQueueRunning = true;
+            
+           // if (PhotonNetwork.IsMasterClient) PhotonNetwork.IsMessageQueueRunning = true;
+        }
+
+        private int countForSendIsReady = 0;
+        public void AddCountForSendIsReady()
+        {
+            countForSendIsReady++;
+            if(countForSendIsReady == GameStateMachine.Instance.playersReadyDict.Count)
+            GameStateMachine.Instance.SendSetToggleReady(true);
         }
 
         [Serializable]
