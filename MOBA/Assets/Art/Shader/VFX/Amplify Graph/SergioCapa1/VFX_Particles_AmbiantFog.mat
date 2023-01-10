@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: VFX_SergioCapa1_Cone
-  m_Shader: {fileID: 4800000, guid: b0568589dc9c75444aba72d3d31d9472, type: 3}
+  m_Name: VFX_Particles_AmbiantFog
+  m_Shader: {fileID: 4800000, guid: da130363eb830584095058e974d55e38, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,17 +19,22 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _MainTexCone:
-        m_Texture: {fileID: 2800000, guid: f631fa6989759d848bb4c1c5d67a6cc4, type: 3}
+    - _FogTexture:
+        m_Texture: {fileID: 2800000, guid: 46b0abf306c3cb54f98992fc957ce5c2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: 91e5a5de1601d7441a12bfbd27ae58ab, type: 3}
+    - _texcoord:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _MainIns: 5
+    - _DepthFadeDistance: 0.001
+    - _FogPower: 0.2
+    - _LuminosityIntensity: 2.5
     m_Colors:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FogLayer1TilingandOffset1: {r: 1, g: 1, b: 0.1, a: 0.07}
+    - _FogLayer2TilingandOffset: {r: 1, g: 1.2, b: -0.02, a: -0.07}
+    - _FogLayer3TilingandOffset: {r: 0.7, g: 0.5, b: 0, a: -0.04}
   m_BuildTextureStacks: []
