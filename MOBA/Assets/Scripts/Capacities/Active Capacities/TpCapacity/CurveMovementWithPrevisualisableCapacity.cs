@@ -36,7 +36,6 @@ namespace Entities.Capacities
 
         public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
         {
-           
             base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);
             champion.RotateMeshChampionRPC(previsualisableCurveMovementObjectForward);
             
@@ -67,12 +66,10 @@ namespace Entities.Capacities
             base.InitiateCooldown();
             champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, true);
         }
-        
         public override void EndCooldown()
         {
             champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, false);
             base.EndCooldown();
-            
         }
         public void DisableDrawing()
         {
@@ -93,7 +90,7 @@ namespace Entities.Capacities
 
         public bool GetCanDraw()
         {
-            if (champion.currentCapacityUsed != null) return false;
+            if (!champion.CheckCurrentCapacityForCastableCapacity()) return false;
             return canDraw;
         }
 

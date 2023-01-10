@@ -149,7 +149,6 @@ namespace  Entities
                 materialColor.a =  graphicsToShowAlpha[i];
                 graphicsToShow[i].color = materialColor;
             }
-            
             OnShowElementFeedback?.Invoke();
         }
 
@@ -200,6 +199,8 @@ namespace  Entities
             enemiesThatCanSeeMe.Remove(viewable);
             if(hide) HideElements();
         }
+        
+     
         [PunRPC]
 
         public void HideElements()

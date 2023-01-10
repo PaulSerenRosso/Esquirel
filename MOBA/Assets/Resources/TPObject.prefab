@@ -93,8 +93,8 @@ GameObject:
   - component: {fileID: 7787077127828374448}
   - component: {fileID: 7787077127828374450}
   - component: {fileID: 7787077127828374451}
-  - component: {fileID: 7787077127828374461}
   - component: {fileID: 9024169498931819359}
+  - component: {fileID: 9207296735300815420}
   m_Layer: 29
   m_Name: TPObject
   m_TagString: Untagged
@@ -176,21 +176,8 @@ MonoBehaviour:
   canView: 0
   meshFilterFoV: {fileID: 0}
   viewObstructedByObstacle: 0
-  collider: {fileID: 7787077127828374461}
+  collider: {fileID: 9207296735300815420}
   renderer: {fileID: 7787077126835712645}
---- !u!65 &7787077127828374461
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7787077127828374449}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &9024169498931819359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +193,20 @@ MonoBehaviour:
   renderer: {fileID: 7787077126835712635}
   trail: {fileID: 2387758167308349078}
   tpObject: {fileID: 7787077127828374451}
+--- !u!64 &9207296735300815420
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7787077127828374449}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &6874362687689804178
 PrefabInstance:
   m_ObjectHideFlags: 0

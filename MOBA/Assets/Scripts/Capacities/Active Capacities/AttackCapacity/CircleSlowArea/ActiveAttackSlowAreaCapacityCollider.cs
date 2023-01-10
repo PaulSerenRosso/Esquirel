@@ -23,12 +23,12 @@ namespace Entities.Capacities
 
         public override void CollideWithEntity(Entity entityCollided)
         {
-            base.CollideWithEntity(entityCollided);
             if (entityCollided.team != team)
             {
                 Debug.Log("bonsoir je test la collision");
             entityCollided.RequestAddPassiveCapacity(passiveSpeedSo.indexInCollection);
             }
+            base.CollideWithEntity(entityCollided);
         }
     }
 }

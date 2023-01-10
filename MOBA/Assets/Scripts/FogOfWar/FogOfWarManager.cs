@@ -42,6 +42,7 @@ namespace Entities.FogOfWar
         public List<string> sceneToRenderFog;
 
         public float startYPositionRay;
+
         [Header("Fog Of War Parameter")] [Tooltip("Color for the area where the player can't see")]
         public Color fogColor = new Color(0.25f, 0.25f, 0.25f, 1f);
 
@@ -58,7 +59,7 @@ namespace Entities.FogOfWar
 
         //Parameter For Creating Field Of View Mesh
         public FOVSettings settingsFOV;
-        
+
         private void RenderFOW()
         {
             foreach (var viewable in allViewables)
@@ -68,7 +69,6 @@ namespace Entities.FogOfWar
                     DrawFieldOfView(viewable);
                 }
             }
-            
         }
 
         public bool CheckEntityIsVisibleForPlayer(Entity entity)
@@ -256,10 +256,12 @@ namespace Entities.FogOfWar
         {
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
             RaycastHit[] hits = new RaycastHit[2];
-            
-            int hitsCount = Physics.RaycastNonAlloc(new Vector3(entity.transform.position.x,startYPositionRay ,entity.transform.position.z) , dir, hits, entity.viewRange,
+
+            int hitsCount = Physics.RaycastNonAlloc(
+                new Vector3(entity.transform.position.x, startYPositionRay, entity.transform.position.z), dir, hits,
+                entity.viewRange,
                 layerObstacleFogOfWar);
-       
+
 
             if (hitsCount == 0)
             {
@@ -280,10 +282,11 @@ namespace Entities.FogOfWar
                     Bush bush = hits[i].collider.GetComponent<Bush>();
                     if (bush)
                     {
-                        if(!bush.CheckBushMaskView(entity)) continue;
+                        if (!bush.CheckBushMaskView(entity)) continue;
                     }
-                    else  if(!entity.GetViewObstructedByObstacle()) continue;
-                        fieldOfViewObstacles.Add(hits[i]);
+                    else if (!entity.GetViewObstructedByObstacle()) continue;
+
+                    fieldOfViewObstacles.Add(hits[i]);
                     return new ViewCastInfo(true, hits[i].point, hits[i].distance, globalAngle);
                 }
             }
@@ -294,39 +297,38 @@ namespace Entities.FogOfWar
 
 
         private List<RaycastHit> fieldOfViewObstacles = new List<RaycastHit>();
-  
+
 
         ViewCastInfo ViewCastEntity(float globalAngle, Entity entity)
         {
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
-            RaycastHit[] hits = Physics.RaycastAll(new Vector3(entity.transform.position.x,startYPositionRay ,entity.transform.position.z), dir, entity.viewRange,
+            RaycastHit[] hits = Physics.RaycastAll(
+                new Vector3(entity.transform.position.x, startYPositionRay, entity.transform.position.z), dir,
+                entity.viewRange,
                 layerTargetFogOfWar);
 
             fieldOfViewObstacles.Clear();
 
 
-           
             if (hits.Length != 0)
             {
                 for (int i = 0; i < hits.Length; i++)
                 {
-                   
                     if (IsInLayerMask(hits[i].collider.gameObject, layerObstacleFogOfWar))
                     {
                         Bush bush = hits[i].collider.GetComponent<Bush>();
                         if (bush)
                         {
-                            if(!bush.CheckBushMaskView(entity)) continue;
+                            if (!bush.CheckBushMaskView(entity)) continue;
                         }
                         else
                         {
-                            if(!entity.GetViewObstructedByObstacle()) continue;
+                            if (!entity.GetViewObstructedByObstacle()) continue;
                         }
+
                         fieldOfViewObstacles.Add(hits[i]);
                     }
                 }
-
-
                 if (fieldOfViewObstacles.Count != 0)
                 {
                     RaycastHit closerHit = fieldOfViewObstacles[0];
@@ -337,11 +339,16 @@ namespace Entities.FogOfWar
                             closerHit = fieldOfViewObstacles[i];
                         }
                     }
-
                     for (int i = 0; i < hits.Length; i++)
                     {
                         Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
-                        
+                        if (!candidateEntity)
+                        {
+                            EntityFogOfWarColliderLinker entityFogOfWarColliderLinker =
+                                hits[i].collider.gameObject.GetComponent<EntityFogOfWarColliderLinker>();
+                            if (entityFogOfWarColliderLinker) candidateEntity = entityFogOfWarColliderLinker.GetEntity;
+                        }
+
                         if (candidateEntity != null)
                         {
                             if (hits[i].distance <= closerHit.distance)
@@ -360,6 +367,12 @@ namespace Entities.FogOfWar
                 for (int i = 0; i < hits.Length; i++)
                 {
                     Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
+                    if (!candidateEntity)
+                    {
+                        EntityFogOfWarColliderLinker entityFogOfWarColliderLinker =
+                            hits[i].collider.gameObject.GetComponent<EntityFogOfWarColliderLinker>();
+                        if (candidateEntity) candidateEntity = entityFogOfWarColliderLinker.GetEntity;
+                    }
 
                     if (candidateEntity != null)
                     {

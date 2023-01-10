@@ -35,6 +35,7 @@ public class CatapultThrowingCapacity : CurveMovementCapacity
       activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
       activeCapacityAnimationLauncher.Setup(curveMovementCapacitySo.activeCapacityAnimationLauncherInfo, champion);
       curveObject = champion.catapultMovment;
+      champion.CancelPrevisualisable();
       champion.RotateMeshChampionRPC(((Vector3)customParameters[1]-(Vector3)customParameters[0]).normalized);
       curveObject.LaunchSetUpRPC(0,caster.entityIndex);
       base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);

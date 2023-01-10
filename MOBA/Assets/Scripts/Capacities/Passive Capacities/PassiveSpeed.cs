@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
+using Entities.Champion;
 using ExitGames.Client.Photon.StructWrapping;
+using GameStates;
 using UnityEngine;
 
 public class PassiveSpeed : PassiveCapacity
@@ -11,7 +13,7 @@ public class PassiveSpeed : PassiveCapacity
     private float currentRefSpeed;
     private IMoveable moveable;
     private Timer speedDurationTimer;
-    private Entity target;
+    private Champion champion;
     
     
     public override PassiveCapacitySO AssociatedPassiveCapacitySO()
@@ -27,10 +29,19 @@ public class PassiveSpeed : PassiveCapacity
        currentRefSpeed = moveable.GetReferenceMoveSpeed();
        moveable.RequestIncreaseCurrentMoveSpeed(so.speedFactor*currentRefSpeed);
         speedDurationTimer = new Timer(so.time);
-        this.target = target;
+        this.champion =(Champion) target;
         speedDurationTimer.InitiateTimer();
         speedDurationTimer.TickTimerEvent +=
             EndMove;
+        champion.OnDie += 
+            CancelPassiveWhenDie;
+      
+    }
+
+    private void CancelPassiveWhenDie()
+    {
+        Debug.Log("je suis lancer");
+        champion.RequestRemovePassiveCapacity((byte)champion.passiveCapacitiesList.IndexOf(this));
     }
 
     public override void SyncOnAdded(Entity target){
@@ -44,9 +55,18 @@ public class PassiveSpeed : PassiveCapacity
                  };
          }*/
          CreateFx();
-         Debug.Log(fxObject);
+         champion = (Champion)target;
+         fxObject.transform.parent = champion.rotateParent;
          target.meshRenderersToShow.Add(fxObject.GetComponent<ParticleSystemRenderer>());
         target.meshRenderersToShowAlpha.Add(1);
+        if(GameStateMachine.Instance.GetPlayerTeam() == target.team)
+            target.ShowElements();
+        else
+        {
+            //tendencer
+            if(target.enemiesThatCanSeeMe.Count == 0)
+                target.HideElements(); 
+        }
     }
 
     public override void SyncOnRemoved(Entity target)
@@ -60,11 +80,13 @@ public class PassiveSpeed : PassiveCapacity
                      return;
                  };
          }*/
+        Debug.Log("syncremoved");
        base.SyncOnRemoved(target);
        Debug.Log(fxObject);
        var particleSystemRenderer = fxObject.GetComponent<ParticleSystemRenderer>();
        Debug.Log(particleSystemRenderer);
        Debug.Log(target);
+       
        target.meshRenderersToShowAlpha.RemoveAt(target.meshRenderersToShow.IndexOf(particleSystemRenderer));
        target.meshRenderersToShow.Remove(particleSystemRenderer);
         RequeueFx();
@@ -72,11 +94,14 @@ public class PassiveSpeed : PassiveCapacity
 
     private void EndMove()
     {
-        target.RequestRemovePassiveCapacity((byte)target.passiveCapacitiesList.IndexOf(this));
+        champion.RequestRemovePassiveCapacity((byte)champion.passiveCapacitiesList.IndexOf(this));
+        speedDurationTimer.TickTimerEvent -= EndMove;
+        champion.OnDie -= CancelPassiveWhenDie;
     }
 
     protected override void OnRemovedEffects(Entity target)
     {
-      moveable.RequestDecreaseCurrentMoveSpeed(so.speedFactor*currentRefSpeed);
+        Debug.Log("onremovedeffect");
+        moveable.RequestDecreaseCurrentMoveSpeed(so.speedFactor*currentRefSpeed);
     }
 }

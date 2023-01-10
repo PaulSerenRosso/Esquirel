@@ -65,6 +65,12 @@ namespace Entities.Champion
 
         protected override void OnUpdate()
         {
+            if(OnDie != null)
+            for (int i = 0; i < OnDie.GetInvocationList().Length; i++)
+            {
+                Debug.Log(OnDie.GetInvocationList().Length);
+                Debug.Log(OnDie.GetInvocationList()[i].Method.Name);
+            }
             if (isFollowing) FollowEntity(); // Lol
             if (!photonView.IsMine) return;
             CheckMoveDistance();

@@ -16,7 +16,6 @@ namespace MiniMap
 
         public void Start()
         {
-            
             StartCoroutine(AddEventToCapturePoint());
         }
 
