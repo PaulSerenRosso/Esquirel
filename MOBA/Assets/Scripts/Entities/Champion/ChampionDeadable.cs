@@ -50,7 +50,6 @@ namespace Entities.Champion
         public void RequestDie()
         {
             photonView.RPC("DieRPC", RpcTarget.MasterClient);
-       
         }
 
         [PunRPC]
