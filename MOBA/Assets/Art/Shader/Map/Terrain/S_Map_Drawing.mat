@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _T1_Terrain:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b5a08282becbc6142a7d15cd79a17a62, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T1_TerrainNAOH:
@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T2_Terrain:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f4602775b0259074fb73ea432930b326, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T2_TerrainNAOH:
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T3_Terrain:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f21bdb6686d6c7b40a57852da3257e96, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T3_TerrainNAOH:
@@ -56,22 +56,24 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AddVertexPaintingToMask: 0
+    - _AddVertexPaintingToMask: 1
     - _AlphaCutoff: 0.5
     - _EnvironmentReflections: 1
+    - _FlipSymetryVertexPaint: 0
     - _GrayscaleDebug: 0
     - _IntensityColorMap: 2
     - _NormalDebug: 0
     - _ReceiveShadows: 1
+    - _RotateVertexPaintMask: 0
     - _Smoothness: 0
     - _SpecularHighlights: 1
-    - _SymetryVertexPaint: 1
-    - _T1_ProceduralTiling1: 0
-    - _T1_Tiling1: 10
+    - _SymetryVertexPaint: 0
+    - _T1_ProceduralTiling1: 1
+    - _T1_Tiling1: 20.8
     - _T2_ProceduralTiling1: 0
     - _T2_Tilling1: 10
     - _T3_ProceduralTiling1: 0
-    - _T3_Tilling1: 10
+    - _T3_Tilling1: 21.8
     - _T4_ProceduralTiling1: 0
     - _T4_Tilling1: 10
     - _VertexPaintDebug: 0

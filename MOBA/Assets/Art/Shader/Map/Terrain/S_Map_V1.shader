@@ -711,7 +711,7 @@ Shader "S_Map_V1"
 				float4 color53 = IsGammaSpace() ? float4(1,0,0.03653574,0) : float4(1,0,0.002827844,0);
 				float4 DebugColor252 = color53;
 				float4 lerpResult151 = lerp( T2_RGB114 , DebugColor252 , DebugVertexPainting46);
-				float4 lerpResult150 = lerp( ( lerpResult147 * ( 1.0 - ( break494.r + break494.g + break494.b ) ) ) , lerpResult151 , ( break494.r * 2.0 ));
+				float4 lerpResult150 = lerp( ( lerpResult147 * ( 1.0 - ( break494.r + break494.g + break494.b ) ) ) , lerpResult151 , ( break494.r * 1.0 ));
 				float T3_Tilling365 = _T3_Tilling1;
 				float2 temp_cast_13 = (T3_Tilling365).xx;
 				float2 texCoord118 = IN.ase_texcoord7.xy * temp_cast_13 + float2( 0,0 );
@@ -738,7 +738,7 @@ Shader "S_Map_V1"
 				float4 color55 = IsGammaSpace() ? float4(0,1,0.002223969,0) : float4(0,1,0.0001721338,0);
 				float4 DebugColor354 = color55;
 				float4 lerpResult157 = lerp( T3_RGB130 , DebugColor354 , DebugVertexPainting46);
-				float4 lerpResult155 = lerp( lerpResult150 , lerpResult157 , ( break494.g * 2.0 ));
+				float4 lerpResult155 = lerp( lerpResult150 , lerpResult157 , ( break494.g * 1.0 ));
 				float T4_Tilling368 = _T4_Tilling1;
 				float2 temp_cast_16 = (T4_Tilling368).xx;
 				float2 texCoord132 = IN.ase_texcoord7.xy * temp_cast_16 + float2( 0,0 );
@@ -765,7 +765,7 @@ Shader "S_Map_V1"
 				float4 color56 = IsGammaSpace() ? float4(0.00126791,0,1,0) : float4(9.813545E-05,0,1,0);
 				float4 DebugColor457 = color56;
 				float4 lerpResult161 = lerp( T4_RGB144 , DebugColor457 , DebugVertexPainting46);
-				float4 lerpResult165 = lerp( lerpResult155 , lerpResult161 , ( break494.b * 2.0 ));
+				float4 lerpResult165 = lerp( lerpResult155 , lerpResult161 , ( break494.b * 1.0 ));
 				float4 AllAlbedoCombined168 = lerpResult165;
 				float4 lerpResult425 = lerp( T1_RGB71 , DebugColor151 , DebugVertexPainting46);
 				float4 break187 = saturate( ( IN.ase_color * 2.0 ) );
@@ -2066,7 +2066,7 @@ Shader "S_Map_V1"
 				float4 color53 = IsGammaSpace() ? float4(1,0,0.03653574,0) : float4(1,0,0.002827844,0);
 				float4 DebugColor252 = color53;
 				float4 lerpResult151 = lerp( T2_RGB114 , DebugColor252 , DebugVertexPainting46);
-				float4 lerpResult150 = lerp( ( lerpResult147 * ( 1.0 - ( break494.r + break494.g + break494.b ) ) ) , lerpResult151 , ( break494.r * 2.0 ));
+				float4 lerpResult150 = lerp( ( lerpResult147 * ( 1.0 - ( break494.r + break494.g + break494.b ) ) ) , lerpResult151 , ( break494.r * 1.0 ));
 				float T3_Tilling365 = _T3_Tilling1;
 				float2 temp_cast_13 = (T3_Tilling365).xx;
 				float2 texCoord118 = IN.ase_texcoord2.xy * temp_cast_13 + float2( 0,0 );
@@ -2093,7 +2093,7 @@ Shader "S_Map_V1"
 				float4 color55 = IsGammaSpace() ? float4(0,1,0.002223969,0) : float4(0,1,0.0001721338,0);
 				float4 DebugColor354 = color55;
 				float4 lerpResult157 = lerp( T3_RGB130 , DebugColor354 , DebugVertexPainting46);
-				float4 lerpResult155 = lerp( lerpResult150 , lerpResult157 , ( break494.g * 2.0 ));
+				float4 lerpResult155 = lerp( lerpResult150 , lerpResult157 , ( break494.g * 1.0 ));
 				float T4_Tilling368 = _T4_Tilling1;
 				float2 temp_cast_16 = (T4_Tilling368).xx;
 				float2 texCoord132 = IN.ase_texcoord2.xy * temp_cast_16 + float2( 0,0 );
@@ -2120,7 +2120,7 @@ Shader "S_Map_V1"
 				float4 color56 = IsGammaSpace() ? float4(0.00126791,0,1,0) : float4(9.813545E-05,0,1,0);
 				float4 DebugColor457 = color56;
 				float4 lerpResult161 = lerp( T4_RGB144 , DebugColor457 , DebugVertexPainting46);
-				float4 lerpResult165 = lerp( lerpResult155 , lerpResult161 , ( break494.b * 2.0 ));
+				float4 lerpResult165 = lerp( lerpResult155 , lerpResult161 , ( break494.b * 1.0 ));
 				float4 AllAlbedoCombined168 = lerpResult165;
 				float4 lerpResult425 = lerp( T1_RGB71 , DebugColor151 , DebugVertexPainting46);
 				float4 break187 = saturate( ( IN.ase_color * 2.0 ) );
@@ -2665,7 +2665,7 @@ Shader "S_Map_V1"
 				float4 color53 = IsGammaSpace() ? float4(1,0,0.03653574,0) : float4(1,0,0.002827844,0);
 				float4 DebugColor252 = color53;
 				float4 lerpResult151 = lerp( T2_RGB114 , DebugColor252 , DebugVertexPainting46);
-				float4 lerpResult150 = lerp( ( lerpResult147 * ( 1.0 - ( break494.r + break494.g + break494.b ) ) ) , lerpResult151 , ( break494.r * 2.0 ));
+				float4 lerpResult150 = lerp( ( lerpResult147 * ( 1.0 - ( break494.r + break494.g + break494.b ) ) ) , lerpResult151 , ( break494.r * 1.0 ));
 				float T3_Tilling365 = _T3_Tilling1;
 				float2 temp_cast_13 = (T3_Tilling365).xx;
 				float2 texCoord118 = IN.ase_texcoord2.xy * temp_cast_13 + float2( 0,0 );
@@ -2692,7 +2692,7 @@ Shader "S_Map_V1"
 				float4 color55 = IsGammaSpace() ? float4(0,1,0.002223969,0) : float4(0,1,0.0001721338,0);
 				float4 DebugColor354 = color55;
 				float4 lerpResult157 = lerp( T3_RGB130 , DebugColor354 , DebugVertexPainting46);
-				float4 lerpResult155 = lerp( lerpResult150 , lerpResult157 , ( break494.g * 2.0 ));
+				float4 lerpResult155 = lerp( lerpResult150 , lerpResult157 , ( break494.g * 1.0 ));
 				float T4_Tilling368 = _T4_Tilling1;
 				float2 temp_cast_16 = (T4_Tilling368).xx;
 				float2 texCoord132 = IN.ase_texcoord2.xy * temp_cast_16 + float2( 0,0 );
@@ -2719,7 +2719,7 @@ Shader "S_Map_V1"
 				float4 color56 = IsGammaSpace() ? float4(0.00126791,0,1,0) : float4(9.813545E-05,0,1,0);
 				float4 DebugColor457 = color56;
 				float4 lerpResult161 = lerp( T4_RGB144 , DebugColor457 , DebugVertexPainting46);
-				float4 lerpResult165 = lerp( lerpResult155 , lerpResult161 , ( break494.b * 2.0 ));
+				float4 lerpResult165 = lerp( lerpResult155 , lerpResult161 , ( break494.b * 1.0 ));
 				float4 AllAlbedoCombined168 = lerpResult165;
 				float4 lerpResult425 = lerp( T1_RGB71 , DebugColor151 , DebugVertexPainting46);
 				float4 break187 = saturate( ( IN.ase_color * 2.0 ) );
@@ -3653,7 +3653,7 @@ Shader "S_Map_V1"
 				float4 color53 = IsGammaSpace() ? float4(1,0,0.03653574,0) : float4(1,0,0.002827844,0);
 				float4 DebugColor252 = color53;
 				float4 lerpResult151 = lerp( T2_RGB114 , DebugColor252 , DebugVertexPainting46);
-				float4 lerpResult150 = lerp( ( lerpResult147 * ( 1.0 - ( break494.r + break494.g + break494.b ) ) ) , lerpResult151 , ( break494.r * 2.0 ));
+				float4 lerpResult150 = lerp( ( lerpResult147 * ( 1.0 - ( break494.r + break494.g + break494.b ) ) ) , lerpResult151 , ( break494.r * 1.0 ));
 				float T3_Tilling365 = _T3_Tilling1;
 				float2 temp_cast_13 = (T3_Tilling365).xx;
 				float2 texCoord118 = IN.ase_texcoord7.xy * temp_cast_13 + float2( 0,0 );
@@ -3680,7 +3680,7 @@ Shader "S_Map_V1"
 				float4 color55 = IsGammaSpace() ? float4(0,1,0.002223969,0) : float4(0,1,0.0001721338,0);
 				float4 DebugColor354 = color55;
 				float4 lerpResult157 = lerp( T3_RGB130 , DebugColor354 , DebugVertexPainting46);
-				float4 lerpResult155 = lerp( lerpResult150 , lerpResult157 , ( break494.g * 2.0 ));
+				float4 lerpResult155 = lerp( lerpResult150 , lerpResult157 , ( break494.g * 1.0 ));
 				float T4_Tilling368 = _T4_Tilling1;
 				float2 temp_cast_16 = (T4_Tilling368).xx;
 				float2 texCoord132 = IN.ase_texcoord7.xy * temp_cast_16 + float2( 0,0 );
@@ -3707,7 +3707,7 @@ Shader "S_Map_V1"
 				float4 color56 = IsGammaSpace() ? float4(0.00126791,0,1,0) : float4(9.813545E-05,0,1,0);
 				float4 DebugColor457 = color56;
 				float4 lerpResult161 = lerp( T4_RGB144 , DebugColor457 , DebugVertexPainting46);
-				float4 lerpResult165 = lerp( lerpResult155 , lerpResult161 , ( break494.b * 2.0 ));
+				float4 lerpResult165 = lerp( lerpResult155 , lerpResult161 , ( break494.b * 1.0 ));
 				float4 AllAlbedoCombined168 = lerpResult165;
 				float4 lerpResult425 = lerp( T1_RGB71 , DebugColor151 , DebugVertexPainting46);
 				float4 break187 = saturate( ( IN.ase_color * 2.0 ) );
@@ -3906,7 +3906,7 @@ Node;AmplifyShaderEditor.CommentaryNode;308;-4274,-2482;Inherit;False;3709.769;2
 Node;AmplifyShaderEditor.CommentaryNode;307;-7498.852,-2491.554;Inherit;False;3081.05;2439.487;NAOH NormalMap Ambiant Occlusion Height;8;264;171;265;266;279;280;292;293;;0.1278601,0.1179245,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;264;-6154.443,-2441.554;Inherit;False;1683.34;546.8347;NAOH Texture 1;8;255;257;259;256;260;262;378;379;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;245;-2928,1568;Inherit;False;2436.83;1127.007;Vertex Painting;32;195;436;434;437;435;433;432;430;431;197;441;440;439;438;426;429;425;200;208;424;422;423;421;410;408;409;190;188;193;189;187;186;;1,1,1,1;0;0
-Node;AmplifyShaderEditor.CommentaryNode;169;-2928,352;Inherit;False;1975.007;1179.899;Texture Set By Vertex Color;28;147;148;146;149;150;151;153;152;154;155;157;160;161;164;158;159;162;163;165;168;400;401;402;415;420;419;494;501;;0,0,0,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;169;-2928,352;Inherit;False;1975.007;1179.899;Texture Set By Vertex Color;29;147;148;146;149;150;151;153;152;154;155;157;160;161;164;158;159;162;163;165;168;400;401;402;415;420;419;494;501;541;;0,0,0,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;145;-7584,1200;Inherit;False;580.6001;1437.798;Other Parameters;2;41;48;;0,0,0,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;72;-2944,-2432;Inherit;False;2313.769;659.8782;Albedo Texture 1;13;58;61;59;63;67;68;66;64;70;69;71;376;399;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;48;-7568,1824;Inherit;False;497;798.0001;Debug Vertex Color;8;57;56;55;54;52;53;50;51;;0.571486,0,1,1;0;0
@@ -3972,7 +3972,7 @@ Node;AmplifyShaderEditor.LerpOp;69;-1120,-2368;Inherit;False;3;0;COLOR;0,0,0,0;F
 Node;AmplifyShaderEditor.GetLocalVarNode;58;-2880,-2352;Inherit;False;11;T1_Textures;1;0;OBJECT;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.SamplerNode;12;-3664,-2368;Inherit;True;Property;_T_1_TextureSample;T_1_Texture Sample;1;0;Create;True;0;0;0;False;0;False;10;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RegisterLocalVarNode;11;-3888,-2368;Inherit;False;T1_Textures;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
-Node;AmplifyShaderEditor.TexturePropertyNode;10;-4176,-2368;Inherit;True;Property;_T1_Terrain;T1_Terrain;10;1;[Header];Create;True;1;Texture 1 Vertex Paint Black;0;0;False;0;False;None;53dbbb28d566466438ccca8793669096;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;10;-4176,-2368;Inherit;True;Property;_T1_Terrain;T1_Terrain;10;1;[Header];Create;True;1;Texture 1 Vertex Paint Black;0;0;False;0;False;None;74c0f22b9612a7843b6df2db8a7499de;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.SamplerNode;63;-2352,-2000;Inherit;True;Property;_TextureSample24;Texture Sample 24;7;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;26;-3648,-1696;Inherit;True;Property;_T_2_TextureSample;T_2_Texture Sample;1;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;34;-3648,-976;Inherit;True;Property;_T_3_TextureSample;T_3_Texture Sample;1;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -4013,9 +4013,9 @@ Node;AmplifyShaderEditor.GetLocalVarNode;138;-1376,-112;Inherit;False;45;DebugGr
 Node;AmplifyShaderEditor.LerpOp;139;-1120,-288;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.FunctionNode;140;-2304,-256;Inherit;True;Procedural Sample;-1;;15;f5379ff72769e2b4495e5ce2f004d8d4;2,157,0,315,0;7;82;SAMPLER2D;0;False;158;SAMPLER2DARRAY;0;False;183;FLOAT;0;False;5;FLOAT2;0,0;False;80;FLOAT3;0,0,0;False;104;FLOAT2;1,1;False;74;SAMPLERSTATE;0;False;5;COLOR;0;FLOAT;32;FLOAT;33;FLOAT;34;FLOAT;35
 Node;AmplifyShaderEditor.RegisterLocalVarNode;144;-848,-288;Inherit;True;T4_RGB;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.TexturePropertyNode;24;-4160,-1696;Inherit;True;Property;_T2_Terrain;T2_Terrain;14;1;[Header];Create;True;1;Texture 2 Vertex Paint Red;0;0;False;0;False;None;84508b93f15f2b64386ec07486afc7a3;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.TexturePropertyNode;33;-4160,-976;Inherit;True;Property;_T3_Terrain;T3_Terrain;18;1;[Header];Create;True;1;Texture 3 Vertex Paint Green;0;0;False;0;False;None;b297077dae62c1944ba14cad801cddf5;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.TexturePropertyNode;38;-4176,-288;Inherit;True;Property;_T4_Terrain;T4_Terrain;22;1;[Header];Create;True;1;Texture 4 Vertex Paint Blue;0;0;False;0;False;None;59b3de376c11d60448521197df3abecd;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;24;-4160,-1696;Inherit;True;Property;_T2_Terrain;T2_Terrain;14;1;[Header];Create;True;1;Texture 2 Vertex Paint Red;0;0;False;0;False;None;f4602775b0259074fb73ea432930b326;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;33;-4160,-976;Inherit;True;Property;_T3_Terrain;T3_Terrain;18;1;[Header];Create;True;1;Texture 3 Vertex Paint Green;0;0;False;0;False;None;f21bdb6686d6c7b40a57852da3257e96;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;38;-4176,-288;Inherit;True;Property;_T4_Terrain;T4_Terrain;22;1;[Header];Create;True;1;Texture 4 Vertex Paint Blue;0;0;False;0;False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.FunctionNode;129;-2288,-960;Inherit;True;Procedural Sample;-1;;16;f5379ff72769e2b4495e5ce2f004d8d4;2,157,0,315,0;7;82;SAMPLER2D;0;False;158;SAMPLER2DARRAY;0;False;183;FLOAT;0;False;5;FLOAT2;0,0;False;80;FLOAT3;0,0,0;False;104;FLOAT2;1,1;False;74;SAMPLERSTATE;0;False;5;COLOR;0;FLOAT;32;FLOAT;33;FLOAT;34;FLOAT;35
 Node;AmplifyShaderEditor.FunctionNode;105;-2304,-1664;Inherit;True;Procedural Sample;-1;;17;f5379ff72769e2b4495e5ce2f004d8d4;2,157,0,315,0;7;82;SAMPLER2D;0;False;158;SAMPLER2DARRAY;0;False;183;FLOAT;0;False;5;FLOAT2;0,0;False;80;FLOAT3;0,0,0;False;104;FLOAT2;1,1;False;74;SAMPLERSTATE;0;False;5;COLOR;0;FLOAT;32;FLOAT;33;FLOAT;34;FLOAT;35
 Node;AmplifyShaderEditor.RegisterLocalVarNode;27;-3248,-1696;Inherit;False;T2_Albedo_Texture;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
@@ -4101,7 +4101,7 @@ Node;AmplifyShaderEditor.FunctionNode;463;1840,-1264;Inherit;False;Normal Recons
 Node;AmplifyShaderEditor.RangedFloatNode;459;1856,-1760;Inherit;False;Property;_Smoothness;Smoothness;26;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.NormalVertexDataNode;465;1872,-1424;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleAddOpNode;467;2080,-1376;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.RangedFloatNode;450;1248,-1728;Inherit;False;Property;_IntensityColorMap;IntensityColorMap;1;0;Create;True;0;0;0;False;0;False;2;1;0;2;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;450;1248,-1728;Inherit;False;Property;_IntensityColorMap;IntensityColorMap;1;0;Create;True;0;0;0;False;0;False;2;2;0;2;0;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;210;688,-1776;Inherit;False;208;AllAlbedoVertexPaint;1;0;OBJECT;;False;1;COLOR;0
 Node;AmplifyShaderEditor.GetLocalVarNode;448;-112,-1840;Inherit;False;443;AddVertexPaintingToMask;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;186;-2544,2048;Inherit;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0
@@ -4190,7 +4190,7 @@ Node;AmplifyShaderEditor.TextureCoordinatesNode;22;-4160,-2160;Inherit;False;0;1
 Node;AmplifyShaderEditor.RegisterLocalVarNode;507;-8589.416,-2448;Inherit;False;TerrainMask_VertexPaint;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;516;-8861.416,-2240;Inherit;False;0;508;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;518;-8285.416,-2448;Inherit;True;Property;_TerrainMask_VertexPaintSample;TerrainMask_VertexPaint Sample;27;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TexturePropertyNode;508;-8845.416,-2448;Inherit;True;Property;_TerrainMask_VertexPaint;TerrainMask_VertexPaint;9;0;Create;True;0;0;0;False;0;False;61bcabd8649009f41850e63708dd1066;61bcabd8649009f41850e63708dd1066;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;508;-8845.416,-2448;Inherit;True;Property;_TerrainMask_VertexPaint;TerrainMask_VertexPaint;9;0;Create;True;0;0;0;False;0;False;61bcabd8649009f41850e63708dd1066;836fea28e82765b479e5639f9df52ace;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.RegisterLocalVarNode;517;-7917.416,-2448;Inherit;False;TerrainMask_VertexPaintAlbedo;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.GetLocalVarNode;513;-4704,576;Inherit;False;507;TerrainMask_VertexPaint;1;0;OBJECT;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.GetLocalVarNode;519;-3984,512;Inherit;False;517;TerrainMask_VertexPaintAlbedo;1;0;OBJECT;;False;1;COLOR;0
@@ -4205,22 +4205,17 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;488;-4592,944;Inherit;False;2;2;0;
 Node;AmplifyShaderEditor.LerpOp;535;-4752,1024;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.Vector2Node;490;-4992,1024;Inherit;False;Constant;_Vector1;Vector 1;26;0;Create;True;0;0;0;False;0;False;-2,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.Vector2Node;534;-4992,1152;Inherit;False;Constant;_Vector2;Vector 1;26;0;Create;True;0;0;0;False;0;False;-2,-1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
-Node;AmplifyShaderEditor.RangedFloatNode;497;-6912,2160;Inherit;False;Property;_SymetryVertexPaint;Symetry Vertex Paint;6;2;[Header];[IntRange];Create;True;1;Mask Vertex Painting;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;521;-6912,2240;Inherit;False;Property;_FlipSymetryVertexPaint;Flip Symetry Vertex Paint;7;1;[IntRange];Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;536;-5072,1280;Inherit;False;520;FlipSymetryVertexPaint;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;497;-6912,2160;Inherit;False;Property;_SymetryVertexPaint;Symetry Vertex Paint;6;2;[Header];[IntRange];Create;True;1;Mask Vertex Painting;0;0;False;0;False;1;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;521;-6912,2240;Inherit;False;Property;_FlipSymetryVertexPaint;Flip Symetry Vertex Paint;7;1;[IntRange];Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;522;-6912,2320;Inherit;False;Property;_RotateVertexPaintMask;Rotate Vertex Paint Mask;8;0;Create;True;1;Mask Vertex Painting;0;0;False;0;False;0;0.25;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TauNode;527;-5344,1040;Inherit;False;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;528;-5232,960;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RotatorNode;540;-8560,-2240;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;1;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.TauNode;537;-8848,-2000;Inherit;False;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;538;-8736,-2080;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;539;-8976,-2080;Inherit;False;523;RotateVertexPaintMask;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.WireNode;542;-5104,1392;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.WireNode;544;-5072,1408;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.GetLocalVarNode;526;-5472,959;Inherit;False;523;RotateVertexPaintMask;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RotatorNode;524;-5024,816;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;1;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;484;-3952,928;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.FunctionNode;549;-4352,1392;Inherit;True;ASF_UVSplit2;-1;;34;cf8f6cda4b80530479e6cfa16a50c155;0;1;19;FLOAT;0;False;4;FLOAT;0;FLOAT;14;FLOAT;15;FLOAT;16
-Node;AmplifyShaderEditor.GetLocalVarNode;536;-5072,1280;Inherit;False;520;FlipSymetryVertexPaint;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;522;-6878.048,2320;Inherit;False;Property;_RotateVertexPaintMask;Rotate Vertex Paint Mask;8;0;Create;True;1;Mask Vertex Painting;0;0;False;0;False;0;0.7233878;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;541;-2569.929,1435.056;Inherit;False;Constant;_Float5;Float 5;27;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
 WireConnection;260;0;256;0
 WireConnection;260;1;259;0
 WireConnection;260;2;379;0
@@ -4378,8 +4373,11 @@ WireConnection;419;0;147;0
 WireConnection;419;1;420;0
 WireConnection;420;0;415;0
 WireConnection;402;0;494;2
+WireConnection;402;1;541;0
 WireConnection;401;0;494;1
+WireConnection;401;1;541;0
 WireConnection;400;0;494;0
+WireConnection;400;1;541;0
 WireConnection;415;0;494;0
 WireConnection;415;1;494;1
 WireConnection;415;2;494;2
@@ -4507,4 +4505,4 @@ WireConnection;484;0;480;0
 WireConnection;484;1;549;14
 WireConnection;549;19;544;0
 ASEEND*/
-//CHKSM=CBCCB63760ADF97B90639717AAFCCB1FCA647661
+//CHKSM=DA7F67C43117C3CE5253BAFA79BD0F881F2D0476
