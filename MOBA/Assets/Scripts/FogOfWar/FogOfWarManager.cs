@@ -346,7 +346,7 @@ namespace Entities.FogOfWar
                         {
                             EntityFogOfWarColliderLinker entityFogOfWarColliderLinker =
                                 hits[i].collider.gameObject.GetComponent<EntityFogOfWarColliderLinker>();
-                            if (candidateEntity) candidateEntity = entityFogOfWarColliderLinker.GetEntity;
+                            if (entityFogOfWarColliderLinker) candidateEntity = entityFogOfWarColliderLinker.GetEntity;
                         }
 
                         if (candidateEntity != null)

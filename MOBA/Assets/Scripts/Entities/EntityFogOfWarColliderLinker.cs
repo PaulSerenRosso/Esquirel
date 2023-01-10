@@ -10,7 +10,16 @@ public class EntityFogOfWarColliderLinker : MonoBehaviour
     [SerializeField] private Entity entity;
     [SerializeField] private Collider collider;
 
-    public Entity GetEntity => entity;
+    public Entity GetEntity
+    {
+        get
+        {
+            Debug.Log("fx"+entity.name);
+            return entity;
+            
+            
+        }
+    } 
 
     public Collider GetCollider => collider;
 }
