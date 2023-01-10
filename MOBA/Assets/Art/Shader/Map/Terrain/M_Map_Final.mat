@@ -64,7 +64,7 @@ Material:
     - _IntensityColorMap: 2
     - _NormalDebug: 0
     - _ReceiveShadows: 1
-    - _RotateVertexPaintMask: 0.7233878
+    - _RotateVertexPaintMask: 0
     - _Smoothness: 0
     - _SpecularHighlights: 1
     - _SymetryVertexPaint: 0
