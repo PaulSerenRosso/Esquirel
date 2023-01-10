@@ -1,6 +1,7 @@
 using Entities;
 using Entities.Capacities;
 using Entities.Champion;
+using Entities.FogOfWar;
 using GameStates;
 using Photon.Pun;
 using Unity.Mathematics;
@@ -59,6 +60,7 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
         {
             targetEntityIsLifeable = true;
             impactFxTimerInfo.fxPos =targetEntity.entityCapacityCollider.GetCollider.ClosestPoint(champion.transform.position);
+            impactFxTimerInfo.fxPos.y = FogOfWarManager.Instance.startYPositionRay;
             impactFxTimerInfo.fxRotation =
                 Quaternion.LookRotation((impactFxTimerInfo.fxPos-champion.transform.position).normalized, Vector3.up);
             impactFxTimer.InitiateTimer();

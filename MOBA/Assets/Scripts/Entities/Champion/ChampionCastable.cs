@@ -16,6 +16,8 @@ namespace Entities.Champion
         
         public void CancelPrevisualisable()
         {
+         
+            Debug.Log(currentPrevisualisable);
             if (currentPrevisualisable != null)
             {
                 currentPrevisualisable.DisableDrawing();
@@ -41,6 +43,7 @@ namespace Entities.Champion
         [PunRPC]
         public void CancelCurrentCapacity()
         {
+            if(attackBase != currentCapacityUsed) return;
             if (currentCapacityUsed != null)
             {
                 currentCapacityUsed.CancelCapacity();
@@ -94,6 +97,7 @@ namespace Entities.Champion
                     if (!previsualisable.GetIsDrawing() && previsualisable.GetCanDraw())
                     {
                         currentPrevisualisable = previsualisable;
+                        Debug.Log(currentPrevisualisable);
                         previsualisable.EnableDrawing();
                     }
                     else if (previsualisable.GetCanSkipDrawing())
@@ -151,8 +155,7 @@ namespace Entities.Champion
         [PunRPC]
         public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
             params object[] otherParameters)
-        {
-            
+        {CancelCurrentCapacity();
             if (activeCapacities[capacityIndex] is IPrevisualisable)
             {
                 IPrevisualisable previsualisable = (IPrevisualisable)activeCapacities[capacityIndex];

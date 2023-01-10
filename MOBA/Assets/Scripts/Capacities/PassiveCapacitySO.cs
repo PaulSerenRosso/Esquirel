@@ -14,6 +14,7 @@ namespace Entities.Capacities
         [Tooltip("GD Name")] public string descriptionName;
         
         [Tooltip("Capacity Icon")] public Sprite icon;
+        
 
     public GameObject fxPrefab;
 
