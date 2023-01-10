@@ -93,7 +93,7 @@ namespace Entities.Champion
             photonView.RPC("SyncDieRPC", RpcTarget.All);
         }
 
-        public event GlobalDelegates.NoParameterDelegate OnDie;
+        public event GlobalDelegates.NoParameterDelegate OnDie ;
         public event GlobalDelegates.NoParameterDelegate OnDieFeedback;
 
         public void RequestRevive()
@@ -128,7 +128,6 @@ namespace Entities.Champion
         public void ReviveRPC()
         {
             isAlive = true;
-            
             SetCurrentHpRPC(maxHp);
             SetCurrentResourceRPC(maxResource);
             OnRevive?.Invoke();

@@ -8,6 +8,10 @@ namespace MiniMap
 {
 public class MiniMapDynamicIcon : MiniMapIcon
 {
+    protected override void Start()
+    {
+    }
+
     private void Update()
     {
         SetPositionInMiniMap();

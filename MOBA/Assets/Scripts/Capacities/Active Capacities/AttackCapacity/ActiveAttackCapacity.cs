@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Entities.FogOfWar;
 using Photon.Pun;
 using UnityEngine;
 
@@ -64,8 +65,7 @@ namespace Entities.Capacities
             damageTimer.CancelTimer();
             attackTimer.CancelTimer();
         }
-
-
+        
         public override void SetUpActiveCapacity(byte soIndex, Entity caster)
         {
             so = (ActiveAttackWithColliderCapacitySO)CapacitySOCollectionManager.GetActiveCapacitySOByIndex(soIndex);
