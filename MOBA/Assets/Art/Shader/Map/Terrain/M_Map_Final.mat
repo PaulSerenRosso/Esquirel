@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _T1_Terrain:
-        m_Texture: {fileID: 2800000, guid: 53dbbb28d566466438ccca8793669096, type: 3}
+        m_Texture: {fileID: 2800000, guid: 74c0f22b9612a7843b6df2db8a7499de, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T1_TerrainNAOH:
@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T2_Terrain:
-        m_Texture: {fileID: 2800000, guid: 84508b93f15f2b64386ec07486afc7a3, type: 3}
+        m_Texture: {fileID: 2800000, guid: f4602775b0259074fb73ea432930b326, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T2_TerrainNAOH:
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T3_Terrain:
-        m_Texture: {fileID: 2800000, guid: b297077dae62c1944ba14cad801cddf5, type: 3}
+        m_Texture: {fileID: 2800000, guid: f21bdb6686d6c7b40a57852da3257e96, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T3_TerrainNAOH:
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T4_Terrain:
-        m_Texture: {fileID: 2800000, guid: 59b3de376c11d60448521197df3abecd, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T4_TerrainNAOH:
@@ -52,24 +52,24 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TerrainMask_VertexPaint:
-        m_Texture: {fileID: 2800000, guid: 61bcabd8649009f41850e63708dd1066, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2e6b84768323c104bb05cf92d7716cae, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 1, y: 1}
     m_Floats:
     - _AddVertexPaintingToMask: 0
     - _AlphaCutoff: 0.5
     - _EnvironmentReflections: 1
-    - _FlipSymetryVertexPaint: 1
+    - _FlipSymetryVertexPaint: 0
     - _GrayscaleDebug: 0
-    - _IntensityColorMap: 1
+    - _IntensityColorMap: 2
     - _NormalDebug: 0
     - _ReceiveShadows: 1
     - _RotateVertexPaintMask: 0
     - _Smoothness: 0
     - _SpecularHighlights: 1
-    - _SymetryVertexPaint: 1
+    - _SymetryVertexPaint: 0
     - _T1_ProceduralTiling1: 1
-    - _T1_Tiling1: 10
+    - _T1_Tiling1: 15.3
     - _T2_ProceduralTiling1: 0
     - _T2_Tilling1: 10
     - _T3_ProceduralTiling1: 0
