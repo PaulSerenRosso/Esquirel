@@ -13,7 +13,6 @@ namespace Entities.Capacities
 
         public override void InitCapacityFX(int entityIndex, byte capacityIndex, Vector3 direction)
         {
-            base.InitCapacityFX(entityIndex, capacityIndex, direction);
             champion = (Champion.Champion)EntityCollectionManager.GetEntityByIndex(entityIndex);
             if (capacityIndex == 255)
                 ActiveAttackCapacity = (ActiveAttackCapacity)champion.attackBase;
@@ -28,6 +27,7 @@ namespace Entities.Capacities
                 var mainModule = allParticleSystems[i].main;
                 mainModule.simulationSpeed = 1 / ActiveAttackCapacity.so.fxTime;
             }
+            base.InitCapacityFX(entityIndex, capacityIndex, direction);
         }
     }
 }

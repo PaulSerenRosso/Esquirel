@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Entities.FogOfWar;
 using UnityEngine;
 
 namespace Entities.Capacities
@@ -7,7 +8,7 @@ namespace Entities.Capacities
     public class ActiveAttackSlowAreaCapacityFX : ActiveAttackCapacityFX
     {
         [SerializeField] protected GameObject fxObject;
-        [SerializeField] private SphereCollider fogCollider;
+        [SerializeField] private EntityFogOfWarColliderLinker fogCollider;
 
         public override void InitCapacityFX(int entityIndex, byte capacityIndex, Vector3 direction)
         {
@@ -18,7 +19,7 @@ namespace Entities.Capacities
                 (ActiveAttackWithColliderSlowAreaCapacitySo)activeAttackWithColliderSlowAreaCapacity.so;
             fxObject.transform.SetGlobalScale(new Vector3(1, 0, 1) * activeAttackWithColliderSlowAreaCapacitySo.radiusArea +
                                               Vector3.up * transform.lossyScale.y);
-            fogCollider.radius = activeAttackWithColliderSlowAreaCapacitySo.radiusArea/2;
+            fogCollider.transform.SetGlobalScale(Vector3.one*activeAttackWithColliderSlowAreaCapacitySo.radiusArea);
         }
     }
 }

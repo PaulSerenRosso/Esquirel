@@ -107,3 +107,5 @@ MonoBehaviour:
     amount: 3
   - Element: {fileID: 8110421565520617150, guid: e9492d85934383045af08345034315d9, type: 3}
     amount: 10
+  - Element: {fileID: 8402012246838916218, guid: 49152db17b359cc43ada8e2de81c1a15, type: 3}
+    amount: 10
