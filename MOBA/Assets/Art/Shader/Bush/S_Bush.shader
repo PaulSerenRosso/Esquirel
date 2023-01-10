@@ -8,8 +8,12 @@ Shader "S_Bush"
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[ASEBegin]_ColorTip("ColorTip", Color) = (0.5843138,0.7490196,0.2078432,1)
 		_ColorRoot("ColorRoot", Color) = (0.3215686,0.227451,0.1176471,1)
-		_DitherProperty("DitherProperty", Range( 0 , 1)) = 0
-		[ASEEnd]_TextureSample0("Texture Sample 0", 2D) = "white" {}
+		_NoiseTexture("Noise Texture", 2D) = "white" {}
+		_AlphaClipValue("AlphaClipValue", Range( 0 , 1)) = 0
+		_ActivateDither("ActivateDither", Range( 0 , 1)) = 0
+		_UseWindVertexOffset("UseWindVertexOffset", Range( 0 , 1)) = 0
+		_Frequence("Frequence ", Float) = 2
+		[ASEEnd]_Amplitude("Amplitude", Float) = 0.3
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 
@@ -178,6 +182,8 @@ Shader "S_Bush"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define ASE_ABSOLUTE_VERTEX_POS 1
+			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 101001
 
 
@@ -217,6 +223,7 @@ Shader "S_Bush"
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
+			#define ASE_NEEDS_VERT_POSITION
 			#define ASE_NEEDS_FRAG_SCREEN_POSITION
 
 
@@ -253,8 +260,12 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
-			float4 _TextureSample0_ST;
-			float _DitherProperty;
+			float4 _NoiseTexture_ST;
+			float _Frequence;
+			float _Amplitude;
+			float _UseWindVertexOffset;
+			float _ActivateDither;
+			float _AlphaClipValue;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -287,18 +298,22 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
-			sampler2D _TextureSample0;
+			sampler2D _NoiseTexture;
 
 
-			inline float Dither4x4Bayer( int x, int y )
+			inline float Dither8x8Bayer( int x, int y )
 			{
-				const float dither[ 16 ] = {
-			 1,  9,  3, 11,
-			13,  5, 15,  7,
-			 4, 12,  2, 10,
-			16,  8, 14,  6 };
-				int r = y * 4 + x;
-				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+				const float dither[ 64 ] = {
+			 1, 49, 13, 61,  4, 52, 16, 64,
+			33, 17, 45, 29, 36, 20, 48, 32,
+			 9, 57,  5, 53, 12, 60,  8, 56,
+			41, 25, 37, 21, 44, 28, 40, 24,
+			 3, 51, 15, 63,  2, 50, 14, 62,
+			35, 19, 47, 31, 34, 18, 46, 30,
+			11, 59,  7, 55, 10, 58,  6, 54,
+			43, 27, 39, 23, 42, 26, 38, 22};
+				int r = y * 8 + x;
+				return dither[r] / 64; // same # of instructions as pre-dividing due to compiler magic
 			}
 			
 
@@ -309,6 +324,12 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float3 break56 = v.vertex.xyz;
+				float3 appendResult65 = (float3(break56.x , ( break56.y + ( sin( ( ( break56.x * _Frequence ) + _TimeParameters.x ) ) * _Amplitude ) ) , break56.z));
+				float2 texCoord67 = v.texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+				float3 lerpResult66 = lerp( v.vertex.xyz , appendResult65 , texCoord67.y);
+				float3 lerpResult69 = lerp( v.vertex.xyz , lerpResult66 , _UseWindVertexOffset);
+				
 				o.ase_texcoord7.xy = v.texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -320,7 +341,7 @@ Shader "S_Bush"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = lerpResult69;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -513,24 +534,28 @@ Shader "S_Bush"
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord7.xy.y ));
+				
+				float2 break44 = float2( 1,0 );
+				float lerpResult41 = lerp( break44.x , break44.y , _ActivateDither);
+				
 				float4 ase_screenPosNorm = ScreenPos / ScreenPos.w;
 				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
-				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
-				float2 uv_TextureSample0 = IN.ase_texcoord7.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
-				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
-				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
+				float2 clipScreen27 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither27 = Dither8x8Bayer( fmod(clipScreen27.x, 8), fmod(clipScreen27.y, 8) );
+				float2 uv_NoiseTexture = IN.ase_texcoord7.xy * _NoiseTexture_ST.xy + _NoiseTexture_ST.zw;
+				dither27 = step( dither27, tex2D( _NoiseTexture, uv_NoiseTexture ).r );
+				float lerpResult30 = lerp( _AlphaClipValue , dither27 , _ActivateDither);
 				
 
-				float3 BaseColor = lerpResult17.rgb;
+				float3 BaseColor = lerpResult8.rgb;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
 				float Occlusion = 1;
-				float Alpha = lerpResult17.a;
-				float AlphaClipThreshold = 0.5;
+				float Alpha = ( lerpResult8.a * lerpResult41 );
+				float AlphaClipThreshold = lerpResult30;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
 				float3 RefractionColor = 1;
@@ -704,6 +729,8 @@ Shader "S_Bush"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define ASE_ABSOLUTE_VERTEX_POS 1
+			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 101001
 
 
@@ -717,7 +744,8 @@ Shader "S_Bush"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_POSITION
+
 
 			struct VertexInput
 			{
@@ -745,8 +773,12 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
-			float4 _TextureSample0_ST;
-			float _DitherProperty;
+			float4 _NoiseTexture_ST;
+			float _Frequence;
+			float _Amplitude;
+			float _UseWindVertexOffset;
+			float _ActivateDither;
+			float _AlphaClipValue;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -779,18 +811,22 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
-			sampler2D _TextureSample0;
+			sampler2D _NoiseTexture;
 
 
-			inline float Dither4x4Bayer( int x, int y )
+			inline float Dither8x8Bayer( int x, int y )
 			{
-				const float dither[ 16 ] = {
-			 1,  9,  3, 11,
-			13,  5, 15,  7,
-			 4, 12,  2, 10,
-			16,  8, 14,  6 };
-				int r = y * 4 + x;
-				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+				const float dither[ 64 ] = {
+			 1, 49, 13, 61,  4, 52, 16, 64,
+			33, 17, 45, 29, 36, 20, 48, 32,
+			 9, 57,  5, 53, 12, 60,  8, 56,
+			41, 25, 37, 21, 44, 28, 40, 24,
+			 3, 51, 15, 63,  2, 50, 14, 62,
+			35, 19, 47, 31, 34, 18, 46, 30,
+			11, 59,  7, 55, 10, 58,  6, 54,
+			43, 27, 39, 23, 42, 26, 38, 22};
+				int r = y * 8 + x;
+				return dither[r] / 64; // same # of instructions as pre-dividing due to compiler magic
 			}
 			
 
@@ -806,6 +842,12 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
+				float3 break56 = v.vertex.xyz;
+				float3 appendResult65 = (float3(break56.x , ( break56.y + ( sin( ( ( break56.x * _Frequence ) + _TimeParameters.x ) ) * _Amplitude ) ) , break56.z));
+				float2 texCoord67 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+				float3 lerpResult66 = lerp( v.vertex.xyz , appendResult65 , texCoord67.y);
+				float3 lerpResult69 = lerp( v.vertex.xyz , lerpResult66 , _UseWindVertexOffset);
+				
 				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
 				float4 screenPos = ComputeScreenPos(ase_clipPos);
 				o.ase_texcoord3 = screenPos;
@@ -821,7 +863,7 @@ Shader "S_Bush"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = lerpResult69;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -983,18 +1025,21 @@ Shader "S_Bush"
 				#endif
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord2.xy.y ));
+				float2 break44 = float2( 1,0 );
+				float lerpResult41 = lerp( break44.x , break44.y , _ActivateDither);
+				
 				float4 screenPos = IN.ase_texcoord3;
 				float4 ase_screenPosNorm = screenPos / screenPos.w;
 				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
-				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
-				float2 uv_TextureSample0 = IN.ase_texcoord2.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
-				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
-				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
+				float2 clipScreen27 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither27 = Dither8x8Bayer( fmod(clipScreen27.x, 8), fmod(clipScreen27.y, 8) );
+				float2 uv_NoiseTexture = IN.ase_texcoord2.xy * _NoiseTexture_ST.xy + _NoiseTexture_ST.zw;
+				dither27 = step( dither27, tex2D( _NoiseTexture, uv_NoiseTexture ).r );
+				float lerpResult30 = lerp( _AlphaClipValue , dither27 , _ActivateDither);
 				
 
-				float Alpha = lerpResult17.a;
-				float AlphaClipThreshold = 0.5;
+				float Alpha = ( lerpResult8.a * lerpResult41 );
+				float AlphaClipThreshold = lerpResult30;
 				float AlphaClipThresholdShadow = 0.5;
 
 				#ifdef ASE_DEPTH_WRITE_ON
@@ -1040,6 +1085,8 @@ Shader "S_Bush"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define ASE_ABSOLUTE_VERTEX_POS 1
+			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 101001
 
 
@@ -1053,7 +1100,8 @@ Shader "S_Bush"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_POSITION
+
 
 			struct VertexInput
 			{
@@ -1081,8 +1129,12 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
-			float4 _TextureSample0_ST;
-			float _DitherProperty;
+			float4 _NoiseTexture_ST;
+			float _Frequence;
+			float _Amplitude;
+			float _UseWindVertexOffset;
+			float _ActivateDither;
+			float _AlphaClipValue;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1115,18 +1167,22 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
-			sampler2D _TextureSample0;
+			sampler2D _NoiseTexture;
 
 
-			inline float Dither4x4Bayer( int x, int y )
+			inline float Dither8x8Bayer( int x, int y )
 			{
-				const float dither[ 16 ] = {
-			 1,  9,  3, 11,
-			13,  5, 15,  7,
-			 4, 12,  2, 10,
-			16,  8, 14,  6 };
-				int r = y * 4 + x;
-				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+				const float dither[ 64 ] = {
+			 1, 49, 13, 61,  4, 52, 16, 64,
+			33, 17, 45, 29, 36, 20, 48, 32,
+			 9, 57,  5, 53, 12, 60,  8, 56,
+			41, 25, 37, 21, 44, 28, 40, 24,
+			 3, 51, 15, 63,  2, 50, 14, 62,
+			35, 19, 47, 31, 34, 18, 46, 30,
+			11, 59,  7, 55, 10, 58,  6, 54,
+			43, 27, 39, 23, 42, 26, 38, 22};
+				int r = y * 8 + x;
+				return dither[r] / 64; // same # of instructions as pre-dividing due to compiler magic
 			}
 			
 
@@ -1137,6 +1193,12 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float3 break56 = v.vertex.xyz;
+				float3 appendResult65 = (float3(break56.x , ( break56.y + ( sin( ( ( break56.x * _Frequence ) + _TimeParameters.x ) ) * _Amplitude ) ) , break56.z));
+				float2 texCoord67 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+				float3 lerpResult66 = lerp( v.vertex.xyz , appendResult65 , texCoord67.y);
+				float3 lerpResult69 = lerp( v.vertex.xyz , lerpResult66 , _UseWindVertexOffset);
+				
 				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
 				float4 screenPos = ComputeScreenPos(ase_clipPos);
 				o.ase_texcoord3 = screenPos;
@@ -1152,7 +1214,7 @@ Shader "S_Bush"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = lerpResult69;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -1290,18 +1352,21 @@ Shader "S_Bush"
 				#endif
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord2.xy.y ));
+				float2 break44 = float2( 1,0 );
+				float lerpResult41 = lerp( break44.x , break44.y , _ActivateDither);
+				
 				float4 screenPos = IN.ase_texcoord3;
 				float4 ase_screenPosNorm = screenPos / screenPos.w;
 				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
-				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
-				float2 uv_TextureSample0 = IN.ase_texcoord2.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
-				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
-				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
+				float2 clipScreen27 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither27 = Dither8x8Bayer( fmod(clipScreen27.x, 8), fmod(clipScreen27.y, 8) );
+				float2 uv_NoiseTexture = IN.ase_texcoord2.xy * _NoiseTexture_ST.xy + _NoiseTexture_ST.zw;
+				dither27 = step( dither27, tex2D( _NoiseTexture, uv_NoiseTexture ).r );
+				float lerpResult30 = lerp( _AlphaClipValue , dither27 , _ActivateDither);
 				
 
-				float Alpha = lerpResult17.a;
-				float AlphaClipThreshold = 0.5;
+				float Alpha = ( lerpResult8.a * lerpResult41 );
+				float AlphaClipThreshold = lerpResult30;
 				#ifdef ASE_DEPTH_WRITE_ON
 					float DepthValue = 0;
 				#endif
@@ -1339,6 +1404,8 @@ Shader "S_Bush"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define ASE_ABSOLUTE_VERTEX_POS 1
+			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 101001
 
 
@@ -1353,7 +1420,8 @@ Shader "S_Bush"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_POSITION
+
 
 			struct VertexInput
 			{
@@ -1383,8 +1451,12 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
-			float4 _TextureSample0_ST;
-			float _DitherProperty;
+			float4 _NoiseTexture_ST;
+			float _Frequence;
+			float _Amplitude;
+			float _UseWindVertexOffset;
+			float _ActivateDither;
+			float _AlphaClipValue;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1417,18 +1489,22 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
-			sampler2D _TextureSample0;
+			sampler2D _NoiseTexture;
 
 
-			inline float Dither4x4Bayer( int x, int y )
+			inline float Dither8x8Bayer( int x, int y )
 			{
-				const float dither[ 16 ] = {
-			 1,  9,  3, 11,
-			13,  5, 15,  7,
-			 4, 12,  2, 10,
-			16,  8, 14,  6 };
-				int r = y * 4 + x;
-				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+				const float dither[ 64 ] = {
+			 1, 49, 13, 61,  4, 52, 16, 64,
+			33, 17, 45, 29, 36, 20, 48, 32,
+			 9, 57,  5, 53, 12, 60,  8, 56,
+			41, 25, 37, 21, 44, 28, 40, 24,
+			 3, 51, 15, 63,  2, 50, 14, 62,
+			35, 19, 47, 31, 34, 18, 46, 30,
+			11, 59,  7, 55, 10, 58,  6, 54,
+			43, 27, 39, 23, 42, 26, 38, 22};
+				int r = y * 8 + x;
+				return dither[r] / 64; // same # of instructions as pre-dividing due to compiler magic
 			}
 			
 
@@ -1439,6 +1515,12 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float3 break56 = v.vertex.xyz;
+				float3 appendResult65 = (float3(break56.x , ( break56.y + ( sin( ( ( break56.x * _Frequence ) + _TimeParameters.x ) ) * _Amplitude ) ) , break56.z));
+				float2 texCoord67 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+				float3 lerpResult66 = lerp( v.vertex.xyz , appendResult65 , texCoord67.y);
+				float3 lerpResult69 = lerp( v.vertex.xyz , lerpResult66 , _UseWindVertexOffset);
+				
 				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
 				float4 screenPos = ComputeScreenPos(ase_clipPos);
 				o.ase_texcoord3 = screenPos;
@@ -1454,7 +1536,7 @@ Shader "S_Bush"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = lerpResult69;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -1588,20 +1670,24 @@ Shader "S_Bush"
 				#endif
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord2.xy.y ));
+				
+				float2 break44 = float2( 1,0 );
+				float lerpResult41 = lerp( break44.x , break44.y , _ActivateDither);
+				
 				float4 screenPos = IN.ase_texcoord3;
 				float4 ase_screenPosNorm = screenPos / screenPos.w;
 				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
-				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
-				float2 uv_TextureSample0 = IN.ase_texcoord2.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
-				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
-				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
+				float2 clipScreen27 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither27 = Dither8x8Bayer( fmod(clipScreen27.x, 8), fmod(clipScreen27.y, 8) );
+				float2 uv_NoiseTexture = IN.ase_texcoord2.xy * _NoiseTexture_ST.xy + _NoiseTexture_ST.zw;
+				dither27 = step( dither27, tex2D( _NoiseTexture, uv_NoiseTexture ).r );
+				float lerpResult30 = lerp( _AlphaClipValue , dither27 , _ActivateDither);
 				
 
-				float3 BaseColor = lerpResult17.rgb;
+				float3 BaseColor = lerpResult8.rgb;
 				float3 Emission = 0;
-				float Alpha = lerpResult17.a;
-				float AlphaClipThreshold = 0.5;
+				float Alpha = ( lerpResult8.a * lerpResult41 );
+				float AlphaClipThreshold = lerpResult30;
 
 				#ifdef _ALPHATEST_ON
 					clip(Alpha - AlphaClipThreshold);
@@ -1636,6 +1722,8 @@ Shader "S_Bush"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define ASE_ABSOLUTE_VERTEX_POS 1
+			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 101001
 
 
@@ -1649,7 +1737,8 @@ Shader "S_Bush"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_POSITION
+
 
 			struct VertexInput
 			{
@@ -1677,8 +1766,12 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
-			float4 _TextureSample0_ST;
-			float _DitherProperty;
+			float4 _NoiseTexture_ST;
+			float _Frequence;
+			float _Amplitude;
+			float _UseWindVertexOffset;
+			float _ActivateDither;
+			float _AlphaClipValue;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1711,18 +1804,22 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
-			sampler2D _TextureSample0;
+			sampler2D _NoiseTexture;
 
 
-			inline float Dither4x4Bayer( int x, int y )
+			inline float Dither8x8Bayer( int x, int y )
 			{
-				const float dither[ 16 ] = {
-			 1,  9,  3, 11,
-			13,  5, 15,  7,
-			 4, 12,  2, 10,
-			16,  8, 14,  6 };
-				int r = y * 4 + x;
-				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+				const float dither[ 64 ] = {
+			 1, 49, 13, 61,  4, 52, 16, 64,
+			33, 17, 45, 29, 36, 20, 48, 32,
+			 9, 57,  5, 53, 12, 60,  8, 56,
+			41, 25, 37, 21, 44, 28, 40, 24,
+			 3, 51, 15, 63,  2, 50, 14, 62,
+			35, 19, 47, 31, 34, 18, 46, 30,
+			11, 59,  7, 55, 10, 58,  6, 54,
+			43, 27, 39, 23, 42, 26, 38, 22};
+				int r = y * 8 + x;
+				return dither[r] / 64; // same # of instructions as pre-dividing due to compiler magic
 			}
 			
 
@@ -1733,6 +1830,12 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID( v, o );
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
+				float3 break56 = v.vertex.xyz;
+				float3 appendResult65 = (float3(break56.x , ( break56.y + ( sin( ( ( break56.x * _Frequence ) + _TimeParameters.x ) ) * _Amplitude ) ) , break56.z));
+				float2 texCoord67 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+				float3 lerpResult66 = lerp( v.vertex.xyz , appendResult65 , texCoord67.y);
+				float3 lerpResult69 = lerp( v.vertex.xyz , lerpResult66 , _UseWindVertexOffset);
+				
 				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
 				float4 screenPos = ComputeScreenPos(ase_clipPos);
 				o.ase_texcoord3 = screenPos;
@@ -1748,7 +1851,7 @@ Shader "S_Bush"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = lerpResult69;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -1877,19 +1980,23 @@ Shader "S_Bush"
 				#endif
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord2.xy.y ));
+				
+				float2 break44 = float2( 1,0 );
+				float lerpResult41 = lerp( break44.x , break44.y , _ActivateDither);
+				
 				float4 screenPos = IN.ase_texcoord3;
 				float4 ase_screenPosNorm = screenPos / screenPos.w;
 				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
-				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
-				float2 uv_TextureSample0 = IN.ase_texcoord2.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
-				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
-				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
+				float2 clipScreen27 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither27 = Dither8x8Bayer( fmod(clipScreen27.x, 8), fmod(clipScreen27.y, 8) );
+				float2 uv_NoiseTexture = IN.ase_texcoord2.xy * _NoiseTexture_ST.xy + _NoiseTexture_ST.zw;
+				dither27 = step( dither27, tex2D( _NoiseTexture, uv_NoiseTexture ).r );
+				float lerpResult30 = lerp( _AlphaClipValue , dither27 , _ActivateDither);
 				
 
-				float3 BaseColor = lerpResult17.rgb;
-				float Alpha = lerpResult17.a;
-				float AlphaClipThreshold = 0.5;
+				float3 BaseColor = lerpResult8.rgb;
+				float Alpha = ( lerpResult8.a * lerpResult41 );
+				float AlphaClipThreshold = lerpResult30;
 
 				half4 color = half4(BaseColor, Alpha );
 
@@ -1921,6 +2028,8 @@ Shader "S_Bush"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define ASE_ABSOLUTE_VERTEX_POS 1
+			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 101001
 
 
@@ -1934,7 +2043,8 @@ Shader "S_Bush"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_POSITION
+
 
 			struct VertexInput
 			{
@@ -1963,8 +2073,12 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
-			float4 _TextureSample0_ST;
-			float _DitherProperty;
+			float4 _NoiseTexture_ST;
+			float _Frequence;
+			float _Amplitude;
+			float _UseWindVertexOffset;
+			float _ActivateDither;
+			float _AlphaClipValue;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1997,18 +2111,22 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
-			sampler2D _TextureSample0;
+			sampler2D _NoiseTexture;
 
 
-			inline float Dither4x4Bayer( int x, int y )
+			inline float Dither8x8Bayer( int x, int y )
 			{
-				const float dither[ 16 ] = {
-			 1,  9,  3, 11,
-			13,  5, 15,  7,
-			 4, 12,  2, 10,
-			16,  8, 14,  6 };
-				int r = y * 4 + x;
-				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+				const float dither[ 64 ] = {
+			 1, 49, 13, 61,  4, 52, 16, 64,
+			33, 17, 45, 29, 36, 20, 48, 32,
+			 9, 57,  5, 53, 12, 60,  8, 56,
+			41, 25, 37, 21, 44, 28, 40, 24,
+			 3, 51, 15, 63,  2, 50, 14, 62,
+			35, 19, 47, 31, 34, 18, 46, 30,
+			11, 59,  7, 55, 10, 58,  6, 54,
+			43, 27, 39, 23, 42, 26, 38, 22};
+				int r = y * 8 + x;
+				return dither[r] / 64; // same # of instructions as pre-dividing due to compiler magic
 			}
 			
 
@@ -2019,6 +2137,12 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float3 break56 = v.vertex.xyz;
+				float3 appendResult65 = (float3(break56.x , ( break56.y + ( sin( ( ( break56.x * _Frequence ) + _TimeParameters.x ) ) * _Amplitude ) ) , break56.z));
+				float2 texCoord67 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+				float3 lerpResult66 = lerp( v.vertex.xyz , appendResult65 , texCoord67.y);
+				float3 lerpResult69 = lerp( v.vertex.xyz , lerpResult66 , _UseWindVertexOffset);
+				
 				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
 				float4 screenPos = ComputeScreenPos(ase_clipPos);
 				o.ase_texcoord4 = screenPos;
@@ -2033,7 +2157,7 @@ Shader "S_Bush"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = lerpResult69;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -2174,18 +2298,21 @@ Shader "S_Bush"
 				#endif
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord3.xy.y ));
+				float2 break44 = float2( 1,0 );
+				float lerpResult41 = lerp( break44.x , break44.y , _ActivateDither);
+				
 				float4 screenPos = IN.ase_texcoord4;
 				float4 ase_screenPosNorm = screenPos / screenPos.w;
 				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
-				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
-				float2 uv_TextureSample0 = IN.ase_texcoord3.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
-				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
-				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
+				float2 clipScreen27 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither27 = Dither8x8Bayer( fmod(clipScreen27.x, 8), fmod(clipScreen27.y, 8) );
+				float2 uv_NoiseTexture = IN.ase_texcoord3.xy * _NoiseTexture_ST.xy + _NoiseTexture_ST.zw;
+				dither27 = step( dither27, tex2D( _NoiseTexture, uv_NoiseTexture ).r );
+				float lerpResult30 = lerp( _AlphaClipValue , dither27 , _ActivateDither);
 				
 
-				float Alpha = lerpResult17.a;
-				float AlphaClipThreshold = 0.5;
+				float Alpha = ( lerpResult8.a * lerpResult41 );
+				float AlphaClipThreshold = lerpResult30;
 				#ifdef ASE_DEPTH_WRITE_ON
 					float DepthValue = 0;
 				#endif
@@ -2234,6 +2361,8 @@ Shader "S_Bush"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
+			#define ASE_ABSOLUTE_VERTEX_POS 1
+			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 101001
 
 
@@ -2271,6 +2400,7 @@ Shader "S_Bush"
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
+			#define ASE_NEEDS_VERT_POSITION
 			#define ASE_NEEDS_FRAG_SCREEN_POSITION
 
 
@@ -2307,8 +2437,12 @@ Shader "S_Bush"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _ColorTip;
 			float4 _ColorRoot;
-			float4 _TextureSample0_ST;
-			float _DitherProperty;
+			float4 _NoiseTexture_ST;
+			float _Frequence;
+			float _Amplitude;
+			float _UseWindVertexOffset;
+			float _ActivateDither;
+			float _AlphaClipValue;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -2341,20 +2475,24 @@ Shader "S_Bush"
 				int _PassValue;
 			#endif
 
-			sampler2D _TextureSample0;
+			sampler2D _NoiseTexture;
 
 
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
 
-			inline float Dither4x4Bayer( int x, int y )
+			inline float Dither8x8Bayer( int x, int y )
 			{
-				const float dither[ 16 ] = {
-			 1,  9,  3, 11,
-			13,  5, 15,  7,
-			 4, 12,  2, 10,
-			16,  8, 14,  6 };
-				int r = y * 4 + x;
-				return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+				const float dither[ 64 ] = {
+			 1, 49, 13, 61,  4, 52, 16, 64,
+			33, 17, 45, 29, 36, 20, 48, 32,
+			 9, 57,  5, 53, 12, 60,  8, 56,
+			41, 25, 37, 21, 44, 28, 40, 24,
+			 3, 51, 15, 63,  2, 50, 14, 62,
+			35, 19, 47, 31, 34, 18, 46, 30,
+			11, 59,  7, 55, 10, 58,  6, 54,
+			43, 27, 39, 23, 42, 26, 38, 22};
+				int r = y * 8 + x;
+				return dither[r] / 64; // same # of instructions as pre-dividing due to compiler magic
 			}
 			
 
@@ -2365,6 +2503,12 @@ Shader "S_Bush"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float3 break56 = v.vertex.xyz;
+				float3 appendResult65 = (float3(break56.x , ( break56.y + ( sin( ( ( break56.x * _Frequence ) + _TimeParameters.x ) ) * _Amplitude ) ) , break56.z));
+				float2 texCoord67 = v.texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+				float3 lerpResult66 = lerp( v.vertex.xyz , appendResult65 , texCoord67.y);
+				float3 lerpResult69 = lerp( v.vertex.xyz , lerpResult66 , _UseWindVertexOffset);
+				
 				o.ase_texcoord7.xy = v.texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -2375,7 +2519,7 @@ Shader "S_Bush"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = lerpResult69;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -2569,24 +2713,28 @@ Shader "S_Bush"
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
 				float4 lerpResult8 = lerp( _ColorTip , _ColorRoot , ( 1.0 - IN.ase_texcoord7.xy.y ));
+				
+				float2 break44 = float2( 1,0 );
+				float lerpResult41 = lerp( break44.x , break44.y , _ActivateDither);
+				
 				float4 ase_screenPosNorm = ScreenPos / ScreenPos.w;
 				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float2 clipScreen14 = ase_screenPosNorm.xy * _ScreenParams.xy;
-				float dither14 = Dither4x4Bayer( fmod(clipScreen14.x, 4), fmod(clipScreen14.y, 4) );
-				float2 uv_TextureSample0 = IN.ase_texcoord7.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
-				dither14 = step( dither14, tex2D( _TextureSample0, uv_TextureSample0 ).r );
-				float4 lerpResult17 = lerp( lerpResult8 , ( lerpResult8 * dither14 ) , _DitherProperty);
+				float2 clipScreen27 = ase_screenPosNorm.xy * _ScreenParams.xy;
+				float dither27 = Dither8x8Bayer( fmod(clipScreen27.x, 8), fmod(clipScreen27.y, 8) );
+				float2 uv_NoiseTexture = IN.ase_texcoord7.xy * _NoiseTexture_ST.xy + _NoiseTexture_ST.zw;
+				dither27 = step( dither27, tex2D( _NoiseTexture, uv_NoiseTexture ).r );
+				float lerpResult30 = lerp( _AlphaClipValue , dither27 , _ActivateDither);
 				
 
-				float3 BaseColor = lerpResult17.rgb;
+				float3 BaseColor = lerpResult8.rgb;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
 				float Occlusion = 1;
-				float Alpha = lerpResult17.a;
-				float AlphaClipThreshold = 0.5;
+				float Alpha = ( lerpResult8.a * lerpResult41 );
+				float AlphaClipThreshold = lerpResult30;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
 				float3 RefractionColor = 1;
@@ -2673,37 +2821,106 @@ Shader "S_Bush"
 }
 /*ASEBEGIN
 Version=19102
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;0,0;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;S_Bush;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;0;Surface;0;0;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;638087828150082610;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;0;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;0;8;False;True;True;True;True;True;True;True;False;;False;0
+Node;AmplifyShaderEditor.CommentaryNode;72;-464,-816;Inherit;False;552;310;Using VertexOffset;3;70;71;69;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;68;-1906.937,-807.0211;Inherit;False;1416.001;673.0002;Simple Wind Bush;13;56;59;57;60;61;62;63;65;64;66;67;73;76;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;46;-96,-368;Inherit;False;493;560;Current Color;5;8;13;10;11;12;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;45;-448,224;Inherit;False;888;792;Dither;9;0;32;30;31;41;42;44;27;28;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;3;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;5;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;6;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TexCoordVertexDataNode;12;-944,64;Inherit;False;0;2;0;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.OneMinusNode;13;-752,112;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LerpOp;8;-512,-128;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.ColorNode;10;-960,-384;Inherit;False;Property;_ColorTip;ColorTip;0;0;Create;True;0;0;0;False;0;False;0.5843138,0.7490196,0.2078432,1;0.5843138,0.7490196,0.2078431,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ColorNode;11;-960,-128;Inherit;False;Property;_ColorRoot;ColorRoot;1;0;Create;True;0;0;0;False;0;False;0.3215686,0.227451,0.1176471,1;0.3215685,0.2274509,0.117647,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;18;-496,384;Inherit;False;Property;_DitherProperty;DitherProperty;2;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;19;-336,80;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.DitheringNode;14;-558,232;Inherit;False;0;False;4;0;FLOAT;0;False;1;SAMPLER2D;;False;2;FLOAT4;0,0,0,0;False;3;SAMPLERSTATE;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;21;-1024,256;Inherit;True;Property;_TextureSample0;Texture Sample 0;3;0;Create;True;0;0;0;False;0;False;-1;None;f631fa6989759d848bb4c1c5d67a6cc4;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.LerpOp;17;-176,-128;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.BreakToComponentsNode;22;-128,105.5;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
-WireConnection;1;0;17;0
-WireConnection;1;6;22;3
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;224,272;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.RangedFloatNode;32;-128,608;Inherit;False;Property;_ActivateDither;ActivateDither;4;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;30;256,560;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;31;-128,480;Inherit;False;Property;_AlphaClipValue;AlphaClipValue;3;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.DitheringNode;27;-80,736;Inherit;False;1;True;4;0;FLOAT;0;False;1;SAMPLER2D;;False;2;FLOAT4;0,0,0,0;False;3;SAMPLERSTATE;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;28;-400,720;Inherit;True;Property;_NoiseTexture;Noise Texture;2;0;Create;True;0;0;0;False;0;False;-1;None;f631fa6989759d848bb4c1c5d67a6cc4;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.LerpOp;41;256,304;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.Vector2Node;42;-128,304;Inherit;False;Constant;_Vector0;Vector 0;5;0;Create;True;0;0;0;False;0;False;1,0;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+Node;AmplifyShaderEditor.BreakToComponentsNode;44;32,304;Inherit;False;FLOAT2;1;0;FLOAT2;0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
+Node;AmplifyShaderEditor.TexCoordVertexDataNode;12;-64,64;Inherit;False;0;2;0;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;11;-80,-128;Inherit;False;Property;_ColorRoot;ColorRoot;1;0;Create;True;0;0;0;False;0;False;0.3215686,0.227451,0.1176471,1;0.3215678,0.2274502,0.1176463,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;10;-80,-320;Inherit;False;Property;_ColorTip;ColorTip;0;0;Create;True;0;0;0;False;0;False;0.5843138,0.7490196,0.2078432,1;0.5843138,0.7490196,0.2078424,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.OneMinusNode;13;112,112;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;8;240,-128;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.BreakToComponentsNode;56;-1664.937,-629.0211;Inherit;False;FLOAT3;1;0;FLOAT3;0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;57;-1552.937,-501.0211;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;60;-1408.937,-501.0211;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleTimeNode;61;-1584.937,-245.0209;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SinOpNode;62;-1280.937,-501.0211;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;63;-1165.192,-501.7098;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.DynamicAppendNode;65;-912.9371,-629.0211;Inherit;False;FLOAT3;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;64;-1024.937,-597.0211;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;66;-672.9366,-757.0211;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;67;-992.9372,-373.0208;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.PosVertexDataNode;70;-320,-768;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;71;-416,-624;Inherit;False;Property;_UseWindVertexOffset;UseWindVertexOffset;5;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;69;-96,-768;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.RangedFloatNode;59;-1664,-384;Inherit;False;Property;_Frequence;Frequence ;6;0;Create;True;0;0;0;False;0;False;2;10.61;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;73;-1280,-384;Inherit;False;Property;_Amplitude;Amplitude;7;0;Create;True;0;0;0;False;0;False;0.3;0.1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;928,-128;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;12;S_Bush;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;0;Surface;0;0;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;638087828150082610;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;0;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;0;638088565499135098;0;8;False;True;True;True;True;True;True;True;False;;False;0
+Node;AmplifyShaderEditor.BreakToComponentsNode;78;400,-48;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;79;528,48;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;80;768,48;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PosVertexDataNode;76;-1856,-768;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.DepthFade;77;-992,80;Inherit;False;True;True;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PosVertexDataNode;84;-1184,-128;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.PosVertexDataNode;86;-2144,256;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TransformPositionNode;85;-1904,256;Inherit;False;Object;World;False;Fast;True;1;0;FLOAT3;0,0,0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.WorldSpaceCameraPos;82;-2208,112;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.DistanceOpNode;83;-1696,112;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;87;-1440,112;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ClampOpNode;89;-1184,112;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;81;-1600,208;Inherit;False;Property;_FadeDistance;FadeDistance;8;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+WireConnection;30;0;31;0
+WireConnection;30;1;27;0
+WireConnection;30;2;32;0
+WireConnection;27;0;28;1
+WireConnection;41;0;44;0
+WireConnection;41;1;44;1
+WireConnection;41;2;32;0
+WireConnection;44;0;42;0
 WireConnection;13;0;12;2
 WireConnection;8;0;10;0
 WireConnection;8;1;11;0
 WireConnection;8;2;13;0
-WireConnection;19;0;8;0
-WireConnection;19;1;14;0
-WireConnection;14;0;21;0
-WireConnection;17;0;8;0
-WireConnection;17;1;19;0
-WireConnection;17;2;18;0
-WireConnection;22;0;17;0
+WireConnection;56;0;76;0
+WireConnection;57;0;56;0
+WireConnection;57;1;59;0
+WireConnection;60;0;57;0
+WireConnection;60;1;61;0
+WireConnection;62;0;60;0
+WireConnection;63;0;62;0
+WireConnection;63;1;73;0
+WireConnection;65;0;56;0
+WireConnection;65;1;64;0
+WireConnection;65;2;56;2
+WireConnection;64;0;56;1
+WireConnection;64;1;63;0
+WireConnection;66;0;76;0
+WireConnection;66;1;65;0
+WireConnection;66;2;67;2
+WireConnection;69;0;70;0
+WireConnection;69;1;66;0
+WireConnection;69;2;71;0
+WireConnection;1;0;8;0
+WireConnection;1;6;80;0
+WireConnection;1;7;30;0
+WireConnection;1;8;69;0
+WireConnection;78;0;8;0
+WireConnection;79;0;78;3
+WireConnection;79;1;77;0
+WireConnection;80;0;78;3
+WireConnection;80;1;41;0
+WireConnection;77;1;84;0
+WireConnection;77;0;89;0
+WireConnection;85;0;86;0
+WireConnection;83;0;82;0
+WireConnection;83;1;85;0
+WireConnection;87;0;83;0
+WireConnection;87;1;81;0
+WireConnection;89;0;87;0
 ASEEND*/
-//CHKSM=82E4DB80FE54E4C539FFD494C6AF829258621D9D
+//CHKSM=187C1792ADFF742E96B479FF4F14E222F0FFA100
