@@ -7,18 +7,17 @@ using UnityEngine;
 
 namespace RessourceProduction
 {
-    public abstract class CapturePointTickProduction<T, SO> : RessourceTickProduction<T, SO> where SO : CapturePointTickProductionSO<T>
+    public abstract class CapturePointTickProduction<T, SO> : RessourceTickProduction<T, SO>
+        where SO : CapturePointTickProductionSO<T>
     {
         protected CapturePoint.CapturePoint[] allCapturesPoint;
-        [SerializeField]
-        protected Enums.Team team;
-
-       
+        [SerializeField] protected Enums.Team team;
         
         protected override void OnStart()
         {
             base.OnStart();
             StartCoroutine(WaitForAddEventToCapturePoint());
+
         }
 
         IEnumerator WaitForAddEventToCapturePoint()
@@ -26,6 +25,7 @@ namespace RessourceProduction
             yield return new WaitForEndOfFrame();
             AddEventToCapturePoint();
         }
+
         private void AddEventToCapturePoint()
         {
             for (int i = 0; i < allCapturesPoint.Length; i++)
@@ -48,8 +48,5 @@ namespace RessourceProduction
                 }
             }
         }
-
-
-       
     }
 }

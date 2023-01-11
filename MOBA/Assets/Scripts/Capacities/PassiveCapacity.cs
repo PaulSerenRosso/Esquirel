@@ -9,7 +9,7 @@ namespace Entities.Capacities
         public byte indexOfSo; //Index Reference in CapacitySOCollectionManager
 
         public bool stackable;
-        private int count; //Amount of Stacks
+        protected int count; //Amount of Stacks
 
         public List<Enums.CapacityType> types; //All types of the capacity
 

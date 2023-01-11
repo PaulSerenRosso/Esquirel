@@ -16,7 +16,7 @@ namespace Entities.Capacities
         public TimerFxInfo impactFxTimerInfo;
         public ActiveAttackCapacitySO so;
         public TimerOneCount attackTimer;
-
+        public float damage;
         public Vector3 directionAttack;
 
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -73,12 +73,14 @@ namespace Entities.Capacities
             champion = (Champion.Champion)caster;
             activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
             activeCapacityAnimationLauncher.Setup(so.activeCapacityAnimationLauncherInfo, champion);
+            damage = so.damage;
         }
 
         public override void SetUpActiveCapacityForMasterClient(byte soIndex, Entity caster)
         {
             base.SetUpActiveCapacityForMasterClient(soIndex, caster);
             damageTimer = new TimerOneCount(so.damageTime);
+      
             beginDamageTimer = new TimerOneCount(so.damageBeginTime);
             impactFxTimerInfo = new TimerFxInfo(so.attackCapacityImpactFx);
             attackTimer = new TimerOneCount(so.attackTime);

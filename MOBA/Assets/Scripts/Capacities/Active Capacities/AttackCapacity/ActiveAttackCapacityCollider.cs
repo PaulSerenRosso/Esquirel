@@ -31,7 +31,7 @@ namespace Entities.Capacities
             ActiveAttackWithColliderCapacitySO so = (ActiveAttackWithColliderCapacitySO)
                 CapacitySOCollectionManager.GetActiveCapacitySOByIndex(activeCapacity.indexOfSOInCollection);
             activeAttackWithColliderCapacity = (ActiveAttackWithColliderCapacity)activeCapacity;
-            damage = so.damage;
+            damage = activeAttackWithColliderCapacity.damage;
             team = activeCapacity.caster.team;
             transform.position +=
                 activeAttackWithColliderCapacity.directionAttack *
