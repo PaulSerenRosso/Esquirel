@@ -8,6 +8,6 @@ namespace RessourceProduction
 [CreateAssetMenu(menuName = "RessourceProduction/VictoryProductionSO", fileName = "VictoryProductionSO")]
 public class VictoryProductionSO : CapturePointTickProductionSO<float>
 {
- 
+  public List<float> VictorySteps = new List<float>();
 }
 }

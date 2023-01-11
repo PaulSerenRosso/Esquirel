@@ -73,7 +73,6 @@ namespace Entities.Champion
         public void SyncIncreaseMaxHpRPC(float amount)
         {
             maxHp = amount;
-            currentHp = amount;
             OnIncreaseMaxHpFeedback?.Invoke(amount);
         }
 
@@ -81,7 +80,7 @@ namespace Entities.Champion
         public void IncreaseMaxHpRPC(float amount)
         {
             maxHp += amount;
-            currentHp = amount;
+         
             if (maxHp < currentHp)
                 currentHp = maxHp;
             OnIncreaseMaxHp?.Invoke(amount);

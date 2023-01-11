@@ -64,7 +64,7 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
             impactFxTimerInfo.fxRotation =
                 Quaternion.LookRotation((impactFxTimerInfo.fxPos-champion.transform.position).normalized, Vector3.up);
             impactFxTimer.InitiateTimer();
-            lifeableTarget.DecreaseCurrentHpRPC(activeAutoAttackSO.damage);
+            lifeableTarget.DecreaseCurrentHpRPC(damage);
         }
  
     }
