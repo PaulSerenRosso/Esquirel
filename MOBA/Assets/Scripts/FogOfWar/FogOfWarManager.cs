@@ -11,6 +11,10 @@ namespace Entities.FogOfWar
         //Instance => talk to the group to see if that possible
         private static FogOfWarManager _instance;
 
+        [SerializeField]
+        private float lerpFactor;
+
+  
         public static FogOfWarManager Instance
         {
             get { return _instance; }
@@ -35,6 +39,7 @@ namespace Entities.FogOfWar
         /// <param name="IFogOfWarViewable"> Interface for Entity </param>
         private List<Entity> allViewables = new List<Entity>();
 
+        
         private Dictionary<Entity, List<Entity>> currentViewablesWithEntitiesShowables =
             new Dictionary<Entity, List<Entity>>();
 
@@ -48,6 +53,8 @@ namespace Entities.FogOfWar
 
         public LayerMask layerTargetFogOfWar;
         public LayerMask layerObstacleFogOfWar;
+
+        
 
         [Tooltip("Material who is going to be render in the RenderPass")]
         public Material fogMat;
@@ -66,6 +73,7 @@ namespace Entities.FogOfWar
             {
                 if (GameStates.GameStateMachine.Instance.GetPlayerTeam() == viewable.team)
                 {
+                    
                     DrawFieldOfView(viewable);
                 }
             }
@@ -158,7 +166,9 @@ namespace Entities.FogOfWar
         //Draw the Field of View for the Player.
         public void DrawFieldOfView(Entity entity)
         {
-            int stepCount = Mathf.RoundToInt(entity.viewAngle * settingsFOV.meshResolution / 5);
+
+           
+                int stepCount = Mathf.RoundToInt(entity.viewAngle * settingsFOV.meshResolution / 5);
             float stepAngleSize = entity.viewAngle / stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
             ViewCastInfo oldViewCast = new ViewCastInfo();
@@ -190,18 +200,27 @@ namespace Entities.FogOfWar
 
                 viewPoints.Add(newViewCast.point);
                 oldViewCast = newViewCast;
-            }
+            
 
-            int vertexCount = viewPoints.Count + 1;
+          
+            }
+            entity.finalPoints = new List<Vector3>(viewPoints);
+            if (entity.currentPoints.Count == 0)
+                entity.currentPoints = new List<Vector3>(viewPoints);
+
+            int vertexCount = entity.currentPoints.Count + 1;
             Vector3[] vertices = new Vector3[vertexCount];
             int[] triangles = new int[(vertexCount - 2) * 3];
-
             vertices[0] = Vector3.zero;
             for (int i = 0; i < vertexCount - 1; i++)
             {
-                vertices[i + 1] = entity.transform.InverseTransformPoint(viewPoints[i]) +
+                entity.currentPoints[i] =
+                    Vector3.Lerp(entity.currentPoints[i], entity.finalPoints[i], Time.deltaTime * lerpFactor);
+                vertices[i + 1] = entity.transform.InverseTransformPoint(entity.currentPoints[i]) +
                                   Vector3.forward * settingsFOV.maskCutawayDst;
 
+               
+                
                 if (i < vertexCount - 2)
                 {
                     triangles[i * 3] = 0;
@@ -221,6 +240,7 @@ namespace Entities.FogOfWar
             viewMesh.vertices = vertices;
             viewMesh.triangles = triangles;
             viewMesh.RecalculateNormals();
+          
         }
 
         EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast, Entity entity)

@@ -20,6 +20,13 @@ namespace Entities
         public List<IFOWShowable> seenShowables = new List<IFOWShowable>();
         public MeshFilter meshFilterFoV;
 
+
+     
+        public List<Vector3> currentPoints = new List<Vector3>();
+        public List<Vector3> finalPoints = new List<Vector3>();
+
+
+        
         public bool viewObstructedByObstacle = true;
         public Enums.Team GetTeam()
         {

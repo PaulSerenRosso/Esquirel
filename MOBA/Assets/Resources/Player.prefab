@@ -445,6 +445,8 @@ MonoBehaviour:
   viewAngle: 360
   canView: 1
   meshFilterFoV: {fileID: 3480681341397647661}
+  currentPoints: []
+  finalPoints: []
   viewObstructedByObstacle: 1
   catapultMovment: {fileID: 3023031675705156806}
   transformView: {fileID: 8091990961712310653}
