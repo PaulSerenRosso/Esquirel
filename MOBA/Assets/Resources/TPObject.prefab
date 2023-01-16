@@ -175,6 +175,8 @@ MonoBehaviour:
   viewAngle: 0
   canView: 0
   meshFilterFoV: {fileID: 0}
+  currentPoints: []
+  finalPoints: []
   viewObstructedByObstacle: 0
   collider: {fileID: 9207296735300815420}
   renderer: {fileID: 7787077126835712645}

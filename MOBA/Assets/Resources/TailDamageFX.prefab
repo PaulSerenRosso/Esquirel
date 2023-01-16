@@ -189,6 +189,8 @@ MonoBehaviour:
   viewAngle: 0
   canView: 0
   meshFilterFoV: {fileID: 0}
+  currentPoints: []
+  finalPoints: []
   viewObstructedByObstacle: 0
   allParticleSystems:
   - {fileID: 7205735103138732490}
