@@ -119,7 +119,7 @@ Material:
     - _GlossyReflections: 0
     - _MainTex_Ins: 1
     - _MainTex_Power: 1
-    - _Main_Ins: 2
+    - _Main_Ins: 1
     - _Main_Pow: 2
     - _Metallic: 0
     - _OcclusionStrength: 1

@@ -7,7 +7,7 @@ using Entities.FogOfWar;
 using GameStates;
 using MiniMap;
 using Photon.Pun;
-
+using RessourceProduction;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -40,7 +40,7 @@ namespace Entities.Champion
         public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
         public ActiveCapacity currentCapacityUsed;
         public IAimable autoAttack;
-
+        public AuraProduction auraProduction;
 
         private void OnDrawGizmosSelected()
         {
@@ -186,8 +186,22 @@ namespace Entities.Champion
             {
                 HideElements();
             }
+            switch (team)
+                    {
+                        case Enums.Team.Team1:
+                        {
+                            GoldProduction.secondGoldProduction.LinkBounty(this);
+                            break;
+                        }
+                        case Enums.Team.Team2:
+                        {
+                            GoldProduction.firstTeamGoldProduction.LinkBounty(this);
+                            break;
+                        }
+                    }
             rb.velocity = Vector3.zero;
             RequestSetCanDie(true);
+            auraProduction.InitAuraProduction();
         }
 
         public void RequestChangeBoolParameterAnimator(string parameterName, bool value)

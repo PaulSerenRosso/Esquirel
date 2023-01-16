@@ -10,7 +10,6 @@ public abstract class RessourceProduction<T, SO> : MonoBehaviourPun,IPunObservab
 {
     public T ressource;
     public SO so;
-
     private void Start()
     {
         OnStart();
@@ -24,13 +23,13 @@ public abstract class RessourceProduction<T, SO> : MonoBehaviourPun,IPunObservab
         }
         set
         {
+            UpdateFeedback(value);
             ressource = value;
             
-            UpdateFeedback();
         }
     }
 
-    abstract public void UpdateFeedback();
+    abstract public void UpdateFeedback(T value);
     
    protected virtual void OnStart()
     {
@@ -45,12 +44,23 @@ public abstract class RessourceProduction<T, SO> : MonoBehaviourPun,IPunObservab
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(Ressource);
+           WritingSerializeView(stream);
+            
         }
         else
         {
-            Ressource = (T)stream.ReceiveNext();
+           ReadSerializeView(stream);
         }
+    }
+
+    public virtual void WritingSerializeView(PhotonStream stream)
+    {
+        stream.SendNext(Ressource);
+    }
+
+    public virtual void ReadSerializeView(PhotonStream stream)
+    {
+        Ressource = (T)stream.ReceiveNext();
     }
 }
 }

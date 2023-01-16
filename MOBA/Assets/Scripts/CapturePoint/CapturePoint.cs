@@ -348,7 +348,7 @@ namespace CapturePoint
                     team = destinationState.team;
                     destinationState.enterStateEvent?.Invoke();
                     neutralState.exitStateEvent?.Invoke();
-                    Debug.Log("bonsoir àtous enter ");
+//                    Debug.Log("bonsoir àtous enter ");
                     RequestUpdateCapturePointVisual();
                     return;
                 }

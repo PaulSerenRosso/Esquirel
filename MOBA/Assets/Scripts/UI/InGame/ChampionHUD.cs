@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class ChampionHUD : MonoBehaviour
 {
+    /*
     [SerializeField] private Image healthBar;
   //  [SerializeField] private Image resourceBar;
     [SerializeField] private Image spellPassive;
@@ -22,13 +23,16 @@ public class ChampionHUD : MonoBehaviour
     [SerializeField] private Image spellTwoCooldown;
     [SerializeField] private Image spellThreeCooldown;
     [SerializeField] private Image spellUltimateCooldown;
+    */
+    // private SpellHolder passiveHolder;
+  //  private Dictionary<byte, SpellHolder> spellHolderDict = new Dictionary<byte, SpellHolder>();
     private Champion champion;
     private IResourceable resourceable;
     private IActiveLifeable lifeable;
-    private ICastable castable;
-    private SpellHolder passiveHolder;
-    private Dictionary<byte, SpellHolder> spellHolderDict = new Dictionary<byte, SpellHolder>();
+    private PlayerInterface playerInterface;
 
+    private Champion otherChampion; 
+    /*
     public class SpellHolder
     {
         public Image spellIcon;
@@ -45,80 +49,73 @@ public class ChampionHUD : MonoBehaviour
             spellIcon.sprite = image;
         }
 
-        public void StartTimer(float coolDown)
-        {
-            var timer = 0.0;
-            var tckRate = GameStateMachine.Instance.tickRate;
+     
+        }
+    }
+    */
 
+    public void StartTimer(float coolDown, PlayerUIImage playerUIImage)
+    {
+        float timer = 0;
+        var tckRate = GameStateMachine.Instance.tickRate;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameStateMachine.Instance.OnTick += TickMaster;
+        }
+        else
+        {
+            GameStateMachine.Instance.OnTickFeedback += TickClient;
+        }
+        
+        void TickMaster()
+        {
+            timer += (float)(1.0 / tckRate);
+            playerInterface.UpdateSpellTimer(playerUIImage, timer, coolDown);
+            if (!(timer > coolDown)) return;
             if (PhotonNetwork.IsMasterClient)
             {
-                GameStateMachine.Instance.OnTick += TickMaster;
+                GameStateMachine.Instance.OnTick -= TickMaster;
             }
             else
             {
-                GameStateMachine.Instance.OnTickFeedback += TickClient;
+                GameStateMachine.Instance.OnTickFeedback -= TickClient;
             }
 
+            playerInterface.UpdateSpellTimer(playerUIImage, 0, coolDown);
+        }
 
-            void TickMaster()
+        void TickClient(double timeDiff)
+        {
+            timer += (float)timeDiff;
+
+            playerInterface.UpdateSpellTimer(playerUIImage, timer, coolDown);
+            if (!(timer > coolDown)) return;
+            if (PhotonNetwork.IsMasterClient)
             {
-                timer += 1.0 / tckRate;
-                spellCooldown.fillAmount = 1 - (float)(timer / coolDown);
-                if (!(timer > coolDown)) return;
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    GameStateMachine.Instance.OnTick -= TickMaster;
-                }
-                else
-                {
-                    GameStateMachine.Instance.OnTickFeedback -= TickClient;
-                }
-
-                spellCooldown.fillAmount = 0;
+                GameStateMachine.Instance.OnTick -= TickMaster;
             }
-
-            void TickClient(double timeDiff)
+            else
             {
-                timer += timeDiff;
-
-                spellCooldown.fillAmount = 1 - (float)(timer / coolDown);
-                if (!(timer > coolDown)) return;
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    GameStateMachine.Instance.OnTick -= TickMaster;
-                }
-                else
-                {
-                    GameStateMachine.Instance.OnTickFeedback -= TickClient;
-                }
-
-                spellCooldown.fillAmount = 0;
+                GameStateMachine.Instance.OnTickFeedback -= TickClient;
             }
+
+            playerInterface.UpdateSpellTimer(playerUIImage, 0, coolDown);
         }
     }
 
-    public void InitHUD(Champion newChampion)
+    public void InitHUD(Champion newChampion, PlayerInterface playerInterface)
     {
         champion = newChampion;
         lifeable = champion.GetComponent<IActiveLifeable>();
+       otherChampion = GameStateMachine.Instance.GetOtherChampionOfSameTeam(champion);
         resourceable = champion.GetComponent<IResourceable>();
-        castable = champion.GetComponent<ICastable>();
-
-        healthBar.fillAmount = lifeable.GetCurrentHpPercent();
-     //   resourceBar.fillAmount = resourceable.GetCurrentResourcePercent();
+        this.playerInterface = playerInterface;
+        playerInterface.UpdateHealth(lifeable.GetCurrentHp(), lifeable.GetMaxHp());
         LinkToEvents();
         UpdateIcons(champion);
     }
-
-    private void InitHolders()
-    {
-        var so = champion.championSo;
-        spellPassive.sprite = champion.passiveCapacitiesList[0].AssociatedPassiveCapacitySO().icon;
-        spellOne.sprite = so.activeCapacities[0].icon;
-        spellTwo.sprite = so.activeCapacities[1].icon;
-        spellUltimate.sprite = so.ultimateAbility.icon;
-    }
-
+    
     private void LinkToEvents()
     {
         champion.OnSetCooldownFeedback += UpdateCooldown;
@@ -129,80 +126,62 @@ public class ChampionHUD : MonoBehaviour
         lifeable.OnDecreaseCurrentHpFeedback += UpdateFillPercentHealth;
         lifeable.OnIncreaseMaxHpFeedback += UpdateFillPercentHealth;
         lifeable.OnDecreaseMaxHpFeedback += UpdateFillPercentHealth;
-
-        resourceable.OnSetCurrentResourceFeedback += UpdateFillPercentResource;
-        resourceable.OnSetCurrentResourcePercentFeedback += UpdateFillPercentByPercentResource;
-        resourceable.OnIncreaseCurrentResourceFeedback += UpdateFillPercentResource;
-        resourceable.OnDecreaseCurrentResourceFeedback += UpdateFillPercentResource;
-        resourceable.OnIncreaseMaxResourceFeedback += UpdateFillPercentResource;
-        resourceable.OnDecreaseMaxResourceFeedback += UpdateFillPercentResource;
+        if(!otherChampion) return;
+        otherChampion.OnSetCurrentHpFeedback += UpdateOtherChampionFillPercentHealth;
+        otherChampion.OnSetCurrentHpPercentFeedback += UpdateOtherChampionFillPercentByPercentHealth;
+        otherChampion.OnIncreaseCurrentHpFeedback += UpdateOtherChampionFillPercentHealth;
+        otherChampion.OnDecreaseCurrentHpFeedback += UpdateOtherChampionFillPercentHealth;
+        otherChampion.OnIncreaseMaxHpFeedback += UpdateOtherChampionFillPercentHealth;
+        otherChampion.OnDecreaseMaxHpFeedback += UpdateOtherChampionFillPercentHealth;
     }
 
     private void UpdateIcons(Champion champion)
     {
         var so = champion.championSo;
-        passiveHolder = new SpellHolder
-        {
-            spellIcon = spellPassive,
-            spellCooldown = spellPassiveCooldown
-        };
-        var spellOneHolder = new SpellHolder
-        {
-            spellIcon = spellOne,
-            spellCooldown = spellOneCooldown
-        };
-        var spellTwoHolder = new SpellHolder
-        {
-            spellIcon = spellTwo,
-            spellCooldown = spellTwoCooldown
-        };
-        var spellThreeHolder = new SpellHolder
-        {
-            spellIcon = spellThree,
-            spellCooldown = spellThreeCooldown
-        };
-        var ultimateHolder = new SpellHolder
-        {
-            spellIcon = spellUltimate,
-            spellCooldown = spellUltimateCooldown
-        };
-
-        spellHolderDict.Add(0, spellOneHolder);
-        spellHolderDict.Add(1, spellTwoHolder);
-        spellHolderDict.Add(2, spellThreeHolder);
-        spellHolderDict.Add(3, ultimateHolder);
-
-        if (so.passiveCapacities.Length != 0)
-            passiveHolder.Setup(so.passiveCapacities[0].icon);
-        if (so.activeCapacities.Length > 0)
-        {
-            spellOneHolder.Setup(so.activeCapacities[0].icon);
-        }
-
-        if (so.activeCapacities.Length > 1)
-        {
-            spellTwoHolder.Setup(so.activeCapacities[1].icon);
-        }
-
-        if (so.activeCapacities.Length > 2)
-            spellThreeHolder.Setup(so.activeCapacities[2].icon);
-
-        if (so.ultimateAbility)
-        {
-            ultimateHolder.Setup(so.ultimateAbility.icon);
-        }
+        playerInterface.SetUpImageVisual(PlayerUIImage.Spell01, so.activeCapacities[1].icon);
+        playerInterface.SetUpImageVisual(PlayerUIImage.Spell02, so.activeCapacities[2].icon);
+        playerInterface.SetUpImageVisual(PlayerUIImage.Ward, so.activeCapacities[0].icon);
+        playerInterface.SetUpImageVisual(PlayerUIImage.AutoAttack, so.attackAbility.icon);
+        playerInterface.SetUpImageVisual(PlayerUIImage.PlayerCharacter, so.championIcon);
     }
 
     private void UpdateCooldown(byte capacityIndex, bool inCooldown)
     {
         if (inCooldown && champion.photonView.IsMine)
         {
-            for (byte i = 0; i < champion.activeCapacities.Count; i++)
+            if (champion.attackBase.indexOfSOInCollection == capacityIndex)
             {
-                if (champion.activeCapacities[i].indexOfSOInCollection == capacityIndex)
+                StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex)
+                    .cooldown, PlayerUIImage.AutoAttack);
+                return;
+            }
+            for (byte i = 0; i < champion.championSo.activeCapacities.Length; i++)
+            {
+                if (champion.championSo.activeCapacities[i].indexInCollection == capacityIndex)
                 {
-                    spellHolderDict[i].StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex)
-                        .cooldown);
+                    switch (i)
+                    {
+                        case 0 :
+                        {
+                            StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex)
+                                .cooldown, PlayerUIImage.Ward);
+                            break;
+                        }
+                        case 1 :
+                        {
+                            StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex)
+                                .cooldown, PlayerUIImage.Spell01);
+                            break;
+                        }
+                        case 2:
+                        {
+                            StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex)
+                                .cooldown, PlayerUIImage.Spell02);
+                            break;
+                        }
+
+                    }
+                  
                     return;
                 }
             }
@@ -211,21 +190,23 @@ public class ChampionHUD : MonoBehaviour
 
     private void UpdateFillPercentByPercentHealth(float value)
     {
-        healthBar.fillAmount = lifeable.GetCurrentHp() / lifeable.GetMaxHp();
+        playerInterface.UpdateHealth(lifeable.GetCurrentHp(), lifeable.GetMaxHp());
     }
 
     private void UpdateFillPercentHealth(float value)
     {
-        healthBar.fillAmount = lifeable.GetCurrentHp() / lifeable.GetMaxHp();
+       playerInterface.UpdateHealth(lifeable.GetCurrentHp(), lifeable.GetMaxHp());
+    }
+    
+    private void UpdateOtherChampionFillPercentByPercentHealth(float value)
+    {
+        playerInterface.UpdateAllyHealth(otherChampion.GetCurrentHp(), otherChampion.GetMaxHp());
     }
 
-    private void UpdateFillPercentByPercentResource(float value)
+    private void UpdateOtherChampionFillPercentHealth(float value)
     {
-      //  resourceBar.fillAmount = value;
+        playerInterface.UpdateAllyHealth(otherChampion.GetCurrentHp(), otherChampion.GetMaxHp());
     }
 
-    private void UpdateFillPercentResource(float value)
-    {
-      //  resourceBar.fillAmount = resourceable.GetCurrentResource();
-    }
+
 }

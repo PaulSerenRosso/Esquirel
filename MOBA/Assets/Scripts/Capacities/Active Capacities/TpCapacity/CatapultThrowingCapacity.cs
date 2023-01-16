@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using Entities.FogOfWar;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
 
@@ -31,6 +31,7 @@ public class CatapultThrowingCapacity : CurveMovementCapacity
 
    public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
    {
+      
       champion = (Champion.Champion)EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
       activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
       activeCapacityAnimationLauncher.Setup(curveMovementCapacitySo.activeCapacityAnimationLauncherInfo, champion);

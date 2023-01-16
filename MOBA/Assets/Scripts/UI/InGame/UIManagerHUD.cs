@@ -3,15 +3,11 @@ using UnityEngine;
 
 public partial class UIManager
 {
-    [SerializeField] private ChampionHUD[] championOverlays;
+    [SerializeField] private ChampionHUD championOverlay;
     
-    public void InstantiateChampionHUD()
+    public void InitChampionHUD()
     {
         var champion = GameStateMachine.Instance.GetPlayerChampion();
-        if (champion == null) return;
-        var canvasIndex = champion.championSo.canvasIndex;
-        if (canvasIndex >= championOverlays.Length) canvasIndex = 0;
-        var canvasChampion = Instantiate(championOverlays[canvasIndex], transform);
-        canvasChampion.InitHUD(champion);
+        championOverlay.InitHUD(champion, playerInterface);
     }
 }

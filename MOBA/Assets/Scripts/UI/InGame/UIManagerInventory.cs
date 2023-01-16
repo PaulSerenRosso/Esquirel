@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 public partial class UIManager
 {
+    /*
     [SerializeField] private List<InventoryPanel> inventoriesPanel = new List<InventoryPanel>();
     [SerializeField] private List<LocalInventory.LocalInventorySlots> slots = new List<LocalInventory.LocalInventorySlots>();
     private LocalInventory localInventory;
@@ -117,4 +118,5 @@ public partial class UIManager
             localInventory.LinkWithInventory(champion);
         }
     }
+    */
 }

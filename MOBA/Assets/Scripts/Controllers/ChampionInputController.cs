@@ -36,11 +36,12 @@ namespace Controllers.Inputs
         /// Actions Performed on Show or Hide Shop
         /// </summary>
         /// <param name="ctx"></param>
+   /*
         private void OnShowHideShop(InputAction.CallbackContext ctx)
         {
             UIManager.Instance.ShowHideShop();
         }
-
+*/
         /// <summary>
         /// Actions Performed on Capacity 0 Activation
         /// </summary>
@@ -68,10 +69,10 @@ namespace Controllers.Inputs
         /// Actions Performed on Capacity 2 Activation
         /// </summary>
         /// <param name="ctx"></param>
-        private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
-        {
-            champion.RequestCast((byte)(champion.activeCapacities.Count - 1), targetEntity, cursorWorldPos);
-        }
+    //    private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
+      //  {
+       //     champion.RequestCast((byte)(champion.activeCapacities.Count - 1), targetEntity, cursorWorldPos);
+        //}
 
         private void OnPrintCapacity0Previsualisable(InputAction.CallbackContext ctx)
         {
@@ -88,11 +89,12 @@ namespace Controllers.Inputs
             champion.LaunchCapacityWithPrevisualisable(2, targetEntity, cursorWorldPos);
         }
 
-        private void OnPrintUltimatePrevisualisable(InputAction.CallbackContext ctx)
-        {
-            champion.LaunchCapacityWithPrevisualisable(3, targetEntity, cursorWorldPos);
-        }
+     //   private void OnPrintUltimatePrevisualisable(InputAction.CallbackContext ctx)
+      //  {
+        //    champion.LaunchCapacityWithPrevisualisable(3, targetEntity, cursorWorldPos);
+       // }
 
+        /*
         /// <summary>
         /// Actions Performed on Item 0 Activation
         /// </summary>
@@ -119,6 +121,7 @@ namespace Controllers.Inputs
         {
             champion.RequestActivateItem(2, targetEntity, cursorWorldPos);
         }
+        */
 
         private void Update()
         {
@@ -312,11 +315,11 @@ namespace Controllers.Inputs
             inputs.Capacity.Capacity0.performed += OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed += OnActivateCapacity2;
-            inputs.Capacity.Capacity3.performed += OnActivateUltimateAbility;
+       //     inputs.Capacity.Capacity3.performed += OnActivateUltimateAbility;
             inputs.Capacity.PrevisualisableCapacity0.performed += OnPrintCapacity0Previsualisable;
             inputs.Capacity.PrevisualisableCapacity1.performed += OnPrintCapacity1Previsualisable;
             inputs.Capacity.PrevisualisableCapacity2.performed += OnPrintCapacity2Previsualisable;
-            inputs.Capacity.PrevisualisableCapacity3.performed += OnPrintUltimatePrevisualisable;
+      //      inputs.Capacity.PrevisualisableCapacity3.performed += OnPrintUltimatePrevisualisable;
             inputs.MoveMouse.CancelButton.performed += OnMouseLeftClick;
 
             inputs.MoveMouse.ActiveButton.performed += OnMouseRightClick;
@@ -325,12 +328,12 @@ namespace Controllers.Inputs
 
             inputsAreLinked = true;
 
-            inputs.Inventory.ActivateItem0.performed += OnActivateItem0;
-            inputs.Inventory.ActivateItem1.performed += OnActivateItem1;
-            inputs.Inventory.ActivateItem2.performed += OnActivateItem2;
-            inputs.Inventory.ShowHideInventory.started += context => UIManager.Instance.ShowHideInventory(true);
-            inputs.Inventory.ShowHideInventory.canceled += context => UIManager.Instance.ShowHideInventory(false);
-            inputs.Inventory.ShowHideShop.performed += OnShowHideShop;
+        //    inputs.Inventory.ActivateItem0.performed += OnActivateItem0;
+          //  inputs.Inventory.ActivateItem1.performed += OnActivateItem1;
+            //inputs.Inventory.ActivateItem2.performed += OnActivateItem2;
+     //       inputs.Inventory.ShowHideInventory.started += context => UIManager.Instance.ShowHideInventory(true);
+       //     inputs.Inventory.ShowHideInventory.canceled += context => UIManager.Instance.ShowHideInventory(false);
+         //   inputs.Inventory.ShowHideShop.performed += OnShowHideShop;
         }
 
         public override void Unlink()
@@ -339,12 +342,12 @@ namespace Controllers.Inputs
             inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed -= OnActivateCapacity2;
-            inputs.Capacity.Capacity3.performed -= OnActivateUltimateAbility;
+      //      inputs.Capacity.Capacity3.performed -= OnActivateUltimateAbility;
             inputs.Capacity.PrevisualisableCapacity0.performed -= OnPrintCapacity0Previsualisable;
             inputs.Capacity.PrevisualisableCapacity1.performed -= OnPrintCapacity1Previsualisable;
             inputs.Capacity.PrevisualisableCapacity2.performed -= OnPrintCapacity2Previsualisable;
-            inputs.Capacity.PrevisualisableCapacity3.performed -= OnPrintUltimatePrevisualisable;
-            inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
+         //   inputs.Capacity.PrevisualisableCapacity3.performed -= OnPrintUltimatePrevisualisable;
+        //    inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
             inputs.MoveMouse.ActiveButton.performed -= OnMouseRightClick;
             inputs.MoveMouse.CancelButton.performed -= OnMouseLeftClick;
             CameraController.Instance.UnLinkCamera();
