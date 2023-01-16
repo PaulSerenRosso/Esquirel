@@ -210,7 +210,6 @@ namespace PointPlacerClosestAtCandidatePointHelper
             {
                 if (distanceAvoiders[i] == currentAvoider)
                 {
-                    Debug.Log("je suis lu");
                     continue;
                 }
 
