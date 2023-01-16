@@ -18,6 +18,7 @@ MonoBehaviour:
   fxPrefab: {fileID: 3248323131726062708, guid: b773e4e6ca4f2c64eb11478903e58f15, type: 3}
   description: 
   stackable: 0
+  maxCount: 0
   types: 
   indexInCollection: 1
   speedFactor: 0.7

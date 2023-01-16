@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49b0e445bca7fc40b994a626c49bb5b, type: 3}
+  m_Name: IncreaserHpSO
+  m_EditorClassIdentifier: 
+  referenceName: 
+  descriptionName: 
+  icon: {fileID: 21300000, guid: da07ff3398264c34f89cd68eb8d3eac8, type: 3}
+  fxPrefab: {fileID: 0}
+  description: 
+  stackable: 1
+  types: 
+  indexInCollection: 3
+  auraCost: 010000000200000003000000
+  maxCount: 3
+  rankedMaxHpFactors:
+  - 50
+  - 100
+  - 500

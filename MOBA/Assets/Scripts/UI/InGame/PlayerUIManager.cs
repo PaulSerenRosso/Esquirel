@@ -3,6 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public partial class UIManager {
-    [SerializeField] private PlayerInterface playerInterfacce = null;
+    [SerializeField] private PlayerInterface playerInterface = null;
 }
 

@@ -384,6 +384,7 @@ namespace GameStates
                 Debug.LogError("This key is not valid.");
                 return;
             }
+
             playersReadyDict[photonID].playerReady = ready;
             debugList[photonID].playerReady = ready;
 
@@ -394,7 +395,7 @@ namespace GameStates
             {
                 playersReadyDict[key].playerReady = false;
             }
-            
+
             currentState.OnAllPlayerReady();
         }
 
@@ -441,15 +442,13 @@ namespace GameStates
 
             InstantiateChampion();
         }
-        
-        
+
 
         /// <summary>
         /// Executed during the exit of loading state, so after every champion is instantiated and every indexes are linked
         /// </summary>
         public void LateLoad()
         {
-            
             LinkLoadChampionData();
             SetupUI();
         }
@@ -490,7 +489,7 @@ namespace GameStates
         private void LinkLoadChampionData()
         {
             foreach (var playerData in playersReadyDict.Values)
-            {   
+            {
                 ApplyChampionSoData(playerData);
             }
         }
@@ -524,12 +523,14 @@ namespace GameStates
         {
             if (UIManager.Instance == null) return;
 
-            UIManager.Instance.InstantiateChampionHUD();
+            UIManager.Instance.InitChampionHUD();
 
+            /*
             foreach (var actorNumber in playersReadyDict)
             {
                 UIManager.Instance.AssignInventory(actorNumber.Key);
             }
+            */
         }
 
         public void SendWinner(Enums.Team team)
@@ -554,6 +555,21 @@ namespace GameStates
             }
 
             return Color.black;
+        }
+
+        public Champion GetOtherChampionOfSameTeam(Champion champion)
+        {
+            var otherChampion = playersReadyDict.Where((pair =>
+            {
+                if (pair.Value.champion != champion && pair.Value.champion.team == champion.team)
+                {
+                    return true;
+                }
+
+                return false;
+            }));
+            if (otherChampion.Count() == 0) return null; 
+            return otherChampion.First().Value.champion;
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
