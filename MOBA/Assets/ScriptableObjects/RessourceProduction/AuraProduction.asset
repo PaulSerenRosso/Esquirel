@@ -9,18 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa02e5b5a25eeb14e8183d568b389f67, type: 3}
-  m_Name: VictoryPoint
+  m_Script: {fileID: 11500000, guid: 4e0e2219e023ca6488744eec5267cb22, type: 3}
+  m_Name: AuraProduction
   m_EditorClassIdentifier: 
-  ressourceMax: 500
+  ressourceMax: 10
   ressourceMin: 0
   ressourceInitial: 0
-  timeBetweenTick: 0.5
-  ressourceAmountPerTick: 1
-  victorySteps:
-  - triggerValue: 50
-    auraAmount: 1
-  - triggerValue: 100
-    auraAmount: 2
-  - triggerValue: 200
-    auraAmount: 3
+  passiveCapacitySo:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

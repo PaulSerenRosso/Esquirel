@@ -9,17 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8432c9c86f61578459bdb8f7b43ee0e0, type: 3}
-  m_Name: BonusSpeed
+  m_Script: {fileID: 11500000, guid: b49b0e445bca7fc40b994a626c49bb5b, type: 3}
+  m_Name: IncreaserHpSO
   m_EditorClassIdentifier: 
   referenceName: 
   descriptionName: 
   icon: {fileID: 0}
-  fxPrefab: {fileID: 3248323131726062708, guid: b773e4e6ca4f2c64eb11478903e58f15, type: 3}
+  fxPrefab: {fileID: 0}
   description: 
-  stackable: 0
-  maxCount: 0
+  stackable: 1
   types: 
-  indexInCollection: 1
-  speedFactor: 0.7
-  time: 5
+  indexInCollection: 0
+  auraCost: 010000000200000003000000
+  maxCount: 3
+  rankedMaxHpFactors:
+  - 50
+  - 100
+  - 500

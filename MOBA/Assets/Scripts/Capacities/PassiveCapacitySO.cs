@@ -22,7 +22,6 @@ namespace Entities.Capacities
         public string description;
         
         public bool stackable;
-        public int maxCount;
 
         virtual public bool TryAdded(Entity target)
         {

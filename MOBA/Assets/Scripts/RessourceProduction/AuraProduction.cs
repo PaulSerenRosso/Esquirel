@@ -32,36 +32,34 @@ namespace RessourceProduction
 
         public override void IncreaseRessource(int amount)
         {
-            Ressource++;
+            Ressource+= amount;
         }
         
         public override void DecreaseRessource(int amount)
         {
-            Ressource--;
+            Ressource+= amount;
         }
         
         [PunRPC]
-        void IncreaseAuraCapacityRPC(int index)
+        void DecreaseAuraCapacityRPC(int index)
         {
-            if (Ressource > 0 && auraCapacityCounts[index] == so.passiveCapacitySo[index].maxCount)
+            if (Ressource >= so.passiveCapacitySo[index].auraCost[auraCapacityCounts[index]] && auraCapacityCounts[index] == so.passiveCapacitySo[index].maxCount)
             {
-                DecreaseRessource(so.passiveCapacitySo[index].auraCost);
+                DecreaseRessource(so.passiveCapacitySo[index].auraCost[auraCapacityCounts[index]]);
                 champion.RequestAddPassiveCapacity(so.passiveCapacitySo[index].indexInCollection);
-                photonView.RPC("SyncIncreaseAuraCapacityRPC", RpcTarget.MasterClient, index);
+                photonView.RPC("SyncDecreaseAuraCapacityRPC", RpcTarget.All, index);
             }
         }
         [PunRPC]
-        public void SyncIncreaseAuraCapacityRPC(int index)
+        public void SyncDecreaseAuraCapacityRPC(int index)
         {
             auraCapacityCounts[index]++;
         }
 
-        public void RequestIncreaseAuraCapacity(int index)
+        public void RequestDecreaseAuraCapacity(int index)
         {
-            if (Ressource > 0 && auraCapacityCounts[index] == so.passiveCapacitySo[index].maxCount)
-
-
-                photonView.RPC("IncreaseAuraCapacityRPC", RpcTarget.MasterClient, index);
+            if (Ressource >= so.passiveCapacitySo[index].auraCost[auraCapacityCounts[index]] && auraCapacityCounts[index] == so.passiveCapacitySo[index].maxCount)
+                photonView.RPC("DecreaseAuraCapacityRPC", RpcTarget.MasterClient, index);
         }
 
         public void UpdateAuraCapacityCounts(PassiveCapacityAuraSO auraSo, int valueCount)

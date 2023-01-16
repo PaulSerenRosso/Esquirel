@@ -15,6 +15,7 @@ namespace RessourceProduction
         private int currentStepIndex;
         public static VictoryProduction firstTeamVictoryProduction;
         public static VictoryProduction secondTeamVictoryProduction;
+
         protected override void OnStart()
         {
             allCapturesPoint = CapturePointCollectionManager.instance.VictoryCapturePoints;
@@ -51,11 +52,18 @@ namespace RessourceProduction
                 GameStateMachine.Instance.SendWinner(team);
             }
 
-            if (Ressource >= so.VictorySteps[currentStepIndex])
+            if (currentStepIndex != so.victorySteps.Count)
             {
-                // give point
-                
-                currentStepIndex++;
+                if (Ressource >= so.victorySteps[currentStepIndex].triggerValue)
+                {
+                    foreach (var player in GameStateMachine.Instance.playersReadyDict)
+                    {
+                        var champion = player.Value.champion;
+                        if (champion.team == team)
+                            champion.auraProduction.IncreaseRessource(so.victorySteps[currentStepIndex].auraAmount);
+                    }
+                    currentStepIndex++;
+                }
             }
         }
 
