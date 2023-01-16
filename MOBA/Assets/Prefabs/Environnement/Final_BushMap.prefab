@@ -54,7 +54,7 @@ PrefabInstance:
     - target: {fileID: 3850792163060348962, guid: 38b8d5f2565955e4ca1675679cfc64b5, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 5742240919589079163, guid: bd49d44250309774ea221a5284d5c290, type: 3}
+      objectReference: {fileID: 7817584680802525349, guid: ce77cb0bcec3bbe45bbcd32cc8569718, type: 3}
     - target: {fileID: 3850792163060348964, guid: 38b8d5f2565955e4ca1675679cfc64b5, type: 3}
       propertyPath: scale
       value: 2
@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3850792163060348965, guid: 38b8d5f2565955e4ca1675679cfc64b5, type: 3}
       propertyPath: m_Name
-      value: BushMap_2 Variant
+      value: Final_BushMap
       objectReference: {fileID: 0}
     - target: {fileID: 3850792163060348965, guid: 38b8d5f2565955e4ca1675679cfc64b5, type: 3}
       propertyPath: m_Layer
