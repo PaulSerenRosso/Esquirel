@@ -17,7 +17,6 @@ namespace Entities.Champion
         public void CancelPrevisualisable()
         {
          
-            Debug.Log(currentPrevisualisable);
             if (currentPrevisualisable != null)
             {
                 currentPrevisualisable.DisableDrawing();
@@ -97,7 +96,6 @@ namespace Entities.Champion
                     if (!previsualisable.GetIsDrawing() && previsualisable.GetCanDraw())
                     {
                         currentPrevisualisable = previsualisable;
-                        Debug.Log(currentPrevisualisable);
                         previsualisable.EnableDrawing();
                     }
                     else if (previsualisable.GetCanSkipDrawing())

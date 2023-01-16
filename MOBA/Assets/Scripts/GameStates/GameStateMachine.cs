@@ -452,7 +452,6 @@ namespace GameStates
             
             LinkLoadChampionData();
             SetupUI();
-            Debug.Log("link load champion data");
         }
 
         private void LinkChampionSOCapacityIndexes()
@@ -507,8 +506,6 @@ namespace GameStates
 
         private void ApplyChampionSoData(PlayerData playerData)
         {
-            UnityEngine.Debug.Log(
-                "player so top");
             if (playerData.championSOIndex >= allChampionsSo.Length)
             {
                 Debug.LogWarning("Make sure the mesh is valid. Selects default mesh.");
