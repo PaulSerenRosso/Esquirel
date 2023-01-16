@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: VFX_Main_Glow_01
-  m_Shader: {fileID: 4800000, guid: ccb0dc3c6c1a7b64fac8a585710a8304, type: 3}
-  m_ShaderKeywords: _USE_CUSTOM_ON_ON
+  m_Name: VFX_Main_Glow_01_TwoSide
+  m_Shader: {fileID: 4800000, guid: d83ceccb30a96ba408aeeadf2fe40556, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -26,9 +26,9 @@ Material:
     m_Floats:
     - _AlphaCutoff: 0.5
     - _Fade_Distance: 1
-    - _MainTex_Power: 1
+    - _MainTex_Power: 1.5
     - _Main_Ins: 1
-    - _USE_CUSTOM_ON: 1
+    - _USE_CUSTOM_ON: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
