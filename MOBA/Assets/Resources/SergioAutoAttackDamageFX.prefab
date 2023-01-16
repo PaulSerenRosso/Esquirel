@@ -168,7 +168,7 @@ MonoBehaviour:
   canShow: 0
   canHide: 0
   meshRenderersToShow:
-  - {fileID: 0}
+  - {fileID: 8390614769663487395}
   - {fileID: 531194758579677882}
   - {fileID: 7737262715809782872}
   - {fileID: 1781074023871989204}
@@ -359,11 +359,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7952660501665870426, guid: f5f581bbfd3148b468594007460bd452, type: 3}
       propertyPath: m_RenderMode
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7952660501665870426, guid: f5f581bbfd3148b468594007460bd452, type: 3}
       propertyPath: m_RenderAlignment
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7952660501665870426, guid: f5f581bbfd3148b468594007460bd452, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -391,6 +391,11 @@ Transform:
 --- !u!198 &5358047808524195270 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4479656363672658501, guid: f5f581bbfd3148b468594007460bd452, type: 3}
+  m_PrefabInstance: {fileID: 8390614769717213059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!199 &8390614769663487395 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 80992800, guid: f5f581bbfd3148b468594007460bd452, type: 3}
   m_PrefabInstance: {fileID: 8390614769717213059}
   m_PrefabAsset: {fileID: 0}
 --- !u!198 &6025219978485914109 stripped
