@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3850792163060348964, guid: 38b8d5f2565955e4ca1675679cfc64b5, type: 3}
       propertyPath: maxBladeHeight
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3850792163060348965, guid: 38b8d5f2565955e4ca1675679cfc64b5, type: 3}
       propertyPath: m_Name
