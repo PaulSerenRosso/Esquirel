@@ -9,31 +9,40 @@ using UnityEngine;
 
 public partial class UIManager
 {
-  [SerializeField]
-  private TextMeshProUGUI goldText;
-
-  [SerializeField]
-  private int goldAmount;
-
-  [SerializeField]
-  private float percentageHealAmount;
-
-  [SerializeField] private GoldProduction firstTeamGoldProduction;
-  [SerializeField] private GoldProduction secondTeamGoldProduction;
   
-
-  
-  public void IncreaseHealAmountOfPerseverance()
+  public void UpdateGoldText(int value, Enums.Team team)
   {
-    var champion = GameStateMachine.Instance.GetPlayerChampion();
-    champion.RequestIncreaseHealAmountOfPerseverance(percentageHealAmount);
-    if(champion.team == Enums.Team.Team1)
-        firstTeamGoldProduction.RequestDecreaseRessource(goldAmount);
-      else
-        secondTeamGoldProduction.RequestDecreaseRessource(goldAmount);
+    switch (team)
+    {
+      case Enums.Team.Team1:
+      {
+        playerInterface.UpdateGoldTeam01(value);
+        break; 
+      }
+      case Enums.Team.Team2:
+      {
+        playerInterface.UpdateGoldTeam02(value);
+        break; 
+      }
+    }
   }
-  public void UpdateGoldText(float value)
+
+  public void UpdateStreak(int value, int nextValue, Enums.Team team) 
   {
-    goldText.text = value.ToString();
+    switch (team)
+    {
+      case Enums.Team.Team1:
+      {
+       playerInterface.UpdateStreakTeam01(value);
+       playerInterface.UpdateGoldStreakTeam01(nextValue);
+        break; 
+      }
+      case Enums.Team.Team2:
+      {
+        playerInterface.UpdateStreakTeam02(value);
+        playerInterface.UpdateGoldStreakTeam02(nextValue);
+        break; 
+      }
+    }
   }
 }

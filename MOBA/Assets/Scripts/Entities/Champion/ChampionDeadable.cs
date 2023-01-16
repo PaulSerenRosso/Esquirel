@@ -61,13 +61,13 @@ namespace Entities.Champion
                 InputManager.PlayerMap.Attack.Disable();
                 InputManager.PlayerMap.Capacity.Disable();
                 InputManager.PlayerMap.Inventory.Disable();
-            agent.isStopped = true;
-            agent.enabled = false;
             }
+
+            SetCanMoveRPC(false);
             isAlive = false;
             canBeTargeted = false;
             entityClicker.EnableCollider = false;
-            rotateParent.gameObject.SetActive(false); 
+            rotateParent.gameObject.SetActive(false);
             uiTransform.gameObject.SetActive(false);
             FogOfWarManager.Instance.RemoveFOWViewable(this);
 
@@ -84,7 +84,7 @@ namespace Entities.Champion
             }
 
             isAlive = false;
-            
+
             // TODO - Disable collision, etc...
 
             OnDie?.Invoke();
@@ -92,7 +92,7 @@ namespace Entities.Champion
             photonView.RPC("SyncDieRPC", RpcTarget.All);
         }
 
-        public event GlobalDelegates.NoParameterDelegate OnDie ;
+        public event GlobalDelegates.NoParameterDelegate OnDie;
         public event GlobalDelegates.NoParameterDelegate OnDieFeedback;
 
         public void RequestRevive()
@@ -111,10 +111,11 @@ namespace Entities.Champion
                 InputManager.PlayerMap.Attack.Enable();
                 InputManager.PlayerMap.Capacity.Enable();
                 InputManager.PlayerMap.Inventory.Enable();
-            agent.enabled = true;
-            agent.isStopped = false;
-            agent.destination = transform.position;
+                agent.enabled = true;
+                agent.isStopped = false;
+                agent.destination = transform.position;
             }
+            SetCanMoveRPC(true);
             canBeTargeted = true;
             entityClicker.EnableCollider = true;
             FogOfWarManager.Instance.AddFOWViewable(this);
@@ -131,7 +132,6 @@ namespace Entities.Champion
             SetCurrentResourceRPC(maxResource);
             OnRevive?.Invoke();
             photonView.RPC("SyncReviveRPC", RpcTarget.All);
-
         }
 
         private void Revive()

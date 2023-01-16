@@ -7,29 +7,23 @@ using UnityEngine.UI;
 
 public partial class UIManager
 {
-   [SerializeField]
-   private Image firstTeamVictoryPointSlider;
+    
+    private void Start()
+    {
+        playerInterface.SetColorVictoryTeam01();
+        playerInterface.SetColorVictoryTeam02();
+    }
 
-   [SerializeField] private Image secondTeamVictoryPointSlider;
+    public void UpdateSlider(float currentPointVictory, float maxPointVictory, Enums.Team team)
+    {
+        if (team == Enums.Team.Team1)
+        {
+            playerInterface.UpdateVictoryTeam01(currentPointVictory, maxPointVictory);
+        }
+            else
+        {
+            playerInterface.UpdateVictoryTeam02(currentPointVictory, maxPointVictory);
+        }
 
-   private Image currentSlider;
-
-   private void Start()
-   {
-       firstTeamVictoryPointSlider.color = GameStateMachine.Instance.GetTeamColor(Enums.Team.Team1);
-       secondTeamVictoryPointSlider.color = GameStateMachine.Instance.GetTeamColor(Enums.Team.Team2);
-   }
-
-   public void UpdateSlider(float currentPointVictory,  float maxPointVictory, Enums.Team team)
-   {
-       if (team == Enums.Team.Team1)
-       {
-           currentSlider = firstTeamVictoryPointSlider;
-       }
-       else
-       {
-           currentSlider = secondTeamVictoryPointSlider;
-       }
-       currentSlider.fillAmount = currentPointVictory / maxPointVictory;
-   }
+    }
 }

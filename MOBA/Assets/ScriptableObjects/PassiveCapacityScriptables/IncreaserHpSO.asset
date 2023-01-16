@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceName: 
   descriptionName: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: da07ff3398264c34f89cd68eb8d3eac8, type: 3}
   fxPrefab: {fileID: 0}
   description: 
   stackable: 1
   types: 
-  indexInCollection: 0
+  indexInCollection: 3
   auraCost: 010000000200000003000000
   maxCount: 3
   rankedMaxHpFactors:

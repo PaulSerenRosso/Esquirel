@@ -201,6 +201,7 @@ namespace Entities.Champion
                     }
             rb.velocity = Vector3.zero;
             RequestSetCanDie(true);
+            auraProduction.InitAuraProduction();
         }
 
         public void RequestChangeBoolParameterAnimator(string parameterName, bool value)

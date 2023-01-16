@@ -13,11 +13,26 @@ namespace RessourceProduction
 {
     public class GoldProduction : CapturePointTickProduction<int, GoldProductionSO>
     {
+        private int CurrentStreakLevel
+        {
+            get
+            {
+                return currentStreakLevel;
+            }
+
+            set
+            {
+                currentStreakLevel = value;
+                UIManager.Instance.UpdateStreak(currentStreakLevel, so.streaks[currentStreakLevel], team);
+                
+            }
+        }
         private int currentStreakLevel;
         private UIManager uiManager;
         public static GoldProduction firstTeamGoldProduction;
         public static GoldProduction secondGoldProduction;
 
+        
         protected override void OnStart()
         {
             allCapturesPoint = CapturePointCollectionManager.instance.GoldCapturePoints;
@@ -34,6 +49,7 @@ namespace RessourceProduction
                     secondGoldProduction = this;
                     break;
                 }
+                
             }
 
             for (int i = 0; i < allCapturesPoint.Length; i++)
@@ -54,8 +70,8 @@ namespace RessourceProduction
             }
 
             uiManager = UIManager.Instance;
-            uiManager.UpdateGoldText(Ressource);
-            currentStreakLevel = 0;
+            uiManager.UpdateGoldText(Ressource, team);
+            CurrentStreakLevel = 0;
         }
 
         public void LinkBounty(Champion enemyChampion)
@@ -88,10 +104,10 @@ namespace RessourceProduction
 
         public void TryBreakCurrentStreak()
         {
-            if (currentStreakLevel == 0) return;
+            if (CurrentStreakLevel == 0) return;
             if (!allCapturesPoint.All(point => point.team == team))
             {
-                currentStreakLevel = 0;
+                CurrentStreakLevel = 0;
             }
         }
 
@@ -101,7 +117,7 @@ namespace RessourceProduction
             if (so.ressourceMax < Ressource)
                 Ressource = so.ressourceMax;
 
-            var soStreak = so.streaks[currentStreakLevel];
+            var soStreak = so.streaks[CurrentStreakLevel];
             if (ressource >= soStreak)
             {
                 DecreaseRessource(soStreak);
@@ -122,8 +138,8 @@ namespace RessourceProduction
                 if (allCapturesPoint.Any(point => point.team == team))
                 {
                     // convert
-                    if (currentStreakLevel != so.streaks.Count - 1)
-                        currentStreakLevel++;
+                    if (CurrentStreakLevel != so.streaks.Count - 1)
+                        CurrentStreakLevel++;
                 }
             }
             //  convert en gland automatiquement 
@@ -147,8 +163,23 @@ namespace RessourceProduction
 
         public override void UpdateFeedback(int value)
         {
-            if (uiManager != null && GameStateMachine.Instance.GetPlayerTeam() == team)
-                uiManager.UpdateGoldText(value);
+            if (uiManager != null)
+            {
+                uiManager.UpdateGoldText(value, team);
+            }
+            
+        }
+
+        public override void ReadSerializeView(PhotonStream stream)
+        {
+            base.ReadSerializeView(stream);
+            CurrentStreakLevel = (int) stream.ReceiveNext();
+        }
+
+        public override void WritingSerializeView(PhotonStream stream)
+        {
+            base.WritingSerializeView(stream);
+            stream.SendNext( CurrentStreakLevel);
         }
     }
 }

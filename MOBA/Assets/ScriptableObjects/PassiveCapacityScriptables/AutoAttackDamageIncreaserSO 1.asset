@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceName: 
   descriptionName: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 6d880134e66232c4492a3070abb2f03d, type: 3}
   fxPrefab: {fileID: 0}
   description: 
   stackable: 1
   types: 
-  indexInCollection: 0
+  indexInCollection: 4
   auraCost: 010000000200000003000000
   maxCount: 3
   attackCapacitySoToIncreaseDamage:
   - {fileID: 11400000, guid: e339005550fb5fc42bcd3dad960bae2e, type: 2}
   - {fileID: 11400000, guid: 21c7c14e005d4cc4f8470bf9a61776e2, type: 2}
   rankedDamageFactors:
-  - 50
-  - 100
-  - 200
+  - 5
+  - 10
+  - 20

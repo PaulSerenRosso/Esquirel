@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities.Capacities;
 using Entities.Champion;
+using GameStates;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace RessourceProduction
@@ -16,17 +18,32 @@ namespace RessourceProduction
         protected override void OnStart()
         {
             base.OnStart();
+            photonView.TransferOwnership(PhotonNetwork.MasterClient);
+        }
+
+        public void InitAuraProduction()
+        {
+            if (champion.photonView.IsMine)
+            {
+                UIManager.Instance.SetUpAuraSprite(0, so.passiveCapacitySo[0].icon, AuraUIImage.AADamage, (() => RequestDecreaseAuraCapacity(0)));
+                UIManager.Instance.SetUpAuraSprite(0, so.passiveCapacitySo[1].icon, AuraUIImage.Comp01Damage, (() => RequestDecreaseAuraCapacity(1)));
+                UIManager.Instance.SetUpAuraSprite(0, so.passiveCapacitySo[2].icon, AuraUIImage.LifePoint, (() => RequestDecreaseAuraCapacity(2)));
+                UIManager.Instance.ChangeAuraState(false);
+            }
         }
 
         public override void UpdateFeedback(int value)
         {
+  //          Debug.Log("bonsoir à tous");
+            if(!champion.photonView.IsMine) return;
+//            Debug.Log("bonsoir à tous");
             if (Ressource == 0 && value >= 1)
             {
-                // enabled ui
+                UIManager.Instance.ChangeAuraState(true);
             }
             else if (Ressource >= 1 && value == 0)
             {
-                //disabled ui
+                UIManager.Instance.ChangeAuraState(false);
             }
         }
 
@@ -37,13 +54,14 @@ namespace RessourceProduction
         
         public override void DecreaseRessource(int amount)
         {
-            Ressource+= amount;
+            Ressource-= amount;
         }
         
         [PunRPC]
         void DecreaseAuraCapacityRPC(int index)
         {
-            if (Ressource >= so.passiveCapacitySo[index].auraCost[auraCapacityCounts[index]] && auraCapacityCounts[index] == so.passiveCapacitySo[index].maxCount)
+            if(auraCapacityCounts[index] != so.passiveCapacitySo[index].maxCount)
+            if (Ressource >= so.passiveCapacitySo[index].auraCost[auraCapacityCounts[index]])
             {
                 DecreaseRessource(so.passiveCapacitySo[index].auraCost[auraCapacityCounts[index]]);
                 champion.RequestAddPassiveCapacity(so.passiveCapacitySo[index].indexInCollection);
@@ -54,17 +72,37 @@ namespace RessourceProduction
         public void SyncDecreaseAuraCapacityRPC(int index)
         {
             auraCapacityCounts[index]++;
+            if(!champion.photonView.IsMine) return;
+            switch (index)
+            {
+                case 0:
+                {
+                    UIManager.Instance.UpdateAuraValue( auraCapacityCounts[index], AuraUIImage.AADamage);
+                    break;
+                }
+                case 1:
+                {
+                    UIManager.Instance.UpdateAuraValue( auraCapacityCounts[index], AuraUIImage.Comp01Damage);
+                    break;
+                }
+                case 2:
+                {
+                    UIManager.Instance.UpdateAuraValue( auraCapacityCounts[index], AuraUIImage.LifePoint);
+                    break;
+                }
+            }
+       
+            Debug.Log(auraCapacityCounts[index]);
         }
 
         public void RequestDecreaseAuraCapacity(int index)
         {
-            if (Ressource >= so.passiveCapacitySo[index].auraCost[auraCapacityCounts[index]] && auraCapacityCounts[index] == so.passiveCapacitySo[index].maxCount)
+            if(auraCapacityCounts[index] != so.passiveCapacitySo[index].maxCount)
+            if (Ressource >= so.passiveCapacitySo[index].auraCost[auraCapacityCounts[index]] )
                 photonView.RPC("DecreaseAuraCapacityRPC", RpcTarget.MasterClient, index);
         }
 
-        public void UpdateAuraCapacityCounts(PassiveCapacityAuraSO auraSo, int valueCount)
-        {
-           auraCapacityCounts[Array.IndexOf(so.passiveCapacitySo, auraSo)] = valueCount;
-        }
+
+      
     }
 }

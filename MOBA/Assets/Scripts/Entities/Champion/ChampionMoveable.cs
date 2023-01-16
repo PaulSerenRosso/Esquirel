@@ -107,7 +107,11 @@ namespace Entities.Champion
         [PunRPC]
         public void SyncSetCanMoveRPC(bool value)
         {
-            canMove = value;
+           
+            if(isAlive)
+            {
+                canMove = value;
+            }
             if (photonView.IsMine)
             {
                 moveDestination = transform.position;
