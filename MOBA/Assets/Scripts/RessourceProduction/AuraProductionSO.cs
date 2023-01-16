@@ -10,5 +10,6 @@ public class AuraProductionSO : RessourceProductionSO<int>
 {
   public PassiveCapacityAuraSO[] passiveCapacitySo;
   
+  
 }
 }

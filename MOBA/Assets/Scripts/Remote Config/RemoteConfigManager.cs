@@ -201,11 +201,11 @@ namespace RemoteConfig {
             variables.relaiCapturePoint.neutralState.stabilityPoint = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_NEUTRAL_StabilityPoint");
             
             //PRODUCTION
-            variables.relaiProduction.ressourceMax = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceMax");
-            variables.relaiProduction.ressourceMin = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceMin");
-            variables.relaiProduction.ressourceInitial = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceInitial");
-            variables.relaiProduction.timeBetweenTick = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_TimeBetweenTick");
-            variables.relaiProduction.ressourceAmountPerTick = RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceAmountPerTick");
+            variables.relaiProduction.ressourceMax =(int) RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceMax");
+            variables.relaiProduction.ressourceMin =(int) RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceMin");
+            variables.relaiProduction.ressourceInitial =(int) RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceInitial");
+            variables.relaiProduction.timeBetweenTick =(int) RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_TimeBetweenTick");
+            variables.relaiProduction.ressourceAmountPerTick = (int)RemoteConfigService.Instance.appConfig.GetFloat("RELAI_PROD_ResourceAmountPerTick");
         }
     }
 }

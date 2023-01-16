@@ -8,7 +8,7 @@ namespace Entities.Capacities
 {
 public abstract class PassiveCapacityAuraSO : PassiveCapacitySO
 {
-  public int auraCost;
-  
+  public int[] auraCost;
+  public int maxCount;
 }
 }

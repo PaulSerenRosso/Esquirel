@@ -11,13 +11,13 @@ using UnityEngine;
 
 namespace RessourceProduction
 {
-    public class GoldProduction : CapturePointTickProduction<float, GoldProductionSO>
+    public class GoldProduction : CapturePointTickProduction<int, GoldProductionSO>
     {
         private int currentStreakLevel;
         private UIManager uiManager;
         public static GoldProduction firstTeamGoldProduction;
         public static GoldProduction secondGoldProduction;
-        
+
         protected override void OnStart()
         {
             allCapturesPoint = CapturePointCollectionManager.instance.GoldCapturePoints;
@@ -35,6 +35,7 @@ namespace RessourceProduction
                     break;
                 }
             }
+
             for (int i = 0; i < allCapturesPoint.Length; i++)
             {
                 switch (team)
@@ -51,6 +52,7 @@ namespace RessourceProduction
                     }
                 }
             }
+
             uiManager = UIManager.Instance;
             uiManager.UpdateGoldText(Ressource);
             currentStreakLevel = 0;
@@ -65,18 +67,18 @@ namespace RessourceProduction
         {
             switch (team)
             {
-                case Enums.Team.Team1 :
+                case Enums.Team.Team1:
                 {
-                    float bounty = secondGoldProduction.ressource *
-                                             secondGoldProduction.so.bountyPercentage;
+                    int bounty =(int) (secondGoldProduction.ressource *
+                                   secondGoldProduction.so.bountyPercentage);
                     secondGoldProduction.DecreaseRessource(bounty);
                     IncreaseRessource(bounty);
                     break;
                 }
-                case Enums.Team.Team2 :
+                case Enums.Team.Team2:
                 {
-                    float bounty = firstTeamGoldProduction.ressource *
-                                   firstTeamGoldProduction.so.bountyPercentage;
+                   int bounty =(int) (firstTeamGoldProduction.ressource *
+                                   firstTeamGoldProduction.so.bountyPercentage);
                     firstTeamGoldProduction.DecreaseRessource(bounty);
                     IncreaseRessource(bounty);
                     break;
@@ -86,37 +88,39 @@ namespace RessourceProduction
 
         public void TryBreakCurrentStreak()
         {
-            if(currentStreakLevel == 0) return;
-            if(!allCapturesPoint.All(point => point.team == team))
+            if (currentStreakLevel == 0) return;
+            if (!allCapturesPoint.All(point => point.team == team))
             {
                 currentStreakLevel = 0;
             }
         }
 
-        public override void IncreaseRessource(float amount)
+        public override void IncreaseRessource(int amount)
         {
             Ressource += amount;
             if (so.ressourceMax < Ressource)
                 Ressource = so.ressourceMax;
-            if (allCapturesPoint.All(point => point.team == team))
+
+            var soStreak = so.streaks[currentStreakLevel];
+            if (ressource >= soStreak)
             {
-                var soStreak = so.streaks[currentStreakLevel];
-                if (ressource >= soStreak)
+                DecreaseRessource(soStreak);
+                switch (team)
                 {
-                    DecreaseRessource(soStreak);
-                    switch (team)
+                    case Enums.Team.Team1:
                     {
-                        case Enums.Team.Team1:
-                        {
-                            VictoryProduction.firstTeamVictoryProduction.IncreaseRessource(so.victoryAmount);
-                            break;
-                        }
-                        case Enums.Team.Team2:
-                        {
-                            VictoryProduction.secondTeamVictoryProduction.IncreaseRessource(so.victoryAmount);
-                            break;
-                        }
+                        VictoryProduction.firstTeamVictoryProduction.IncreaseRessource(so.victoryAmount);
+                        break;
                     }
+                    case Enums.Team.Team2:
+                    {
+                        VictoryProduction.secondTeamVictoryProduction.IncreaseRessource(so.victoryAmount);
+                        break;
+                    }
+                }
+
+                if (allCapturesPoint.Any(point => point.team == team))
+                {
                     // convert
                     if (currentStreakLevel != so.streaks.Count - 1)
                         currentStreakLevel++;
@@ -124,24 +128,24 @@ namespace RessourceProduction
             }
             //  convert en gland automatiquement 
             // streaks
-            
+
             // casser une streak ajouter event restart
         }
 
-        public void RequestDecreaseRessource(float amount)
+        public void RequestDecreaseRessource(int amount)
         {
             photonView.RPC("DecreaseRessource", RpcTarget.MasterClient, amount);
         }
 
         [PunRPC]
-        public override void DecreaseRessource(float amount)
+        public override void DecreaseRessource(int amount)
         {
             Ressource -= amount;
             if (so.ressourceMin > ressource)
                 Ressource = 0;
         }
 
-        public override void UpdateFeedback(float value)
+        public override void UpdateFeedback(int value)
         {
             if (uiManager != null && GameStateMachine.Instance.GetPlayerTeam() == team)
                 uiManager.UpdateGoldText(value);

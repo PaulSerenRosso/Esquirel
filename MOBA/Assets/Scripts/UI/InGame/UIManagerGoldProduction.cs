@@ -13,7 +13,7 @@ public partial class UIManager
   private TextMeshProUGUI goldText;
 
   [SerializeField]
-  private float goldAmount;
+  private int goldAmount;
 
   [SerializeField]
   private float percentageHealAmount;
