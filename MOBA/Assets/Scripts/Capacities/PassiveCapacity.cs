@@ -23,7 +23,6 @@ namespace Entities.Capacities
             set
             {
                 _fxObject = value;
-                Debug.Log(value);
             }
             get
             {
@@ -64,7 +63,6 @@ namespace Entities.Capacities
             if(AssociatedPassiveCapacitySO().fxPrefab == null) return;
             fxObject = PoolLocalManager.Instance.PoolInstantiate(AssociatedPassiveCapacitySO().fxPrefab, entity.transform.position,
                 quaternion.identity, entity.transform);
-            Debug.Log("create fx"+ fxObject);
         }
 
         protected void RequeueFx()

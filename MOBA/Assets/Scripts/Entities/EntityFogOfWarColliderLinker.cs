@@ -14,7 +14,6 @@ public class EntityFogOfWarColliderLinker : MonoBehaviour
     {
         get
         {
-            Debug.Log("fx"+entity.name);
             return entity;
             
             
