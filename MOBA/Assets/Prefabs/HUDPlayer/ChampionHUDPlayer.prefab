@@ -374,7 +374,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.0000038147}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 875, y: 191.295}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &3914398794111395273
@@ -866,7 +866,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 6425557381214286745}
-  resourceBar: {fileID: 7672763341755898067}
   spellPassive: {fileID: 4277277111723018374}
   spellOne: {fileID: 233074098067123157}
   spellTwo: {fileID: 3195056070628690164}
