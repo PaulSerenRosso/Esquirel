@@ -14,12 +14,14 @@ namespace Entities
        [SerializeField] private CatapultThrowingCapacitySO catapultThrowingCapacityCapacitySo;
        [SerializeField] public Vector3 destination;
 
+       [SerializeField] private AnimationClip reloadAnimation;
 
         public bool requestSended;
         private float distanceForUseCatapult;
 
         private float distanceSqrForUseCatapult;
 
+        [SerializeField] public Animator animator;
         public float DistanceForUseCatapult
         {
             get => distanceForUseCatapult;
@@ -39,8 +41,9 @@ namespace Entities
             base.OnStart();
             activeCapacities = new List<ActiveCapacity>();
             soIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(catapultThrowingCapacityCapacitySo);
-         
-        
+            Debug.Log(catapultThrowingCapacityCapacitySo.cooldown/reloadAnimation.length);
+            animator.SetFloat("ReloadSpeedFactor", 1/(catapultThrowingCapacityCapacitySo.cooldown/reloadAnimation.length));   
+            Debug.Log(animator.GetFloat("ReloadSpeedFactor"));
             activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(soIndex, this));
             activeCapacities[0].SetUpActiveCapacity(soIndex, this);
             DistanceForUseCatapult = catapultThrowingCapacityCapacitySo.referenceRange;
@@ -121,8 +124,6 @@ namespace Entities
         [PunRPC]
         void SetOnCooldownCapacityRPC(byte indexOfSOInCollection, bool value)
         {
-            
-      
             for (int i = 0; i < activeCapacities.Count; i++)
             {
                 if (activeCapacities[i].indexOfSOInCollection == indexOfSOInCollection)

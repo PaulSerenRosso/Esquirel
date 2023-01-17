@@ -36,6 +36,7 @@ namespace Entities.Champion
         public CollisionBlocker blocker;
         [SerializeField] public NavMeshObstacle obstacle;
 
+      public  CapturePoint.CapturePoint currentPoint;
         public ActiveCapacity attackBase;
         public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
         public ActiveCapacity currentCapacityUsed;
@@ -90,12 +91,13 @@ namespace Entities.Champion
             maxResource = championSo.maxRessource;
             currentResource = championSo.maxRessource;
             viewRange = championSo.viewRange;
+            blocker.characterCollider.enabled = true;
             referenceMoveSpeed = championSo.referenceMoveSpeed;
             currentMoveSpeed = referenceMoveSpeed;
             attackDamage = championSo.attackDamage;
             attackAbilityIndex = championSo.attackAbilityIndex;
             abilitiesIndexes = championSo.activeCapacitiesIndexes;
-            ultimateAbilityIndex = championSo.ultimateAbilityIndex;
+      //      ultimateAbilityIndex = championSo.ultimateAbilityIndex;
             var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position,
                 Quaternion.identity, rotateParent);
             championMesh.transform.localEulerAngles = Vector3.zero;
@@ -164,12 +166,12 @@ namespace Entities.Champion
             {
                 activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.activeCapacities[i].indexInCollection,this));
             }
-            activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.ultimateAbility.indexInCollection,this));
+        //    activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.ultimateAbility.indexInCollection,this));
             for (int i = 0; i < so.activeCapacities.Length; i++)
             {
                 activeCapacities[i].SetUpActiveCapacity(so.activeCapacities[i].indexInCollection, this);
             }
-            activeCapacities[activeCapacities.Count-1].SetUpActiveCapacity(so.ultimateAbility.indexInCollection, this);
+       //     activeCapacities[activeCapacities.Count-1].SetUpActiveCapacity(so.ultimateAbility.indexInCollection, this);
             attackBase =
                 CapacitySOCollectionManager.CreateActiveCapacity(so.attackAbility.indexInCollection, this);
             autoAttack =(IAimable) attackBase;

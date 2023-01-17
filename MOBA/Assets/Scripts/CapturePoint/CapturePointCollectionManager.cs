@@ -15,5 +15,7 @@ public class CapturePointCollectionManager : MonoBehaviour
    {
       instance = this;
    }
+   
+   
 }
 }

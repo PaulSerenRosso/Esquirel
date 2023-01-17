@@ -106,11 +106,15 @@ public class ChampionHUD : MonoBehaviour
 
     public void InitHUD(Champion newChampion, PlayerInterface playerInterface)
     {
+        Debug.Log("test");
         champion = newChampion;
         lifeable = champion.GetComponent<IActiveLifeable>();
        otherChampion = GameStateMachine.Instance.GetOtherChampionOfSameTeam(champion);
         resourceable = champion.GetComponent<IResourceable>();
         this.playerInterface = playerInterface;
+        Debug.Log(lifeable);
+        Debug.Log(lifeable.GetCurrentHp());
+        Debug.Log(lifeable.GetMaxHp());
         playerInterface.UpdateHealth(lifeable.GetCurrentHp(), lifeable.GetMaxHp());
         LinkToEvents();
         UpdateIcons(champion);
@@ -138,9 +142,9 @@ public class ChampionHUD : MonoBehaviour
     private void UpdateIcons(Champion champion)
     {
         var so = champion.championSo;
-        playerInterface.SetUpImageVisual(PlayerUIImage.Spell01, so.activeCapacities[1].icon);
-        playerInterface.SetUpImageVisual(PlayerUIImage.Spell02, so.activeCapacities[2].icon);
-        playerInterface.SetUpImageVisual(PlayerUIImage.Ward, so.activeCapacities[0].icon);
+        playerInterface.SetUpImageVisual(PlayerUIImage.Spell01, so.activeCapacities[0].icon);
+        playerInterface.SetUpImageVisual(PlayerUIImage.Spell02, so.activeCapacities[1].icon);
+        playerInterface.SetUpImageVisual(PlayerUIImage.Ward, so.activeCapacities[2].icon);
         playerInterface.SetUpImageVisual(PlayerUIImage.AutoAttack, so.attackAbility.icon);
         playerInterface.SetUpImageVisual(PlayerUIImage.PlayerCharacter, so.championIcon);
     }
@@ -161,19 +165,19 @@ public class ChampionHUD : MonoBehaviour
                 {
                     switch (i)
                     {
-                        case 0 :
+                        case 2 :
                         {
                             StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex)
                                 .cooldown, PlayerUIImage.Ward);
                             break;
                         }
-                        case 1 :
+                        case 0 :
                         {
                             StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex)
                                 .cooldown, PlayerUIImage.Spell01);
                             break;
                         }
-                        case 2:
+                        case 1:
                         {
                             StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex)
                                 .cooldown, PlayerUIImage.Spell02);
