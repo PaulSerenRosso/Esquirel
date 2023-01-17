@@ -7,7 +7,7 @@ namespace Entities.Champion
 {
     public class ChampionMeshLinker : MonoBehaviourPun
     {
-        [SerializeField] private MeshRenderer[] teamColorfulParts;
+        [SerializeField] private Renderer[] teamColorfulParts;
         public Animator animator;
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
         
@@ -21,9 +21,8 @@ namespace Entities.Champion
                 break;
             }
 
-            foreach (var rd in teamColorfulParts)
-            {
-                rd.material.SetColor(EmissionColor, color * 1f);
+            foreach (var rd in teamColorfulParts) {
+                rd.material.color = color;
             }
         }
     }
