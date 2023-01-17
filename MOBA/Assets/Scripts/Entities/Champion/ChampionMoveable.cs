@@ -6,6 +6,7 @@ using ExitGames.Client.Photon.StructWrapping;
 using GameStates;
 using UnityEngine;
 using Photon.Pun;
+using Unity.Mathematics;
 using UnityEngine.AI;
 
 
@@ -62,6 +63,8 @@ namespace Entities.Champion
         private ITargetable targetEntity;
         public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent;
 
+        [SerializeField] private ChampionMoveablePrevisualisation championMoveablePrevisualisationPrefab;
+       
         //NavMesh
         [SerializeField] public NavMeshAgent agent;
 
@@ -85,7 +88,11 @@ namespace Entities.Champion
                 agent.enabled = true;
                 moveDestination = transform.position;
                 agent.speed = currentMoveSpeed;
+            var championMoveablePrevisualisation=  Instantiate(championMoveablePrevisualisationPrefab, Vector3.zero, quaternion.identity);
+            championMoveablePrevisualisation.champion = this;
+
             }
+            
             //NavMeshBuilder.ClearAllNavMeshes();
             //NavMeshBuilder.BuildNavMesh();
         }
@@ -114,7 +121,7 @@ namespace Entities.Champion
             }
             if (photonView.IsMine)
             {
-                moveDestination = transform.position;
+            //    moveDestination = transform.position;
                 agent.enabled = value;
             }
 
@@ -249,7 +256,11 @@ namespace Entities.Champion
             isFollowing = false;
             moveDestination = position;
             moveDestination.y = transform.position.y;
+           
+            
         }
+        
+       
 
         public void StartMoveToTarget(Entity _entity, ActiveCapacity capacityWhichAimed,
             GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent)
@@ -264,6 +275,7 @@ namespace Entities.Champion
                 currentIAimable = (IAimable)capacityWhichAimed;
                 currentCapacityAimed = capacityWhichAimed;
                 this.currentTargetCapacityAtRangeEvent = currentTargetCapacityAtRangeEvent;
+          
             }
         }
 
@@ -385,7 +397,7 @@ namespace Entities.Champion
         {
         
             transform.position = newPos;
-            moveDestination = newPos;
+                //   moveDestination = newPos;
             photonView.RPC("WaitForAllReceiveMoveChampion", RpcTarget.MasterClient);
         }
         [PunRPC]

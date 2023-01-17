@@ -27,7 +27,7 @@ public class TpMovement : ChampionCapacityCurveMovement
         Smoke smoke = (Smoke) PoolNetworkManager.Instance.PoolInstantiate(tpCapacitySo.smokePrefab, transform.position,
             Quaternion.identity);
        smoke.ChangeTeamRPC((byte)champion.team);
-       StartCoroutine(smoke.SetUp(tpCapacitySo.smokeDuration, tpCapacitySo.smokePrefab, transform.position));
+       StartCoroutine(smoke.SetUp(curveMovementCapacity,tpCapacitySo.smokeDuration, tpCapacitySo.smokePrefab, transform.position));
        
     }
     public override void SetUp(byte capacityIndex, int championIndex)

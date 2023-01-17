@@ -14,6 +14,7 @@ namespace Entities.Capacities
         private TpMovement tpMovement;
 
         private int useCount = 0;
+        private bool isEndCurve;
 
         public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
@@ -22,6 +23,7 @@ namespace Entities.Capacities
             {
                 if (base.TryCast(targetsEntityIndexes, targetPositions) )
                 {
+                   
                     useCount = 1;
                     return true;
                 }
@@ -42,13 +44,14 @@ namespace Entities.Capacities
             useCount = (int)customParameters[2];
             if (useCount == 1)
             {
-                SetCanSkipDrawing(true);
+                curveObject.endCurveEvent += () => isEndCurve = true;
                 curveObject.endCurveEvent -= TpChampion;
+                SetCanSkipDrawing(true);
                 base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);
             }
             else if (useCount == 2)
             {
-                curveObject.endCurveEvent += TpChampion;
+                TryTpChampion();
             }
         }
 
@@ -63,11 +66,24 @@ namespace Entities.Capacities
             base.InitiateCooldown();
             champion.RequestSetSkipDrawingCapacity(indexOfSOInCollection, false);
             useCount = 0;
+            isEndCurve = false;
             // 
         }
 
+        void TryTpChampion()
+        {
+            if (isEndCurve)
+            {
+             TpChampion();   
+            }
+            else
+            {
+                curveObject.endCurveEvent += TpChampion;
+            }
+        }
         void TpChampion()
         {
+           
             if (PhotonNetwork.IsMasterClient)
             {
                 champion.RequestMoveChampion(
@@ -87,7 +103,6 @@ namespace Entities.Capacities
                 curveObject = PhotonNetwork.Instantiate(tpCapacitySo.tpObjectPrefab.gameObject.name, Vector3.zero,
                     Quaternion.identity).GetComponent<CurveMovement>();
                 curveObject.GetComponent<TpObject>().RequestDeactivate();
-                curveObject.endCurveEvent += InitiateCooldown;
                 curveObject.RequestSetupRPC((byte)champion.activeCapacities.IndexOf(this), caster.entityIndex);
             }
         }

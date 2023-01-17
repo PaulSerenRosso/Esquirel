@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AlgebraHelpers;
 using Controllers;
+using Controllers.Inputs;
 using Entities.Capacities;
 using Entities.FogOfWar;
 using GameStates;
@@ -21,7 +22,7 @@ namespace Entities.Champion
         public Transform rotateParent;
         public Transform championMesh;
         private Vector3 respawnPos;
-        [SerializeField]
+        [SerializeField] public ChampionInputController inputController; 
         public float pointPlacerDistanceAvoidance;
         private FogOfWarManager fowm;
         private CapacitySOCollectionManager capacityCollection;

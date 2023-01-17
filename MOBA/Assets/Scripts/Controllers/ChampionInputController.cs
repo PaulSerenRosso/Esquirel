@@ -199,7 +199,7 @@ namespace Controllers.Inputs
 
             if (isActivebuttonPress)
             {
-                SelectMoveTarget();
+                TryMoveToTarget();
             }
 
             if (catapultTarget != null)
@@ -221,21 +221,24 @@ namespace Controllers.Inputs
 
         void OnMouseRightClick(InputAction.CallbackContext ctx)
         {
-            SelectMoveTarget();
+            if (!TryMoveToTarget())
+            {
+                OnMoveToCursorPos?.Invoke(cursorWorldPos[0]);
+            }
         }
-
+       
         void OnMouseLeftClick(InputAction.CallbackContext ctx)
         {
             champion.CancelPrevisualisable();
         }
 
-        public void SelectMoveTarget()
+        public bool TryMoveToTarget()
         {
             if (catapultDetected != null)
             {
                 catapultTarget = catapultDetected;
                 champion.MoveToPosition(cursorWorldPos[0]);
-                return;
+                return true;
             }
             else
             {
@@ -254,6 +257,7 @@ namespace Controllers.Inputs
                         //   Debug.Log(champion.autoAttack.TryAim(champion.entityIndex, selectedEntity[0], cursorWorldPos[0]));
                         champion.StartMoveToTarget(EntityCollectionManager.GetEntityByIndex(this.targetEntity[0]),
                             champion.attackBase, champion.RequestAttack);
+                        return true;
                     }
                     else
                     {
@@ -269,8 +273,10 @@ namespace Controllers.Inputs
             {
                 champion.MoveToPosition(cursorWorldPos[0]);
             }
+            return false;
         }
 
+        public event GlobalDelegates.OneParameterDelegate<Vector3> OnMoveToCursorPos;
 
         /// <summary>
         /// Get World Position of mouse
@@ -305,6 +311,7 @@ namespace Controllers.Inputs
         public override void Link(Entity entity)
         {
             champion = controlledEntity as Champion;
+            
             base.Link(entity);
 
             cam = Camera.main;

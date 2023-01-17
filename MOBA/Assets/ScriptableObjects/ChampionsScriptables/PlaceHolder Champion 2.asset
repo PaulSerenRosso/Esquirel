@@ -17,8 +17,8 @@ MonoBehaviour:
   championIcon: {fileID: 21300000, guid: 110b84145e36fd94e898d5ba97a5b2d3, type: 3}
   maxHp: 800
   maxRessource: 10
-  viewRange: 10
-  referenceMoveSpeed: 7
+  viewRange: 15
+  referenceMoveSpeed: 4.2
   attackAbility: {fileID: 11400000, guid: 21c7c14e005d4cc4f8470bf9a61776e2, type: 2}
   attackAbilityIndex: 0
   attackDamage: 0
@@ -26,10 +26,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4892e9fd3d893d04b8b520812f3c9710, type: 2}
   passiveCapacitiesIndexes: 00
   activeCapacities:
-  - {fileID: 11400000, guid: aad87c277a071be459b9251985d0be77, type: 2}
   - {fileID: 11400000, guid: 242aadcd426718e43ae6bb3fec70cfc8, type: 2}
   - {fileID: 11400000, guid: ad595481d827f564e92f1c7118532bda, type: 2}
+  - {fileID: 11400000, guid: aad87c277a071be459b9251985d0be77, type: 2}
   - {fileID: 11400000, guid: 7b777685e7c5c344ca741b124e656fef, type: 2}
-  activeCapacitiesIndexes: 070805
-  ultimateAbility: {fileID: 0}
+  activeCapacitiesIndexes: 07080509
   ultimateAbilityIndex: 3
