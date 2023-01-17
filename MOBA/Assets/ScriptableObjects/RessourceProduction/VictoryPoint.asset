@@ -18,9 +18,17 @@ MonoBehaviour:
   timeBetweenTick: 0.5
   ressourceAmountPerTick: 1
   victorySteps:
-  - triggerValue: 10
+  - triggerValue: 62
     auraAmount: 1
-  - triggerValue: 50
-    auraAmount: 2
-  - triggerValue: 80
+  - triggerValue: 124
+    auraAmount: 1
+  - triggerValue: 186
+    auraAmount: 1
+  - triggerValue: 248
+    auraAmount: 1
+  - triggerValue: 310
+    auraAmount: 1
+  - triggerValue: 375
+    auraAmount: 1
+  - triggerValue: 450
     auraAmount: 3
