@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_IndicatorSergio1
-  m_Shader: {fileID: -6465566751694194690, guid: 6c92a27c50da11b40bf207032c1e3311, type: 3}
-  m_ShaderKeywords: 
+  m_Name: CirclePreview
+  m_Shader: {fileID: -6465566751694194690, guid: bc098e6d76231a341bafa27289f45912, type: 3}
+  m_ShaderKeywords: ENUM_AE9BD6E9FC384213983E26733C45BA75_CIRCLE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,10 +19,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c60c68369bf77814cbb34dfa4a8818dc, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -35,7 +31,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    m_Floats:
+    - ENUM_AE9BD6E9FC384213983E26733C45BA75: 0
+    - Vector1_b9b741ac9c1f4f7eb3b36ab45b2e7106: 0.1
+    - _AlphaClip: 0.5
+    - _AlphaClip1: 0.5
+    - _ShapeSize: 1
     m_Colors:
-    - Color_a5dd1da722ec47c798b0d779b3936cc6: {r: 8, g: 8, b: 8, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _OutColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutColor_1: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
