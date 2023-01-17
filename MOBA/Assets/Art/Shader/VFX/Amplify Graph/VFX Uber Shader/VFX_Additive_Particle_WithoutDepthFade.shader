@@ -149,7 +149,7 @@ Shader "VFX_Additive_Particle_WithoutDepthFade"
 			Name "Forward"
 			Tags { "LightMode"="UniversalForward" }
 
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
+			Blend One OneMinusSrcAlpha, One OneMinusSrcAlpha
 			ZWrite Off
 			ZTest LEqual
 			Offset 0 , 0
@@ -162,6 +162,7 @@ Shader "VFX_Additive_Particle_WithoutDepthFade"
 			#pragma multi_compile_instancing
 			#define _RECEIVE_SHADOWS_OFF 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
+			#define _ALPHAPREMULTIPLY_ON 1
 			#define ASE_SRP_VERSION 101001
 
 
@@ -424,6 +425,7 @@ Shader "VFX_Additive_Particle_WithoutDepthFade"
 			#pragma multi_compile_instancing
 			#define _RECEIVE_SHADOWS_OFF 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
+			#define _ALPHAPREMULTIPLY_ON 1
 			#define ASE_SRP_VERSION 101001
 
 
@@ -705,6 +707,7 @@ Shader "VFX_Additive_Particle_WithoutDepthFade"
 			#pragma multi_compile_instancing
 			#define _RECEIVE_SHADOWS_OFF 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
+			#define _ALPHAPREMULTIPLY_ON 1
 			#define ASE_SRP_VERSION 101001
 
 
@@ -946,8 +949,8 @@ Node;AmplifyShaderEditor.VertexColorNode;14;-656,256;Inherit;False;0;5;COLOR;0;F
 Node;AmplifyShaderEditor.SamplerNode;20;-1040,-128;Inherit;True;Property;_MainTexture;Main Texture;0;0;Create;True;0;0;0;False;0;False;-1;None;9ea091eaf22759a4192850c0dfa2604c;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.PowerNode;21;-640,-128;Inherit;False;False;2;0;COLOR;0,0,0,0;False;1;FLOAT;1;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;22;-1152,128;Inherit;False;Property;_Main_Pow;Main_Pow;1;0;Create;True;0;0;0;False;0;False;1;1;1;20;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;24;-768,128;Inherit;False;Property;_Main_Ins;Main_Ins;2;0;Create;True;0;0;0;False;0;False;1;1;1;20;0;1;FLOAT;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;10;288,0;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_Additive_Particle_WithoutDepthFade;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;5;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638087977900595844;  Blend;0;638087992548249206;Two Sided;1;638087974349470738;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;0;638085389684412829;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
+Node;AmplifyShaderEditor.RangedFloatNode;24;-768,128;Inherit;False;Property;_Main_Ins;Main_Ins;2;0;Create;True;0;0;0;False;0;False;1;3;1;20;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;10;288,0;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_Additive_Particle_WithoutDepthFade;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;5;1;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638087977900595844;  Blend;1;638095630049379544;Two Sided;1;638087974349470738;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;0;638085389684412829;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;8;-240,16;Inherit;False;3;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;25;16,16;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.ColorNode;27;-288,-256;Inherit;False;Property;_Color;Color;3;0;Create;True;0;0;0;False;0;False;1,1,1,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -971,4 +974,4 @@ WireConnection;45;1;14;4
 WireConnection;43;0;26;0
 WireConnection;43;1;44;0
 ASEEND*/
-//CHKSM=040A5E6AEBBE3263449BC57D1A6EC82877C6B464
+//CHKSM=D027794019301C893D11EECC808EFB5E92B0DFB4
