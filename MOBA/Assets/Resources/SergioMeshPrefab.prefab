@@ -45,7 +45,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6faea4ee78b274340acac4bcaff33d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamColorfulParts: []
+  teamColorfulParts:
+  - {fileID: 7810424100998204385}
+  - {fileID: 5459543002217902435}
+  - {fileID: 3639533850469164572}
+  - {fileID: 7076795497597980447}
+  - {fileID: 9209802527024575928}
+  - {fileID: 1707568762232030453}
+  - {fileID: 8591928515326359109}
+  - {fileID: 1143804413318247097}
+  - {fileID: 2220773970670477656}
+  - {fileID: 8575176296128413120}
+  - {fileID: 8354555162763285784}
+  - {fileID: 515396122754231942}
+  - {fileID: 8425850898954013099}
+  - {fileID: 7046569898788317505}
+  - {fileID: 5860527362298240984}
+  - {fileID: 497795712076323936}
+  - {fileID: 8377998671745448508}
   animator: {fileID: 3022758321376639196}
 --- !u!114 &1462076197913721084
 MonoBehaviour:
@@ -59,7 +76,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1bbb1ac8b6182240a7735bd36b82f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystems: []
   meshRenderers:
   - {fileID: 7810424100998204385}
   - {fileID: 5459543002217902435}

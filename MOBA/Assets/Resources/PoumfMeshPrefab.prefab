@@ -45,7 +45,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6faea4ee78b274340acac4bcaff33d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamColorfulParts: []
+  teamColorfulParts:
+  - {fileID: 7727776748275881186}
+  - {fileID: 5521015376412864096}
+  - {fileID: 3991622353282559276}
+  - {fileID: 3880026545382586655}
+  - {fileID: 7309187534587514908}
+  - {fileID: 5192997406443103023}
+  - {fileID: 1840672066330394203}
+  - {fileID: 8096207951698682563}
+  - {fileID: 4640587946431641136}
+  - {fileID: 437203879783516762}
+  - {fileID: 35370593461547397}
+  - {fileID: 7172293502311552434}
+  - {fileID: 8295074382790845759}
   animator: {fileID: 5016752821275209648}
 --- !u!114 &2599805225094211869
 MonoBehaviour:
