@@ -20,9 +20,13 @@ MonoBehaviour:
   stackable: 1
   types: 
   indexInCollection: 3
-  auraCost: 010000000200000003000000
-  maxCount: 3
+  auraCost: 01000000010000000100000001000000010000000100000001000000
+  maxCount: 7
   rankedMaxHpFactors:
   - 50
   - 100
-  - 500
+  - 150
+  - 200
+  - 250
+  - 300
+  - 400

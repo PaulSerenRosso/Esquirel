@@ -20,12 +20,16 @@ MonoBehaviour:
   stackable: 1
   types: 
   indexInCollection: 5
-  auraCost: 010000000200000003000000
-  maxCount: 3
+  auraCost: 01000000010000000100000001000000010000000100000001000000
+  maxCount: 7
   attackCapacitySoToIncreaseDamage:
   - {fileID: 11400000, guid: 58376b91df0d9a94490ed2d720806b7f, type: 2}
   - {fileID: 11400000, guid: ad595481d827f564e92f1c7118532bda, type: 2}
   rankedDamageFactors:
-  - 5
-  - 10
-  - 20
+  - 1.1
+  - 1.2
+  - 1.3
+  - 1.4
+  - 1.5
+  - 1.6
+  - 2
