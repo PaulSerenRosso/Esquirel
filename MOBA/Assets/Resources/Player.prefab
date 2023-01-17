@@ -462,6 +462,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   blocker: {fileID: 3711244289653556686}
   obstacle: {fileID: 7728234700033618375}
+  currentPoint: {fileID: 0}
   auraProduction: {fileID: 3143879509387280758}
   maxHp: 0
   currentHp: 0
@@ -469,7 +470,6 @@ MonoBehaviour:
   canAttack: 1
   attackDamage: 0
   abilitiesIndexes: 0000
-  ultimateAbilityIndex: 0
   canCast: 1
   isAlive: 1
   canDie: 1
@@ -494,7 +494,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 3480681341667345177}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.4
   m_Height: 2
   m_Direction: 1

@@ -65,7 +65,7 @@ namespace CapturePoint
 
         public override void TriggerEnter(Collider other)
         {
-           
+      
             Entity entity = other.GetComponent<Entity>();
 
             if (entity != null)
@@ -79,11 +79,15 @@ namespace CapturePoint
                         if (entity.team == Enums.Team.Team1)
                         {
                             firstTeamChampions.Add(champion);
+                            champion.currentPoint = this;
+                            // ajoute le check de la mort   
                             ResolveTeamSupremacy();
                         }
                         else if (entity.team == Enums.Team.Team2)
                         {
                             secondTeamChampions.Add(champion);
+                            champion.currentPoint = this;
+                            // ajoute le check de la mort
                             ResolveTeamSupremacy();
                         }
                     }
@@ -95,10 +99,29 @@ namespace CapturePoint
                 
             }
         }
+        
+
+
+     public  void RemoveSecondTeamChampion(Champion champion)
+        {
+            Debug.Log("remove");
+            secondTeamChampions.Remove(champion);
+            ResolveTeamSupremacy();
+            champion.currentPoint = null;
+       
+        }
+        
+      public  void RemoveFirstTeamChampion(Champion champion)
+        {
+            Debug.Log("remove");
+            firstTeamChampions.Remove(champion);
+            ResolveTeamSupremacy();
+            champion.currentPoint = null;
+         
+        }
 
         public override void TriggerExit(Collider other)
         {
-           
             Entity entity = other.GetComponent<Entity>();
             if (entity)
             {
@@ -109,16 +132,13 @@ namespace CapturePoint
                     {
                         if (entity.team == Enums.Team.Team1)
                         {
-                            firstTeamChampions.Remove(champion);
-                            ResolveTeamSupremacy();
+                            RemoveFirstTeamChampion(champion);
                         }
                         else if (entity.team == Enums.Team.Team2)
                         {
-                            secondTeamChampions.Remove(champion);
-                            ResolveTeamSupremacy();
+                          RemoveSecondTeamChampion(champion);
                         }
                     }
-
                     if (champion.photonView.IsMine)
                     {
                         capturePointValueText.enabled = false;
@@ -156,8 +176,6 @@ namespace CapturePoint
                 capturePointDirection = 0;
                 return;
             }
-
-
             switch (team)
             {
                 case Enums.Team.Team1:
@@ -175,7 +193,7 @@ namespace CapturePoint
                     UpdateCapturePointDirectionNeutral();
                     break;
                 }
-                    break;
+                
             }
         }
 

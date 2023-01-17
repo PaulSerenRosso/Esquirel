@@ -17,6 +17,7 @@ namespace Controllers
         [SerializeField] private Vector3 offset;
         [SerializeField] private float lerpSpeed;
         [SerializeField] private float rotationY;
+        [SerializeField] private float offsetScreenForMoveCameraFactor;
         public void Awake()
         {
             if (Instance != null && Instance != this)
@@ -74,22 +75,24 @@ namespace Controllers
             {
                 nextPos = transform.position;
 
-                if (Input.mousePosition.x >= Screen.width - 1)
+                var offsetWidth = Screen.width * offsetScreenForMoveCameraFactor;
+                var offsetHeight = Screen.height * offsetScreenForMoveCameraFactor;
+                if (Input.mousePosition.x >= Screen.width - offsetWidth)
                 {
                     nextPos += transform.right * cameraSpeed;
                 }
 
-                if (Input.mousePosition.x <= 0)
+                if (Input.mousePosition.x <= 0 +offsetWidth)
                 {
                     nextPos -= transform.right * cameraSpeed;
                 }
 
-                if (Input.mousePosition.y >= Screen.height - 1)
+                if (Input.mousePosition.y >= Screen.height - offsetHeight)
                 {
                     nextPos += transform.forward * cameraSpeed;
                 }
 
-                if (Input.mousePosition.y <= 0)
+                if (Input.mousePosition.y <= 0 + offsetHeight)
                 {
                     nextPos -= transform.forward * cameraSpeed;
                 }

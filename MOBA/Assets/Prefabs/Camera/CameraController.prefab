@@ -168,6 +168,7 @@ MonoBehaviour:
   offset: {x: 0, y: 15, z: -5}
   lerpSpeed: 15
   rotationY: 0
+  offsetScreenForMoveCameraFactor: 0.1
 --- !u!1 &4099163247525632606
 GameObject:
   m_ObjectHideFlags: 0
