@@ -245,7 +245,7 @@ namespace Entities.Champion
 
         public void MoveToPosition(Vector3 position)
         {
-            RequestCancelCurrentCapacity();
+            RequestCancelAutoAttack();
             isFollowing = false;
             moveDestination = position;
             moveDestination.y = transform.position.y;
@@ -257,7 +257,7 @@ namespace Entities.Champion
             if (!isFollowing ||
                 (isFollowing && (entityFollow != _entity || currentCapacityAimed != capacityWhichAimed)))
             {
-                RequestCancelCurrentCapacity();
+                RequestCancelAutoAttack();
                 entityFollow = _entity;
                 isFollowing = true;
                 targetEntity = (ITargetable)entityFollow;
@@ -306,7 +306,7 @@ namespace Entities.Champion
                 }
                 else
                 {
-                    RequestCancelCurrentCapacity();
+                    RequestCancelAutoAttack();
                     isFollowing = false;
                     currentTargetCapacityAtRangeEvent = null;
                 }
@@ -314,7 +314,7 @@ namespace Entities.Champion
             else
             {
                 moveDestination = transform.position;
-                RequestCancelCurrentCapacity();
+                RequestCancelAutoAttack();
                 currentTargetCapacityAtRangeEvent = null;
                 isFollowing = false;
             }

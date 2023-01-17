@@ -63,6 +63,7 @@ namespace Entities.Capacities
             base.InitiateCooldown();
             champion.RequestSetSkipDrawingCapacity(indexOfSOInCollection, false);
             useCount = 0;
+            // 
         }
 
         void TpChampion()

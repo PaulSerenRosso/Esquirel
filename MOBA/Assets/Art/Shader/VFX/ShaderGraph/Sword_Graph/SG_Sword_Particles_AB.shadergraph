@@ -3786,7 +3786,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "SBG__DepthFade",
+    "m_Name": "SBG_DepthFade",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {

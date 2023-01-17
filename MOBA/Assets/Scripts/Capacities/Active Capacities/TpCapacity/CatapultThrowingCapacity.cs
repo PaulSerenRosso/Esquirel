@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Entities.FogOfWar;
+using GameStates;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
 
@@ -39,6 +40,8 @@ public class CatapultThrowingCapacity : CurveMovementCapacity
       champion.CancelPrevisualisable();
       champion.RotateMeshChampionRPC(((Vector3)customParameters[1]-(Vector3)customParameters[0]).normalized);
       curveObject.LaunchSetUpRPC(0,caster.entityIndex);
+      if(GameStateMachine.Instance.GetPlayerChampion().team == champion.team)
+      catapult.animator.Play("Throwing");
       base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);
    }
 

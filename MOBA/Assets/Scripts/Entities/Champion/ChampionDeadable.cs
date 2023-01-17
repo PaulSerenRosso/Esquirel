@@ -63,9 +63,12 @@ namespace Entities.Champion
                 InputManager.PlayerMap.Inventory.Disable();
             }
 
+            transformView.enabled = false;
             SetCanMoveRPC(false);
             isAlive = false;
             canBeTargeted = false;
+            blocker.characterCollider.enabled = false;
+
             entityClicker.EnableCollider = false;
             rotateParent.gameObject.SetActive(false);
             uiTransform.gameObject.SetActive(false);
@@ -81,6 +84,24 @@ namespace Entities.Champion
             {
                 Debug.LogWarning($"{name} can't die!");
                 return;
+            }
+
+            CancelCurrentCapacityRPC();
+            if (currentPoint != null)
+            {
+                switch (team)
+                {
+                    case Enums.Team.Team1:
+                    {
+                        currentPoint.RemoveFirstTeamChampion(this);
+                        break;
+                    }
+                    case Enums.Team.Team2:
+                    {
+                        currentPoint.RemoveSecondTeamChampion(this);
+                        break;
+                    }
+                }
             }
 
             isAlive = false;
@@ -115,13 +136,16 @@ namespace Entities.Champion
                 agent.isStopped = false;
                 agent.destination = transform.position;
             }
+
             SetCanMoveRPC(true);
             canBeTargeted = true;
+            blocker.characterCollider.enabled = true;
             entityClicker.EnableCollider = true;
             FogOfWarManager.Instance.AddFOWViewable(this);
             rotateParent.gameObject.SetActive(true);
             uiTransform.gameObject.SetActive(true);
             OnReviveFeedback?.Invoke();
+            transformView.enabled = true;
         }
 
         [PunRPC]

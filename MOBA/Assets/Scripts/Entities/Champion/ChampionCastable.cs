@@ -8,7 +8,6 @@ namespace Entities.Champion
     public partial class Champion : ICastable
     {
         public byte[] abilitiesIndexes = new byte[2];
-        public byte ultimateAbilityIndex;
 
         public bool canCast;
         private IPunObservable _punObservableImplementation;
@@ -29,20 +28,25 @@ namespace Entities.Champion
             return canCast;
         }
 
-        public void RequestCancelCurrentCapacity()
+        public void RequestCancelAutoAttack()
         {
             if(attackBase != currentCapacityUsed) return;
             if (currentCapacityUsed != null)
             {
-                photonView.RPC("CancelCurrentCapacity", RpcTarget.MasterClient);
+                photonView.RPC("CancelAutoAttackRPC", RpcTarget.MasterClient);
                 photonView.RefreshRpcMonoBehaviourCache();
             }
         }
 
         [PunRPC]
-        public void CancelCurrentCapacity()
+        public void CancelAutoAttackRPC()
         {
             if(attackBase != currentCapacityUsed) return;
+            CancelCurrentCapacityRPC();
+        }
+
+        private void CancelCurrentCapacityRPC()
+        {
             if (currentCapacityUsed != null)
             {
                 currentCapacityUsed.CancelCapacity();
@@ -153,7 +157,7 @@ namespace Entities.Champion
         [PunRPC]
         public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
             params object[] otherParameters)
-        {CancelCurrentCapacity();
+        {CancelAutoAttackRPC();
             if (activeCapacities[capacityIndex] is IPrevisualisable)
             {
                 IPrevisualisable previsualisable = (IPrevisualisable)activeCapacities[capacityIndex];

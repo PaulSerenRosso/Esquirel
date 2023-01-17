@@ -31,5 +31,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad595481d827f564e92f1c7118532bda, type: 2}
   - {fileID: 11400000, guid: 7b777685e7c5c344ca741b124e656fef, type: 2}
   activeCapacitiesIndexes: 070805
-  ultimateAbility: {fileID: 11400000, guid: 888a7f5f56181e24c8a2f954bd5dbb02, type: 2}
+  ultimateAbility: {fileID: 0}
   ultimateAbilityIndex: 3
