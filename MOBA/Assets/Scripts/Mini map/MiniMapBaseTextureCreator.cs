@@ -1,8 +1,9 @@
-#if UNITY_EDITOR
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 namespace MiniMap
 {
@@ -24,6 +25,14 @@ namespace MiniMap
           DisabledMaskCameras();
         }
 
+        private void DisabledMaskCameras()
+        {
+            for (int i = 0; i < miniMapMasks.Count; i++)
+            {
+                miniMapMasks[i].camera.enabled = false;
+            }
+        }
+        #if UNITY_EDITOR
         public void BakeBaseTexture()
         {
 
@@ -51,16 +60,6 @@ namespace MiniMap
                 miniMapMasks[i].camera.enabled = true;
             }
         }
-        
-        private void DisabledMaskCameras()
-        {
-            for (int i = 0; i < miniMapMasks.Count; i++)
-            {
-                miniMapMasks[i].camera.enabled = false;
-            }
-        }
-        
-
         private void MergeMasks()
         {
             for (int i = 2; i < miniMapMasks.Count; i++)
@@ -93,6 +92,6 @@ namespace MiniMap
             AssetDatabase.Refresh();
         }
         
+#endif
     }
 }
-#endif

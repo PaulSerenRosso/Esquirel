@@ -128,7 +128,6 @@ namespace Entities
             {
                 if (activeCapacities[i].indexOfSOInCollection == indexOfSOInCollection)
                 {
-                  
                     activeCapacities[i].onCooldown = value;
                     return;
                 }

@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   perseveranceSo: {fileID: 11400000, guid: 4892e9fd3d893d04b8b520812f3c9710, type: 2}
-  generatorCapturePoint: {fileID: 11400000, guid: d0a4e117580c6f14eb35ef08c092dd0a, type: 2}
+  generatorCapturePoint: {fileID: 11400000, guid: 26af1beafd8304f4f95704695e36fa6d, type: 2}
   relaiCapturePoint: {fileID: 11400000, guid: 54a79a3e06e0e24468f25479eedb9581, type: 2}
   relaiProduction: {fileID: 11400000, guid: f9477f62550293c4e9e920f17249ae26, type: 2}
   generatorProduction: {fileID: 11400000, guid: f732d07e9fa77d641b9aa59683a4b11c, type: 2}
