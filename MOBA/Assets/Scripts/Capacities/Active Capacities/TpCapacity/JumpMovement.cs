@@ -52,7 +52,7 @@ namespace Entities.Capacities
                 InputManager.PlayerMap.Movement.Enable();
                 InputManager.PlayerMap.Attack.Enable();
                 InputManager.PlayerMap.Capacity.Enable();
-                InputManager.PlayerMap.MoveMouse.Enable();
+          
             }
 
             champion.entityCapacityCollider.EnableEntityCollider();
@@ -65,7 +65,6 @@ namespace Entities.Capacities
             {
                 InputManager.PlayerMap.Movement.Disable();
                 InputManager.PlayerMap.Attack.Disable();
-                InputManager.PlayerMap.MoveMouse.Disable();
                 InputManager.PlayerMap.Capacity.Disable();
             }
             else

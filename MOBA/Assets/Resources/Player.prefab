@@ -453,6 +453,7 @@ MonoBehaviour:
   championSo: {fileID: 0}
   rotateParent: {fileID: 3480681341152264625}
   championMesh: {fileID: 0}
+  inputController: {fileID: 3480681341667345172}
   pointPlacerDistanceAvoidance: 1.5
   camera: {fileID: 0}
   rb: {fileID: 6530865356692434526}
@@ -479,6 +480,7 @@ MonoBehaviour:
   referenceMoveSpeed: 10
   canMove: 1
   moveDestination: {x: 0, y: 0, z: 0}
+  championMoveablePrevisualisationPrefab: {fileID: 7433721097378969182, guid: 9ccaa9893ac9b9648ae882915c4f23ed, type: 3}
   agent: {fileID: 3480681341667345173}
   maxResource: 0
   currentResource: 0

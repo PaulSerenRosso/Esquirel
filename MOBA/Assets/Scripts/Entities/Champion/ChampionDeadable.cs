@@ -65,6 +65,7 @@ namespace Entities.Champion
 
             transformView.enabled = false;
             SetCanMoveRPC(false);
+            moveDestination  = respawnPos;
             isAlive = false;
             canBeTargeted = false;
             blocker.characterCollider.enabled = false;
