@@ -27,6 +27,7 @@ public class CatapultMovment : JumpMovement
         base.StartCurveMovementRPC(startPos, endPos);
         championViewRange = champion.viewRange;
         champion.viewRange = 0;
+        //champion.moveDestination = catapultThrowingCapacity.endPosition;
     }
 
     protected override void ActivateController()

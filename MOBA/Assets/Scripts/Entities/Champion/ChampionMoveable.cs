@@ -255,9 +255,7 @@ namespace Entities.Champion
             RequestCancelAutoAttack();
             isFollowing = false;
             moveDestination = position;
-            moveDestination.y = transform.position.y;
-           
-            
+            moveDestination.y = 0;
         }
         
        
