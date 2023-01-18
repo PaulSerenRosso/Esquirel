@@ -58,9 +58,9 @@ MonoBehaviour:
   m_Active: 1
   OutlineSettings:
     Color: {r: 0.2, g: 0.4, b: 1, a: 1}
-    Width: 5
+    Width: 4.3
     LayerMask:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 268435456
     RenderPassEvent: 500
     SortingCriteria: 59
