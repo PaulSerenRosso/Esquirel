@@ -69,9 +69,7 @@ namespace Entities.Capacities
         {
             activeCapacityAnimationLauncher.CancelAnimationTimer();
         }
-
-      
-
+        
         public override void EndCooldown()
         {
             champion.RequestToSetOnCooldownCapacity(indexOfSOInCollection, false);

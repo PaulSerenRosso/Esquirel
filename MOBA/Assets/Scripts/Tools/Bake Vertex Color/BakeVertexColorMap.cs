@@ -1,13 +1,14 @@
 using System;
-using UnityEditor;
-using UnityEngine;
 #if UNITY_EDITOR
+using UnityEditor;
+#endif
+using UnityEngine;
 public class BakeVertexColorMap : MonoBehaviour
 {
     Mesh SourceMesh;
     public Shader BakeVertexColorMapShader;
     public int Resolution = 2048;
-
+ #if  UNITY_EDITOR
     private void Awake()
     {
 
@@ -42,5 +43,5 @@ public class BakeVertexColorMap : MonoBehaviour
             Debug.Log("JE Draw");
         }
     }
-}
 #endif
+}
