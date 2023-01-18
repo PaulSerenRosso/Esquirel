@@ -106,15 +106,11 @@ public class ChampionHUD : MonoBehaviour
 
     public void InitHUD(Champion newChampion, PlayerInterface playerInterface)
     {
-        Debug.Log("test");
         champion = newChampion;
         lifeable = champion.GetComponent<IActiveLifeable>();
        otherChampion = GameStateMachine.Instance.GetOtherChampionOfSameTeam(champion);
         resourceable = champion.GetComponent<IResourceable>();
         this.playerInterface = playerInterface;
-        Debug.Log(lifeable);
-        Debug.Log(lifeable.GetCurrentHp());
-        Debug.Log(lifeable.GetMaxHp());
         playerInterface.UpdateHealth(lifeable.GetCurrentHp(), lifeable.GetMaxHp());
         LinkToEvents();
         UpdateIcons(champion);

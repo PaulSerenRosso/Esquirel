@@ -104,7 +104,7 @@ namespace CapturePoint
 
      public virtual void RemoveSecondTeamChampion(Champion champion)
         {
-            Debug.Log("remove");
+
             secondTeamChampions.Remove(champion);
             ResolveTeamSupremacy();
             champion.currentPoint = null;
@@ -113,7 +113,7 @@ namespace CapturePoint
         
       public virtual void RemoveFirstTeamChampion(Champion champion)
         {
-            Debug.Log("remove");
+      
             firstTeamChampions.Remove(champion);
             ResolveTeamSupremacy();
             champion.currentPoint = null;

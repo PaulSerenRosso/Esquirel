@@ -27,7 +27,11 @@ namespace Controllers.Inputs
         private Catapult catapultTarget;
         private Catapult catapultDetected;
         [SerializeField] private float movePositionDetectionDistance;
+        private bool entityIsVisible;
 
+        private bool cursorIsAimed;
+        private bool cursorIsUpdate;
+    
         /// <summary>
         /// Actions Performed on Attack Activation
         /// </summary>
@@ -126,8 +130,12 @@ namespace Controllers.Inputs
         private void Update()
         {
             if (!inputsAreLinked) return;
-            var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
+            cursorIsAimed = false;
+            cursorIsUpdate = false;
 
+            if (CursorManager.Instance.CurrentCursorType == Enums.CursorType.Aim) cursorIsAimed = true; 
+            var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
+            entityIsVisible = false;
             if (!Physics.Raycast(mouseRay, out RaycastHit hit, movePositionDetectionDistance,
                     layerForDetectMovePosition)) return;
 
@@ -169,12 +177,30 @@ namespace Controllers.Inputs
                     }
                     //    if (ent == null && hit.transform.parent != null) hit.transform.parent.GetComponent<Entity>();
 
+                    if (FogOfWarManager.Instance.CheckEntityIsVisibleForPlayer(closerEnt))
+                    {
+                        entityIsVisible = true;
+                    }
+
                     // Debug.Log("hitentity");
                     if (closerEnt is ITargetable)
                     {
                         ITargetable entTarget = (ITargetable)closerEnt;
                         if (entTarget.CanBeTargeted())
                         {
+
+                            if (entityIsVisible && !cursorIsAimed )
+                            {
+                                // Debug.Log(FogOfWarManager.Instance.CheckEntityIsVisibleForPlayer(targetEntity));
+                                if (champion.autoAttack.TryAim(champion.entityIndex, closerEnt.entityIndex,
+                                        cursorWorldPos[0]))
+                                {
+                                    CursorManager.Instance.ChangeCursorSpriteToAttackSprite();
+                                    cursorIsUpdate = true;
+                                }
+                            }
+                            
+
                             // Debug.Log("set list input");
                             targetEntity[0] = closerEnt.entityIndex;
                             cursorWorldPos[0] = closerEnt.transform.position;
@@ -183,6 +209,11 @@ namespace Controllers.Inputs
                     else if (closerEnt is Catapult catapult)
                     {
                         catapultDetected = catapult;
+                        if (!cursorIsAimed)
+                        {
+                            cursorIsUpdate = true;
+                        CursorManager.Instance.ChangeCursorSpriteToInteractSprite();
+                        }
                     }
                 }
                 else
@@ -217,6 +248,13 @@ namespace Controllers.Inputs
                         new Vector3[] { champion.transform.position });
                 }
             }
+            if(!cursorIsUpdate && !cursorIsAimed)
+                if (CursorManager.Instance.CurrentCursorType != Enums.CursorType.Base)
+                {
+                    CursorManager.Instance.ChangeCursorSpriteToBaseSprite();
+                }
+                    
+            
         }
 
         void OnMouseRightClick(InputAction.CallbackContext ctx)
