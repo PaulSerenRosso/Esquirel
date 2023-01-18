@@ -102,7 +102,6 @@ public class CapturePointWithInner : CapturePoint
       for (int i = 0; i < firstTeamChampions.Count; i++)
       {
          var sqrMagnitude = (firstTeamChampions[i].transform.position - transform.position).sqrMagnitude;
-         Debug.Log(sqrMagnitude);
          if (firstTeamChampionInInnerPoint.Contains(firstTeamChampions[i]))
          {
             if (sqrMagnitude >
@@ -125,7 +124,6 @@ public class CapturePointWithInner : CapturePoint
       for (int i = 0; i < secondTeamChampions.Count; i++)
       {
          var sqrMagnitude = (secondTeamChampions[i].transform.position - transform.position).sqrMagnitude;
-         Debug.Log(sqrMagnitude);
          if (secondTeamChampionInInnerPoint.Contains(secondTeamChampions[i]))
          {
             if (sqrMagnitude >

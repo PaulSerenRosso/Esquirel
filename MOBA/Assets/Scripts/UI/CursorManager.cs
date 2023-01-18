@@ -14,9 +14,16 @@ public class CursorManager : MonoBehaviour
     [SerializeField]
     private Image cursorImage;
     [SerializeField]
+    private Sprite interactCursorSprite;
+    [SerializeField]
     private Sprite aimCursorSprite;
     [SerializeField]
-    private Sprite baseCursorSprite; 
+    private Sprite attackCursorSprite;
+    [SerializeField]
+    private Sprite baseCursorSprite;
+
+    public  Enums.CursorType CurrentCursorType => currentCursorType;
+    private Enums.CursorType currentCursorType;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,10 +37,8 @@ public class CursorManager : MonoBehaviour
         Cursor.lockState =CursorLockMode.None;
      
         DontDestroyOnLoad(this);
-        
     }
-
-
+    
     private void Update()
     {
         cursor.position =Input.mousePosition;
@@ -41,16 +46,29 @@ public class CursorManager : MonoBehaviour
 
     public void ChangeCursorSpriteToAimSprite()
     {
+        currentCursorType = Enums.CursorType.Aim;
         cursorImage.sprite = aimCursorSprite; 
+    }
+    public void ChangeCursorSpriteToInteractSprite()
+    {
+        currentCursorType = Enums.CursorType.Interact;
+        cursorImage.sprite = interactCursorSprite; 
+    }
+    public void ChangeCursorSpriteToAttackSprite()
+    {
+        currentCursorType = Enums.CursorType.Attack;
+        cursorImage.sprite = attackCursorSprite; 
     }
     
     public void ChangeCursorSpriteToBaseSprite()
     {
+        currentCursorType = Enums.CursorType.Base;
         cursorImage.sprite = baseCursorSprite;
     }
 
     public void ChangeCursorSpriteColor(Color color)
     {
+       
         cursorImage.color = color;
     }
 }
