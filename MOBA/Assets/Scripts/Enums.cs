@@ -20,4 +20,9 @@ public class Enums
     {
         None, Team1, Team2, Conflict
     }
+
+    public enum CursorType
+    {
+        Base, Attack, Aim, Interact
+    }
 }

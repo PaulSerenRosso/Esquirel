@@ -46,7 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursor: {fileID: 6505229500793123420}
   cursorImage: {fileID: 6505229500793123419}
+  interactCursorSprite: {fileID: 21300000, guid: cad65f669a51fc745904a74b84fc9219, type: 3}
   aimCursorSprite: {fileID: 21300000, guid: a82c1650266449541b1f6cb6aead3e12, type: 3}
+  attackCursorSprite: {fileID: 21300000, guid: d7390319aa8fb124b9383cacafea7cdc, type: 3}
   baseCursorSprite: {fileID: 21300000, guid: e1715e3bfce753f48a4814adb257dbf6, type: 3}
 --- !u!1 &6505229500644527565
 GameObject:
