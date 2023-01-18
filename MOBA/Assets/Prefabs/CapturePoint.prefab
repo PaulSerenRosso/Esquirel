@@ -79,15 +79,14 @@ MonoBehaviour:
   canRemovePassiveCapacity: 1
   uiTransform: {fileID: 0}
   offset: {x: 0, y: 2, z: 0}
+  entityCapacityCollider: {fileID: 0}
   canShow: 0
   canHide: 0
   meshRenderersToShow: []
   meshRenderersToShowAlpha: []
-  particleSystemsToShow: []
-  particleSystemsToShowAlpha: []
   graphicsToShow: []
   graphicsToShowAlpha: []
-  currentBush: {fileID: 0}
+  bushes: []
   canChangeTeam: 0
   team: 0
   baseViewRange: 12
@@ -95,6 +94,9 @@ MonoBehaviour:
   viewAngle: 360
   canView: 1
   meshFilterFoV: {fileID: 7672945575054462519}
+  currentPoints: []
+  finalPoints: []
+  viewObstructedByObstacle: 1
   renderer: {fileID: 5393284651723786285}
   gradient:
     serializedVersion: 2

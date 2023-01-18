@@ -19,8 +19,6 @@ namespace Entities.Capacities
         )
         {
             base.SetUp(capacityIndex, championIndex);
-
-
             endCurveEvent += LaunchTP;
         }
 

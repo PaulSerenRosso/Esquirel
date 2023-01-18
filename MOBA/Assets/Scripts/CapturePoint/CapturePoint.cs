@@ -21,7 +21,7 @@ namespace CapturePoint
 
         private CapturePointTeamState destinationState;
         private int capturePointDirection;
-        [SerializeField] private CapturePointSO capturePointSO;
+        [SerializeField] protected CapturePointSO capturePointSO;
        public CapturePointState neutralState;
        public CapturePointTeamState secondTeamState;
        public CapturePointTeamState firstTeamState;
@@ -30,9 +30,9 @@ namespace CapturePoint
         private List<GlobalDelegates.NoParameterDelegate> capturePointDelegates =
             new List<GlobalDelegates.NoParameterDelegate>();
 
-        private List<Champion> firstTeamChampions = new List<Champion>();
-        private List<Champion> secondTeamChampions = new List<Champion>();
-        private Enums.CapturePointResolveType capturePointResolve;
+        protected List<Champion> firstTeamChampions = new List<Champion>();
+        protected List<Champion> secondTeamChampions = new List<Champion>();
+        protected Enums.CapturePointResolveType capturePointResolve;
         private float capturePointNewValue;
 
         public float CapturePointValue
@@ -102,7 +102,7 @@ namespace CapturePoint
         
 
 
-     public  void RemoveSecondTeamChampion(Champion champion)
+     public virtual void RemoveSecondTeamChampion(Champion champion)
         {
             Debug.Log("remove");
             secondTeamChampions.Remove(champion);
@@ -111,7 +111,7 @@ namespace CapturePoint
        
         }
         
-      public  void RemoveFirstTeamChampion(Champion champion)
+      public virtual void RemoveFirstTeamChampion(Champion champion)
         {
             Debug.Log("remove");
             firstTeamChampions.Remove(champion);
@@ -147,7 +147,7 @@ namespace CapturePoint
             }
         }
 
-        void ResolveTeamSupremacy()
+        protected virtual void ResolveTeamSupremacy()
         {
             if (secondTeamChampions.Count == 0 && firstTeamChampions.Count == 0)
             {
@@ -169,7 +169,7 @@ namespace CapturePoint
             UpdateCapturePointDirection();
         }
 
-        void UpdateCapturePointDirection()
+        protected void UpdateCapturePointDirection()
         {
             if (capturePointResolve == Enums.CapturePointResolveType.Conflict)
             {

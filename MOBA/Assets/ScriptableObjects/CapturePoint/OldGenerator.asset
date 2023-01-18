@@ -9,22 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4cb4b3d4d2632488940eaf08900fb7, type: 3}
-  m_Name: Generator
+  m_Script: {fileID: 11500000, guid: 02f54b935a44bc64a8fb8bd2a368dc1e, type: 3}
+  m_Name: OldGenerator
   m_EditorClassIdentifier: 
   baseViewRange: 0
   viewRange: 0
-  capturePointSpeed: 0.4
+  capturePointSpeed: 0.2
   firstTeamState:
-    stabilityPoint: 3
-    captureValue: 5.5
-    maxValue: 3
+    stabilityPoint: 0
+    captureValue: 4
+    maxValue: 0
     team: 1
   secondTeamState:
-    stabilityPoint: 11
-    captureValue: 8.5
-    maxValue: 11
+    stabilityPoint: 14
+    captureValue: 10
+    maxValue: 14
     team: 2
   neutralState:
     stabilityPoint: 7
-  innerPointRange: 10

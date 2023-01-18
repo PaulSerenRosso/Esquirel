@@ -29,6 +29,11 @@ namespace Entities.Champion
         
         private void Update()
         {
+            if (champion.agent.path.corners.Length == 0)
+            {
+                agentPathLineRenderer.positionCount = 0;
+                return;
+            }
             agentPathLineRenderer.positionCount = champion.agent.path.corners.Length;
             agentPathLineRenderer.SetPosition(0, champion.transform.position);
             for (int i = 1; i < champion.agent.path.corners.Length; i++)
