@@ -21,14 +21,30 @@ Material:
     m_TexEnvs:
     - _Emissive_Noise_Texture:
         m_Texture: {fileID: 2800000, guid: 91e5a5de1601d7441a12bfbd27ae58ab, type: 3}
+        m_Scale: {x: 10, y: 10}
+        m_Offset: {x: 0, y: 0}
+    - _T_Crack_Emissive:
+        m_Texture: {fileID: 2800000, guid: 6961eb72a3f061a4fa3b06abfc75ce34, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T_Crack_Height:
-        m_Texture: {fileID: 2800000, guid: f1320c199cbff2249aced034545a8313, type: 3}
+        m_Texture: {fileID: 2800000, guid: 99bbd97c475e9404a8d198fcbc364252, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T_Crack_MainTex:
-        m_Texture: {fileID: 2800000, guid: ac4a495b4922b1b4f926b3fffdcf1f53, type: 3}
+        m_Texture: {fileID: 2800000, guid: a978584aafa036047bb10068aeb14b5b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T_Crack_N:
+        m_Texture: {fileID: 2800000, guid: 0b2df78316b2f69479d152577286abab, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T_Mask_Texture:
+        m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample1:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -37,12 +53,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _Brightness: 3
+    - _Brightness: 2
     - _Emission_Noise_UPanner: 0
     - _Emission_Noise_VPanner: -0.15
-    - _Emissive_Power: 1
+    - _Emissive_Power: 2
     - _EnvironmentReflections: 1
-    - _HeightScale: 0.362
+    - _HeightScale: 0.2
     - _ReceiveShadows: 1
     - _SpecularHighlights: 1
     m_Colors:
