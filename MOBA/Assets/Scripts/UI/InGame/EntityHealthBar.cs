@@ -24,7 +24,9 @@ namespace UIComponents
             lifeable.OnDecreaseCurrentHpFeedback += UpdateFillPercent;
             lifeable.OnIncreaseMaxHpFeedback += UpdateFillPercent;
             lifeable.OnDecreaseMaxHpFeedback += UpdateFillPercent;
-        
+
+            UpdateFillPercentByPercent(0);
+
         }
         
         private void UpdateFillPercentByPercent(float value) {
