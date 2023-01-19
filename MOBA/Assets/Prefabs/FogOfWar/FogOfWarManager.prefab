@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b495c58f8f430d458287b1f7b8a437b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpFactor: 10
+  lerpFactor: 5
   cameraFog: {fileID: 1126480335}
   sceneToRenderFog:
   - Tempo_In Game Scene
@@ -179,14 +179,13 @@ MonoBehaviour:
   - _FogOfWarDebugTest
   - FOG_InGameScene
   startYPositionRay: 0.5
-  fogColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
+  fogColor: {r: 0.1764706, g: 0.1764706, b: 0.1764706, a: 1}
   layerTargetFogOfWar:
     serializedVersion: 2
     m_Bits: 1627496448
   layerObstacleFogOfWar:
     serializedVersion: 2
     m_Bits: 1090527232
-  timeForRemove: 0.1
   fogMat: {fileID: 2100000, guid: 269845f80d310d74db13180ca168d3e1, type: 2}
   worldSize: 160
   worldSizeGizmos: 1

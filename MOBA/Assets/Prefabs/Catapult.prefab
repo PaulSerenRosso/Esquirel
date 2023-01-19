@@ -135,7 +135,7 @@ MonoBehaviour:
   finalPoints: []
   viewObstructedByObstacle: 1
   catapultThrowingCapacityCapacitySo: {fileID: 11400000, guid: bad8d0330de7d97499de9182b006d9f3, type: 2}
-  destination: {x: 11.12, y: 0, z: -32.1}
+  destination: {x: 25.1, y: 0, z: -10.1}
   reloadAnimation: {fileID: -201274986745152302, guid: fb205f018b1d5b044a9ba375aef93a01, type: 3}
   requestSended: 0
   animator: {fileID: 6798955596650311206}

@@ -1,0 +1,4 @@
+Gold Coin Font: Myriad Pro Regular _ 15.42 pt _ Espacement:-20
+Streak Font : Myriad Pro Regular _ 25.53 pt _ italique
+Couleur1 : ffb14d  
+Couleur2 : e9ebec
