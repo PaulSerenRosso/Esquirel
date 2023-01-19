@@ -55,6 +55,7 @@ namespace Entities.Capacities
 
             champion.entityCapacityCollider.EnableEntityCollider();
             champion.entityClicker.EnableCollider = true;
+            champion.canUseCatapultMovement = true;
         }
 
         protected virtual void DeactivateController()
@@ -74,6 +75,7 @@ namespace Entities.Capacities
             champion.SyncSetCanMoveRPC(false);
             champion.blocker.characterColliderBlocker.enabled = false;
             champion.entityClicker.EnableCollider = false;
+            champion.canUseCatapultMovement = false;
         }
 
 

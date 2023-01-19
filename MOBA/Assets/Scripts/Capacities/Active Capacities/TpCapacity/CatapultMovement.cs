@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
-public class CatapultMovment : JumpMovement
+public class CatapultMovement : JumpMovement
 {
     private CatapultThrowingCapacity catapultThrowingCapacity;
     private Catapult catapult;
@@ -28,6 +28,12 @@ public class CatapultMovment : JumpMovement
         championViewRange = champion.viewRange;
         champion.viewRange = 0;
         //champion.moveDestination = catapultThrowingCapacity.endPosition;
+    }
+
+    protected override void DeactivateController()
+    {
+        base.DeactivateController();
+      
     }
 
     protected override void ActivateController()

@@ -70,6 +70,7 @@ namespace Entities.Champion
             canBeTargeted = false;
             blocker.characterCollider.enabled = false;
 
+            canUseCatapultMovement = false;
             entityClicker.EnableCollider = false;
             rotateParent.gameObject.SetActive(false);
             uiTransform.gameObject.SetActive(false);
@@ -140,6 +141,7 @@ namespace Entities.Champion
 
             SetCanMoveRPC(true);
             canBeTargeted = true;
+            canUseCatapultMovement = true;
             blocker.characterCollider.enabled = true;
             entityClicker.EnableCollider = true;
             FogOfWarManager.Instance.AddFOWViewable(this);

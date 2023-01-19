@@ -20,6 +20,12 @@ public class CapturePointWithInner : CapturePoint
    {
       base.OnStart();
 
+      if (PhotonNetwork.IsMasterClient)
+      {
+         OnRemoveFirstTeamChampion += RemoveFirstTeamChampionInInnerPoint;
+         OnRemoveSecondTeamChampion += RemoveSecondTeamChampionInInnerPoint;
+      }
+      
       if (capturePointSO)
       {
          _capturePointWithInnerSo =(CapturePointWithInnerSO) capturePointSO;
@@ -31,26 +37,7 @@ public class CapturePointWithInner : CapturePoint
       }
    }
 
-   void OnValidate()
-   {
-      if (capturePointSO)
-      {
-      _capturePointWithInnerSo =(CapturePointWithInnerSO) capturePointSO;
-
-      }
-      
-
-   }
-
-   private void OnDrawGizmosSelected()
-   {
-      Gizmos.color = Color.red;
-      if (capturePointSO)
-      {
-         Gizmos.DrawWireSphere(transform.position, _capturePointWithInnerSo.innerPointRange);
-      }
-
-   }
+   
 
    protected override void ResolveTeamSupremacy()
    {
@@ -82,15 +69,15 @@ public class CapturePointWithInner : CapturePoint
       
    }
 
-   public override void RemoveFirstTeamChampion(Champion champion)
+    void RemoveFirstTeamChampionInInnerPoint(Champion champion)
    {
-      base.RemoveFirstTeamChampion(champion);
-      firstTeamChampionInInnerPoint.Remove(champion);
+  
+      firstTeamChampionInInnerPoint.Remove(champion); ;
+
    }
 
-   public override void RemoveSecondTeamChampion(Champion champion)
+     void RemoveSecondTeamChampionInInnerPoint(Champion champion)
    {
-      base.RemoveSecondTeamChampion(champion);
       secondTeamChampionInInnerPoint.Remove(champion);
    }
 
