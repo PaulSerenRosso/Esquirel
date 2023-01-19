@@ -35,8 +35,7 @@ public class OutlinePass : ScriptableRenderPass
     private RenderTargetIdentifier _cameraColor;
     private FilteringSettings _filteringSettings;
 
-    public OutlinePass(OutlineFeature.Settings settings)
-    {
+    public OutlinePass(OutlineFeature.Settings settings) {
         profilingSampler = new ProfilingSampler(ProfilerTag);
         _settings = settings;
         renderPassEvent = settings.RenderPassEvent;
@@ -54,8 +53,7 @@ public class OutlinePass : ScriptableRenderPass
         _outlineMaterial.SetFloat(_outlineWidthID, Mathf.Max(1f, settings.Width));
     }
 
-    public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
-    {
+    public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData) {
         RenderTextureDescriptor descriptor = renderingData.cameraData.cameraTargetDescriptor;
 
         descriptor.graphicsFormat = GraphicsFormat.R8_UNorm;
@@ -76,8 +74,7 @@ public class OutlinePass : ScriptableRenderPass
         _cameraColor = renderingData.cameraData.renderer.cameraColorTarget;
     }
 
-    public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
-    {
+    public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
         DrawingSettings drawingSettings = CreateDrawingSettings(
             _shaderTags,
             ref renderingData,
@@ -117,8 +114,8 @@ public class OutlinePass : ScriptableRenderPass
         CommandBufferPool.Release(cmd);
     }
 
-    public override void OnCameraCleanup(CommandBuffer cmd)
-    {
+    public override void OnCameraCleanup(CommandBuffer cmd) {
+        return;
         if (cmd == null)
         {
             throw new ArgumentNullException("cmd");
