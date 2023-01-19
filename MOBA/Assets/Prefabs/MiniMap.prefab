@@ -137,7 +137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8347761880195390565}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 6.4, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8347761879964725510}
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: 2b3e4933810a1414080184e826cf133e, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -317,7 +317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8347761880760738413}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 6.4, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8347761879964725510}
@@ -457,7 +457,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 10
+  m_SortingOrder: -11
   m_TargetDisplay: 0
 --- !u!114 &8347761880971600045
 MonoBehaviour:
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -525,7 +525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8347761881178489030}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 6.4, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8347761879964725510}
@@ -559,7 +559,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 78.24
-  m_Depth: 1.65
+  m_Depth: -0.21
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 1073741824
@@ -633,7 +633,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8347761881201181251}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 6.4, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8347761879964725510}
@@ -749,8 +749,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 617.2, y: 0}
-  m_SizeDelta: {x: -1342.5549, y: -660.5057}
+  m_AnchoredPosition: {x: 835, y: -415}
+  m_SizeDelta: {x: -1670, y: -830}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8347761881465002565
 CanvasRenderer:
@@ -806,15 +806,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMapCenter: {x: 0, y: 0, z: 0}
-  worldMapSize: {x: 143.21, y: 143.21}
-  screenMapSize: 478.3
-  screenMapCenter: {x: 617.2, y: 0}
+  worldMapSize: {x: 165.7, y: 165.7}
+  screenMapSize: 250
+  screenMapCenter: {x: 835, y: -415}
   mapObject: {fileID: 8347761881465002567}
   iconPrefab: {fileID: 1529495135643827006, guid: 23e1d148486b965428314d0b1132df16, type: 3}
-  minWorldMapPosition: {x: -71.605, y: -71.605}
-  miniMapSize: {x: 478.3, y: 478.3}
-  substractionBetweenMaxAndMinWorldPos: {x: 143.21, y: 143.21}
-  maxWorldMapPosition: {x: 71.605, y: 71.605}
+  minWorldMapPosition: {x: -82.85, y: -82.85}
+  miniMapSize: {x: 250, y: 250}
+  substractionBetweenMaxAndMinWorldPos: {x: 165.7, y: 165.7}
+  maxWorldMapPosition: {x: 82.85, y: 82.85}
   ratioXY: 1
   ratioYX: 1
 --- !u!114 &8347761881744238679
