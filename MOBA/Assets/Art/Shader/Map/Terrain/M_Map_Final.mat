@@ -24,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T1_TerrainNAOH:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 7d5aacd9a1cc3684d844764682929ab6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T2_Terrain:
@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T2_TerrainNAOH:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 62dd9caeca8b41f43ad6062f3ce4c6f5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T3_Terrain:
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T3_TerrainNAOH:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 2ab94f1a48e06794fbb0e7821f782089, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T4_Terrain:
