@@ -37,16 +37,18 @@ namespace Entities.Champion
                 photonView.RefreshRpcMonoBehaviourCache();
             }
         }
-
+        
         [PunRPC]
         public void CancelAutoAttackRPC()
         {
+            Debug.Log("currentCapacityUsed" +currentCapacityUsed);
             if(attackBase != currentCapacityUsed) return;
             CancelCurrentCapacityRPC();
         }
 
         private void CancelCurrentCapacityRPC()
         {
+            Debug.Log("currentCapacityUsed" +currentCapacityUsed);
             if (currentCapacityUsed != null)
             {
                 currentCapacityUsed.CancelCapacity();

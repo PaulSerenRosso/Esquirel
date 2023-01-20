@@ -207,7 +207,7 @@ namespace Entities.Champion
             rb.velocity = Vector3.zero;
             RequestSetCanDie(true);
             auraProduction.InitAuraProduction();
-            canUseCatapultMovement = true;
+            SyncSetCanCatapultMovementRPC(true);
         }
 
         public void RequestChangeBoolParameterAnimator(string parameterName, bool value)
@@ -261,5 +261,13 @@ namespace Entities.Champion
     
             }
         }
+
+      public  void  SetCanCatapultMovement(bool value)
+        {
+            photonView.RPC("SyncSetCanCatapultMovementRPC",RpcTarget.All ,value);
+        }
+
+       [PunRPC]
+       public void SyncSetCanCatapultMovementRPC(bool value) => canUseCatapultMovement = value;
     }
 }

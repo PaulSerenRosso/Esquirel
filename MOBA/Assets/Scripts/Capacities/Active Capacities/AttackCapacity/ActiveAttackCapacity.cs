@@ -31,8 +31,8 @@ namespace Entities.Capacities
         
         
         protected virtual void EndAttackTimer()
-        {   
-           
+        { 
+            
         }
 
         protected virtual void InitFX(int[] targetsEntityIndexes, Vector3[] targetPositions)

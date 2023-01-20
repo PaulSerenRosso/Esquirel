@@ -49,14 +49,14 @@ namespace Entities.Champion
         }
 
         private bool isMoved;
-
-
+        
         // === League Of Legends
         private int mouseTargetIndex;
-        private bool isFollowing;
+        public bool isFollowing;
         private Entity entityFollow;
         public Vector3 moveDestination;
 
+        public bool inCurveMovement;
         private Vector3 oldMoveDestination;
         private IAimable currentIAimable;
         private ActiveCapacity currentCapacityAimed;
@@ -114,12 +114,13 @@ namespace Entities.Champion
         [PunRPC]
         public void SyncSetCanMoveRPC(bool value)
         {
-            if (value && !isAlive)
+            if ((value && !isAlive) || (value && inCurveMovement))
             {
+               
                 return;
             }
-
             canMove = value;
+            
             if (photonView.IsMine)
             {
                 //    moveDestination = transform.position;
@@ -440,7 +441,6 @@ namespace Entities.Champion
                 agent.SetDestination(moveDestination);
                 oldMoveDestination = moveDestination;
             }
-
             moveDestination = agent.destination;
         }
 

@@ -481,7 +481,9 @@ MonoBehaviour:
   items: []
   referenceMoveSpeed: 10
   canMove: 1
+  isFollowing: 0
   moveDestination: {x: 0, y: 0, z: 0}
+  inCurveMovement: 0
   championMoveablePrevisualisationPrefab: {fileID: 7433721097378969182, guid: 9ccaa9893ac9b9648ae882915c4f23ed, type: 3}
   agent: {fileID: 3480681341667345173}
   maxResource: 0

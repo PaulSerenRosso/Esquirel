@@ -101,13 +101,12 @@ namespace Entities
         public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
             params object[] otherParameters)
         {
-            if (!activeCapacities[capacityIndex].TryCast(targetedEntities, targetedPositions)) return;
             if ((transform.position - targetedPositions[0]).sqrMagnitude > distanceSqrForUseCatapult) return;
             Champion.Champion champion =  EntityCollectionManager.GetEntityByIndex(targetedEntities[0]) as Champion.Champion;
-            Debug.Log(champion);
+     
             if (!champion.canUseCatapultMovement) return ;
-            
-            Debug.Log(champion.canUseCatapultMovement);
+            if (!activeCapacities[capacityIndex].TryCast(targetedEntities, targetedPositions)) return;
+            champion.CancelAutoAttackRPC();
             photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions,
                 activeCapacities[capacityIndex].GetCustomSyncParameters());
             OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacities[capacityIndex].GetCustomSyncParameters());
