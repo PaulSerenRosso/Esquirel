@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T4_Terrain:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 47c18da720477f444a965ad6fd34f638, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T4_TerrainNAOH:
@@ -75,7 +75,7 @@ Material:
     - _T3_ProceduralTiling1: 0
     - _T3_Tilling1: 21.8
     - _T4_ProceduralTiling1: 0
-    - _T4_Tilling1: 10
+    - _T4_Tilling1: 27.1
     - _VertexPaintDebug: 0
     m_Colors:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
