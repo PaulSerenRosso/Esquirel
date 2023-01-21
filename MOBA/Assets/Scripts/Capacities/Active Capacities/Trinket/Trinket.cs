@@ -56,7 +56,7 @@ public class Trinket : Entity
        {
            if(enemiesThatCanSeeMe.Count == 0)
                HideElements();
-           else ShowElements();
+         
        }
        SyncSetViewRangeRPC(trinketCapacity.so.trinketViewRadius);
        SyncSetBaseViewRangeRPC(trinketCapacity.so.trinketViewRadius);

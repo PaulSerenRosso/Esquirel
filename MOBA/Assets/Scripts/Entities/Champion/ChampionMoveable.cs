@@ -23,7 +23,7 @@ namespace Entities.Champion
             set
             {
                 currentMoveSpeed = value;
-                animator.SetFloat("speedRatio", currentMoveSpeed/referenceMoveSpeed);
+                animator.SetFloat("speedRatio", currentMoveSpeed / referenceMoveSpeed);
                 if (photonView.IsMine)
                     agent.speed = currentMoveSpeed;
             }
@@ -49,14 +49,14 @@ namespace Entities.Champion
         }
 
         private bool isMoved;
-
-
+        
         // === League Of Legends
         private int mouseTargetIndex;
-        private bool isFollowing;
+        public bool isFollowing;
         private Entity entityFollow;
         public Vector3 moveDestination;
 
+        public bool inCurveMovement;
         private Vector3 oldMoveDestination;
         private IAimable currentIAimable;
         private ActiveCapacity currentCapacityAimed;
@@ -64,7 +64,7 @@ namespace Entities.Champion
         public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent;
 
         [SerializeField] private ChampionMoveablePrevisualisation championMoveablePrevisualisationPrefab;
-       
+
         //NavMesh
         [SerializeField] public NavMeshAgent agent;
 
@@ -88,11 +88,11 @@ namespace Entities.Champion
                 agent.enabled = true;
                 moveDestination = transform.position;
                 agent.speed = currentMoveSpeed;
-            var championMoveablePrevisualisation=  Instantiate(championMoveablePrevisualisationPrefab, Vector3.zero, quaternion.identity);
-            championMoveablePrevisualisation.champion = this;
-
+                var championMoveablePrevisualisation = Instantiate(championMoveablePrevisualisationPrefab, Vector3.zero,
+                    quaternion.identity);
+                championMoveablePrevisualisation.champion = this;
             }
-            
+
             //NavMeshBuilder.ClearAllNavMeshes();
             //NavMeshBuilder.BuildNavMesh();
         }
@@ -114,14 +114,16 @@ namespace Entities.Champion
         [PunRPC]
         public void SyncSetCanMoveRPC(bool value)
         {
-           
-            if(isAlive)
+            if ((value && !isAlive) || (value && inCurveMovement))
             {
-                canMove = value;
+               
+                return;
             }
+            canMove = value;
+            
             if (photonView.IsMine)
             {
-            //    moveDestination = transform.position;
+                //    moveDestination = transform.position;
                 agent.enabled = value;
             }
 
@@ -257,8 +259,7 @@ namespace Entities.Champion
             moveDestination = position;
             moveDestination.y = 0;
         }
-        
-       
+
 
         public void StartMoveToTarget(Entity _entity, ActiveCapacity capacityWhichAimed,
             GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent)
@@ -273,7 +274,6 @@ namespace Entities.Champion
                 currentIAimable = (IAimable)capacityWhichAimed;
                 currentCapacityAimed = capacityWhichAimed;
                 this.currentTargetCapacityAtRangeEvent = currentTargetCapacityAtRangeEvent;
-          
             }
         }
 
@@ -363,19 +363,20 @@ namespace Entities.Champion
             receiveStartMoveChampionCount = 0;
             photonView.RPC("StartMoveChampionRPC", RpcTarget.All, newPos);
         }
-        
+
         [PunRPC]
         public void StartMoveChampionRPC(Vector3 newPos)
         {
             OnStartMoveChampion?.Invoke();
             transformView.enabled = false;
-           if (!photonView.IsMine)
+            if (!photonView.IsMine)
             {
                 obstacle.enabled = false;
             }
-           SyncSetCanMoveRPC(false);
 
-           photonView.RPC("WaitForAllReceiveStartMoveChampion", RpcTarget.MasterClient, newPos);
+            SyncSetCanMoveRPC(false);
+
+            photonView.RPC("WaitForAllReceiveStartMoveChampion", RpcTarget.MasterClient, newPos);
         }
 
         private int receiveStartMoveChampionCount = 0;
@@ -384,8 +385,8 @@ namespace Entities.Champion
         void WaitForAllReceiveStartMoveChampion(Vector3 pos)
         {
             receiveStartMoveChampionCount++;
-            if(receiveStartMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
-            photonView.RPC("MoveChampionRPC", RpcTarget.All, pos);
+            if (receiveStartMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
+                photonView.RPC("MoveChampionRPC", RpcTarget.All, pos);
         }
 
         private int receiveMoveChampionCount = 0;
@@ -393,20 +394,19 @@ namespace Entities.Champion
         [PunRPC]
         public void MoveChampionRPC(Vector3 newPos)
         {
-        
             transform.position = newPos;
-                //   moveDestination = newPos;
+            //   moveDestination = newPos;
             photonView.RPC("WaitForAllReceiveMoveChampion", RpcTarget.MasterClient);
         }
+
         [PunRPC]
         void WaitForAllReceiveMoveChampion()
         {
-    
             receiveMoveChampionCount++;
-            if(receiveMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
+            if (receiveMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
                 photonView.RPC("EndMoveChampion", RpcTarget.All);
         }
-        
+
         [PunRPC]
         void EndMoveChampion()
         {
@@ -416,7 +416,7 @@ namespace Entities.Champion
             {
                 obstacle.enabled = true;
             }
-            
+
             SyncSetCanMoveRPC(true);
 
             OnEndMoveChampion?.Invoke();
@@ -441,7 +441,6 @@ namespace Entities.Champion
                 agent.SetDestination(moveDestination);
                 oldMoveDestination = moveDestination;
             }
-
             moveDestination = agent.destination;
         }
 

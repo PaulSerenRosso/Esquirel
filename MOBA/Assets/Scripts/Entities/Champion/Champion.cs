@@ -11,12 +11,13 @@ using Photon.Pun;
 using RessourceProduction;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Entities.Champion
 {
     public partial class Champion : Entity
     {
-        public CatapultMovment catapultMovment;
+        [FormerlySerializedAs("catapultMovment")] public CatapultMovement catapultMovement;
         public PhotonTransformView transformView;
         public ChampionSO championSo;
         public Transform rotateParent;
@@ -37,6 +38,7 @@ namespace Entities.Champion
         public CollisionBlocker blocker;
         [SerializeField] public NavMeshObstacle obstacle;
 
+        public bool canUseCatapultMovement = true;
       public  CapturePoint.CapturePoint currentPoint;
         public ActiveCapacity attackBase;
         public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
@@ -205,6 +207,7 @@ namespace Entities.Champion
             rb.velocity = Vector3.zero;
             RequestSetCanDie(true);
             auraProduction.InitAuraProduction();
+            SyncSetCanCatapultMovementRPC(true);
         }
 
         public void RequestChangeBoolParameterAnimator(string parameterName, bool value)
@@ -258,5 +261,13 @@ namespace Entities.Champion
     
             }
         }
+
+      public  void  SetCanCatapultMovement(bool value)
+        {
+            photonView.RPC("SyncSetCanCatapultMovementRPC",RpcTarget.All ,value);
+        }
+
+       [PunRPC]
+       public void SyncSetCanCatapultMovementRPC(bool value) => canUseCatapultMovement = value;
     }
 }

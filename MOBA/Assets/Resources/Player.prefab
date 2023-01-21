@@ -365,6 +365,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8388608
   movePositionDetectionDistance: 50
+  canSelectEntity: 0
 --- !u!195 &3480681341667345173
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -448,7 +449,7 @@ MonoBehaviour:
   currentPoints: []
   finalPoints: []
   viewObstructedByObstacle: 1
-  catapultMovment: {fileID: 3023031675705156806}
+  catapultMovement: {fileID: 3023031675705156806}
   transformView: {fileID: 8091990961712310653}
   championSo: {fileID: 0}
   rotateParent: {fileID: 3480681341152264625}
@@ -463,6 +464,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   blocker: {fileID: 3711244289653556686}
   obstacle: {fileID: 7728234700033618375}
+  canUseCatapultMovement: 0
   currentPoint: {fileID: 0}
   auraProduction: {fileID: 3143879509387280758}
   maxHp: 0
@@ -479,7 +481,9 @@ MonoBehaviour:
   items: []
   referenceMoveSpeed: 10
   canMove: 1
+  isFollowing: 0
   moveDestination: {x: 0, y: 0, z: 0}
+  inCurveMovement: 0
   championMoveablePrevisualisationPrefab: {fileID: 7433721097378969182, guid: 9ccaa9893ac9b9648ae882915c4f23ed, type: 3}
   agent: {fileID: 3480681341667345173}
   maxResource: 0

@@ -98,7 +98,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   curveMovementMaxYPosition: 30
   curveMovementTime: 10
-  referenceRange: 10
+  referenceRange: 3.5
   activeCapacityAnimationLauncherInfo:
     animationTime: 0
     animatorParameterName: 

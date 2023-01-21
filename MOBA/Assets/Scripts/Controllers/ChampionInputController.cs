@@ -27,6 +27,8 @@ namespace Controllers.Inputs
         private Catapult catapultTarget;
         private Catapult catapultDetected;
         [SerializeField] private float movePositionDetectionDistance;
+
+        public bool canSelectEntity;
         private bool entityIsVisible;
 
         private bool cursorIsAimed;
@@ -272,6 +274,7 @@ namespace Controllers.Inputs
 
         public bool TryMoveToTarget()
         {
+           
             if (catapultDetected != null)
             {
                 catapultTarget = catapultDetected;
