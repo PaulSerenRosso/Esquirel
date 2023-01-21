@@ -16,7 +16,7 @@ namespace Entities.Capacities
            {
            if (base.TryCast(targetsEntityIndexes, targetPositions))
            {
-               
+            
                return true;
            }
            }
@@ -32,6 +32,7 @@ namespace Entities.Capacities
        protected override void EndAttackTimer()
        {
            champion.RequestResetCapacityRPC();
+       champion.SetCanCatapultMovement(true);
        }
 
        protected override void InitFX(int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -65,7 +66,8 @@ namespace Entities.Capacities
         }
 
         public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
-        {
+        { 
+            champion.SyncSetCanCatapultMovementRPC(false);
             champion.RotateMeshChampionRPC(previsualisableObjectForward);
             champion.SetCurrentCapacityUsed((byte)champion.activeCapacities.IndexOf(this));
         }

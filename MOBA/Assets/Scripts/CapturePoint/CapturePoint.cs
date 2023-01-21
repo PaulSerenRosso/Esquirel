@@ -99,24 +99,30 @@ namespace CapturePoint
                 
             }
         }
-        
 
 
-     public virtual void RemoveSecondTeamChampion(Champion champion)
+
+        public event GlobalDelegates.OneParameterDelegate<Champion> OnRemoveSecondTeamChampion;
+     public void RemoveSecondTeamChampion(Champion champion)
         {
 
             secondTeamChampions.Remove(champion);
-            ResolveTeamSupremacy();
+            OnRemoveSecondTeamChampion?.Invoke(champion);
             champion.currentPoint = null;
+            ResolveTeamSupremacy();
        
         }
+     
+     public event GlobalDelegates.OneParameterDelegate<Champion> OnRemoveFirstTeamChampion;
         
-      public virtual void RemoveFirstTeamChampion(Champion champion)
+      public  void RemoveFirstTeamChampion(Champion champion)
         {
       
             firstTeamChampions.Remove(champion);
+            OnRemoveFirstTeamChampion?.Invoke(champion);
             ResolveTeamSupremacy();
             champion.currentPoint = null;
+    
          
         }
 

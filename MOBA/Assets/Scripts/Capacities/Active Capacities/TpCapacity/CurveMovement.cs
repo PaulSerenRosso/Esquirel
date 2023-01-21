@@ -20,8 +20,8 @@ namespace Entities.Capacities
         
         private bool isEndCurve = true;
         private Vector3 startPosition;
-    
-        private Vector3 endPosition;
+
+        protected Vector3 endPosition;
         public event GlobalDelegates.NoParameterDelegate endCurveEvent;
         protected Champion.Champion champion;
         public void RequestSetupRPC(byte capacityIndex, int championIndex)
@@ -65,6 +65,7 @@ namespace Entities.Capacities
             trail.enabled = true;
             trail.Clear();
             isEndCurve = false;
+          
         }
 
         protected virtual void OnUpdate()
