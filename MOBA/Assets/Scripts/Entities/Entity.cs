@@ -90,7 +90,7 @@ namespace Entities
         {
             photonView.RPC("SyncInstantiateRPC", RpcTarget.All, position, rotation);
             OnInstantiated();
-            ClearBushes();
+         
         }
 
         protected void ClearBushes()
@@ -107,6 +107,7 @@ namespace Entities
         {
             photonView.RPC("SyncDeainstantiateRPC", RpcTarget.All);
             OnDeainstantiated();
+            ClearBushes();
         }
 
         public virtual void OnInstantiated()
