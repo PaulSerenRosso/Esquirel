@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: VFX_PoumfCapa_CrackParallax
   m_Shader: {fileID: 4800000, guid: 189194a0efc8ea04fa0bec0f3cd49ac5, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _USE_CUSTOMM_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Emissive_Noise_Texture:
-        m_Texture: {fileID: 2800000, guid: 91e5a5de1601d7441a12bfbd27ae58ab, type: 3}
+        m_Texture: {fileID: 2800000, guid: a435b44991020ee418c814a7d237b7ad, type: 3}
         m_Scale: {x: 10, y: 10}
         m_Offset: {x: 0, y: 0}
     - _T_Crack_Emissive:
@@ -37,6 +37,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _T_Crack_N:
         m_Texture: {fileID: 2800000, guid: 0b2df78316b2f69479d152577286abab, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T_HeightCrack:
+        m_Texture: {fileID: 2800000, guid: 99bbd97c475e9404a8d198fcbc364252, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T_Mask_Texture:
@@ -58,11 +62,15 @@ Material:
     - _Emission_Noise_VPanner: -0.15
     - _Emissive_Power: 2
     - _EnvironmentReflections: 1
-    - _HeightScale: 0.2
+    - _HeightScale: 0.4
     - _ReceiveShadows: 1
     - _SpecularHighlights: 1
+    - _Use_Custom: 0
+    - _Use_Customm: 1
+    - _Use_Customm1: 0
     m_Colors:
     - _Base_Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Emi_Color: {r: 4, g: 0.7372549, b: 0, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Emi_Color: {r: 3.9533494, g: 0.74513394, b: 0, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
