@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 6258173476951505825}
   - component: {fileID: 5815231235936308330}
   - component: {fileID: 3023031675705156806}
+  - component: {fileID: 409330449869177433}
   m_Layer: 29
   m_Name: Player
   m_TagString: Untagged
@@ -594,6 +595,21 @@ MonoBehaviour:
   renderer: {fileID: 3480681341667345171}
   trail: {fileID: 5087988965798534875}
   UIRoot: {fileID: 0}
+--- !u!114 &409330449869177433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3480681341667345177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1649cc3270e5ba9479ff7dc49b8663ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagePopUp: {fileID: 3240552065661360653, guid: 9b71ce1cf86221944bc013ee55e44110, type: 3}
+  startPosition: {fileID: 3480681342087303708}
+  positionVariation: {x: 0.25, y: 0.25}
 --- !u!1 &3480681342087303709
 GameObject:
   m_ObjectHideFlags: 0
