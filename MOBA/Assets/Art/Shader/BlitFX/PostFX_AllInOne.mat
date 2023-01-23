@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PostFX_AllInOneFXDamage
+  m_Name: PostFX_AllInOne
   m_Shader: {fileID: -6465566751694194690, guid: a6a5b24379e2f8b40ba0910537e14d70, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
