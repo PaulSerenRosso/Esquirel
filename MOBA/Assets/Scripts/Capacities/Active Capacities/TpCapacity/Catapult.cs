@@ -41,9 +41,7 @@ namespace Entities
             base.OnStart();
             activeCapacities = new List<ActiveCapacity>();
             soIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(catapultThrowingCapacityCapacitySo);
-            Debug.Log(catapultThrowingCapacityCapacitySo.cooldown/reloadAnimation.length);
-            animator.SetFloat("ReloadSpeedFactor", 1/(catapultThrowingCapacityCapacitySo.cooldown/reloadAnimation.length));   
-            Debug.Log(animator.GetFloat("ReloadSpeedFactor"));
+            animator.SetFloat("ReloadSpeedFactor", 1/(catapultThrowingCapacityCapacitySo.cooldown/reloadAnimation.length));
             activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(soIndex, this));
             activeCapacities[0].SetUpActiveCapacity(soIndex, this);
             DistanceForUseCatapult = catapultThrowingCapacityCapacitySo.referenceRange;
@@ -107,6 +105,7 @@ namespace Entities
             if (!champion.canUseCatapultMovement) return ;
             if (!activeCapacities[capacityIndex].TryCast(targetedEntities, targetedPositions)) return;
             champion.CancelAutoAttackRPC();
+            champion.RequestResetCapacityAimed();
             photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions,
                 activeCapacities[capacityIndex].GetCustomSyncParameters());
             OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacities[capacityIndex].GetCustomSyncParameters());

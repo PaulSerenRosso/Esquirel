@@ -37,7 +37,11 @@ namespace Entities.Champion
                 photonView.RefreshRpcMonoBehaviourCache();
             }
         }
-        
+
+        public void RequestResetCapacityAimed()
+        {
+            photonView.RPC("SyncResetCapacityAimedRPC", RpcTarget.All);
+        }
         [PunRPC]
         public void CancelAutoAttackRPC()
         {
@@ -46,7 +50,13 @@ namespace Entities.Champion
             CancelCurrentCapacityRPC();
         }
 
-        private void CancelCurrentCapacityRPC()
+        [PunRPC]
+        public void SyncResetCapacityAimedRPC()
+        {
+            currentCapacityAimed = null;
+        }
+
+        public void CancelCurrentCapacityRPC()
         {
             Debug.Log("currentCapacityUsed" +currentCapacityUsed);
             if (currentCapacityUsed != null)

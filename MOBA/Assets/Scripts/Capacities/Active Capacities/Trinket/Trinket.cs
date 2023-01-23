@@ -56,25 +56,19 @@ public class Trinket : Entity
        {
            if(enemiesThatCanSeeMe.Count == 0)
                HideElements();
-         
        }
        SyncSetViewRangeRPC(trinketCapacity.so.trinketViewRadius);
        SyncSetBaseViewRangeRPC(trinketCapacity.so.trinketViewRadius);
        SyncSetViewAngleRPC(trinketCapacity.so.trinketViewAngle);
+       if(FogOfWarManager.Instance)
+           FogOfWarManager.Instance.AddFOWViewable(this);
    }
 
    public void TickDespawnTimer()
    {
        PoolNetworkManager.Instance.PoolRequeue(trinketCapacity.so.trinketPrefab, this);
    }
-
-   public override void OnInstantiatedFeedback()
-   {
-       base.OnInstantiatedFeedback();
-       if(FogOfWarManager.Instance)
-       FogOfWarManager.Instance.AddFOWViewable(this);
-   }
-
+   
    public override void OnDeainstantiatedFeedback()
    {
        base.OnDeainstantiatedFeedback();

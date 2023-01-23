@@ -71,8 +71,14 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
 
     protected override void EndAttackTimer()
     {
-        champion.CancelAutoAttackRPC();
+         champion.CancelAutoAttackRPC();
         damageTimer.CancelTimer();
+    }
+
+    public override void CancelCapacity()
+    {
+        base.CancelCapacity();
+        
     }
 
     private void CancelDamage()

@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityIndex: 0
   canAddPassiveCapacity: 1
+  entityFowShowableLinker: {fileID: 0}
   canRemovePassiveCapacity: 1
   uiTransform: {fileID: 0}
   offset: {x: 0, y: 2, z: 0}

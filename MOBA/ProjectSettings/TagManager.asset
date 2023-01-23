@@ -36,10 +36,10 @@ TagManager:
   - EntityClicker
   - Catapult
   - 
-  - 
+  - EntityCapturePoint
   - Floor
   - Outline
-  - Entity
+  - EntityShowable
   - Obstacle
   - FoW
   m_SortingLayers:

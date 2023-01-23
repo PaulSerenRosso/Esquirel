@@ -3,7 +3,10 @@ using UnityEngine;
 
 namespace CapturePoint {
     [CreateAssetMenu(menuName = "Remote Variables/New capture point")]
-    public class CapturePointSO : ScriptableObject {
+    public class CapturePointSO : ScriptableObject
+    {
+
+   
         [Header("FOW View Range")] public float baseViewRange;
         public float viewRange;
 
@@ -19,6 +22,8 @@ namespace CapturePoint {
         public float stabilityPoint;
         public GlobalDelegates.NoParameterDelegate enterStateEvent;
         public  GlobalDelegates.NoParameterDelegate exitStateEvent;
+        public GlobalDelegates.NoParameterDelegate enterStateEventFeedback;
+        public  GlobalDelegates.NoParameterDelegate exitStateEventFeedback;
 
         public virtual void Copy(CapturePointState capturePointState)
         {

@@ -44,23 +44,15 @@ public abstract class RessourceProduction<T, SO> : MonoBehaviourPun,IPunObservab
     {
         if (stream.IsWriting)
         {
-           WritingSerializeView(stream);
+            stream.SendNext(Ressource);
             
         }
         else
         {
-           ReadSerializeView(stream);
+            Ressource = (T)stream.ReceiveNext();
         }
     }
 
-    public virtual void WritingSerializeView(PhotonStream stream)
-    {
-        stream.SendNext(Ressource);
-    }
-
-    public virtual void ReadSerializeView(PhotonStream stream)
-    {
-        Ressource = (T)stream.ReceiveNext();
-    }
+ 
 }
 }

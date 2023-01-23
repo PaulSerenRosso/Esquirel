@@ -49,7 +49,7 @@ namespace Controllers
         {
             if (!ctx.performed) return;
             cameraLock = !cameraLock;
-            Debug.Log("Camera Lock Toggled");
+      
         }
 
         private void LateUpdate()

@@ -83,15 +83,17 @@ namespace Entities.Capacities
         }
         void TpChampion()
         {
-           
             if (PhotonNetwork.IsMasterClient)
             {
                 champion.RequestMoveChampion(
                     ChampionPlacerManager.instance.GetLauncher.LaunchPlacePointClosestAtCandidatePointWithDistanceAvoider(curveObject
                             .transform.position, champion.pointPlacerDistanceAvoidance, champion.pointPlacerColliderRadius,
                        tpCapacitySo.secondDetectionSo,  champion.championPlacerDistanceAvoider.pointAvoider).point);
-            champion.CancelAutoAttackRPC();
+            
             }
+
+            champion.CancelCurrentCapacityRPC();
+            champion.RequestResetCapacityAimed();
             champion.isFollowing = false;
         }
 
