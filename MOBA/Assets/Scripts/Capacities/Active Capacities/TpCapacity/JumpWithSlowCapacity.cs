@@ -47,6 +47,12 @@ namespace Entities.Capacities
             }
 //            Debug.Log( (byte)champion.activeCapacities.IndexOf(this)+ "casterindex" + caster.entityIndex + "caster " + caster);
             curveObject.LaunchSetUpRPC((byte)champion.activeCapacities.IndexOf(this), caster.entityIndex);
+            if (champion.photonView.IsMine)
+            {
+       
+                _previsualisableCurveMovementObject.UpdatePositionAndSize(range, jumpSO.slowAreaCapacitySo.radiusArea);
+            _previsualisableCurveMovementObject.gameObject.SetActive(false);
+            }
         }
       
     }

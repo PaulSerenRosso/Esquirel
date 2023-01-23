@@ -109,6 +109,13 @@ namespace Entities.Capacities
                 curveObject.GetComponent<TpObject>().RequestDeactivate();
                 curveObject.RequestSetupRPC((byte)champion.activeCapacities.IndexOf(this), caster.entityIndex);
             }
+
+            if (champion.photonView.IsMine)
+            {
+                
+                _previsualisableCurveMovementObject.UpdatePositionAndSize(range, tpCapacitySo.smokePrefab.transform.lossyScale.x*2);
+                _previsualisableCurveMovementObject.gameObject.SetActive(false);
+            }
         }
     }
 }

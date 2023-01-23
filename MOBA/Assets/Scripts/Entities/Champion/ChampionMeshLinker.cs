@@ -27,9 +27,17 @@ namespace Entities.Champion
                 rd.material.color = color;
             }
 
+                var teamColor = GameStateMachine.Instance.GetTeamColor(team);
+                championRenderer.material.SetColor("_OutlineSelectionColor", teamColor);
+                championRenderer.material.SetColor("_OutlineMainColor", teamColor);
             if (team == Enums.Team.Team1)
+            {
                 championRenderer.material.mainTexture = championTextures[0];
-            else  championRenderer.material.mainTexture = championTextures[1];
+            }
+            else
+            {
+                championRenderer.material.mainTexture = championTextures[1];
+            }
 
         }
     }
