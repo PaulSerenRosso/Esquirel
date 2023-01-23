@@ -5,7 +5,7 @@ using UnityEngine;
 public class CollisionBlocker : MonoBehaviour
 {
     public CapsuleCollider characterColliderBlocker;  
-    public CapsuleCollider characterCollider;
+    public Collider characterCollider;
 
     public void SetUpBlocker()
     {

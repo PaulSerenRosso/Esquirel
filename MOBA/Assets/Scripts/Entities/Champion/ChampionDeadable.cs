@@ -88,6 +88,7 @@ namespace Entities.Champion
             }
 
             CancelCurrentCapacityRPC();
+            RequestResetCapacityAimed();
             if (currentPoint != null)
             {
                 switch (team)

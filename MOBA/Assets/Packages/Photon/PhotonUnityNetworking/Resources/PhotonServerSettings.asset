@@ -257,6 +257,10 @@ MonoBehaviour:
   - CancelAutoAttackCapacity
   - CancelAutoAttackRPC
   - SyncSetCanCatapultMovementRPC
+  - SyncSetCurrentBountyRPC
+  - SyncSetCurrentStepIndexRPC
+  - SyncSetCurrentStreakRPC
+  - SyncCancelAutoAutoAttackRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -241,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityIndex: 0
   canAddPassiveCapacity: 1
+  entityFowShowableLinker: {fileID: 0}
   canRemovePassiveCapacity: 1
   uiTransform: {fileID: 0}
   offset: {x: 0, y: 2, z: 0}
@@ -292,6 +293,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  pointName: Generator
   capturePointSO: {fileID: 11400000, guid: 26af1beafd8304f4f95704695e36fa6d, type: 2}
   neutralState:
     stabilityPoint: 0

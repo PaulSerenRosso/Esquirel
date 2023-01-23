@@ -69,16 +69,13 @@ namespace Entities.Champion
 
         protected override void OnUpdate()
         {
+         
             if (isFollowing) FollowEntity(); // Lol
             if (!photonView.IsMine) return;
             CheckMoveDistance();
         }
 
-
-        public override void OnInstantiated()
-        {
-            base.OnInstantiated();
-        }
+        
 
         public override void OnInstantiatedFeedback()
         {
@@ -185,12 +182,14 @@ namespace Entities.Champion
             {
                 RequestAddPassiveCapacity(so.passiveCapacitiesIndexes[i]);
             }
+            
             }
             championMesh.GetComponent<EntityFOWShowableLinker>().LinkEntity(this);
             if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
             {
                 HideElements();
             }
+            
             switch (team)
                     {
                         case Enums.Team.Team1:
@@ -218,7 +217,6 @@ namespace Entities.Champion
         [PunRPC]
         void ChangeBoolParameterAnimator(string parameterName, bool value)
         {
-            
             animator.SetBool(parameterName, value);
         }
         

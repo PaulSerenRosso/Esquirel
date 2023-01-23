@@ -25,6 +25,7 @@ namespace Entities
         [SerializeField]
         public bool canAddPassiveCapacity = true;
 
+        public EntityFogOfWarColliderLinker entityFowShowableLinker;
         /// <summary>
         /// True if passiveCapacities can be removed from the entity's passiveCapacitiesList. False if not.
         /// </summary>
@@ -65,6 +66,7 @@ namespace Entities
 
         private void Update()
         {
+           
             OnUpdate();
         }
 

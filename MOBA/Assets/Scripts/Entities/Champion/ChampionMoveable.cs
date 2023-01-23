@@ -59,7 +59,7 @@ namespace Entities.Champion
         public bool inCurveMovement;
         private Vector3 oldMoveDestination;
         private IAimable currentIAimable;
-        private ActiveCapacity currentCapacityAimed;
+      public  ActiveCapacity currentCapacityAimed;
         private ITargetable targetEntity;
         public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent;
 
@@ -255,6 +255,7 @@ namespace Entities.Champion
         public void MoveToPosition(Vector3 position)
         {
             RequestCancelAutoAttack();
+            RequestResetCapacityAimed();
             isFollowing = false;
             moveDestination = position;
             moveDestination.y = 0;
@@ -268,6 +269,7 @@ namespace Entities.Champion
                 (isFollowing && (entityFollow != _entity || currentCapacityAimed != capacityWhichAimed)))
             {
                 RequestCancelAutoAttack();
+                RequestResetCapacityAimed();
                 entityFollow = _entity;
                 isFollowing = true;
                 targetEntity = (ITargetable)entityFollow;
@@ -317,6 +319,7 @@ namespace Entities.Champion
                 else
                 {
                     RequestCancelAutoAttack();
+                    RequestResetCapacityAimed();
                     isFollowing = false;
                     currentTargetCapacityAtRangeEvent = null;
                 }
@@ -325,6 +328,7 @@ namespace Entities.Champion
             {
                 moveDestination = transform.position;
                 RequestCancelAutoAttack();
+                RequestResetCapacityAimed();
                 currentTargetCapacityAtRangeEvent = null;
                 isFollowing = false;
             }

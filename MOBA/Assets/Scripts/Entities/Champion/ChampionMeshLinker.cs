@@ -10,7 +10,9 @@ namespace Entities.Champion
         [SerializeField] private Renderer[] teamColorfulParts;
         public Animator animator;
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
-        
+        public Renderer championRenderer;
+
+        public Texture[] championTextures;
         public void LinkTeamColor(Enums.Team team)
         {
             var color = Color.white;
@@ -24,6 +26,11 @@ namespace Entities.Champion
             foreach (var rd in teamColorfulParts) {
                 rd.material.color = color;
             }
+
+            if (team == Enums.Team.Team1)
+                championRenderer.material.mainTexture = championTextures[0];
+            else  championRenderer.material.mainTexture = championTextures[1];
+
         }
     }
 }
