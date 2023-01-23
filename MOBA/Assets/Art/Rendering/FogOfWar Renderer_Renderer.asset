@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff3cb2dad69c9745a72dfa5f5ceadfe, type: 3}
   m_Name: Fog Feature Pass
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
     renderPassEvent: 500
     blitMaterial: {fileID: 2100000, guid: 269845f80d310d74db13180ca168d3e1, type: 2}
