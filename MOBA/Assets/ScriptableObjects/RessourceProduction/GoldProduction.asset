@@ -17,6 +17,6 @@ MonoBehaviour:
   ressourceInitial: 10
   timeBetweenTick: 2
   ressourceAmountPerTick: 1
-  streaks: 320000002d00000028000000230000001e000000
-  victoryAmount: 50
-  bountyPercentage: 0.5
+  streaks: 96000000
+  victoryAmount: 100
+  bountyPercentage: 0.25

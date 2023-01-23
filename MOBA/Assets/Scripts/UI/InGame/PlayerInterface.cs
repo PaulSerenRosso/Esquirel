@@ -18,6 +18,7 @@ public class PlayerInterface : MonoBehaviour
 
     [Header("Spell")] [SerializeField] private Image autoAttackImage = null;
     [SerializeField] private Image spell01Image = null;
+    [SerializeField] private Image spell01RecastImage = null;
     [SerializeField] private Image spell01Cooldown = null;
     [SerializeField] private TextMeshProUGUI spell01CooldownTxt = null;
     [SerializeField] private Image spell02Image = null;
@@ -114,21 +115,30 @@ public class PlayerInterface : MonoBehaviour
             case PlayerUIImage.PlayerCharacter: break;
 
             case PlayerUIImage.AutoAttack: break;
-
+            
             case PlayerUIImage.Spell01:
                 spell01CooldownTxt.enabled = true;
                 spell01Cooldown.fillAmount = 1-cooldownValue / maxCooldownValue;
-                spell01CooldownTxt.text = (Mathf.Round((maxCooldownValue-cooldownValue)*10)/10).ToString();
+                spell01CooldownTxt.text = (Mathf.Round((maxCooldownValue-cooldownValue) * 10f) / 10f).ToString();
                 if (cooldownValue == 0)
                 {
                     spell01Cooldown.fillAmount = 0;
                     spell01CooldownTxt.enabled = false;
                 }
                 break;
+            
+            case PlayerUIImage.Spell01Recast:
+                spell01RecastImage.fillAmount = 1-cooldownValue / maxCooldownValue;
+                spell01Cooldown.fillAmount = 0;
+                if (cooldownValue == 0) {
+                    spell01RecastImage.fillAmount = 0;
+                }
+                break;
+            
             case PlayerUIImage.Spell02:
                 spell02CooldownTxt.enabled = true;
                 spell02Cooldown.fillAmount = 1-cooldownValue / maxCooldownValue;
-                spell02CooldownTxt.text = (Mathf.Round((maxCooldownValue-cooldownValue)*10)/10).ToString();
+                spell02CooldownTxt.text = (Mathf.Round((maxCooldownValue-cooldownValue) * 10f) / 10f).ToString();
                 if (cooldownValue == 0)
                 {
                     spell02Cooldown.fillAmount = 0;
@@ -139,7 +149,7 @@ public class PlayerInterface : MonoBehaviour
             case PlayerUIImage.Ward:
                 wardCooldownTxt.enabled = true;
                 wardCooldown.fillAmount = 1-cooldownValue / maxCooldownValue;
-                wardCooldownTxt.text =(Mathf.Round((maxCooldownValue-cooldownValue)*10)/10).ToString();
+                wardCooldownTxt.text = (Mathf.Round((maxCooldownValue-cooldownValue) * 10f) / 10f).ToString();
                 if (cooldownValue == 0)
                 {
                     wardCooldown.fillAmount = 0;
@@ -258,6 +268,7 @@ public enum PlayerUIImage
     PlayerCharacter,
     AutoAttack,
     Spell01,
+    Spell01Recast,
     Spell02,
     Ward
 }
