@@ -12,23 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa02e5b5a25eeb14e8183d568b389f67, type: 3}
   m_Name: VictoryPoint
   m_EditorClassIdentifier: 
-  ressourceMax: 500
+  ressourceMax: 1000
   ressourceMin: 0
   ressourceInitial: 0
   timeBetweenTick: 0.5
   ressourceAmountPerTick: 1
-  victorySteps:
-  - triggerValue: 62
-    auraAmount: 1
-  - triggerValue: 124
-    auraAmount: 1
-  - triggerValue: 186
-    auraAmount: 1
-  - triggerValue: 248
-    auraAmount: 1
-  - triggerValue: 310
-    auraAmount: 1
-  - triggerValue: 375
-    auraAmount: 1
-  - triggerValue: 450
-    auraAmount: 3
+  victorySteps: []
