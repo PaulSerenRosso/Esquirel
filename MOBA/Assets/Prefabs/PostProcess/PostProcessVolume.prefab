@@ -61,7 +61,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596278f00d6d8ff4eb9ce9125d10a178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpEffect: {fileID: 2100000, guid: aa982780f3a8ce64e9f3c34fee5c00b2, type: 2}
+  postProcessEffectMaterial: {fileID: 2100000, guid: aa982780f3a8ce64e9f3c34fee5c00b2, type: 2}
   damageEffectApparitionTime: 0.2
   damageEffectDisappearanceTime: 0.2
   hpInPercentageTriggerLowHpEffect: 0.5
+  grayScaleApparitionTime: 2
+  grayScaleDisappearanceTime: 6
+  maxGrayScaleOpacity: 0.8

@@ -9,15 +9,20 @@ public class PostProcessEffectsManager : MonoBehaviour
 
     public static PostProcessEffectsManager Instance;
 
-    [SerializeField] private Material hpEffect;
+    [SerializeField] private Material postProcessEffectMaterial;
     [SerializeField] private float damageEffectApparitionTime;
     [SerializeField] private float damageEffectDisappearanceTime;
     private float damageEffectTimer;
 
     private bool isActiveLowHpEffect;
-    private int damageEffectState;
+    private byte damageEffectState;
     [SerializeField] private float hpInPercentageTriggerLowHpEffect;
 
+    [SerializeField] private float grayScaleApparitionTime;
+    [SerializeField] private float grayScaleDisappearanceTime;
+    private float grayScaleTimer; 
+    private byte grayScaleState;
+    [SerializeField] private float maxGrayScaleOpacity;
     private void Awake()
     {
         Instance = this;
@@ -25,19 +30,19 @@ public class PostProcessEffectsManager : MonoBehaviour
 
     public void LaunchDamageEffect()
     {
-        if(damageEffectState != 0) return;
+        if (damageEffectState != 0) return;
         damageEffectState = 1;
     }
 
     void ActivateLowHpEffect()
     {
-        hpEffect.SetFloat("_OpacityBloodEffect", 1);
+        postProcessEffectMaterial.SetFloat("_OpacityBloodEffect", 1);
         isActiveLowHpEffect = true;
     }
 
     void DeactivateLowHpEffect()
     {
-        hpEffect.SetFloat("_OpacityBloodEffect", 0);
+        postProcessEffectMaterial.SetFloat("_OpacityBloodEffect", 0);
         isActiveLowHpEffect = false;
     }
 
@@ -45,7 +50,7 @@ public class PostProcessEffectsManager : MonoBehaviour
     {
         damageEffectState = 0;
         damageEffectTimer = 0;
-        hpEffect.SetFloat("_OpacityImpactEffect", 0);
+        postProcessEffectMaterial.SetFloat("_OpacityImpactEffect", 0);
     }
 
     public void UpdateLowHpEffect(float hp, float maxHp)
@@ -67,27 +72,77 @@ public class PostProcessEffectsManager : MonoBehaviour
     }
     private void Update()
     {
-        if (damageEffectState == 0) return;
+        UpdateDamageEffect();
+        UpdateGrayScaleEffect();
+    }
 
-        damageEffectTimer += Time.deltaTime;
-      
-        
-        if (damageEffectState == 1)
+    public void ActivateGrayScaleEffect()
+    {
+        grayScaleState = 1;
+        grayScaleTimer = 0;
+    }
+
+    public void DeactivateGrayScaleEffect()
+    {
+        grayScaleTimer = 0;
+        grayScaleState = 2;
+    }
+     void UpdateGrayScaleEffect()
+    {
+        if (grayScaleState != 0)
         {
-            hpEffect.SetFloat("_OpacityImpactEffect", Mathf.Clamp(damageEffectTimer / damageEffectApparitionTime, 0 , 1));
-            if (damageEffectTimer >= damageEffectApparitionTime)
+            grayScaleTimer += Time.deltaTime;
+            
+            if (grayScaleState == 1)
             {
-                damageEffectTimer = 0;
-                damageEffectState = 2;
+                postProcessEffectMaterial.SetFloat("_OpacityGrayscaleEffect",
+                    Mathf.Clamp( maxGrayScaleOpacity*(grayScaleTimer /grayScaleApparitionTime), 0, maxGrayScaleOpacity));
+                if ( grayScaleTimer >= grayScaleApparitionTime)
+                {
+                    grayScaleTimer = 0;
+                    grayScaleState = 0;
+                }
             }
-        }
-        else
-        {
-            hpEffect.SetFloat("_OpacityImpactEffect", Mathf.Clamp(1-(damageEffectTimer / damageEffectDisappearanceTime),0 ,1));
-            if (damageEffectTimer >= damageEffectDisappearanceTime)
+            else
             {
-                ResetDamageEffect();
+                postProcessEffectMaterial.SetFloat("_OpacityGrayscaleEffect",
+                    Mathf.Clamp( maxGrayScaleOpacity- (maxGrayScaleOpacity*(grayScaleTimer/ grayScaleDisappearanceTime)), 0, maxGrayScaleOpacity));
+                if (grayScaleTimer >= grayScaleDisappearanceTime)
+                {
+                    grayScaleTimer = 0;
+                    grayScaleState = 0;
+                }
             }
         }
     }
+
+    private void UpdateDamageEffect()
+    {
+        if (damageEffectState != 0)
+        {
+            damageEffectTimer += Time.deltaTime;
+            
+            if (damageEffectState == 1)
+            {
+                postProcessEffectMaterial.SetFloat("_OpacityImpactEffect",
+                    Mathf.Clamp(damageEffectTimer / damageEffectApparitionTime, 0, 1));
+                if (damageEffectTimer >= damageEffectApparitionTime)
+                {
+                    damageEffectTimer = 0;
+                    damageEffectState = 2;
+                }
+            }
+            else
+            {
+                postProcessEffectMaterial.SetFloat("_OpacityImpactEffect",
+                    Mathf.Clamp(1 - (damageEffectTimer / damageEffectDisappearanceTime), 0, 1));
+                if (damageEffectTimer >= damageEffectDisappearanceTime)
+                {
+                    ResetDamageEffect();
+                }
+            }
+        }
+    }
+
+    
 }
