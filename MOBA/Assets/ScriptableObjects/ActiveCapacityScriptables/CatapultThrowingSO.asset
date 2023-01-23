@@ -16,7 +16,7 @@ MonoBehaviour:
   descriptionName: 
   icon: {fileID: 0}
   description: 
-  cooldown: 20
+  cooldown: 1
   types: 
   fxPrefab: {fileID: 0}
   fxTime: 0
@@ -60,44 +60,26 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 1.4348681
-      outSlope: 1.4348681
+      inSlope: 1
+      outSlope: 1
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.27397645
-      value: 0.39312005
-      inSlope: 0.40199107
-      outSlope: 0.40199107
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.43729955
-      outWeight: 0.3543844
-    - serializedVersion: 3
-      time: 0.6880192
-      value: 0.57420534
-      inSlope: 0.6429799
-      outSlope: 0.6429799
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.23271166
-      outWeight: 1
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1.3648106
-      outSlope: 1.3648106
+      inSlope: 1
+      outSlope: 1
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  curveMovementMaxYPosition: 30
-  curveMovementTime: 10
+  curveMovementMaxYPosition: 15
+  curveMovementTime: 3
   referenceRange: 3.5
   activeCapacityAnimationLauncherInfo:
     animationTime: 0
