@@ -77,7 +77,7 @@ namespace Entities.Capacities
             champion.SyncSetCanCatapultMovementRPC(false);
             champion.inCurveMovement = true;
             champion.moveDestination = endPosition;
-            champion.isFollowing = false;
+            champion.SyncResetCapacityAimedRPC();
         }
 
 

@@ -94,7 +94,7 @@ namespace Entities.Capacities
 
             champion.CancelCurrentCapacityRPC();
             champion.RequestResetCapacityAimed();
-            champion.isFollowing = false;
+           
         }
 
 
