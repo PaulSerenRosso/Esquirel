@@ -40,7 +40,7 @@ Material:
     - _FrequenceBloodSpeed: 8
     - _Opacity: 1
     - _OpacityBloodEffect: 0
-    - _OpacityGrayscaleEffect: 0
+    - _OpacityGrayscaleEffect: 0.85
     - _OpacityImpactEffect: 0
     - _SizeBloodEffect: 2
     - _SizeEffect: 3.25
@@ -50,4 +50,5 @@ Material:
     - _ColorBloodEffect: {r: 1, g: 0, b: 0, a: 0}
     - _ColorEffect: {r: 1, g: 0, b: 0, a: 0}
     - _ColorImpactEffect: {r: 1, g: 1, b: 1, a: 0}
+    - _GrayscaleColorValue: {r: 0.21, g: 0.7126, b: 0.0126, a: 0}
   m_BuildTextureStacks: []
