@@ -223,6 +223,9 @@ namespace Entities.Champion
                 OnSetCurrentHpFeedback += updateLowHpEffect;
                 OnSetCurrentHpPercentFeedback += updateLowHpEffect;
                 OnDecreaseCurrentHpFeedback += (float hp) => PostProcessEffectsManager.Instance.LaunchDamageEffect();
+                OnDieFeedback +=()=>PostProcessEffectsManager.Instance.UpdateLowHpEffect(currentHp, maxHp);;
+                OnDieFeedback += PostProcessEffectsManager.Instance.ActivateGrayScaleEffect;
+                OnReviveFeedback += PostProcessEffectsManager.Instance.DeactivateGrayScaleEffect;
             }
         }
 
