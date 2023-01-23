@@ -17,13 +17,15 @@ namespace Entities.Champion
 {
     public partial class Champion : Entity
     {
-        [FormerlySerializedAs("catapultMovment")] public CatapultMovement catapultMovement;
+        [FormerlySerializedAs("catapultMovment")]
+        public CatapultMovement catapultMovement;
+
         public PhotonTransformView transformView;
         public ChampionSO championSo;
         public Transform rotateParent;
         public Transform championMesh;
         private Vector3 respawnPos;
-        [SerializeField] public ChampionInputController inputController; 
+        [SerializeField] public ChampionInputController inputController;
         public float pointPlacerDistanceAvoidance;
         private FogOfWarManager fowm;
         private CapacitySOCollectionManager capacityCollection;
@@ -39,13 +41,14 @@ namespace Entities.Champion
         [SerializeField] public NavMeshObstacle obstacle;
 
         public bool canUseCatapultMovement = true;
-      public  CapturePoint.CapturePoint currentPoint;
+        public CapturePoint.CapturePoint currentPoint;
         public ActiveCapacity attackBase;
         public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
         public ActiveCapacity currentCapacityUsed;
         public IAimable autoAttack;
         public AuraProduction auraProduction;
         [SerializeField] private Renderer rendererForOutline;
+
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
@@ -62,20 +65,18 @@ namespace Entities.Champion
             uiManager = UIManager.Instance;
             agent = GetComponent<NavMeshAgent>();
             obstacle = GetComponent<NavMeshObstacle>();
-            fowm.AddFOWViewable(this );
+            fowm.AddFOWViewable(this);
             blocker.SetUpBlocker();
             MapLoaderManager.Instance.AddCountForSendIsReady();
         }
 
         protected override void OnUpdate()
         {
-         
             if (isFollowing) FollowEntity(); // Lol
             if (!photonView.IsMine) return;
             CheckMoveDistance();
         }
 
-        
 
         public override void OnInstantiatedFeedback()
         {
@@ -97,7 +98,7 @@ namespace Entities.Champion
             attackDamage = championSo.attackDamage;
             attackAbilityIndex = championSo.attackAbilityIndex;
             abilitiesIndexes = championSo.activeCapacitiesIndexes;
-      //      ultimateAbilityIndex = championSo.ultimateAbilityIndex;
+            //      ultimateAbilityIndex = championSo.ultimateAbilityIndex;
             var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position,
                 Quaternion.identity, rotateParent);
             championMesh.transform.localEulerAngles = Vector3.zero;
@@ -141,7 +142,7 @@ namespace Entities.Champion
                     pos = transform;
                     break;
             }
-            
+
             respawnPos = transform.position = pos.position;
             SetupNavMesh();
             var championMeshLinker = championMesh.GetComponent<ChampionMeshLinker>();
@@ -153,62 +154,83 @@ namespace Entities.Champion
             if (uiManager != null)
             {
                 uiManager.InstantiateHealthBarForEntity(entityIndex);
-             //   uiManager.InstantiateResourceBarForEntity(entityIndex);
+                //   uiManager.InstantiateResourceBarForEntity(entityIndex);
             }
+
             so.SetIndexes();
-          
+
             for (int i = 0; i < so.activeCapacities.Length; i++)
             {
-                activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.activeCapacities[i].indexInCollection,this));
+                activeCapacities.Add(
+                    CapacitySOCollectionManager.CreateActiveCapacity(so.activeCapacities[i].indexInCollection, this));
             }
-        //    activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.ultimateAbility.indexInCollection,this));
+
+            //    activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(so.ultimateAbility.indexInCollection,this));
             for (int i = 0; i < so.activeCapacities.Length; i++)
             {
                 activeCapacities[i].SetUpActiveCapacity(so.activeCapacities[i].indexInCollection, this);
             }
-       //     activeCapacities[activeCapacities.Count-1].SetUpActiveCapacity(so.ultimateAbility.indexInCollection, this);
+
+            //     activeCapacities[activeCapacities.Count-1].SetUpActiveCapacity(so.ultimateAbility.indexInCollection, this);
             attackBase =
                 CapacitySOCollectionManager.CreateActiveCapacity(so.attackAbility.indexInCollection, this);
-            autoAttack =(IAimable) attackBase;
+            autoAttack = (IAimable)attackBase;
             attackBase.SetUpActiveCapacity(so.attackAbility.indexInCollection, this);
             if (PhotonNetwork.IsMasterClient)
             {
-            for (int i = 0; i < so.passiveCapacitiesIndexes.Length; i++)
-            {
-                RequestAddPassiveCapacity(so.passiveCapacitiesIndexes[i]);
+                for (int i = 0; i < so.passiveCapacitiesIndexes.Length; i++)
+                {
+                    RequestAddPassiveCapacity(so.passiveCapacitiesIndexes[i]);
+                }
             }
-            
-            }
+
             championMesh.GetComponent<EntityFOWShowableLinker>().LinkEntity(this);
             if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
             {
                 HideElements();
             }
-            
+
             switch (team)
-                    {
-                        case Enums.Team.Team1:
-                        {
-                            GoldProduction.secondGoldProduction.LinkBounty(this);
-                            break;
-                        }
-                        case Enums.Team.Team2:
-                        {
-                            GoldProduction.firstTeamGoldProduction.LinkBounty(this);
-                            break;
-                        }
-                    }
+            {
+                case Enums.Team.Team1:
+                {
+                    GoldProduction.secondGoldProduction.LinkBounty(this);
+                    break;
+                }
+                case Enums.Team.Team2:
+                {
+                    GoldProduction.firstTeamGoldProduction.LinkBounty(this);
+                    break;
+                }
+            }
+
             rb.velocity = Vector3.zero;
             RequestSetCanDie(true);
             auraProduction.InitAuraProduction();
             SyncSetCanCatapultMovementRPC(true);
+
+            if (photonView.IsMine)
+            {
+                GlobalDelegates.OneParameterDelegate<float> updateLowHpEffect = delegate(float hp)
+                {
+                    PostProcessEffectsManager.Instance.UpdateLowHpEffect(hp, maxHp);
+                };
+                OnDecreaseMaxHpFeedback += updateLowHpEffect;
+                OnIncreaseMaxHpFeedback += updateLowHpEffect;
+                OnSetMaxHpFeedback += updateLowHpEffect;
+                OnDecreaseCurrentHpFeedback += updateLowHpEffect;
+                OnIncreaseCurrentHpFeedback += updateLowHpEffect;
+                OnSetCurrentHpFeedback += updateLowHpEffect;
+                OnSetCurrentHpPercentFeedback += updateLowHpEffect;
+                OnDecreaseCurrentHpFeedback += (float hp) => PostProcessEffectsManager.Instance.LaunchDamageEffect();
+            }
         }
 
         public void RequestChangeBoolParameterAnimator(string parameterName, bool value)
         {
             photonView.RPC("ChangeBoolParameterAnimator", RpcTarget.All, parameterName, value);
         }
-        
+
         public void ActivateOutline()
         {
             rendererForOutline.material.SetInt("_Selection", 1);
@@ -216,7 +238,6 @@ namespace Entities.Champion
 
         public void DeactivateOutline()
         {
-            
             rendererForOutline.material.SetInt("_Selection", 0);
         }
 
@@ -225,8 +246,8 @@ namespace Entities.Champion
         {
             animator.SetBool(parameterName, value);
         }
-        
-        
+
+
         public void RequestSetCurrentCapacityUsed(byte index)
         {
             photonView.RPC("SetCurrentCapacityUsed", RpcTarget.All, index);
@@ -237,17 +258,18 @@ namespace Entities.Champion
         {
             currentCapacityUsed = activeCapacities[index];
         }
-        
+
         public void RequestSetCurrentCapacityUsedEqualToAttackBase()
         {
             photonView.RPC("SetCurrentCapacityUsedEqualToAttackBase", RpcTarget.All);
         }
+
         [PunRPC]
         public void SetCurrentCapacityUsedEqualToAttackBase()
         {
             currentCapacityUsed = attackBase;
         }
-  
+
         public void RequestIncreaseHealAmountOfPerseverance(float amount)
         {
             photonView.RPC("IncreaseHealAmountOfPerseverance", RpcTarget.MasterClient, amount);
@@ -259,19 +281,18 @@ namespace Entities.Champion
             PassivePerseverance passivePerseverance = (PassivePerseverance)passiveCapacitiesList[0];
             passivePerseverance.healPercentage += amount;
             Debug.Log(passivePerseverance.healPercentage);
-            if(!passivePerseverance.healPercentage.IsClamp(0 ,1))
+            if (!passivePerseverance.healPercentage.IsClamp(0, 1))
             {
-                passivePerseverance.healPercentage = 1; 
-    
+                passivePerseverance.healPercentage = 1;
             }
         }
 
-      public  void  SetCanCatapultMovement(bool value)
+        public void SetCanCatapultMovement(bool value)
         {
-            photonView.RPC("SyncSetCanCatapultMovementRPC",RpcTarget.All ,value);
+            photonView.RPC("SyncSetCanCatapultMovementRPC", RpcTarget.All, value);
         }
 
-       [PunRPC]
-       public void SyncSetCanCatapultMovementRPC(bool value) => canUseCatapultMovement = value;
+        [PunRPC]
+        public void SyncSetCanCatapultMovementRPC(bool value) => canUseCatapultMovement = value;
     }
 }

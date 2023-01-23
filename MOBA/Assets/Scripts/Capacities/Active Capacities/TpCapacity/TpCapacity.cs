@@ -93,7 +93,8 @@ namespace Entities.Capacities
             }
 
             champion.CancelCurrentCapacityRPC();
-            champion.RequestResetCapacityAimed();
+            champion.SyncResetCapacityAimedRPC();
+            
            
         }
 
