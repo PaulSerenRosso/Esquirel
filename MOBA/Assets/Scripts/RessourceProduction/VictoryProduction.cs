@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CapturePoint;
 using GameStates;
+using Photon.Pun;
 using RessourceProduction;
 using UnityEngine;
 
@@ -12,21 +13,31 @@ namespace RessourceProduction
     {
         // Start is called before the first frame update
         private UIManager uiManager;
+
+   
         private int currentStepIndex;
         public static VictoryProduction firstTeamVictoryProduction;
         public static VictoryProduction secondTeamVictoryProduction;
 
+        public event GlobalDelegates.NoParameterDelegate reachStepEvent;
         protected override void OnStart()
         {
             allCapturesPoint = CapturePointCollectionManager.instance.VictoryCapturePoints;
             base.OnStart();
             uiManager = UIManager.Instance;
             uiManager.UpdateSlider(Ressource, so.ressourceMax, team);
-            currentStepIndex = 0;
+            RequestSetCurrentStepIndex(0);
+            var playerTeam = GameStateMachine.Instance.GetPlayerTeam();
+            if (playerTeam == team)
+            {
+                reachStepEvent += MessagePopUpManager.Instance.SendAllyReachStep;
+            }
+            else   reachStepEvent += MessagePopUpManager.Instance.SendEnemyReachStep;
             switch (team)
             {
                 case Enums.Team.Team1:
                 {
+                    
                     firstTeamVictoryProduction = this;
                     break;
                 }
@@ -37,6 +48,8 @@ namespace RessourceProduction
                 }
             }
         }
+        
+        
 
         public override void UpdateFeedback(float value)
         {
@@ -60,16 +73,31 @@ namespace RessourceProduction
                     {
                         var champion = player.Value.champion;
                         if (champion.team == team)
+                        {
                             champion.auraProduction.IncreaseRessource(so.victorySteps[currentStepIndex].auraAmount);
+                            
+                        }
                     }
-                    currentStepIndex++;
+                  RequestSetCurrentStepIndex(currentStepIndex+1);
                 }
             }
         }
 
+        void RequestSetCurrentStepIndex(int stepIndex) =>
+            photonView.RPC("SyncSetCurrentStepIndexRPC", RpcTarget.All, stepIndex);
+        [PunRPC]
+        void SyncSetCurrentStepIndexRPC(int stepIndex)
+        {
+            if(stepIndex > currentStepIndex)
+                reachStepEvent?.Invoke();
+            currentStepIndex = stepIndex;
+        }
+        
         public override void DecreaseRessource(float amount)
         {
             throw new System.NotImplementedException();
         }
+
+
     }
 }

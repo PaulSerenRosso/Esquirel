@@ -72,6 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityIndex: 0
   canAddPassiveCapacity: 1
+  entityFowShowableLinker: {fileID: 8946926244105007639}
   canRemovePassiveCapacity: 1
   uiTransform: {fileID: 0}
   offset: {x: 0, y: 2, z: 0}
@@ -232,7 +233,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3814170805979933772}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -332,7 +333,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8946926244105007639

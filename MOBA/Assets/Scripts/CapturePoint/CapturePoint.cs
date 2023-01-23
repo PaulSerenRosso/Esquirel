@@ -18,13 +18,13 @@ namespace CapturePoint
         private float capturePointValue;
         private CapturePointTeamState currentTeamState;
         private CapturePointState stateToStabilize;
-
+        public string pointName;
         private CapturePointTeamState destinationState;
         private int capturePointDirection;
-        [SerializeField] protected CapturePointSO capturePointSO;
-       public CapturePointState neutralState;
-       public CapturePointTeamState secondTeamState;
-       public CapturePointTeamState firstTeamState;
+        public CapturePointSO capturePointSO;
+        public CapturePointState neutralState;
+        public CapturePointTeamState secondTeamState;
+        public CapturePointTeamState firstTeamState;
         private float capturePointSpeed;
 
         private List<GlobalDelegates.NoParameterDelegate> capturePointDelegates =
@@ -35,20 +35,22 @@ namespace CapturePoint
         protected Enums.CapturePointResolveType capturePointResolve;
         private float capturePointNewValue;
 
+
         public float CapturePointValue
         {
             set
             {
                 capturePointValue = value;
+                capturePointValue = value;
                 capturePointValueText.text = value.ToString();
-          
             }
         }
 
 
-        [SerializeField]
-        private TextMeshProUGUI capturePointValueText;
-        protected override void OnStart() {
+        [SerializeField] private TextMeshProUGUI capturePointValueText;
+
+        protected override void OnStart()
+        {
             capturePointSpeed = capturePointSO.capturePointSpeed;
             firstTeamState.Copy(capturePointSO.firstTeamState);
             secondTeamState.Copy(capturePointSO.secondTeamState);
@@ -59,18 +61,16 @@ namespace CapturePoint
             team = Enums.Team.Neutral;
             UIManager.Instance.LookAtCamera(this.capturePointValueText.transform);
             capturePointValueText.enabled = false;
-            renderer.material.color= GameStateMachine.Instance.GetTeamColor(team);
+            renderer.material.color = GameStateMachine.Instance.GetTeamColor(team);
             base.OnStart();
         }
 
         public override void TriggerEnter(Collider other)
         {
-      
             Entity entity = other.GetComponent<Entity>();
 
             if (entity != null)
             {
-            
                 Champion champion = (Champion)entity;
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -92,38 +92,33 @@ namespace CapturePoint
                         }
                     }
                 }
+
                 if (champion.photonView.IsMine)
-                    {
-                        capturePointValueText.enabled = true;
-                    }
-                
+                {
+                    capturePointValueText.enabled = true;
+                }
             }
         }
 
 
-
         public event GlobalDelegates.OneParameterDelegate<Champion> OnRemoveSecondTeamChampion;
-     public void RemoveSecondTeamChampion(Champion champion)
-        {
 
+        public void RemoveSecondTeamChampion(Champion champion)
+        {
             secondTeamChampions.Remove(champion);
             OnRemoveSecondTeamChampion?.Invoke(champion);
             champion.currentPoint = null;
             ResolveTeamSupremacy();
-       
         }
-     
-     public event GlobalDelegates.OneParameterDelegate<Champion> OnRemoveFirstTeamChampion;
-        
-      public  void RemoveFirstTeamChampion(Champion champion)
+
+        public event GlobalDelegates.OneParameterDelegate<Champion> OnRemoveFirstTeamChampion;
+
+        public void RemoveFirstTeamChampion(Champion champion)
         {
-      
             firstTeamChampions.Remove(champion);
             OnRemoveFirstTeamChampion?.Invoke(champion);
             ResolveTeamSupremacy();
             champion.currentPoint = null;
-    
-         
         }
 
         public override void TriggerExit(Collider other)
@@ -142,9 +137,10 @@ namespace CapturePoint
                         }
                         else if (entity.team == Enums.Team.Team2)
                         {
-                          RemoveSecondTeamChampion(champion);
+                            RemoveSecondTeamChampion(champion);
                         }
                     }
+
                     if (champion.photonView.IsMine)
                     {
                         capturePointValueText.enabled = false;
@@ -182,6 +178,7 @@ namespace CapturePoint
                 capturePointDirection = 0;
                 return;
             }
+
             switch (team)
             {
                 case Enums.Team.Team1:
@@ -199,7 +196,6 @@ namespace CapturePoint
                     UpdateCapturePointDirectionNeutral();
                     break;
                 }
-                
             }
         }
 
@@ -322,7 +318,7 @@ namespace CapturePoint
             {
                 capturePointDirection = 1;
             }
-            
+
             stateToStabilize = capturePointState;
             RemoveAllCapturePointDelegatesToTick();
             AddRangeCapturePointDelegatesToTick(TickTowardsStabilityPoint);
@@ -359,7 +355,6 @@ namespace CapturePoint
 
         private void TickTowardsDestinationState()
         {
-
             capturePointNewValue = capturePointValue +
                                    capturePointSpeed / (float)GameStateMachine.Instance.tickRate *
                                    capturePointDirection;
@@ -368,12 +363,11 @@ namespace CapturePoint
                 if (capturePointNewValue >= destinationState.captureValue)
                 {
                     CapturePointValue = destinationState.maxValue;
+                    RequestUpdateCapturePointVisual( destinationState.team);
                     RemoveRangeCapturePointDelegateToTick(TickTowardsDestinationState);
-                    team = destinationState.team;
                     destinationState.enterStateEvent?.Invoke();
                     neutralState.exitStateEvent?.Invoke();
 //                    Debug.Log("bonsoir àtous enter ");
-                    RequestUpdateCapturePointVisual();
                     return;
                 }
             }
@@ -381,12 +375,10 @@ namespace CapturePoint
             {
                 if (capturePointNewValue <= destinationState.captureValue)
                 {
+                    RequestUpdateCapturePointVisual(destinationState.team);
                     CapturePointValue = destinationState.maxValue;
-                    team = destinationState.team;
                     destinationState.enterStateEvent?.Invoke();
                     neutralState.exitStateEvent?.Invoke();
-                    Debug.Log("bonsoir àtous enter ");
-                    RequestUpdateCapturePointVisual();
                     RemoveRangeCapturePointDelegateToTick(TickTowardsDestinationState);
                     return;
                 }
@@ -402,12 +394,9 @@ namespace CapturePoint
             {
                 if (capturePointValue > currentTeamState.captureValue)
                 {
-                    team = Enums.Team.Neutral;
-                        currentTeamState.exitStateEvent?.Invoke();
-                        neutralState.enterStateEvent?.Invoke();
-                        
-                    
-                    RequestUpdateCapturePointVisual();
+                    RequestUpdateCapturePointVisual(Enums.Team.Neutral);
+                    currentTeamState.exitStateEvent?.Invoke();
+                    neutralState.enterStateEvent?.Invoke();
                     currentTeamState = null;
                     RemoveRangeCapturePointDelegateToTick(TickCurrentTeamState);
                 }
@@ -416,9 +405,8 @@ namespace CapturePoint
             {
                 if (capturePointValue < currentTeamState.captureValue)
                 {
-                    team = Enums.Team.Neutral;
+                    RequestUpdateCapturePointVisual( Enums.Team.Neutral);
                     currentTeamState.exitStateEvent?.Invoke();
-                    RequestUpdateCapturePointVisual();
                     currentTeamState = null;
                     neutralState.enterStateEvent?.Invoke();
                     RemoveRangeCapturePointDelegateToTick(TickCurrentTeamState);
@@ -431,29 +419,68 @@ namespace CapturePoint
             if (stream.IsWriting)
             {
                 stream.SendNext(capturePointValue);
-            
             }
             else
             {
                 CapturePointValue = (float)stream.ReceiveNext();
-              
             }
         }
 
-        public void RequestUpdateCapturePointVisual()
+        public void RequestUpdateCapturePointVisual(Enums.Team newTeam)
         {
-            photonView.RPC("UpdateCapturePointVisual", RpcTarget.All,(byte) team);
+            photonView.RPC("UpdateCapturePointVisual", RpcTarget.All, (byte)newTeam);
         }
 
         [PunRPC]
         public void UpdateCapturePointVisual(byte indexTeam)
         {
-            team = (Enums.Team)indexTeam;
-            renderer.material.color= GameStateMachine.Instance.GetTeamColor(team);
-            
-           
-            
+            Debug.Log(team);
+            switch (team)
+            {
+                case Enums.Team.Neutral:
+                {
+                    neutralState.exitStateEventFeedback?.Invoke();
 
+                    break;
+                }
+                case Enums.Team.Team1:
+                {
+                    firstTeamState.exitStateEventFeedback?.Invoke();
+                    break;
+                }
+                case Enums.Team.Team2:
+                {
+                    secondTeamState.exitStateEventFeedback?.Invoke();
+                    break;
+                }
+            }
+
+            var newTeam = (Enums.Team)indexTeam;
+            UpdateNewCapturePointState(newTeam);
+            team = newTeam;
+            renderer.material.color = GameStateMachine.Instance.GetTeamColor(team);
+        }
+
+        void UpdateNewCapturePointState(Enums.Team newTeam)
+        {
+            switch (newTeam)
+            {
+                case Enums.Team.Neutral:
+                {
+                    neutralState.enterStateEventFeedback?.Invoke();
+                    break;
+                }
+                case Enums.Team.Team1:
+                {
+                    firstTeamState.enterStateEventFeedback?.Invoke();
+                    break;
+                }
+                case Enums.Team.Team2:
+                {
+                    secondTeamState.enterStateEventFeedback?.Invoke();
+                    break;
+                }
+            }
         }
     }
 }

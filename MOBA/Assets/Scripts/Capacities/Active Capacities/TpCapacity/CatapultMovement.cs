@@ -37,11 +37,11 @@ public class CatapultMovement : JumpMovement
         {
             InputManager.PlayerMap.MoveMouse.Disable();
         }
-    
+        champion.animator.Play("CatapultIdle");
+        champion.animator.SetBool("InCatapult", true);
+
     }
-
-
-
+    
     protected override void ActivateController()
     {
         base.ActivateController();
@@ -50,6 +50,7 @@ public class CatapultMovement : JumpMovement
         {
             InputManager.PlayerMap.MoveMouse.Enable();
         }
+        champion.animator.SetBool("InCatapult", false);
     }
     
 }
