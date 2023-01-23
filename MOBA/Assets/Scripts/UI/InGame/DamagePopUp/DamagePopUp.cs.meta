@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 1649cc3270e5ba9479ff7dc49b8663ed
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - damagePopUp: {fileID: 3240552065661360653, guid: 9b71ce1cf86221944bc013ee55e44110, type: 3}
+  - startPosition: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

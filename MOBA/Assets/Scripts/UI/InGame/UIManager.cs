@@ -1,9 +1,6 @@
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 
-public partial class UIManager : MonoBehaviour
-{
+public partial class UIManager : MonoBehaviour {
     public static UIManager Instance;
     
     private void Awake()
