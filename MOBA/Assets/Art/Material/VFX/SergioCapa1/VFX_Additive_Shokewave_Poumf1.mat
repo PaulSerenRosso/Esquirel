@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VFX_Additive_Shokewave_Poumf1
+  m_Shader: {fileID: 4800000, guid: 7543197eb2705c4438b1b6578e762695, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Dissolve_Texture:
+        m_Texture: {fileID: 2800000, guid: a435b44991020ee418c814a7d237b7ad, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Main_Texture:
+        m_Texture: {fileID: 2800000, guid: f631fa6989759d848bb4c1c5d67a6cc4, type: 3}
+        m_Scale: {x: 1, y: 0.6}
+        m_Offset: {x: 0, y: 0}
+    - _Mask_Texture:
+        m_Texture: {fileID: 2800000, guid: 000619f4b2ebfeb46b2a91c5c51fa122, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise_Texture:
+        m_Texture: {fileID: 2800000, guid: 229b39fcd241b5441b5ee8b7b619e754, type: 3}
+        m_Scale: {x: 2, y: 0.25}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlphaCutoff: 0.5
+    - _Cullmode: 0
+    - _Diss_UPanner: 0
+    - _Diss_VPanner: 0
+    - _Dissolve: 1
+    - _Main_Ins: 1.2
+    - _Main_Pow: 1
+    - _Main_UPanner: 0
+    - _Main_UVPow: 1.2
+    - _Main_VPanner: -0.8
+    - _Mask_Channel: 1
+    - _Mask_Rang2: 3.7
+    - _Mask_Range: 1
+    - _Mian_UVPow: 0.69
+    - _Noise_UPanner: 0
+    - _Noise_VPanner: 0
+    - _Noise_Val: 0.2
+    - _Opacity: 1
+    - _Use_Custom: 0
+    - _Use_Step_Dissiove: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Main_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_BuildTextureStacks: []
