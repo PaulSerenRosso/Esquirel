@@ -22,6 +22,33 @@ MonoBehaviour:
     - _FogOfWarDebugTry
     - FOG_InGameScene
     - Tempo_In Game Scene
+--- !u!114 &-6115719108222500023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a8871ed8b9a0f04f9396e031e7c2015, type: 3}
+  m_Name: AllInOnexVFX
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    Event: 600
+    blitMaterial: {fileID: 2100000, guid: aa982780f3a8ce64e9f3c34fee5c00b2, type: 2}
+    blitMaterialPassIndex: 0
+    setInverseViewMatrix: 0
+    requireDepthNormals: 0
+    srcType: 1
+    srcTextureId: _CameraColorTexture
+    srcTextureObject: {fileID: 0}
+    dstType: 0
+    dstTextureId: 
+    dstTextureObject: {fileID: 0}
+    overrideGraphicsFormat: 0
+    graphicsFormat: 4
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,7 +65,8 @@ MonoBehaviour:
   - {fileID: -7344162105559021888}
   - {fileID: 63595180152150429}
   - {fileID: 7186567748798355767}
-  m_RendererFeatureMap: c00645dd794b149a9d5965ba7aefe1003799679d4ad1bb63
+  - {fileID: -6115719108222500023}
+  m_RendererFeatureMap: c00645dd794b149a9d5965ba7aefe1003799679d4ad1bb63494354a0df9920ab
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
