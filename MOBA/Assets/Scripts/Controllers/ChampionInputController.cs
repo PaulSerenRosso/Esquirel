@@ -33,7 +33,8 @@ namespace Controllers.Inputs
 
         private bool cursorIsAimed;
         private bool cursorIsUpdate;
-    
+
+        private Champion targetChampion;
         /// <summary>
         /// Actions Performed on Attack Activation
         /// </summary>
@@ -172,7 +173,9 @@ namespace Controllers.Inputs
                         if (distanceBetweenCurrentEntityAndControlledEntity <
                             distanceBetweenCloserEntityAndControlledEntity)
                         {
+                            
                             closerEnt = currentEntity;
+                            
                             distanceBetweenCloserEntityAndControlledEntity =
                                 distanceBetweenCurrentEntityAndControlledEntity;
                         }
@@ -184,6 +187,17 @@ namespace Controllers.Inputs
                         entityIsVisible = true;
                     }
 
+                    if (closerEnt != targetChampion)
+                    {
+                        if (targetChampion != null)
+                        {
+                            if (champion.championFollow != targetChampion)
+                            {
+                            targetChampion.DeactivateOutline();
+                            }
+                            targetChampion = null;
+                        }
+                    }
                     // Debug.Log("hitentity");
                     if (closerEnt is ITargetable)
                     {
@@ -199,6 +213,11 @@ namespace Controllers.Inputs
                                 {
                                     CursorManager.Instance.ChangeCursorSpriteToAttackSprite();
                                     cursorIsUpdate = true;
+                                    if (closerEnt is Champion currentTargetChampion)
+                                    {
+                                        targetChampion = currentTargetChampion;
+                                        targetChampion.ActivateOutline();
+                                    }
                                 }
                             }
                             
@@ -215,17 +234,38 @@ namespace Controllers.Inputs
                         {
                             cursorIsUpdate = true;
                         CursorManager.Instance.ChangeCursorSpriteToInteractSprite();
+                        catapultDetected.ActivateOutline();
                         }
                     }
                 }
                 else
                 {
+                    if(catapultDetected)
+                    catapultDetected.DeactivateOutline();
+                    if (targetChampion != null)
+                    {
+                        if (champion.championFollow != targetChampion)
+                        {
+                            targetChampion.DeactivateOutline();
+                        }
+                        targetChampion = null;
+                    }
                     catapultDetected = null;
                     targetEntity[0] = -1;
                 }
             }
             else
             {
+                if(catapultDetected)
+                catapultDetected.DeactivateOutline();
+                if (targetChampion != null)
+                {
+                    if (champion.championFollow != targetChampion)
+                    {
+                        targetChampion.DeactivateOutline();
+                    }
+                    targetChampion = null;
+                }
                 catapultDetected = null;
                 targetEntity[0] = -1;
             }

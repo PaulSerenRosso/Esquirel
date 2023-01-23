@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using Entities.Champion;
+using Entities.FogOfWar;
 using ExitGames.Client.Photon.StructWrapping;
 using GameStates;
 using UnityEngine;
@@ -57,8 +58,13 @@ public class PassiveSpeed : PassiveCapacity
          CreateFx();
          champion = (Champion)target;
          fxObject.transform.parent = champion.rotateParent;
-         target.meshRenderersToShow.Add(fxObject.GetComponent<ParticleSystemRenderer>());
-        target.meshRenderersToShowAlpha.Add(1);
+         var meshrenderers = fxObject.GetComponent<EntityFOWShowableLinker>().meshRenderers;
+         for (int i = 0; i < meshrenderers.Length; i++)
+         {
+             target.meshRenderersToShow.Add(meshrenderers[i]);
+             target.meshRenderersToShowAlpha.Add(1);
+         }
+       
         if(GameStateMachine.Instance.GetPlayerTeam() == target.team)
             target.ShowElements();
         else
@@ -80,15 +86,16 @@ public class PassiveSpeed : PassiveCapacity
                      return;
                  };
          }*/
-        Debug.Log("syncremoved");
+     
        base.SyncOnRemoved(target);
-       Debug.Log(fxObject);
-       var particleSystemRenderer = fxObject.GetComponent<ParticleSystemRenderer>();
-       Debug.Log(particleSystemRenderer);
-       Debug.Log(target);
-       
-       target.meshRenderersToShowAlpha.RemoveAt(target.meshRenderersToShow.IndexOf(particleSystemRenderer));
-       target.meshRenderersToShow.Remove(particleSystemRenderer);
+
+       var meshrenderers = fxObject.GetComponent<EntityFOWShowableLinker>().meshRenderers;
+       for (int i = 0; i < meshrenderers.Length; i++)
+       {
+           target.meshRenderersToShowAlpha.RemoveAt(target.meshRenderersToShow.IndexOf(meshrenderers[i]));
+           target.meshRenderersToShow.Remove(meshrenderers[i]);
+       }
+     
         RequeueFx();
     }
 

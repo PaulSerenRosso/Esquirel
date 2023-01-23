@@ -259,8 +259,7 @@ namespace Entities.FogOfWar
             fieldOfViewObstacles.Clear();
 
             
-            Debug.DrawRay(new Vector3(entity.transform.position.x, startYPositionRay, entity.transform.position.z), dir*
-                entity.viewRange, Color.green, Time.deltaTime);
+    
 
             if (hits.Length != 0)
             {
