@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Entities.Capacities
 {
     [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/ActiveAttackSlowArea", fileName = "ActiveAttackSlowAreaCapacitySO")]  
-public class ActiveAttackWithColliderSlowAreaCapacitySo : ActiveAttackWithColliderCapacitySO
+public class ActiveAttackWithColliderSlowAreaCapacitySO : ActiveAttackWithColliderCapacitySO
 {
     public PassiveSpeedSO passiveSpeed;
     public float radiusArea;

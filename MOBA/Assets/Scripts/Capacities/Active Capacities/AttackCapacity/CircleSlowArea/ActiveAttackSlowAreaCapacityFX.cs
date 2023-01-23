@@ -15,8 +15,8 @@ namespace Entities.Capacities
             base.InitCapacityFX(entityIndex, capacityIndex, direction);
             ActiveAttackWithColliderSlowAreaCapacity activeAttackWithColliderSlowAreaCapacity =
                 (ActiveAttackWithColliderSlowAreaCapacity)ActiveAttackCapacity;
-            ActiveAttackWithColliderSlowAreaCapacitySo activeAttackWithColliderSlowAreaCapacitySo =
-                (ActiveAttackWithColliderSlowAreaCapacitySo)activeAttackWithColliderSlowAreaCapacity.so;
+            ActiveAttackWithColliderSlowAreaCapacitySO activeAttackWithColliderSlowAreaCapacitySo =
+                (ActiveAttackWithColliderSlowAreaCapacitySO)activeAttackWithColliderSlowAreaCapacity.so;
             fxObject.transform.SetGlobalScale(new Vector3(1, 0, 1) * activeAttackWithColliderSlowAreaCapacitySo.radiusArea +
                                               Vector3.up * transform.lossyScale.y);
             fogCollider.transform.SetGlobalScale(Vector3.one*activeAttackWithColliderSlowAreaCapacitySo.radiusArea);

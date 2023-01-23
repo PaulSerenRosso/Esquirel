@@ -8,7 +8,7 @@ namespace Entities.Capacities
     public class CurveMovementWithPrevisualisableCapacity : CurveMovementCapacity, IPrevisualisable
     {
         private bool isDrawing = false;
-        private PrevizualisableCurveMovement _previsualisableCurveMovementObject;
+        protected PrevizualisableCurveMovement _previsualisableCurveMovementObject;
         private Vector3 previsualisableCurveMovementObjectForward;
         private bool canDraw = true;
 
@@ -143,8 +143,7 @@ namespace Entities.Capacities
                 _previsualisableCurveMovementObject =
                     Object.Instantiate(curveMovementWithPrevisualisableCapacitySo.previsualisableCurveMovementPrefab, caster.transform)
                         .GetComponent<PrevizualisableCurveMovement>();
-                _previsualisableCurveMovementObject.UpdatePositionAndSize(range);
-                _previsualisableCurveMovementObject.gameObject.SetActive(false);
+              
                 champion.OnSetCooldownFeedback += DisableCanDraw;
             }
         }
