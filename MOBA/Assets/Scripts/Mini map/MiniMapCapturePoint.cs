@@ -24,9 +24,9 @@ namespace MiniMap
             yield return new WaitForEndOfFrame();
             miniMapIcon = GetComponent<MiniMapIcon>();
             capturePoint = GetComponent<CapturePoint.CapturePoint>();
-            capturePoint.neutralState.enterStateEvent += () => miniMapIcon.SetSprite(neutralStateSprite);
-            capturePoint.firstTeamState.enterStateEvent += () => miniMapIcon.SetSprite(firstTeamStateSprite);
-            capturePoint.secondTeamState.enterStateEvent += () => miniMapIcon.SetSprite(secondTeamStateSprite);
+            capturePoint.neutralState.enterStateEventFeedback += () => miniMapIcon.SetSprite(neutralStateSprite);
+            capturePoint.firstTeamState.enterStateEventFeedback += () => miniMapIcon.SetSprite(firstTeamStateSprite);
+            capturePoint.secondTeamState.enterStateEventFeedback += () => miniMapIcon.SetSprite(secondTeamStateSprite);
         }
 
         public void Test() => Debug.Log("bonsoir ");
