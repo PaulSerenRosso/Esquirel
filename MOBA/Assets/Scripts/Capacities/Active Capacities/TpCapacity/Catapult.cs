@@ -16,6 +16,7 @@ namespace Entities
 
        [SerializeField] private AnimationClip reloadAnimation;
 
+       [SerializeField] private Renderer[] renderersForOutline;
         public bool requestSended;
         private float distanceForUseCatapult;
 
@@ -32,6 +33,22 @@ namespace Entities
             }
         }
 
+        public void ActivateOutline()
+        {
+            for (int i = 0; i < renderersForOutline.Length; i++)
+            { 
+                renderersForOutline[i].material.SetInt("_Selection", 1);
+            }
+        }
+
+        public void DeactivateOutline()
+        {
+            for (int i = 0; i < renderersForOutline.Length; i++)
+            { 
+                renderersForOutline[i].material.SetInt("_Selection", 0);
+            }
+        }
+            
      public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
 
         private byte soIndex;

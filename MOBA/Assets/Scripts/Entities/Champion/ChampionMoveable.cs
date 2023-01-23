@@ -53,7 +53,7 @@ namespace Entities.Champion
         // === League Of Legends
         private int mouseTargetIndex;
         public bool isFollowing;
-        private Entity entityFollow;
+        public Champion championFollow;
         public Vector3 moveDestination;
 
         public bool inCurveMovement;
@@ -266,13 +266,14 @@ namespace Entities.Champion
             GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent)
         {
             if (!isFollowing ||
-                (isFollowing && (entityFollow != _entity || currentCapacityAimed != capacityWhichAimed)))
+                (isFollowing && (championFollow != _entity || currentCapacityAimed != capacityWhichAimed)))
             {
                 RequestCancelAutoAttack();
                 RequestResetCapacityAimed();
-                entityFollow = _entity;
+                championFollow =(Champion) _entity;
+                championFollow.ActivateOutline();
                 isFollowing = true;
-                targetEntity = (ITargetable)entityFollow;
+                targetEntity = (ITargetable)championFollow;
                 currentIAimable = (IAimable)capacityWhichAimed;
                 currentCapacityAimed = capacityWhichAimed;
                 this.currentTargetCapacityAtRangeEvent = currentTargetCapacityAtRangeEvent;
@@ -289,21 +290,21 @@ namespace Entities.Champion
             if (targetEntity.CanBeTargeted())
             {
                 // Debug.Log("canbetarget");
-                if (fowm.CheckEntityIsVisibleForPlayer(entityFollow))
+                if (fowm.CheckEntityIsVisibleForPlayer(championFollow))
                 {
                     //Debug.Log("visible");
-                    if (currentIAimable.TryAim(entityIndex, entityFollow.entityIndex,
-                            entityFollow.transform.position))
+                    if (currentIAimable.TryAim(entityIndex, championFollow.entityIndex,
+                            championFollow.transform.position))
                     {
                         //Debug.Log("tryaim");
                         if (currentCapacityUsed == null)
                         {
-                            if ((this.transform.position - entityFollow.transform.position).sqrMagnitude >
+                            if ((this.transform.position - championFollow.transform.position).sqrMagnitude >
                                 currentIAimable.GetSqrMaxRange())
                             {
                                 //Debug.Log("not distance");
-                                moveDestination = entityFollow.transform.position;
-                                moveDestination.y = entityFollow.transform.position.y;
+                                moveDestination = championFollow.transform.position;
+                                moveDestination.y = championFollow.transform.position.y;
                             }
                             else
                             {
@@ -320,8 +321,6 @@ namespace Entities.Champion
                 {
                     RequestCancelAutoAttack();
                     RequestResetCapacityAimed();
-                    isFollowing = false;
-                    currentTargetCapacityAtRangeEvent = null;
                 }
             }
             else
@@ -329,8 +328,8 @@ namespace Entities.Champion
                 moveDestination = transform.position;
                 RequestCancelAutoAttack();
                 RequestResetCapacityAimed();
-                currentTargetCapacityAtRangeEvent = null;
-                isFollowing = false;
+               
+              
             }
         }
 
@@ -341,10 +340,10 @@ namespace Entities.Champion
             moveDestination = transform.position;
             currentTargetCapacityAtRangeEvent.Invoke(currentCapacityAimed.indexOfSOInCollection, new[]
             {
-                entityFollow.entityIndex
+                championFollow.entityIndex
             }, new[]
             {
-                entityFollow.transform.position
+                championFollow.transform.position
             });
         }
 

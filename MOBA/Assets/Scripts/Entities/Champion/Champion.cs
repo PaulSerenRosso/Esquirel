@@ -45,7 +45,7 @@ namespace Entities.Champion
         public ActiveCapacity currentCapacityUsed;
         public IAimable autoAttack;
         public AuraProduction auraProduction;
-
+        [SerializeField] private Renderer rendererForOutline;
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
@@ -141,18 +141,13 @@ namespace Entities.Champion
                     pos = transform;
                     break;
             }
-
-        
+            
             respawnPos = transform.position = pos.position;
             SetupNavMesh();
-
-
             var championMeshLinker = championMesh.GetComponent<ChampionMeshLinker>();
             championMeshLinker.LinkTeamColor(this.team);
-            animator = championMeshLinker.animator; 
-            
-     
-
+            animator = championMeshLinker.animator;
+            rendererForOutline = championMeshLinker.championRenderer;
             uiManager = UIManager.Instance;
 
             if (uiManager != null)
@@ -212,6 +207,17 @@ namespace Entities.Champion
         public void RequestChangeBoolParameterAnimator(string parameterName, bool value)
         {
             photonView.RPC("ChangeBoolParameterAnimator", RpcTarget.All, parameterName, value);
+        }
+        
+        public void ActivateOutline()
+        {
+            rendererForOutline.material.SetInt("_Selection", 1);
+        }
+
+        public void DeactivateOutline()
+        {
+            
+            rendererForOutline.material.SetInt("_Selection", 0);
         }
 
         [PunRPC]

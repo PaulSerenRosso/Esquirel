@@ -52,8 +52,13 @@ namespace Entities.Champion
 
         [PunRPC]
         public void SyncResetCapacityAimedRPC()
-        {
+        { 
+            if(championFollow)
+            championFollow.DeactivateOutline();
+            isFollowing = false; 
+            championFollow = null; 
             currentCapacityAimed = null;
+            currentTargetCapacityAtRangeEvent = null;
         }
 
         public void CancelCurrentCapacityRPC()

@@ -169,6 +169,9 @@ MonoBehaviour:
   catapultThrowingCapacityCapacitySo: {fileID: 11400000, guid: bad8d0330de7d97499de9182b006d9f3, type: 2}
   destination: {x: 25.1, y: 0, z: -10.1}
   reloadAnimation: {fileID: -201274986745152302, guid: fb205f018b1d5b044a9ba375aef93a01, type: 3}
+  renderersForOutline:
+  - {fileID: 6273284494324470396}
+  - {fileID: 1437645777888185252}
   requestSended: 0
   animator: {fileID: 6717577783061476190}
 --- !u!114 &6215486283502633972
@@ -325,6 +328,16 @@ GameObject:
 --- !u!4 &5875405945829277050 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 00a38c2d363cdb2438875d5c07c7cb10, type: 3}
+  m_PrefabInstance: {fileID: 6197828201459374737}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6273284494324470396 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 75493480999110893, guid: 00a38c2d363cdb2438875d5c07c7cb10, type: 3}
+  m_PrefabInstance: {fileID: 6197828201459374737}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1437645777888185252 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5039687269024256309, guid: 00a38c2d363cdb2438875d5c07c7cb10, type: 3}
   m_PrefabInstance: {fileID: 6197828201459374737}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &6717577783061476190
