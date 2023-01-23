@@ -40,7 +40,7 @@ Material:
     - _FrequenceBloodSpeed: 8
     - _Opacity: 1
     - _OpacityBloodEffect: 0
-    - _OpacityGrayscaleEffect: 0.85
+    - _OpacityGrayscaleEffect: 0
     - _OpacityImpactEffect: 0
     - _SizeBloodEffect: 2
     - _SizeEffect: 3.25
