@@ -17,7 +17,7 @@ public class MessagePopUpManager : MonoBehaviour
     
 
     public void SendEnemyReachStep() =>
-        CreateMessagePopUp("The ennmies reached a step ! They won an aura point !", false);
+        CreateMessagePopUp("The enemies reached a step ! They won an aura point !", false);
 
     public void SendAllyReachStep() => CreateMessagePopUp("You reached a step ! You won an aura point !", true);
 
