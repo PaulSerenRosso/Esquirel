@@ -126,15 +126,7 @@ public class PlayerInterface : MonoBehaviour
                     spell01CooldownTxt.enabled = false;
                 }
                 break;
-            
-            case PlayerUIImage.Spell01Recast:
-                spell01RecastImage.fillAmount = 1-cooldownValue / maxCooldownValue;
-                spell01Cooldown.fillAmount = 0;
-                if (cooldownValue == 0) {
-                    spell01RecastImage.fillAmount = 0;
-                }
-                break;
-            
+
             case PlayerUIImage.Spell02:
                 spell02CooldownTxt.enabled = true;
                 spell02Cooldown.fillAmount = 1-cooldownValue / maxCooldownValue;
@@ -159,6 +151,29 @@ public class PlayerInterface : MonoBehaviour
 
             default: throw new ArgumentOutOfRangeException(nameof(spellType), spellType, null);
         }
+    }
+
+    /// <summary>
+    /// Change the value of the recast cooldown
+    /// </summary>
+    /// <param name="cooldownValue"></param>
+    /// <param name="maxCooldownValue"></param>
+    public void ChangeRecastCooldown(float cooldownValue, float maxCooldownValue) {
+        spell01RecastImage.fillAmount = 1-cooldownValue / maxCooldownValue;
+        spell01Cooldown.fillAmount = 0;
+        if (cooldownValue == 0) {
+            spell01RecastImage.fillAmount = 0;
+        }
+    }
+    
+    /// <summary>
+    /// Change the value of the recast cooldown
+    /// </summary>
+    /// <param name="cooldownValue"></param>
+    /// <param name="maxCooldownValue"></param>
+    public void CancelRecacstCooldown() {
+        spell01RecastImage.fillAmount = 0;
+        spell01Cooldown.fillAmount = 1;
     }
 
     /// <summary>
@@ -268,7 +283,6 @@ public enum PlayerUIImage
     PlayerCharacter,
     AutoAttack,
     Spell01,
-    Spell01Recast,
     Spell02,
     Ward
 }
