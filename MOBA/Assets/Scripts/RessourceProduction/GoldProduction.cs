@@ -13,16 +13,13 @@ namespace RessourceProduction
 {
     public class GoldProduction : CapturePointTickProduction<int, GoldProductionSO>
     {
-      
-
         int currentBounty = 0;
-   
+
         private int currentStreakLevel;
         private UIManager uiManager;
         public static GoldProduction firstTeamGoldProduction;
         public static GoldProduction secondGoldProduction;
 
-        public event GlobalDelegates.OneParameterDelegate<int> increaseGoldWithBountyEvent;
         public event GlobalDelegates.NoParameterDelegate breakStreakEvent;
 
         public event GlobalDelegates.TwoParameterDelegate<int, int> triggerStreakEvent;
@@ -77,60 +74,41 @@ namespace RessourceProduction
 
             uiManager = UIManager.Instance;
             uiManager.UpdateGoldText(Ressource, team);
-           RequestSetCurrentStreak(0);
+            RequestSetCurrentStreak(0);
         }
 
 // aura fonctionne 
-// le lost se lance pas bien
+// le lost se lance pas biens
 // le streak cassé non plus
         public void LinkBounty(Champion enemyChampion)
         {
-            if(PhotonNetwork.IsMasterClient)
-            enemyChampion.OnDie += IncreaseRessourceWithBounty;
-            var playerChampion = GameStateMachine.Instance.GetPlayerChampion();
-            if (enemyChampion == playerChampion)
-            {
-                increaseGoldWithBountyEvent += MessagePopUpManager.Instance.SendPlayerDie;
-            }
-            else if (enemyChampion.team == playerChampion.team)
-            {
-                increaseGoldWithBountyEvent += MessagePopUpManager.Instance.SendAllyPlayerDie;
-    
-                
-            }
-            else
-            {
-                increaseGoldWithBountyEvent += MessagePopUpManager.Instance.SendEnemyPlayerDie;
-           
-            }
-        
+            if (PhotonNetwork.IsMasterClient)
+                enemyChampion.OnDie += ()=> IncreaseRessourceWithBounty(enemyChampion);
         }
 
-        public void IncreaseRessourceWithBounty()
+        public void IncreaseRessourceWithBounty(Champion enemyChampion)
         {
             switch (team)
             {
                 case Enums.Team.Team1:
                 {
-                 var   newBounty = (int)(secondGoldProduction.ressource *
-                                   secondGoldProduction.so.bountyPercentage);
-                    RequestSetCurrentBounty(newBounty);
+                    var newBounty = (int)(secondGoldProduction.ressource *
+                                          secondGoldProduction.so.bountyPercentage);
+                    RequestSetCurrentBounty(newBounty, enemyChampion.entityIndex);
                     secondGoldProduction.DecreaseRessource(newBounty);
                     IncreaseRessource(newBounty);
                     break;
                 }
                 case Enums.Team.Team2:
                 {
-                    var   newBounty= (int)(firstTeamGoldProduction.ressource *
-                                           firstTeamGoldProduction.so.bountyPercentage);
-                    RequestSetCurrentBounty(newBounty);
+                    var newBounty = (int)(firstTeamGoldProduction.ressource *
+                                          firstTeamGoldProduction.so.bountyPercentage);
+                    RequestSetCurrentBounty(newBounty, enemyChampion.entityIndex);
                     firstTeamGoldProduction.DecreaseRessource(newBounty);
                     IncreaseRessource(newBounty);
                     break;
                 }
             }
-
-           
         }
 
 
@@ -173,7 +151,7 @@ namespace RessourceProduction
                     // convert
                     if (currentStreakLevel != so.streaks.Count - 1)
                     {
-                        RequestSetCurrentStreak(currentStreakLevel+1);
+                        RequestSetCurrentStreak(currentStreakLevel + 1);
                     }
                 }
             }
@@ -207,7 +185,7 @@ namespace RessourceProduction
 
         void RequestSetCurrentStreak(int streakIndex)
         {
-            photonView.RPC("SyncSetCurrentStreakRPC", RpcTarget.All,streakIndex);
+            photonView.RPC("SyncSetCurrentStreakRPC", RpcTarget.All, streakIndex);
         }
 
         [PunRPC]
@@ -217,25 +195,38 @@ namespace RessourceProduction
                 breakStreakEvent?.Invoke();
             else if (currentStreakLevel < streakIndex)
             {
-                triggerStreakEvent?.Invoke((int)so.victoryAmount, so.streaks[currentStreakLevel]);;
+                triggerStreakEvent?.Invoke((int)so.victoryAmount, so.streaks[currentStreakLevel]);
+                ;
             }
 
             currentStreakLevel = streakIndex;
             UIManager.Instance.UpdateStreak(currentStreakLevel, so.streaks[currentStreakLevel], team);
         }
-        void RequestSetCurrentBounty(int bounty)
+
+        void RequestSetCurrentBounty(int bounty, int enemyChampionIndex)
         {
-            photonView.RPC("SyncSetCurrentBountyRPC", RpcTarget.All,bounty);
+            photonView.RPC("SyncSetCurrentBountyRPC", RpcTarget.All, bounty, enemyChampionIndex);
         }
+
         [PunRPC]
-       void SyncSetCurrentBountyRPC(int bounty)
+        void SyncSetCurrentBountyRPC(int bounty, int enemyChampionIndex)
         {
             currentBounty = bounty;
-            Debug.Log(currentBounty);
-            increaseGoldWithBountyEvent?.Invoke(currentBounty);
+
+            var playerChampion = GameStateMachine.Instance.GetPlayerChampion();
+            var enemyChampion = EntityCollectionManager.GetEntityByIndex(enemyChampionIndex);
+            if (enemyChampion == playerChampion)
+            {
+                MessagePopUpManager.Instance.SendPlayerDie(bounty);
+            }
+            else if (enemyChampion.team == playerChampion.team)
+            {
+                MessagePopUpManager.Instance.SendAllyPlayerDie(bounty);
+            }
+            else
+            {
+                MessagePopUpManager.Instance.SendEnemyPlayerDie(currentBounty);
+            }
         }
-        
-        
- 
     }
 }
