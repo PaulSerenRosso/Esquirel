@@ -118,7 +118,7 @@ public class PlayerInterface : MonoBehaviour
             case PlayerUIImage.Spell01:
                 spell01CooldownTxt.enabled = true;
                 spell01Cooldown.fillAmount = 1-cooldownValue / maxCooldownValue;
-                spell01CooldownTxt.text = ((int)(maxCooldownValue-cooldownValue)).ToString();
+                spell01CooldownTxt.text = (Mathf.Round((maxCooldownValue-cooldownValue)*10)/10).ToString();
                 if (cooldownValue == 0)
                 {
                     spell01Cooldown.fillAmount = 0;
@@ -128,7 +128,7 @@ public class PlayerInterface : MonoBehaviour
             case PlayerUIImage.Spell02:
                 spell02CooldownTxt.enabled = true;
                 spell02Cooldown.fillAmount = 1-cooldownValue / maxCooldownValue;
-                spell02CooldownTxt.text = ((int)(maxCooldownValue-cooldownValue)).ToString();
+                spell02CooldownTxt.text = (Mathf.Round((maxCooldownValue-cooldownValue)*10)/10).ToString();
                 if (cooldownValue == 0)
                 {
                     spell02Cooldown.fillAmount = 0;
@@ -139,7 +139,7 @@ public class PlayerInterface : MonoBehaviour
             case PlayerUIImage.Ward:
                 wardCooldownTxt.enabled = true;
                 wardCooldown.fillAmount = 1-cooldownValue / maxCooldownValue;
-                wardCooldownTxt.text = ((int)(maxCooldownValue-cooldownValue)).ToString();
+                wardCooldownTxt.text =(Mathf.Round((maxCooldownValue-cooldownValue)*10)/10).ToString();
                 if (cooldownValue == 0)
                 {
                     wardCooldown.fillAmount = 0;
@@ -266,3 +266,5 @@ public enum AuraUIImage
 {
     Comp01Damage, LifePoint, AADamage
 }
+
+

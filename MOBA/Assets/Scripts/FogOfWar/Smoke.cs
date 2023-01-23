@@ -62,5 +62,6 @@ namespace Entities.FogOfWar
             tpCapacity.InitiateCooldown();
             PoolNetworkManager.Instance.PoolRequeue(smokeRef, this);
         }
+       
     }
 }

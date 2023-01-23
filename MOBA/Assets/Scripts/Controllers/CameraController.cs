@@ -97,7 +97,9 @@ namespace Controllers
                     nextPos -= transform.forward * cameraSpeed;
                 }
 
-                transform.position = Vector3.Lerp(transform.position, nextPos, deltaTime* lerpSpeed);
+                nextPos.y = player.position.y + offset.y;
+                var newPos = Vector3.Lerp(transform.position, nextPos, deltaTime* lerpSpeed);
+                transform.position = newPos;
             }
 
             transform.rotation = Quaternion.Euler(transform.rotation.x, rotationY, transform.rotation.z);

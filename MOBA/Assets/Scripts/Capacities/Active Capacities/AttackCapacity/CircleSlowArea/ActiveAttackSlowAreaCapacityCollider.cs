@@ -15,8 +15,8 @@ namespace Entities.Capacities
             base.InitCapacityCollider(activeCapacity);
            
             ActiveAttackWithColliderSlowAreaCapacity activeAttackWithColliderSlowAreaCapacity = (ActiveAttackWithColliderSlowAreaCapacity)activeCapacity;
-            ActiveAttackWithColliderSlowAreaCapacitySo activeAttackWithColliderSlowAreaCapacitySo =
-                (ActiveAttackWithColliderSlowAreaCapacitySo)activeAttackWithColliderSlowAreaCapacity.so;
+            ActiveAttackWithColliderSlowAreaCapacitySO activeAttackWithColliderSlowAreaCapacitySo =
+                (ActiveAttackWithColliderSlowAreaCapacitySO)activeAttackWithColliderSlowAreaCapacity.so;
             passiveSpeedSo = activeAttackWithColliderSlowAreaCapacitySo.passiveSpeed;
             sphereCollider.radius = activeAttackWithColliderSlowAreaCapacitySo.radiusArea/2;
         }

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Entities;
+using ExitGames.Client.Photon.StructWrapping;
+using GameStates;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +29,10 @@ namespace UIComponents
             lifeable.OnDecreaseMaxHpFeedback += UpdateFillPercent;
 
             UpdateFillPercentByPercent(0);
+            for (int i = 0; i <  healthImageList.Count; i++)
+            {
+                healthImageList[i].color = GameStateMachine.Instance.GetTeamColor(entity.team);
+            }
 
         }
         
@@ -34,6 +40,7 @@ namespace UIComponents
             for (int i = 0; i < healthImageList.Count; i++) {
                 healthImageList[i].fillAmount = i < lifeable.GetCurrentHp() ? 1 : 0;
                 healthImageList[i].gameObject.SetActive(!(i >= lifeable.GetMaxHp()));
+                
             }
             //healthBar.fillAmount = lifeable.GetCurrentHp()/lifeable.GetMaxHp();
         }

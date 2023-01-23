@@ -109,3 +109,4 @@ MonoBehaviour:
     m_Bits: 1073741824
   previsualisableCurveMovementPrefab: {fileID: 8800300684960855708, guid: 91db9bdc77f6d9649897efb1b22bd81e, type: 3}
   jumpTrail: {fileID: 9098855745331455748, guid: 3e802a7c4b6fc804381b4ed5f9838d1c, type: 3}
+  slowAreaCapacitySo: {fileID: 11400000, guid: 7b777685e7c5c344ca741b124e656fef, type: 2}

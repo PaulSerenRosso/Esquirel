@@ -10,6 +10,7 @@ namespace Entities.Capacities
 public class JumpWithSlowCapacityCapacitySO : CurveMovementWithPrevisualisableCapacitySO
 {
     public TrailRenderer jumpTrail;
+    public ActiveAttackWithColliderSlowAreaCapacitySO slowAreaCapacitySo;
     public override Type AssociatedType()
     {
         return typeof(JumpWithSlowCapacity);
