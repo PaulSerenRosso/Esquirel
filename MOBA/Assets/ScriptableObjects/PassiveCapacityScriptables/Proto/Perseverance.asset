@@ -23,5 +23,5 @@ MonoBehaviour:
   indexInCollection: 0
   percentage: 0
   timeBetweenHealTick: 10
-  timeBeforeHealAfterDamage: 10
+  timeBeforeHealAfterDamage: 5
   healEffectPrefab: {fileID: 3248323131726062708, guid: 1e116510708295e4fa641f6ab0c260c1, type: 3}

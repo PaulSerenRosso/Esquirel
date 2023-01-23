@@ -308,14 +308,15 @@ GameObject:
   - component: {fileID: 3480681341667345173}
   - component: {fileID: 3480681341667345174}
   - component: {fileID: 3480681341667345175}
-  - component: {fileID: 2263356599250850540}
   - component: {fileID: 6530865356692434526}
   - component: {fileID: 8091990961712310653}
   - component: {fileID: 7728234700033618375}
   - component: {fileID: 6258173476951505825}
   - component: {fileID: 5815231235936308330}
   - component: {fileID: 3023031675705156806}
-  m_Layer: 29
+  - component: {fileID: 7715695118684411017}
+  - component: {fileID: 2877839358977365734}
+  m_Layer: 26
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,6 +344,7 @@ Transform:
   - {fileID: 4465515611955225792}
   - {fileID: 1430484400043318266}
   - {fileID: 3143879509387280757}
+  - {fileID: 53991759265610283}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -365,6 +367,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8388608
   movePositionDetectionDistance: 50
+  canSelectEntity: 0
 --- !u!195 &3480681341667345173
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -425,6 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityIndex: 0
   canAddPassiveCapacity: 1
+  entityFowShowableLinker: {fileID: 7610833882059723297}
   canRemovePassiveCapacity: 1
   uiTransform: {fileID: 3480681342087303708}
   offset: {x: 0, y: 3, z: 0}
@@ -448,7 +452,7 @@ MonoBehaviour:
   currentPoints: []
   finalPoints: []
   viewObstructedByObstacle: 1
-  catapultMovment: {fileID: 3023031675705156806}
+  catapultMovement: {fileID: 3023031675705156806}
   transformView: {fileID: 8091990961712310653}
   championSo: {fileID: 0}
   rotateParent: {fileID: 3480681341152264625}
@@ -463,8 +467,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   blocker: {fileID: 3711244289653556686}
   obstacle: {fileID: 7728234700033618375}
+  canUseCatapultMovement: 0
   currentPoint: {fileID: 0}
   auraProduction: {fileID: 3143879509387280758}
+  rendererForOutline: {fileID: 0}
   maxHp: 0
   currentHp: 0
   attackAbilityIndex: 0
@@ -479,7 +485,10 @@ MonoBehaviour:
   items: []
   referenceMoveSpeed: 10
   canMove: 1
+  isFollowing: 0
+  championFollow: {fileID: 0}
   moveDestination: {x: 0, y: 0, z: 0}
+  inCurveMovement: 0
   championMoveablePrevisualisationPrefab: {fileID: 7433721097378969182, guid: 9ccaa9893ac9b9648ae882915c4f23ed, type: 3}
   agent: {fileID: 3480681341667345173}
   maxResource: 0
@@ -487,20 +496,6 @@ MonoBehaviour:
   canBeTargeted: 1
   references:
     version: 1
---- !u!136 &2263356599250850540
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3480681341667345177}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.4
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &6530865356692434526
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -590,6 +585,35 @@ MonoBehaviour:
   renderer: {fileID: 3480681341667345171}
   trail: {fileID: 5087988965798534875}
   UIRoot: {fileID: 0}
+--- !u!136 &7715695118684411017
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3480681341667345177}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &2877839358977365734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3480681341667345177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1649cc3270e5ba9479ff7dc49b8663ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagePopUp: {fileID: 3240552065661360653, guid: 9b71ce1cf86221944bc013ee55e44110, type: 3}
+  startPosition: {fileID: 3480681342087303708}
+  positionVariation: {x: 0.25, y: 0.25}
 --- !u!1 &3480681342087303709
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,6 +644,66 @@ Transform:
   m_Father: {fileID: 3480681341667345171}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7355104833819675614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 53991759265610283}
+  - component: {fileID: 2600472093334954906}
+  - component: {fileID: 7610833882059723297}
+  m_Layer: 29
+  m_Name: EntityFOVCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &53991759265610283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7355104833819675614}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3480681341667345171}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &2600472093334954906
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7355104833819675614}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &7610833882059723297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7355104833819675614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712e2fdbcb36e764b908c834e57a18e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 3480681341667345175}
+  collider: {fileID: 2600472093334954906}
 --- !u!1 &8991224132892953340
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterColliderBlocker: {fileID: 6945541721071826303}
-  characterCollider: {fileID: 2263356599250850540}
+  characterCollider: {fileID: 2600472093334954906}
 --- !u!54 &2182204461281679847
 Rigidbody:
   m_ObjectHideFlags: 0

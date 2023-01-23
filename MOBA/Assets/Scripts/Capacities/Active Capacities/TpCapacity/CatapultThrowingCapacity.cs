@@ -33,15 +33,16 @@ public class CatapultThrowingCapacity : CurveMovementCapacity
    public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions, params object[] customParameters)
    {
       
+      if(FogOfWarManager.Instance.CheckEntityIsVisibleForPlayer(catapult) || GameStateMachine.Instance.GetPlayerChampion() == champion)
+      catapult.animator.Play("Throwing");
       champion = (Champion.Champion)EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
       activeCapacityAnimationLauncher = new ActiveCapacityAnimationLauncher();
       activeCapacityAnimationLauncher.Setup(curveMovementCapacitySo.activeCapacityAnimationLauncherInfo, champion);
-      curveObject = champion.catapultMovment;
+      curveObject = champion.catapultMovement;
       champion.CancelPrevisualisable();
+
       champion.RotateMeshChampionRPC(((Vector3)customParameters[1]-(Vector3)customParameters[0]).normalized);
       curveObject.LaunchSetUpRPC(0,caster.entityIndex);
-      if(GameStateMachine.Instance.GetPlayerChampion().team == champion.team)
-      catapult.animator.Play("Throwing");
       base.SyncCapacity(targetsEntityIndexes, targetPositions, customParameters);
    }
 

@@ -190,7 +190,7 @@ MonoBehaviour:
   worldSize: 160
   worldSizeGizmos: 1
   settingsFOV:
-    meshResolution: 1
+    meshResolution: 1.5
     edgeResolveIterations: 0
     edgeDstThreshold: 0
     maskCutawayDst: 0.1

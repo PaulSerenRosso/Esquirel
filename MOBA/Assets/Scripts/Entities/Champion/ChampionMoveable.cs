@@ -23,7 +23,7 @@ namespace Entities.Champion
             set
             {
                 currentMoveSpeed = value;
-                animator.SetFloat("speedRatio", currentMoveSpeed/referenceMoveSpeed);
+                animator.SetFloat("speedRatio", currentMoveSpeed / referenceMoveSpeed);
                 if (photonView.IsMine)
                     agent.speed = currentMoveSpeed;
             }
@@ -49,22 +49,22 @@ namespace Entities.Champion
         }
 
         private bool isMoved;
-
-
+        
         // === League Of Legends
         private int mouseTargetIndex;
-        private bool isFollowing;
-        private Entity entityFollow;
+        public bool isFollowing;
+        public Champion championFollow;
         public Vector3 moveDestination;
 
+        public bool inCurveMovement;
         private Vector3 oldMoveDestination;
         private IAimable currentIAimable;
-        private ActiveCapacity currentCapacityAimed;
+      public  ActiveCapacity currentCapacityAimed;
         private ITargetable targetEntity;
         public event GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent;
 
         [SerializeField] private ChampionMoveablePrevisualisation championMoveablePrevisualisationPrefab;
-       
+
         //NavMesh
         [SerializeField] public NavMeshAgent agent;
 
@@ -88,11 +88,11 @@ namespace Entities.Champion
                 agent.enabled = true;
                 moveDestination = transform.position;
                 agent.speed = currentMoveSpeed;
-            var championMoveablePrevisualisation=  Instantiate(championMoveablePrevisualisationPrefab, Vector3.zero, quaternion.identity);
-            championMoveablePrevisualisation.champion = this;
-
+                var championMoveablePrevisualisation = Instantiate(championMoveablePrevisualisationPrefab, Vector3.zero,
+                    quaternion.identity);
+                championMoveablePrevisualisation.champion = this;
             }
-            
+
             //NavMeshBuilder.ClearAllNavMeshes();
             //NavMeshBuilder.BuildNavMesh();
         }
@@ -114,14 +114,16 @@ namespace Entities.Champion
         [PunRPC]
         public void SyncSetCanMoveRPC(bool value)
         {
-           
-            if(isAlive)
+            if ((value && !isAlive) || (value && inCurveMovement))
             {
-                canMove = value;
+               
+                return;
             }
+            canMove = value;
+            
             if (photonView.IsMine)
             {
-            //    moveDestination = transform.position;
+                //    moveDestination = transform.position;
                 agent.enabled = value;
             }
 
@@ -253,27 +255,28 @@ namespace Entities.Champion
         public void MoveToPosition(Vector3 position)
         {
             RequestCancelAutoAttack();
+            RequestResetCapacityAimed();
             isFollowing = false;
             moveDestination = position;
             moveDestination.y = 0;
         }
-        
-       
+
 
         public void StartMoveToTarget(Entity _entity, ActiveCapacity capacityWhichAimed,
             GlobalDelegates.ThirdParameterDelegate<byte, int[], Vector3[]> currentTargetCapacityAtRangeEvent)
         {
             if (!isFollowing ||
-                (isFollowing && (entityFollow != _entity || currentCapacityAimed != capacityWhichAimed)))
+                (isFollowing && (championFollow != _entity || currentCapacityAimed != capacityWhichAimed)))
             {
                 RequestCancelAutoAttack();
-                entityFollow = _entity;
+                RequestResetCapacityAimed();
+                championFollow =(Champion) _entity;
+                championFollow.ActivateOutline();
                 isFollowing = true;
-                targetEntity = (ITargetable)entityFollow;
+                targetEntity = (ITargetable)championFollow;
                 currentIAimable = (IAimable)capacityWhichAimed;
                 currentCapacityAimed = capacityWhichAimed;
                 this.currentTargetCapacityAtRangeEvent = currentTargetCapacityAtRangeEvent;
-          
             }
         }
 
@@ -287,21 +290,21 @@ namespace Entities.Champion
             if (targetEntity.CanBeTargeted())
             {
                 // Debug.Log("canbetarget");
-                if (fowm.CheckEntityIsVisibleForPlayer(entityFollow))
+                if (fowm.CheckEntityIsVisibleForPlayer(championFollow))
                 {
                     //Debug.Log("visible");
-                    if (currentIAimable.TryAim(entityIndex, entityFollow.entityIndex,
-                            entityFollow.transform.position))
+                    if (currentIAimable.TryAim(entityIndex, championFollow.entityIndex,
+                            championFollow.transform.position))
                     {
                         //Debug.Log("tryaim");
                         if (currentCapacityUsed == null)
                         {
-                            if ((this.transform.position - entityFollow.transform.position).sqrMagnitude >
+                            if ((this.transform.position - championFollow.transform.position).sqrMagnitude >
                                 currentIAimable.GetSqrMaxRange())
                             {
                                 //Debug.Log("not distance");
-                                moveDestination = entityFollow.transform.position;
-                                moveDestination.y = entityFollow.transform.position.y;
+                                moveDestination = championFollow.transform.position;
+                                moveDestination.y = championFollow.transform.position.y;
                             }
                             else
                             {
@@ -317,16 +320,16 @@ namespace Entities.Champion
                 else
                 {
                     RequestCancelAutoAttack();
-                    isFollowing = false;
-                    currentTargetCapacityAtRangeEvent = null;
+                    RequestResetCapacityAimed();
                 }
             }
             else
             {
                 moveDestination = transform.position;
                 RequestCancelAutoAttack();
-                currentTargetCapacityAtRangeEvent = null;
-                isFollowing = false;
+                RequestResetCapacityAimed();
+               
+              
             }
         }
 
@@ -337,10 +340,10 @@ namespace Entities.Champion
             moveDestination = transform.position;
             currentTargetCapacityAtRangeEvent.Invoke(currentCapacityAimed.indexOfSOInCollection, new[]
             {
-                entityFollow.entityIndex
+                championFollow.entityIndex
             }, new[]
             {
-                entityFollow.transform.position
+                championFollow.transform.position
             });
         }
 
@@ -363,19 +366,20 @@ namespace Entities.Champion
             receiveStartMoveChampionCount = 0;
             photonView.RPC("StartMoveChampionRPC", RpcTarget.All, newPos);
         }
-        
+
         [PunRPC]
         public void StartMoveChampionRPC(Vector3 newPos)
         {
             OnStartMoveChampion?.Invoke();
             transformView.enabled = false;
-           if (!photonView.IsMine)
+            if (!photonView.IsMine)
             {
                 obstacle.enabled = false;
             }
-           SyncSetCanMoveRPC(false);
 
-           photonView.RPC("WaitForAllReceiveStartMoveChampion", RpcTarget.MasterClient, newPos);
+            SyncSetCanMoveRPC(false);
+
+            photonView.RPC("WaitForAllReceiveStartMoveChampion", RpcTarget.MasterClient, newPos);
         }
 
         private int receiveStartMoveChampionCount = 0;
@@ -384,8 +388,8 @@ namespace Entities.Champion
         void WaitForAllReceiveStartMoveChampion(Vector3 pos)
         {
             receiveStartMoveChampionCount++;
-            if(receiveStartMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
-            photonView.RPC("MoveChampionRPC", RpcTarget.All, pos);
+            if (receiveStartMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
+                photonView.RPC("MoveChampionRPC", RpcTarget.All, pos);
         }
 
         private int receiveMoveChampionCount = 0;
@@ -393,20 +397,19 @@ namespace Entities.Champion
         [PunRPC]
         public void MoveChampionRPC(Vector3 newPos)
         {
-        
             transform.position = newPos;
-                //   moveDestination = newPos;
+            //   moveDestination = newPos;
             photonView.RPC("WaitForAllReceiveMoveChampion", RpcTarget.MasterClient);
         }
+
         [PunRPC]
         void WaitForAllReceiveMoveChampion()
         {
-    
             receiveMoveChampionCount++;
-            if(receiveMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
+            if (receiveMoveChampionCount == GameStateMachine.Instance.playersReadyDict.Count)
                 photonView.RPC("EndMoveChampion", RpcTarget.All);
         }
-        
+
         [PunRPC]
         void EndMoveChampion()
         {
@@ -416,7 +419,7 @@ namespace Entities.Champion
             {
                 obstacle.enabled = true;
             }
-            
+
             SyncSetCanMoveRPC(true);
 
             OnEndMoveChampion?.Invoke();
@@ -441,7 +444,6 @@ namespace Entities.Champion
                 agent.SetDestination(moveDestination);
                 oldMoveDestination = moveDestination;
             }
-
             moveDestination = agent.destination;
         }
 

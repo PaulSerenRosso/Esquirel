@@ -25,6 +25,7 @@ namespace Entities
         [SerializeField]
         public bool canAddPassiveCapacity = true;
 
+        public EntityFogOfWarColliderLinker entityFowShowableLinker;
         /// <summary>
         /// True if passiveCapacities can be removed from the entity's passiveCapacitiesList. False if not.
         /// </summary>
@@ -65,6 +66,7 @@ namespace Entities
 
         private void Update()
         {
+           
             OnUpdate();
         }
 
@@ -90,12 +92,24 @@ namespace Entities
         {
             photonView.RPC("SyncInstantiateRPC", RpcTarget.All, position, rotation);
             OnInstantiated();
+         
+        }
+
+        protected void ClearBushes()
+        {
+            for (int i = 0; i < bushes.Count; i++)
+            {
+                bushes[i].entitiesInside.Remove(this);
+            }
+
+            bushes.Clear();
         }
 
         public void SendSyncDeainstantiate()
         {
             photonView.RPC("SyncDeainstantiateRPC", RpcTarget.All);
             OnDeainstantiated();
+            ClearBushes();
         }
 
         public virtual void OnInstantiated()

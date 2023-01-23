@@ -13,35 +13,42 @@ namespace RessourceProduction
 {
     public class GoldProduction : CapturePointTickProduction<int, GoldProductionSO>
     {
-        private int CurrentStreakLevel
-        {
-            get
-            {
-                return currentStreakLevel;
-            }
+      
 
-            set
-            {
-                currentStreakLevel = value;
-                UIManager.Instance.UpdateStreak(currentStreakLevel, so.streaks[currentStreakLevel], team);
-                
-            }
-        }
+        int currentBounty = 0;
+   
         private int currentStreakLevel;
         private UIManager uiManager;
         public static GoldProduction firstTeamGoldProduction;
         public static GoldProduction secondGoldProduction;
 
-        
+        public event GlobalDelegates.OneParameterDelegate<int> increaseGoldWithBountyEvent;
+        public event GlobalDelegates.NoParameterDelegate breakStreakEvent;
+
+        public event GlobalDelegates.TwoParameterDelegate<int, int> triggerStreakEvent;
+
         protected override void OnStart()
         {
             allCapturesPoint = CapturePointCollectionManager.instance.GoldCapturePoints;
+            var playerTeam = GameStateMachine.Instance.GetPlayerTeam();
+            if (playerTeam == team)
+            {
+                breakStreakEvent += MessagePopUpManager.Instance.SendAllyBreakStreak;
+                triggerStreakEvent += MessagePopUpManager.Instance.SendAllyIncreaseStreak;
+            }
+            else
+            {
+                breakStreakEvent += MessagePopUpManager.Instance.SendEnemyBreakStreak;
+                triggerStreakEvent += MessagePopUpManager.Instance.SendEnemyIncreaseStreak;
+            }
+
             base.OnStart();
             switch (team)
             {
                 case Enums.Team.Team1:
                 {
                     firstTeamGoldProduction = this;
+
                     break;
                 }
                 case Enums.Team.Team2:
@@ -49,7 +56,6 @@ namespace RessourceProduction
                     secondGoldProduction = this;
                     break;
                 }
-                
             }
 
             for (int i = 0; i < allCapturesPoint.Length; i++)
@@ -71,12 +77,33 @@ namespace RessourceProduction
 
             uiManager = UIManager.Instance;
             uiManager.UpdateGoldText(Ressource, team);
-            CurrentStreakLevel = 0;
+           RequestSetCurrentStreak(0);
         }
 
+// aura fonctionne 
+// le lost se lance pas bien
+// le streak cassé non plus
         public void LinkBounty(Champion enemyChampion)
         {
+            if(PhotonNetwork.IsMasterClient)
             enemyChampion.OnDie += IncreaseRessourceWithBounty;
+            var playerChampion = GameStateMachine.Instance.GetPlayerChampion();
+            if (enemyChampion == playerChampion)
+            {
+                increaseGoldWithBountyEvent += MessagePopUpManager.Instance.SendPlayerDie;
+            }
+            else if (enemyChampion.team == playerChampion.team)
+            {
+                increaseGoldWithBountyEvent += MessagePopUpManager.Instance.SendAllyPlayerDie;
+    
+                
+            }
+            else
+            {
+                increaseGoldWithBountyEvent += MessagePopUpManager.Instance.SendEnemyPlayerDie;
+           
+            }
+        
         }
 
         public void IncreaseRessourceWithBounty()
@@ -85,29 +112,35 @@ namespace RessourceProduction
             {
                 case Enums.Team.Team1:
                 {
-                    int bounty =(int) (secondGoldProduction.ressource *
+                 var   newBounty = (int)(secondGoldProduction.ressource *
                                    secondGoldProduction.so.bountyPercentage);
-                    secondGoldProduction.DecreaseRessource(bounty);
-                    IncreaseRessource(bounty);
+                    RequestSetCurrentBounty(newBounty);
+                    secondGoldProduction.DecreaseRessource(newBounty);
+                    IncreaseRessource(newBounty);
                     break;
                 }
                 case Enums.Team.Team2:
                 {
-                   int bounty =(int) (firstTeamGoldProduction.ressource *
-                                   firstTeamGoldProduction.so.bountyPercentage);
-                    firstTeamGoldProduction.DecreaseRessource(bounty);
-                    IncreaseRessource(bounty);
+                    var   newBounty= (int)(firstTeamGoldProduction.ressource *
+                                           firstTeamGoldProduction.so.bountyPercentage);
+                    RequestSetCurrentBounty(newBounty);
+                    firstTeamGoldProduction.DecreaseRessource(newBounty);
+                    IncreaseRessource(newBounty);
                     break;
                 }
             }
+
+           
         }
+
 
         public void TryBreakCurrentStreak()
         {
-            if (CurrentStreakLevel == 0) return;
-            if (!allCapturesPoint.All(point => point.team == team))
+            if (currentStreakLevel == 0) return;
+            if (allCapturesPoint.All(point => point.team != team))
             {
-                CurrentStreakLevel = 0;
+                currentStreakLevel = 0;
+                RequestSetCurrentStreak(0);
             }
         }
 
@@ -117,7 +150,7 @@ namespace RessourceProduction
             if (so.ressourceMax < Ressource)
                 Ressource = so.ressourceMax;
 
-            var soStreak = so.streaks[CurrentStreakLevel];
+            var soStreak = so.streaks[currentStreakLevel];
             if (ressource >= soStreak)
             {
                 DecreaseRessource(soStreak);
@@ -138,8 +171,10 @@ namespace RessourceProduction
                 if (allCapturesPoint.Any(point => point.team == team))
                 {
                     // convert
-                    if (CurrentStreakLevel != so.streaks.Count - 1)
-                        CurrentStreakLevel++;
+                    if (currentStreakLevel != so.streaks.Count - 1)
+                    {
+                        RequestSetCurrentStreak(currentStreakLevel+1);
+                    }
                 }
             }
             //  convert en gland automatiquement 
@@ -167,19 +202,40 @@ namespace RessourceProduction
             {
                 uiManager.UpdateGoldText(value, team);
             }
-            
         }
 
-        public override void ReadSerializeView(PhotonStream stream)
+
+        void RequestSetCurrentStreak(int streakIndex)
         {
-            base.ReadSerializeView(stream);
-            CurrentStreakLevel = (int) stream.ReceiveNext();
+            photonView.RPC("SyncSetCurrentStreakRPC", RpcTarget.All,streakIndex);
         }
 
-        public override void WritingSerializeView(PhotonStream stream)
+        [PunRPC]
+        void SyncSetCurrentStreakRPC(int streakIndex)
         {
-            base.WritingSerializeView(stream);
-            stream.SendNext( CurrentStreakLevel);
+            if (currentStreakLevel > 0 && streakIndex == 0)
+                breakStreakEvent?.Invoke();
+            else if (currentStreakLevel < streakIndex)
+            {
+                triggerStreakEvent?.Invoke((int)so.victoryAmount, so.streaks[currentStreakLevel]);;
+            }
+
+            currentStreakLevel = streakIndex;
+            UIManager.Instance.UpdateStreak(currentStreakLevel, so.streaks[currentStreakLevel], team);
         }
+        void RequestSetCurrentBounty(int bounty)
+        {
+            photonView.RPC("SyncSetCurrentBountyRPC", RpcTarget.All,bounty);
+        }
+        [PunRPC]
+       void SyncSetCurrentBountyRPC(int bounty)
+        {
+            currentBounty = bounty;
+            Debug.Log(currentBounty);
+            increaseGoldWithBountyEvent?.Invoke(currentBounty);
+        }
+        
+        
+ 
     }
 }

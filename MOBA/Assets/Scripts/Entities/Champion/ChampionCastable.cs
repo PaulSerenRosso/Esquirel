@@ -38,15 +38,32 @@ namespace Entities.Champion
             }
         }
 
+        public void RequestResetCapacityAimed()
+        {
+            photonView.RPC("SyncResetCapacityAimedRPC", RpcTarget.All);
+        }
         [PunRPC]
         public void CancelAutoAttackRPC()
         {
+            Debug.Log("currentCapacityUsed" +currentCapacityUsed);
             if(attackBase != currentCapacityUsed) return;
             CancelCurrentCapacityRPC();
         }
 
-        private void CancelCurrentCapacityRPC()
+        [PunRPC]
+        public void SyncResetCapacityAimedRPC()
+        { 
+            if(championFollow)
+            championFollow.DeactivateOutline();
+            isFollowing = false; 
+            championFollow = null; 
+            currentCapacityAimed = null;
+            currentTargetCapacityAtRangeEvent = null;
+        }
+
+        public void CancelCurrentCapacityRPC()
         {
+            Debug.Log("currentCapacityUsed" +currentCapacityUsed);
             if (currentCapacityUsed != null)
             {
                 currentCapacityUsed.CancelCapacity();

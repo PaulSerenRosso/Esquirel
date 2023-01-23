@@ -16,6 +16,7 @@ namespace Entities
 
        [SerializeField] private AnimationClip reloadAnimation;
 
+       [SerializeField] private Renderer[] renderersForOutline;
         public bool requestSended;
         private float distanceForUseCatapult;
 
@@ -32,6 +33,22 @@ namespace Entities
             }
         }
 
+        public void ActivateOutline()
+        {
+            for (int i = 0; i < renderersForOutline.Length; i++)
+            { 
+                renderersForOutline[i].material.SetInt("_Selection", 1);
+            }
+        }
+
+        public void DeactivateOutline()
+        {
+            for (int i = 0; i < renderersForOutline.Length; i++)
+            { 
+                renderersForOutline[i].material.SetInt("_Selection", 0);
+            }
+        }
+            
      public List<ActiveCapacity> activeCapacities = new List<ActiveCapacity>();
 
         private byte soIndex;
@@ -41,9 +58,7 @@ namespace Entities
             base.OnStart();
             activeCapacities = new List<ActiveCapacity>();
             soIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(catapultThrowingCapacityCapacitySo);
-            Debug.Log(catapultThrowingCapacityCapacitySo.cooldown/reloadAnimation.length);
-            animator.SetFloat("ReloadSpeedFactor", 1/(catapultThrowingCapacityCapacitySo.cooldown/reloadAnimation.length));   
-            Debug.Log(animator.GetFloat("ReloadSpeedFactor"));
+            animator.SetFloat("ReloadSpeedFactor", 1/(catapultThrowingCapacityCapacitySo.cooldown/reloadAnimation.length));
             activeCapacities.Add(CapacitySOCollectionManager.CreateActiveCapacity(soIndex, this));
             activeCapacities[0].SetUpActiveCapacity(soIndex, this);
             DistanceForUseCatapult = catapultThrowingCapacityCapacitySo.referenceRange;
@@ -86,6 +101,10 @@ namespace Entities
             requestSended = false;
             if (activeCapacities[capacityIndex].onCooldown) return;
             if ((transform.position - targetedPositions[0]).sqrMagnitude > distanceSqrForUseCatapult) return;
+           Champion.Champion champion =  EntityCollectionManager.GetEntityByIndex(targetedEntities[0]) as Champion.Champion;
+           Debug.Log(champion);
+           if (!champion.canUseCatapultMovement) return ;
+           Debug.Log(champion.canUseCatapultMovement);
             photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities, targetedPositions,
                 otherParameters);
             requestSended = true;
@@ -97,7 +116,13 @@ namespace Entities
         public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions,
             params object[] otherParameters)
         {
+            if ((transform.position - targetedPositions[0]).sqrMagnitude > distanceSqrForUseCatapult) return;
+            Champion.Champion champion =  EntityCollectionManager.GetEntityByIndex(targetedEntities[0]) as Champion.Champion;
+     
+            if (!champion.canUseCatapultMovement) return ;
             if (!activeCapacities[capacityIndex].TryCast(targetedEntities, targetedPositions)) return;
+            champion.CancelAutoAttackRPC();
+            champion.RequestResetCapacityAimed();
             photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions,
                 activeCapacities[capacityIndex].GetCustomSyncParameters());
             OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacities[capacityIndex].GetCustomSyncParameters());

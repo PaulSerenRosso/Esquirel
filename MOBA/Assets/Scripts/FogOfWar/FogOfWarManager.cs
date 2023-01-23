@@ -11,10 +11,9 @@ namespace Entities.FogOfWar
         //Instance => talk to the group to see if that possible
         private static FogOfWarManager _instance;
 
-        [SerializeField]
-        private float lerpFactor;
+        [SerializeField] private float lerpFactor;
 
-  
+
         public static FogOfWarManager Instance
         {
             get { return _instance; }
@@ -39,7 +38,7 @@ namespace Entities.FogOfWar
         /// <param name="IFogOfWarViewable"> Interface for Entity </param>
         private List<Entity> allViewables = new List<Entity>();
 
-        
+
         private Dictionary<Entity, List<Entity>> currentViewablesWithEntitiesShowables =
             new Dictionary<Entity, List<Entity>>();
 
@@ -54,7 +53,6 @@ namespace Entities.FogOfWar
         public LayerMask layerTargetFogOfWar;
         public LayerMask layerObstacleFogOfWar;
 
-        
 
         [Tooltip("Material who is going to be render in the RenderPass")]
         public Material fogMat;
@@ -69,11 +67,11 @@ namespace Entities.FogOfWar
 
         private void RenderFOW()
         {
+            
             foreach (var viewable in allViewables)
             {
                 if (GameStates.GameStateMachine.Instance.GetPlayerTeam() == viewable.team)
                 {
-                    
                     DrawFieldOfView(viewable);
                 }
             }
@@ -166,9 +164,7 @@ namespace Entities.FogOfWar
         //Draw the Field of View for the Player.
         public void DrawFieldOfView(Entity entity)
         {
-
-           
-                int stepCount = Mathf.RoundToInt(entity.viewAngle * settingsFOV.meshResolution / 5);
+            int stepCount = Mathf.RoundToInt(entity.viewAngle * settingsFOV.meshResolution / 5);
             float stepAngleSize = entity.viewAngle / stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
             ViewCastInfo oldViewCast = new ViewCastInfo();
@@ -200,10 +196,8 @@ namespace Entities.FogOfWar
 
                 viewPoints.Add(newViewCast.point);
                 oldViewCast = newViewCast;
-            
-
-          
             }
+
             entity.finalPoints = new List<Vector3>(viewPoints);
             if (entity.currentPoints.Count == 0)
                 entity.currentPoints = new List<Vector3>(viewPoints);
@@ -219,8 +213,7 @@ namespace Entities.FogOfWar
                 vertices[i + 1] = entity.transform.InverseTransformPoint(entity.currentPoints[i]) +
                                   Vector3.forward * settingsFOV.maskCutawayDst;
 
-               
-                
+
                 if (i < vertexCount - 2)
                 {
                     triangles[i * 3] = 0;
@@ -240,7 +233,6 @@ namespace Entities.FogOfWar
             viewMesh.vertices = vertices;
             viewMesh.triangles = triangles;
             viewMesh.RecalculateNormals();
-          
         }
 
         EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast, Entity entity)
@@ -249,72 +241,8 @@ namespace Entities.FogOfWar
             float maxAngle = maxViewCast.angle;
             Vector3 minPoint = Vector3.zero;
             Vector3 maxPoint = Vector3.zero;
-
-            for (int i = 0; i < settingsFOV.edgeResolveIterations; i++)
-            {
-                float angle = (minAngle + maxAngle) / 2;
-                ViewCastInfo newViewCast = ViewCast(angle, entity);
-
-                bool edgeDstThresholdExceeded =
-                    Mathf.Abs(minViewCast.dst - newViewCast.dst) > settingsFOV.edgeDstThreshold;
-                if (newViewCast.hit == minViewCast.hit && !edgeDstThresholdExceeded)
-                {
-                    minAngle = angle;
-                    minPoint = newViewCast.point;
-                }
-                else
-                {
-                    maxAngle = angle;
-                    maxPoint = newViewCast.point;
-                }
-            }
-
             return new EdgeInfo(minPoint, maxPoint);
         }
-
-        ViewCastInfo ViewCast(float globalAngle, Entity entity)
-        {
-            Vector3 dir = DirFromAngle(globalAngle, true, entity);
-            RaycastHit[] hits = new RaycastHit[2];
-
-            int hitsCount = Physics.RaycastNonAlloc(
-                new Vector3(entity.transform.position.x, startYPositionRay, entity.transform.position.z), dir, hits,
-                entity.viewRange,
-                layerObstacleFogOfWar);
-
-
-            if (hitsCount == 0)
-            {
-                return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
-                    globalAngle);
-            }
-            else
-            {
-                if (hitsCount == 2)
-                    if (hits[0].distance > hits[1].distance)
-                        hits = new[]
-                        {
-                            hits[1], hits[0]
-                        };
-                for (int i = 0; i < hits.Length; i++)
-                {
-                    Debug.Log(hits[i].collider.gameObject.name);
-                    Bush bush = hits[i].collider.GetComponent<Bush>();
-                    if (bush)
-                    {
-                        if (!bush.CheckBushMaskView(entity)) continue;
-                    }
-                    else if (!entity.GetViewObstructedByObstacle()) continue;
-
-                    fieldOfViewObstacles.Add(hits[i]);
-                    return new ViewCastInfo(true, hits[i].point, hits[i].distance, globalAngle);
-                }
-            }
-
-            return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
-                globalAngle);
-        }
-
 
         private List<RaycastHit> fieldOfViewObstacles = new List<RaycastHit>();
 
@@ -327,13 +255,17 @@ namespace Entities.FogOfWar
                 entity.viewRange,
                 layerTargetFogOfWar);
 
+            
             fieldOfViewObstacles.Clear();
 
+            
+    
 
             if (hits.Length != 0)
             {
                 for (int i = 0; i < hits.Length; i++)
                 {
+                    if (CheckHitGameObjectIsSameThanViewableEntityGameObject(entity, hits[i])) continue;
                     if (IsInLayerMask(hits[i].collider.gameObject, layerObstacleFogOfWar))
                     {
                         Bush bush = hits[i].collider.GetComponent<Bush>();
@@ -349,6 +281,7 @@ namespace Entities.FogOfWar
                         fieldOfViewObstacles.Add(hits[i]);
                     }
                 }
+
                 if (fieldOfViewObstacles.Count != 0)
                 {
                     RaycastHit closerHit = fieldOfViewObstacles[0];
@@ -359,8 +292,11 @@ namespace Entities.FogOfWar
                             closerHit = fieldOfViewObstacles[i];
                         }
                     }
+
                     for (int i = 0; i < hits.Length; i++)
                     {
+              
+                      if (CheckHitGameObjectIsSameThanViewableEntityGameObject(entity, hits[i])) continue;
                         Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
                         if (!candidateEntity)
                         {
@@ -380,18 +316,19 @@ namespace Entities.FogOfWar
                             }
                         }
                     }
-
+                 
                     return new ViewCastInfo(true, closerHit.point, closerHit.distance, globalAngle);
                 }
 
                 for (int i = 0; i < hits.Length; i++)
                 {
+                    if (CheckHitGameObjectIsSameThanViewableEntityGameObject(entity, hits[i])) continue;
                     Entity candidateEntity = hits[i].collider.gameObject.GetComponent<Entity>();
                     if (!candidateEntity)
                     {
                         EntityFogOfWarColliderLinker entityFogOfWarColliderLinker =
                             hits[i].collider.gameObject.GetComponent<EntityFogOfWarColliderLinker>();
-                        if (candidateEntity) candidateEntity = entityFogOfWarColliderLinker.GetEntity;
+                        if (entityFogOfWarColliderLinker) candidateEntity = entityFogOfWarColliderLinker.GetEntity;
                     }
 
                     if (candidateEntity != null)
@@ -401,11 +338,10 @@ namespace Entities.FogOfWar
                             currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
                     }
                 }
-
+    
                 return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
                     globalAngle);
             }
-
             return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
                 globalAngle);
         }
@@ -434,6 +370,23 @@ namespace Entities.FogOfWar
                 dst = _dst;
                 angle = _angle;
             }
+        }
+
+        bool CheckHitGameObjectIsSameThanViewableEntityGameObject(Entity viewableEntity, RaycastHit hit)
+        {
+            if (viewableEntity.entityFowShowableLinker == null)
+            {
+                if (viewableEntity.gameObject == hit.collider.gameObject)
+                    return true;
+                else
+                {
+                    return false;
+                }
+            }
+            if (viewableEntity.entityFowShowableLinker.gameObject == hit.collider.gameObject)
+                return true;
+            return false;
+          
         }
 
         public struct EdgeInfo

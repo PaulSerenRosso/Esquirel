@@ -34,6 +34,7 @@ namespace Entities.Capacities
         void ActivateChampionMove()
         {
             champion.blocker.characterColliderBlocker.enabled = true;
+            champion.inCurveMovement = false;
             champion.OnStartMoveChampion -= ActivateChampionMove;
         }
 
@@ -50,11 +51,11 @@ namespace Entities.Capacities
                 InputManager.PlayerMap.Movement.Enable();
                 InputManager.PlayerMap.Attack.Enable();
                 InputManager.PlayerMap.Capacity.Enable();
-          
             }
-
             champion.entityCapacityCollider.EnableEntityCollider();
             champion.entityClicker.EnableCollider = true;
+            champion.SyncSetCanCatapultMovementRPC(true);
+            
         }
 
         protected virtual void DeactivateController()
@@ -69,11 +70,14 @@ namespace Entities.Capacities
             {
                 champion.obstacle.enabled = false;
             }
-
             champion.entityCapacityCollider.DisableEntityCollider();
             champion.SyncSetCanMoveRPC(false);
             champion.blocker.characterColliderBlocker.enabled = false;
             champion.entityClicker.EnableCollider = false;
+            champion.SyncSetCanCatapultMovementRPC(false);
+            champion.inCurveMovement = true;
+            champion.moveDestination = endPosition;
+            champion.SyncResetCapacityAimedRPC();
         }
 
 

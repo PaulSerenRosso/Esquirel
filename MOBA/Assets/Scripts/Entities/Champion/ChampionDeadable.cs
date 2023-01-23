@@ -69,7 +69,7 @@ namespace Entities.Champion
             isAlive = false;
             canBeTargeted = false;
             blocker.characterCollider.enabled = false;
-
+             SyncSetCanCatapultMovementRPC(false);
             entityClicker.EnableCollider = false;
             rotateParent.gameObject.SetActive(false);
             uiTransform.gameObject.SetActive(false);
@@ -88,6 +88,7 @@ namespace Entities.Champion
             }
 
             CancelCurrentCapacityRPC();
+            RequestResetCapacityAimed();
             if (currentPoint != null)
             {
                 switch (team)
@@ -140,6 +141,8 @@ namespace Entities.Champion
 
             SetCanMoveRPC(true);
             canBeTargeted = true;
+            SyncSetCanCatapultMovementRPC(true);
+            ClearBushes();
             blocker.characterCollider.enabled = true;
             entityClicker.EnableCollider = true;
             FogOfWarManager.Instance.AddFOWViewable(this);
