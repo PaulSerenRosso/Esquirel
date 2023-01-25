@@ -44,15 +44,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T4_Terrain:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 47c18da720477f444a965ad6fd34f638, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T4_TerrainNAOH:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 2ab94f1a48e06794fbb0e7821f782089, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TerrainMask_VertexPaint:
-        m_Texture: {fileID: 2800000, guid: 2e6b84768323c104bb05cf92d7716cae, type: 3}
+        m_Texture: {fileID: 2800000, guid: b4627c65302b2c3458118e49f4427b4b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 1, y: 1}
     m_Floats:

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceName: Auto
   descriptionName: Auto attack
-  icon: {fileID: 21300000, guid: 80765a06dc799714bbe0733e2152d564, type: 3}
+  icon: {fileID: 9078849478004390248, guid: c2be0bf2e435e214a9823da19df401d2, type: 3}
   description: 
-  cooldown: 2
+  cooldown: 1
   types: 
   fxPrefab: {fileID: 8402012246838916218, guid: 49152db17b359cc43ada8e2de81c1a15, type: 3}
   fxTime: 2
@@ -24,7 +24,7 @@ MonoBehaviour:
   activeCapacityAnimationLauncherInfo:
     animationTime: 0.833
     animatorParameterName: autoAttack
-  damage: 60
+  damage: 1
   offsetAttack: 0.2
   damageBeginTime: 0.07
   impactFxTime: 0.5
@@ -35,5 +35,5 @@ MonoBehaviour:
   previsualisablePrefab: {fileID: 0}
   height: 3
   width: 4
-  maxRange: 4
+  maxRange: 3.5
   rangeForDamage: 4

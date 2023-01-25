@@ -33,13 +33,13 @@ public partial class UIManager
     {
       case Enums.Team.Team1:
       {
-       playerInterface.UpdateStreakTeam01(value);
+       //playerInterface.UpdateStreakTeam01(value);
        playerInterface.UpdateGoldStreakTeam01(nextValue);
         break; 
       }
       case Enums.Team.Team2:
       {
-        playerInterface.UpdateStreakTeam02(value);
+        //playerInterface.UpdateStreakTeam02(value);
         playerInterface.UpdateGoldStreakTeam02(nextValue);
         break; 
       }
