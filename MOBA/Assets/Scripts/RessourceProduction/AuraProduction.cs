@@ -25,9 +25,9 @@ namespace RessourceProduction
         {
             if (champion.photonView.IsMine)
             {
-                UIManager.Instance.SetUpAuraSprite(0, so.passiveCapacitySo[0].icon, AuraUIImage.AADamage, (() => RequestDecreaseAuraCapacity(0)));
-                UIManager.Instance.SetUpAuraSprite(0, so.passiveCapacitySo[1].icon, AuraUIImage.Comp01Damage, (() => RequestDecreaseAuraCapacity(1)));
-                UIManager.Instance.SetUpAuraSprite(0, so.passiveCapacitySo[2].icon, AuraUIImage.LifePoint, (() => RequestDecreaseAuraCapacity(2)));
+                UIManager.Instance.SetUpAuraSprite(0, AuraUIImage.AADamage, (() => RequestDecreaseAuraCapacity(0)));
+                UIManager.Instance.SetUpAuraSprite(0, AuraUIImage.Comp01Damage, (() => RequestDecreaseAuraCapacity(1)));
+                UIManager.Instance.SetUpAuraSprite(0, AuraUIImage.LifePoint, (() => RequestDecreaseAuraCapacity(2)));
                 UIManager.Instance.ChangeAuraState(false);
             }
         }
