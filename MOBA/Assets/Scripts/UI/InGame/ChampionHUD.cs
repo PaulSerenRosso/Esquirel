@@ -111,7 +111,7 @@ public class ChampionHUD : MonoBehaviour
        otherChampion = GameStateMachine.Instance.GetOtherChampionOfSameTeam(champion);
         resourceable = champion.GetComponent<IResourceable>();
         this.playerInterface = playerInterface;
-        playerInterface.UpdateHealth(lifeable.GetCurrentHp(), lifeable.GetMaxHp());
+        playerInterface.UpdateHealth(lifeable);
         LinkToEvents();
         UpdateIcons(champion);
     }
@@ -190,12 +190,12 @@ public class ChampionHUD : MonoBehaviour
 
     private void UpdateFillPercentByPercentHealth(float value)
     {
-        playerInterface.UpdateHealth(lifeable.GetCurrentHp(), lifeable.GetMaxHp());
+        playerInterface.UpdateHealth(lifeable);
     }
 
     private void UpdateFillPercentHealth(float value)
     {
-       playerInterface.UpdateHealth(lifeable.GetCurrentHp(), lifeable.GetMaxHp());
+       playerInterface.UpdateHealth(lifeable);
     }
     
     private void UpdateOtherChampionFillPercentByPercentHealth(float value)

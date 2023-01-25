@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Entities;
 using GameStates;
 using RessourceProduction;
 using TMPro;
@@ -8,7 +10,8 @@ using UnityEngine.Events;
 
 public class PlayerInterface : MonoBehaviour
 {
-    [Header("Player Health")] [SerializeField]
+    [Header("Player Health")]
+    [SerializeField] private List<Image> healthImageList = new List<Image>();
     private Image healthBar = null;
 
     [SerializeField] private Image allyHealthBar = null;
@@ -30,8 +33,6 @@ public class PlayerInterface : MonoBehaviour
 
     [Header("Gold")] [SerializeField] private TextMeshProUGUI team01GoldValue = null;
     [SerializeField] private TextMeshProUGUI team02GoldValue = null;
-    [SerializeField] private TextMeshProUGUI team01StreakValue = null;
-    [SerializeField] private TextMeshProUGUI team02StreakValue = null;
     [SerializeField] private TextMeshProUGUI team01GoldStreak = null;
     [SerializeField] private TextMeshProUGUI team02GoldStreak = null;
 
@@ -50,7 +51,12 @@ public class PlayerInterface : MonoBehaviour
     /// </summary>
     /// <param name="currentHealth"></param>
     /// <param name="maxHealth"></param>
-    public void UpdateHealth(float currentHealth, float maxHealth) => healthBar.fillAmount = currentHealth / maxHealth;
+    public void UpdateHealth(IActiveLifeable lifeable) {
+        for (int i = 0; i < healthImageList.Count; i++) {
+            healthImageList[i].fillAmount = i < lifeable.GetCurrentHp() ? 1 : 0;
+            healthImageList[i].gameObject.SetActive(!(i >= lifeable.GetMaxHp()));
+        }
+    }
 
     public void UpdateAllyHealth(float currentHealth, float maxHealth) =>
         allyHealthBar.fillAmount = currentHealth / maxHealth;
@@ -191,17 +197,16 @@ public class PlayerInterface : MonoBehaviour
     /// Update the gold value of each team
     /// </summary>
     /// <param name="value"></param>
-    public void UpdateGoldTeam01(int value) => team01GoldValue.text = $"{value} gold";
+    public void UpdateGoldTeam01(int value) => team01GoldValue.text = value.ToString();
 
-    public void UpdateGoldTeam02(int value) => team02GoldValue.text = $"{value} gold";
+    public void UpdateGoldTeam02(int value) => team02GoldValue.text = value.ToString();
 
     /// <summary>
     /// Update the Streak of each team
     /// </summary>
     /// <param name="value"></param>
-    public void UpdateStreakTeam01(int value) => team01StreakValue.text = $"Streak : {value}";
-
-    public void UpdateStreakTeam02(int value) => team02StreakValue.text = $"Streak : {value}";
+    //public void UpdateStreakTeam01(int value) => team01StreakValue.text = $"Streak : {value}";
+    //public void UpdateStreakTeam02(int value) => team02StreakValue.text = $"Streak : {value}";
 
     /// <summary>
     /// Update the Streak gold value of each team
