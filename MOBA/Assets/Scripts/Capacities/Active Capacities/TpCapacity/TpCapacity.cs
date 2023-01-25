@@ -38,12 +38,14 @@ namespace Entities.Capacities
         }
 
 
+        
         public override void SyncCapacity(int[] targetsEntityIndexes, Vector3[] targetPositions,
             params object[] customParameters)
         {
             useCount = (int)customParameters[2];
             if (useCount == 1)
             {
+                UIManager.Instance.LaunchRecastCooldown(champion, tpCapacitySo.smokeDuration);
                 curveObject.endCurveEvent += () => isEndCurve = true;
                 curveObject.endCurveEvent -= TpChampion;
                 SetCanSkipDrawing(true);
@@ -51,6 +53,7 @@ namespace Entities.Capacities
             }
             else if (useCount == 2)
             {
+                
                 TryTpChampion();
             }
         }
@@ -67,7 +70,9 @@ namespace Entities.Capacities
             champion.RequestSetSkipDrawingCapacity(indexOfSOInCollection, false);
             useCount = 0;
             isEndCurve = false;
-            // 
+            champion.RequestCancelRecacstCooldown();
+            // end cooldown rpc 
+          
         }
 
         void TryTpChampion()
@@ -79,6 +84,7 @@ namespace Entities.Capacities
             else
             {
                 curveObject.endCurveEvent += TpChampion;
+                champion.SyncCancelRecacstCooldownRPC();
             }
         }
         void TpChampion()
