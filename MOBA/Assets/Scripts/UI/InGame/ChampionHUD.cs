@@ -26,7 +26,7 @@ public class ChampionHUD : MonoBehaviour
     */
     // private SpellHolder passiveHolder;
   //  private Dictionary<byte, SpellHolder> spellHolderDict = new Dictionary<byte, SpellHolder>();
-    private Champion champion;
+  public Champion champion;
     private IResourceable resourceable;
     private IActiveLifeable lifeable;
     private PlayerInterface playerInterface;

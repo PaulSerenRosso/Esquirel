@@ -297,5 +297,17 @@ namespace Entities.Champion
 
         [PunRPC]
         public void SyncSetCanCatapultMovementRPC(bool value) => canUseCatapultMovement = value;
+
+        public void RequestCancelRecacstCooldown()
+        {
+            photonView.RPC("SyncCancelRecacstCooldownRPC", RpcTarget.All);
+        }
+        [PunRPC]
+        public void SyncCancelRecacstCooldownRPC()
+        {
+            UIManager.Instance.CancelRecacstCooldown(this);
+        }
+        
+        
     }
 }

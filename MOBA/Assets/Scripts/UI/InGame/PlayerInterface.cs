@@ -1,5 +1,6 @@
 using System;
 using GameStates;
+using Photon.Pun;
 using RessourceProduction;
 using TMPro;
 using UnityEngine.UI;
@@ -158,13 +159,18 @@ public class PlayerInterface : MonoBehaviour
     /// </summary>
     /// <param name="cooldownValue"></param>
     /// <param name="maxCooldownValue"></param>
+ 
+   
     public void ChangeRecastCooldown(float cooldownValue, float maxCooldownValue) {
+       
         spell01RecastImage.fillAmount = 1-cooldownValue / maxCooldownValue;
         spell01Cooldown.fillAmount = 0;
         if (cooldownValue == 0) {
             spell01RecastImage.fillAmount = 0;
         }
     }
+    
+   
     
     /// <summary>
     /// Change the value of the recast cooldown
