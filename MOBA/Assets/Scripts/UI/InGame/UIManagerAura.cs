@@ -4,9 +4,9 @@ using UnityEngine;
 
 public partial class UIManager
 {
-    public void SetUpAuraSprite(int auraValue, Sprite sprite, AuraUIImage auraUIImage, GlobalDelegates.NoParameterDelegate capacity)
+    public void SetUpAuraSprite(int auraValue, AuraUIImage auraUIImage, GlobalDelegates.NoParameterDelegate capacity)
     {
-        playerInterface.SetUpAuraSprite(auraValue,  sprite,  auraUIImage, capacity);
+        playerInterface.SetUpAuraSprite(auraValue,  auraUIImage, capacity);
     }
 
     public void UpdateAuraValue(int auraValue, AuraUIImage auraUIImage)

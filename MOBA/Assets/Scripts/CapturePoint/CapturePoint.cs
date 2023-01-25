@@ -458,6 +458,7 @@ namespace CapturePoint
             var newTeam = (Enums.Team)indexTeam;
             UpdateNewCapturePointState(newTeam);
             team = newTeam;
+            
             renderer.material.color = GameStateMachine.Instance.GetTeamColor(team);
         }
 
