@@ -171,8 +171,8 @@ MonoBehaviour:
   meshRenderersToShow:
   - {fileID: 7205735103138732491}
   - {fileID: 1696974726384439652}
-  - {fileID: 1696974727066332554}
-  - {fileID: 1696974726545124662}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 1696974725331284865}
   meshRenderersToShowAlpha:
   - 1
@@ -196,8 +196,8 @@ MonoBehaviour:
   allParticleSystems:
   - {fileID: 7205735103138732490}
   - {fileID: 1696974726384439653}
-  - {fileID: 1696974727066332555}
-  - {fileID: 1696974726545124663}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 1696974725331284866}
   fxObject: {fileID: 2779714049642991588}
   fogDetection: {fileID: 2408304084715772168}
@@ -317,26 +317,6 @@ ParticleSystem:
 --- !u!199 &1696974726384439652 stripped
 ParticleSystemRenderer:
   m_CorrespondingSourceObject: {fileID: 2305585826937430653, guid: 725d2df4e7af97049b5b88fe4028fc52, type: 3}
-  m_PrefabInstance: {fileID: 609054253472953113}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1696974727066332555 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2305585827321257618, guid: 725d2df4e7af97049b5b88fe4028fc52, type: 3}
-  m_PrefabInstance: {fileID: 609054253472953113}
-  m_PrefabAsset: {fileID: 0}
---- !u!199 &1696974727066332554 stripped
-ParticleSystemRenderer:
-  m_CorrespondingSourceObject: {fileID: 2305585827321257619, guid: 725d2df4e7af97049b5b88fe4028fc52, type: 3}
-  m_PrefabInstance: {fileID: 609054253472953113}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1696974726545124663 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2305585826634636846, guid: 725d2df4e7af97049b5b88fe4028fc52, type: 3}
-  m_PrefabInstance: {fileID: 609054253472953113}
-  m_PrefabAsset: {fileID: 0}
---- !u!199 &1696974726545124662 stripped
-ParticleSystemRenderer:
-  m_CorrespondingSourceObject: {fileID: 2305585826634636847, guid: 725d2df4e7af97049b5b88fe4028fc52, type: 3}
   m_PrefabInstance: {fileID: 609054253472953113}
   m_PrefabAsset: {fileID: 0}
 --- !u!198 &1696974725331284866 stripped

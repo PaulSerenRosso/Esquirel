@@ -9,6 +9,7 @@ using GameStates;
 using Photon.Pun;
 using RessourceProduction;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace RessourceProduction
 {
@@ -75,7 +76,7 @@ namespace RessourceProduction
 
             uiManager = UIManager.Instance;
             uiManager.UpdateGoldText(Ressource, so.streaks[currentStreakLevel], team);
-            RequestSetCurrentStreak(0);
+            SyncSetCurrentStreakRPC(0, true);
         }
 
         // aura fonctionne 
@@ -148,11 +149,7 @@ namespace RessourceProduction
 
                 if (allCapturesPoint.Any(point => point.team == team))
                 {
-                    // convert
-                    if (currentStreakLevel != so.streaks.Count - 1)
-                    {
-                        RequestSetCurrentStreak(currentStreakLevel + 1);
-                    }
+                    RequestSetCurrentStreak(currentStreakLevel);
                 }
             }
             //  convert en gland automatiquement 
@@ -185,12 +182,26 @@ namespace RessourceProduction
 
         void RequestSetCurrentStreak(int streakIndex)
         {
-            photonView.RPC("SyncSetCurrentStreakRPC", RpcTarget.All, streakIndex);
+            photonView.RPC("SyncSetCurrentStreakRPC", RpcTarget.All, streakIndex, false);
         }
 
         [PunRPC]
-        void SyncSetCurrentStreakRPC(int streakIndex)
+        void SyncSetCurrentStreakRPC(int streakIndex, bool start)
         {
+            if (!start) {
+                switch (team) {
+                    case Enums.Team.Neutral:
+                        break;
+                    case Enums.Team.Team1:
+                        if (uiManager != null) uiManager.Team01Exchange();
+                        break;
+                    case Enums.Team.Team2:
+                        if (uiManager != null) uiManager.Team02Exchange();
+                        break;
+                    default: throw new ArgumentOutOfRangeException();
+                }
+            }
+            
             if (currentStreakLevel > 0 && streakIndex == 0)
                 breakStreakEvent?.Invoke();
             else if (currentStreakLevel < streakIndex)
@@ -201,19 +212,6 @@ namespace RessourceProduction
 
             currentStreakLevel = streakIndex;
             UIManager.Instance.UpdateStreak(currentStreakLevel, so.streaks[currentStreakLevel], team);
-            switch (team) {
-                case Enums.Team.Neutral:
-                    break;
-                case Enums.Team.Team1:
-                    if (uiManager != null) uiManager.Team01Exchange();
-                    break;
-                case Enums.Team.Team2:
-                    if (uiManager != null) uiManager.Team02Exchange();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            
         }
 
         void RequestSetCurrentBounty(int bounty, int enemyChampionIndex)
