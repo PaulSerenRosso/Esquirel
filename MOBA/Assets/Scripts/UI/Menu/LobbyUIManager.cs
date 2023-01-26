@@ -25,6 +25,10 @@ public class LobbyUIManager : MonoBehaviourPun
     [SerializeField] private Color unselectedChampionColor;
     [SerializeField] private Image firstChampionColorImage;
     [SerializeField] private Image secondChampionColorImage;
+    [SerializeField] private Sprite unselectedChampion01 = null;
+    [SerializeField] private Sprite unselectedChampion02 = null;
+    [SerializeField] private Sprite selectedChampion01 = null;
+    [SerializeField] private Sprite selectedChampion02 = null;
     [SerializeField] private Color firstTeamColor;
     [SerializeField] private Color secondTeamColor;
     [SerializeField] private Image teamColorImage;
@@ -65,8 +69,8 @@ public class LobbyUIManager : MonoBehaviourPun
 
         readyButton.interactable = false;
 
-        firstChampionColorImage.color = unselectedChampionColor;
-        secondChampionColorImage.color = unselectedChampionColor;
+        firstChampionColorImage.sprite = unselectedChampion01;
+        secondChampionColorImage.sprite = unselectedChampion02;
 
         // Default is no champion selected
         currentChampion = 2;
@@ -114,12 +118,12 @@ public class LobbyUIManager : MonoBehaviourPun
         {
             // We change GUI
             case 0:
-                firstChampionColorImage.color = selectedChampionColor;
-                secondChampionColorImage.color = unselectedChampionColor;
+                firstChampionColorImage.sprite = selectedChampion01;
+                secondChampionColorImage.sprite = unselectedChampion02;
                 break;
             case 1:
-                firstChampionColorImage.color = unselectedChampionColor;
-                secondChampionColorImage.color = selectedChampionColor;
+                firstChampionColorImage.sprite = unselectedChampion01;
+                secondChampionColorImage.sprite = selectedChampion02;
                 break;
             default:
                 Debug.LogError("Index is not valid. Must be 0 or 1.");
