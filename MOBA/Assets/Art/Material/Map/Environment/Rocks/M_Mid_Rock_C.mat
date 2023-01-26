@@ -47,6 +47,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _GraassMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GrassMask:
+        m_Texture: {fileID: 2800000, guid: 91828cf82ed08124a8d11bb4bb7d6277, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 931a4cc766a3ed24d970f3b01f199e65, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -84,7 +92,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_26d3dcce603d48d5b81a23739ca9e405: -0.01
+    - Vector1_26d3dcce603d48d5b81a23739ca9e405: 0.33
     - Vector1_a3737b07b4dd448cbdc1f1750bd2a6fe: 0.66
     - _AlphaClip: 0
     - _Blend: 0
@@ -100,6 +108,8 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _HeightAmount: 0
+    - _Height_base: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
