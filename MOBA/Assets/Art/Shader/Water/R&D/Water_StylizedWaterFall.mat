@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Water_StylizedWater
+  m_Name: Water_StylizedWaterFall
   m_Shader: {fileID: -6465566751694194690, guid: f79f4a6cfb58abf4bbb8cb61dc4c7569, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3001
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -49,7 +49,7 @@ Material:
     - Vector1_8E5091B8: 0.68
     - Vector1_981A3A67: 1
     m_Colors:
-    - Color_27D4D743: {r: 0.6273585, g: 0.87310034, b: 1, a: 0}
+    - Color_27D4D743: {r: 0.5613208, g: 0.85223436, b: 1, a: 0}
     - Color_51A4B6EC: {r: 0.039215688, g: 0.17254902, b: 0.18431373, a: 1}
     - Color_C347D0B: {r: 0, g: 0.49999985, b: 0.5377358, a: 1}
     - Color_a0acf0c21632403495e2ee13d671e19a: {r: 1, g: 1, b: 1, a: 1}
