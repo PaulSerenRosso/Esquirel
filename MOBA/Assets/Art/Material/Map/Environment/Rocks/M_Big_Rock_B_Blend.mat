@@ -57,7 +57,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GroundTexture:
-        m_Texture: {fileID: 2800000, guid: 74c0f22b9612a7843b6df2db8a7499de, type: 3}
+        m_Texture: {fileID: 2800000, guid: ba683ba528219a04f9da19bdcfe02560, type: 3}
         m_Scale: {x: 4, y: -4}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -105,7 +105,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Debiug: 10
+    - _Debiug: 1.58
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -113,9 +113,9 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _GroundMaskIntensity: 1
+    - _GroundMaskIntensity: 1.5
     - _GroundTexture_Procedural: 1
-    - _MaskPosition: 0.39
+    - _MaskPosition: -0.66
     - _Metallic: 0
     - _NormalMap: 0
     - _NormalScale: 1
@@ -123,8 +123,9 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _SizeGroundMask: 0.46
+    - _SizeGroundMask: -0.13
     - _SizeGroundMask2: 2
+    - _SmoothTopValue: 1.88
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -143,5 +144,6 @@ Material:
     - _RemapParameter: {r: -1, g: -0.9, b: 0.9, a: 0}
     - _RemapParameterIN: {r: -0.8, g: -0.4, b: 0, a: 0}
     - _RemapParameterOut: {r: 1, g: 0, b: 0, a: 0}
+    - _SmoothDownValue: {r: -0.8, g: -0.4, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
