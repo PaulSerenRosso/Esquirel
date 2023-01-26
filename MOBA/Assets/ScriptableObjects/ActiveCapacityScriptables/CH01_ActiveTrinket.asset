@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceName: 
   descriptionName: 
-  icon: {fileID: 21300000, guid: 6d880134e66232c4492a3070abb2f03d, type: 3}
+  icon: {fileID: 21300000, guid: 991afd93ab415244e8427c30a6018dd2, type: 3}
   description: 
   cooldown: 10
   types: 
@@ -22,7 +22,7 @@ MonoBehaviour:
   fxTime: 0
   indexInCollection: 6
   trinketPrefab: {fileID: 4960659890045411926, guid: 1b4df5dfb5fbb094eaf62543f635adce, type: 3}
-  trinketDuration: 20
+  trinketDuration: 10
   trinketViewRadius: 5
   trinketViewAngle: 360
   trinketDetectionDistance: 50
