@@ -133,6 +133,22 @@ PrefabInstance:
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5793960038940234184, guid: 6deae506eff05d047a4d23a6481c4de4, type: 3}
+      propertyPath: ColorModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793960038940234184, guid: 6deae506eff05d047a4d23a6481c4de4, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key2.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793960038940234184, guid: 6deae506eff05d047a4d23a6481c4de4, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key2.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793960038940234184, guid: 6deae506eff05d047a4d23a6481c4de4, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key2.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5793960038940234229, guid: 6deae506eff05d047a4d23a6481c4de4, type: 3}
       propertyPath: m_Layer
       value: 16

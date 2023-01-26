@@ -26,6 +26,7 @@ namespace CapturePoint
         public CapturePointTeamState secondTeamState;
         public CapturePointTeamState firstTeamState;
         private float capturePointSpeed;
+        [SerializeField] private Material rockMaterial;
 
         private List<GlobalDelegates.NoParameterDelegate> capturePointDelegates =
             new List<GlobalDelegates.NoParameterDelegate>();
