@@ -2736,7 +2736,7 @@ MonoBehaviour:
   spell02Image: {fileID: 6197864061044215119}
   spell02Cooldown: {fileID: 6654989604645490377}
   spell02CooldownTxt: {fileID: 825911465577149160}
-  wardImage: {fileID: 0}
+  wardImage: {fileID: 3881706971114316089}
   wardCooldown: {fileID: 1213383649271675028}
   wardCooldownTxt: {fileID: 1213383649835097407}
   team01GoldValue: {fileID: 1213383649618278441}
