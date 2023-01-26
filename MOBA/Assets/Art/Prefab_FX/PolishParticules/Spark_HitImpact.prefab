@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7019290731045377984}
   - component: {fileID: 7019290731045377986}
   - component: {fileID: 7019290731045377985}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Spark_HitImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}

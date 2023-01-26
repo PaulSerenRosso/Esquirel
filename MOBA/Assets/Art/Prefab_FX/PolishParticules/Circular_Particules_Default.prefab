@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4129263214582382562}
   - component: {fileID: 4129263214582382572}
   - component: {fileID: 4129263214582382563}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Circular_Particules_Default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,8 +25,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4129263214582382561}
-  m_LocalRotation: {x: -0.11631197, y: 0.13725573, z: 0.84262055, w: 0.50756586}
-  m_LocalPosition: {x: -0.6400002, y: -0.25, z: -0.28000024}
+  m_LocalRotation: {x: -0.11630916, y: 0.13725266, z: 0.8426209, w: 0.50756663}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 0
   useRigidbodyForVelocity: 1
@@ -4855,7 +4855,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a6077cf380938b4468f09dba8fc30a3c, type: 2}
+  - {fileID: 2100000, guid: b59f8b63188b0814f8f4c3fc2927f5b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

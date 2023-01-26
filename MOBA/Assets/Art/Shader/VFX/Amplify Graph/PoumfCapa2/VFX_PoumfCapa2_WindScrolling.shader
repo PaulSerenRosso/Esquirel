@@ -17,7 +17,8 @@ Shader "VFX_PoumfCapa2_WindScrolling"
 		_WindXSpeed_1("Wind XSpeed_1", Float) = -2
 		_WindYSpeed_1("Wind YSpeed_1", Float) = 0
 		_Opacity("Opacity", Range( 0 , 1)) = 0
-		[ASEEnd][Toggle(_FLIPTEXTURE_ON)] _FlipTexture("Flip Texture", Float) = 0
+		[Toggle(_FLIPTEXTURE_ON)] _FlipTexture("Flip Texture", Float) = 0
+		[ASEEnd]_Color("Color", Color) = (1,1,1,1)
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -212,6 +213,7 @@ Shader "VFX_PoumfCapa2_WindScrolling"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
+			float4 _Color;
 			float _WindXSpeed_1;
 			float _WindYSpeed_1;
 			float _XTilingWindTexture_1;
@@ -416,8 +418,8 @@ Shader "VFX_PoumfCapa2_WindScrolling"
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( IN.ase_color * temp_output_23_0 ).rgb;
-				float Alpha = ( pow( ( ( temp_output_23_0 * ( temp_output_34_0 * 4.0 ) ) * IN.ase_color.a ) , 2.0 ) * _Opacity );
+				float3 Color = ( ( IN.ase_color * temp_output_23_0 ) * _Color ).rgb;
+				float Alpha = ( ( pow( ( ( temp_output_23_0 * ( temp_output_34_0 * 4.0 ) ) * IN.ase_color.a ) , 2.0 ) * _Opacity ) * _Color.a );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -497,6 +499,7 @@ Shader "VFX_PoumfCapa2_WindScrolling"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
+			float4 _Color;
 			float _WindXSpeed_1;
 			float _WindYSpeed_1;
 			float _XTilingWindTexture_1;
@@ -725,7 +728,7 @@ Shader "VFX_PoumfCapa2_WindScrolling"
 				float temp_output_34_0 = ( ( 1.0 - texCoord31.x ) * texCoord31.x );
 				
 
-				float Alpha = ( pow( ( ( temp_output_23_0 * ( temp_output_34_0 * 4.0 ) ) * IN.ase_color.a ) , 2.0 ) * _Opacity );
+				float Alpha = ( ( pow( ( ( temp_output_23_0 * ( temp_output_34_0 * 4.0 ) ) * IN.ase_color.a ) , 2.0 ) * _Opacity ) * _Color.a );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -799,6 +802,7 @@ Shader "VFX_PoumfCapa2_WindScrolling"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
+			float4 _Color;
 			float _WindXSpeed_1;
 			float _WindYSpeed_1;
 			float _XTilingWindTexture_1;
@@ -995,7 +999,7 @@ Shader "VFX_PoumfCapa2_WindScrolling"
 				float temp_output_34_0 = ( ( 1.0 - texCoord31.x ) * texCoord31.x );
 				
 
-				float Alpha = ( pow( ( ( temp_output_23_0 * ( temp_output_34_0 * 4.0 ) ) * IN.ase_color.a ) , 2.0 ) * _Opacity );
+				float Alpha = ( ( pow( ( ( temp_output_23_0 * ( temp_output_34_0 * 4.0 ) ) * IN.ase_color.a ) , 2.0 ) * _Opacity ) * _Color.a );
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1045,9 +1049,9 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;41;144,-512;Inherit;False;2;2;0;CO
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;43;400,256;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;928,-512;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_PoumfCapa2_WindScrolling;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638101812666747487;  Blend;0;0;Two Sided;0;638101812878921567;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;48;-1888,336;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;-1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.StaticSwitch;47;-1728,256;Inherit;False;Property;_FlipTexture;Flip Texture;11;0;Create;True;0;0;0;False;0;False;0;0;1;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.StaticSwitch;47;-1728,256;Inherit;False;Property;_FlipTexture;Flip Texture;11;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;49;-1888,80;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;-1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.StaticSwitch;50;-1728,0;Inherit;False;Property;_FlipTexture;Flip Texture;12;0;Create;False;0;0;0;False;0;False;0;0;1;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.StaticSwitch;50;-1728,0;Inherit;False;Property;_FlipTexture;Flip Texture;12;0;Create;False;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;51;-2048,128;Inherit;False;Constant;_Float1;Float 1;13;0;Create;True;0;0;0;False;0;False;-1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;21;-2419,318;Inherit;False;Property;_YTilingWindTexture_2;Y Tiling Wind Texture_2;5;0;Create;True;0;0;0;False;0;False;1;1;1;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;20;-2432,128;Inherit;False;Property;_XTilingWindTexture_2;X Tiling Wind Texture_2;4;0;Create;True;0;0;0;False;0;False;1;1;1;10;0;1;FLOAT;0
@@ -1063,6 +1067,9 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;56;-112,768;Inherit;True;2;2;0;FLO
 Node;AmplifyShaderEditor.RangedFloatNode;57;-288,880;Inherit;False;Constant;_Float0;Float 0;13;0;Create;True;0;0;0;False;0;False;4;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;58;-368,768;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;34;-513,768;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;59;334.2313,-831.1989;Inherit;False;Property;_Color;Color;12;0;Create;True;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;60;530.7418,-514.6644;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;61;865.5571,-113.4622;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 WireConnection;5;0;19;0
 WireConnection;5;1;54;0
 WireConnection;7;0;6;0
@@ -1090,8 +1097,8 @@ WireConnection;41;0;40;0
 WireConnection;41;1;23;0
 WireConnection;43;0;39;0
 WireConnection;43;1;40;4
-WireConnection;1;2;41;0
-WireConnection;1;3;45;0
+WireConnection;1;2;60;0
+WireConnection;1;3;61;0
 WireConnection;48;0;20;0
 WireConnection;48;1;51;0
 WireConnection;47;1;20;0
@@ -1109,5 +1116,9 @@ WireConnection;58;0;34;0
 WireConnection;58;1;55;2
 WireConnection;34;0;32;0
 WireConnection;34;1;31;1
+WireConnection;60;0;41;0
+WireConnection;60;1;59;0
+WireConnection;61;0;45;0
+WireConnection;61;1;59;4
 ASEEND*/
-//CHKSM=345A14CAFFA134EEAEFBBD4FBC9AE0CC3C8A99FF
+//CHKSM=6C46DD7063272C98F815E669A3DE13BFF557AA1A
