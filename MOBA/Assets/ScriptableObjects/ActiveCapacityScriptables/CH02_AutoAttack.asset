@@ -22,7 +22,7 @@ MonoBehaviour:
   fxTime: 2
   indexInCollection: 0
   activeCapacityAnimationLauncherInfo:
-    animationTime: 0.833
+    animationTime: 0.483
     animatorParameterName: autoAttack
   damage: 1
   offsetAttack: 0.2
