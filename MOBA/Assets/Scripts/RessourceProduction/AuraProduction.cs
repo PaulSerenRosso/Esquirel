@@ -19,7 +19,11 @@ namespace RessourceProduction
         {
             base.OnStart();
             photonView.TransferOwnership(PhotonNetwork.MasterClient);
+            if(photonView.IsMine)
+                UIManager.Instance.ChangeAuraState(false);
         }
+        
+        
 
         public void InitAuraProduction()
         {
@@ -45,6 +49,7 @@ namespace RessourceProduction
             {
                 UIManager.Instance.ChangeAuraState(false);
             }
+            UIManager.Instance.UpdateAuraValue(value);
         }
 
         public override void IncreaseRessource(int amount)
@@ -77,17 +82,17 @@ namespace RessourceProduction
             {
                 case 0:
                 {
-                    UIManager.Instance.UpdateAuraValue( auraCapacityCounts[index], AuraUIImage.AADamage);
+                    UIManager.Instance.UpdateAuraCapacityRank( auraCapacityCounts[index], AuraUIImage.AADamage);
                     break;
                 }
                 case 1:
                 {
-                    UIManager.Instance.UpdateAuraValue( auraCapacityCounts[index], AuraUIImage.Comp01Damage);
+                    UIManager.Instance.UpdateAuraCapacityRank( auraCapacityCounts[index], AuraUIImage.Comp01Damage);
                     break;
                 }
                 case 2:
                 {
-                    UIManager.Instance.UpdateAuraValue( auraCapacityCounts[index], AuraUIImage.LifePoint);
+                    UIManager.Instance.UpdateAuraCapacityRank( auraCapacityCounts[index], AuraUIImage.LifePoint);
                     break;
                 }
             }

@@ -1,3 +1,4 @@
+using GameStates;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,8 +21,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        
         //PhotonNetwork.SerializationRate = 60;
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        PhotonNetwork.AutomaticallySyncScene = false; 
+        SceneManager.LoadScene(1);
     }
 
     public override void OnConnectedToMaster()

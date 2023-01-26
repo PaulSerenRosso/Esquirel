@@ -20,6 +20,8 @@ namespace Entities.Champion
         [FormerlySerializedAs("catapultMovment")]
         public CatapultMovement catapultMovement;
 
+        [SerializeField] private Collider capturePointCollider;
+        
         public PhotonTransformView transformView;
         public ChampionSO championSo;
         public Transform rotateParent;
@@ -208,11 +210,13 @@ namespace Entities.Champion
             RequestSetCanDie(true);
             auraProduction.InitAuraProduction();
             SyncSetCanCatapultMovementRPC(true);
+            capturePointCollider.enabled = true; 
 
             if (photonView.IsMine)
             {
                 GlobalDelegates.OneParameterDelegate<float> updateLowHpEffect = delegate(float hp)
                 {
+                    if(isAlive)
                     PostProcessEffectsManager.Instance.UpdateLowHpEffect(hp, maxHp);
                 };
                 OnDecreaseMaxHpFeedback += updateLowHpEffect;
@@ -223,7 +227,7 @@ namespace Entities.Champion
                 OnSetCurrentHpFeedback += updateLowHpEffect;
                 OnSetCurrentHpPercentFeedback += updateLowHpEffect;
                 OnDecreaseCurrentHpFeedback += (float hp) => PostProcessEffectsManager.Instance.LaunchDamageEffect();
-                OnDieFeedback +=()=>PostProcessEffectsManager.Instance.UpdateLowHpEffect(currentHp, maxHp);;
+                OnDieFeedback +=PostProcessEffectsManager.Instance.DeactivateLowHpEffect;;
                 OnDieFeedback += PostProcessEffectsManager.Instance.ActivateGrayScaleEffect;
                 OnReviveFeedback += PostProcessEffectsManager.Instance.DeactivateGrayScaleEffect;
             }
@@ -297,5 +301,17 @@ namespace Entities.Champion
 
         [PunRPC]
         public void SyncSetCanCatapultMovementRPC(bool value) => canUseCatapultMovement = value;
+
+        public void RequestCancelRecacstCooldown()
+        {
+            photonView.RPC("SyncCancelRecacstCooldownRPC", RpcTarget.All);
+        }
+        [PunRPC]
+        public void SyncCancelRecacstCooldownRPC()
+        {
+            UIManager.Instance.CancelRecacstCooldown(this);
+        }
+        
+        
     }
 }

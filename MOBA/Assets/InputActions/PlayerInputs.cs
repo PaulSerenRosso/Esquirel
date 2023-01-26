@@ -482,6 +482,54 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Surrender"",
+            ""id"": ""711853ba-2a98-4089-a2ce-3f58ae2b27a8"",
+            ""actions"": [
+                {
+                    ""name"": ""ActivateSurrender"",
+                    ""type"": ""Button"",
+                    ""id"": ""d696e6a6-097c-4afd-82be-9e974889d71e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DeactivateSurrender"",
+                    ""type"": ""Button"",
+                    ""id"": ""5faa2de4-998b-4fe8-b3d9-56c573686ba1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3d27d642-48fa-4645-960d-92bbb03a22cf"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateSurrender"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c177c811-acd1-4cdf-9649-4ea222c6c44a"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeactivateSurrender"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -517,6 +565,10 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_MoveMouse_MousePos = m_MoveMouse.FindAction("MousePos", throwIfNotFound: true);
         m_MoveMouse_ActiveButton = m_MoveMouse.FindAction("ActiveButton", throwIfNotFound: true);
         m_MoveMouse_CancelButton = m_MoveMouse.FindAction("CancelButton", throwIfNotFound: true);
+        // Surrender
+        m_Surrender = asset.FindActionMap("Surrender", throwIfNotFound: true);
+        m_Surrender_ActivateSurrender = m_Surrender.FindAction("ActivateSurrender", throwIfNotFound: true);
+        m_Surrender_DeactivateSurrender = m_Surrender.FindAction("DeactivateSurrender", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -874,6 +926,47 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         }
     }
     public MoveMouseActions @MoveMouse => new MoveMouseActions(this);
+
+    // Surrender
+    private readonly InputActionMap m_Surrender;
+    private ISurrenderActions m_SurrenderActionsCallbackInterface;
+    private readonly InputAction m_Surrender_ActivateSurrender;
+    private readonly InputAction m_Surrender_DeactivateSurrender;
+    public struct SurrenderActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public SurrenderActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ActivateSurrender => m_Wrapper.m_Surrender_ActivateSurrender;
+        public InputAction @DeactivateSurrender => m_Wrapper.m_Surrender_DeactivateSurrender;
+        public InputActionMap Get() { return m_Wrapper.m_Surrender; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SurrenderActions set) { return set.Get(); }
+        public void SetCallbacks(ISurrenderActions instance)
+        {
+            if (m_Wrapper.m_SurrenderActionsCallbackInterface != null)
+            {
+                @ActivateSurrender.started -= m_Wrapper.m_SurrenderActionsCallbackInterface.OnActivateSurrender;
+                @ActivateSurrender.performed -= m_Wrapper.m_SurrenderActionsCallbackInterface.OnActivateSurrender;
+                @ActivateSurrender.canceled -= m_Wrapper.m_SurrenderActionsCallbackInterface.OnActivateSurrender;
+                @DeactivateSurrender.started -= m_Wrapper.m_SurrenderActionsCallbackInterface.OnDeactivateSurrender;
+                @DeactivateSurrender.performed -= m_Wrapper.m_SurrenderActionsCallbackInterface.OnDeactivateSurrender;
+                @DeactivateSurrender.canceled -= m_Wrapper.m_SurrenderActionsCallbackInterface.OnDeactivateSurrender;
+            }
+            m_Wrapper.m_SurrenderActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ActivateSurrender.started += instance.OnActivateSurrender;
+                @ActivateSurrender.performed += instance.OnActivateSurrender;
+                @ActivateSurrender.canceled += instance.OnActivateSurrender;
+                @DeactivateSurrender.started += instance.OnDeactivateSurrender;
+                @DeactivateSurrender.performed += instance.OnDeactivateSurrender;
+                @DeactivateSurrender.canceled += instance.OnDeactivateSurrender;
+            }
+        }
+    }
+    public SurrenderActions @Surrender => new SurrenderActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -910,5 +1003,10 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnMousePos(InputAction.CallbackContext context);
         void OnActiveButton(InputAction.CallbackContext context);
         void OnCancelButton(InputAction.CallbackContext context);
+    }
+    public interface ISurrenderActions
+    {
+        void OnActivateSurrender(InputAction.CallbackContext context);
+        void OnDeactivateSurrender(InputAction.CallbackContext context);
     }
 }
