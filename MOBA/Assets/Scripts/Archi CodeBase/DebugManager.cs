@@ -4,7 +4,8 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
-public class DebugManager : MonoBehaviour {
+public class DebugManager : MonoBehaviour
+{
     [SerializeField] private GameObject debguButtons = null;
     [SerializeField] private GameObject debguPing = null;
     [SerializeField] private GameObject debguMaster = null;
@@ -21,32 +22,42 @@ public class DebugManager : MonoBehaviour {
     {
         GameStateMachine.Instance.SwitchState(2);
     }
-    
+
     public void OnTeamWins(int index)
     {
-        GameStateMachine.Instance.winner = index == 0 ? Enums.Team.Team1 : Enums.Team.Team2;
+        if (PhotonNetwork.IsMasterClient)
+        {
+
+            if (index == 0)
+                GameStateMachine.Instance.SendWinner(Enums.Team.Team1);
+            else
+                GameStateMachine.Instance.SendWinner(Enums.Team.Team2);
+
+        }
     }
 
     public void OnDieButtonClick()
-    {
-        GameStateMachine.Instance.GetPlayerChampion().RequestDie();
-    }
+        {
+            GameStateMachine.Instance.GetPlayerChampion().RequestDie();
+        }
 
-    public void OnDamageButtonClick()
-    {
-        GameStateMachine.Instance.GetPlayerChampion().DecreaseCurrentHpRPC(1);
-    }
+        public void OnDamageButtonClick()
+        {
+            GameStateMachine.Instance.GetPlayerChampion().DecreaseCurrentHpRPC(1);
+        }
 
-    public void StopGame() {
-        
-    }
-    
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.F3)) {
-            debguButtons.SetActive(!debguButtons.activeSelf);
-            debguPing.SetActive(!debguPing.activeSelf);
-            debguMaster.SetActive(!debguMaster.activeSelf);
-            debguTick.SetActive(!debguTick.activeSelf);
+        public void StopGame()
+        {
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                debguButtons.SetActive(!debguButtons.activeSelf);
+                debguPing.SetActive(!debguPing.activeSelf);
+                debguMaster.SetActive(!debguMaster.activeSelf);
+                debguTick.SetActive(!debguTick.activeSelf);
+            }
         }
     }
-}

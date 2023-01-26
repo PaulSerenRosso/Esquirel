@@ -15,7 +15,15 @@ public class MessagePopUpManager : MonoBehaviour
     #region Preset
 
     
-
+    public void SendAllyWantSurrender() =>
+        CreateMessagePopUp("Your ally wants to surrender ! Press O for surrender.", false);
+    public void SendAllyCancelSurrender() =>
+        CreateMessagePopUp("Your ally doesn't want surrender anymore !.", false);
+    
+    public void SendYouWantSurrender() =>
+        CreateMessagePopUp("You want to surrender ! Press P for cancel.", false);
+    public void SendYouCancelSurrender() =>
+        CreateMessagePopUp("You doesn't want surrender anymore !.", false);
     public void SendEnemyReachStep() =>
         CreateMessagePopUp("The enemies reached a step ! They won an aura point !", false);
 

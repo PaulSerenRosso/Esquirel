@@ -1,7 +1,10 @@
+using System.Collections;
 using GameStates;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PostGameUIManager : MonoBehaviour
 {
@@ -24,20 +27,43 @@ public class PostGameUIManager : MonoBehaviour
         Instance = this;
     }
 
-    public void DisplayPostGame(Enums.Team winner)
+    public void DisplayPostGame(Enums.Team winner, bool isSurrender = false)
     {
+        if (isSurrender)
+        {
+            winningTeamText.text = $"{winner} has won by surrender !";  
+        } 
+        else
+        {
+            winningTeamText.text = $"{winner} has won!";
+        }
         postGameCanvas.SetActive(true);
-        winningTeamText.text = $"{winner} has won!";
-
         var playerTeam = GameStateMachine.Instance.GetPlayerTeam();
-        resultText.text = playerTeam == winner ? "You won!" : "You lost!";
+        if (isSurrender)
+        {
+            resultText.text = playerTeam == winner ? "You won!" : "You surrender!";
+        }
+        else
+        {
+            resultText.text = playerTeam == winner ? "You won!" : "You lost!";
+        }
+        
     }
 
     public void OnRematchClick()
     {
-        Debug.Log("Does not work yet");
-        return;
-        rematchButton.interactable = false;
-        GameStateMachine.Instance.SendSetToggleReady(true);
+        Time.timeScale = 1; 
+        StartCoroutine(WaitForRematch());
+
+
+
+    }
+
+    IEnumerator WaitForRematch()
+    {
+        yield return new WaitForEndOfFrame();
+        Object.Destroy(GameStateMachine.Instance.gameObject);
+        PhotonNetwork.LeaveRoom();
+        NetworkManager.Instance.OnLeftRoom();
     }
 }

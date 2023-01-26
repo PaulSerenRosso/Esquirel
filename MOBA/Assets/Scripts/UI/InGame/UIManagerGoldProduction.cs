@@ -27,6 +27,16 @@ public partial class UIManager
     }
   }
 
+  public void UpdateNorthRelayCaptureState(Enums.Team team )
+  {
+    playerInterface.UpdateNorthRelaiTeam(team);
+  }
+
+  public void UpdateSouthRelayCaptureState(Enums.Team team )
+  {
+    playerInterface.UpdateSouthRelaiTeam(team);
+  }
+
   public void UpdateStreak(int value, int nextValue, Enums.Team team) 
   {
     switch (team)

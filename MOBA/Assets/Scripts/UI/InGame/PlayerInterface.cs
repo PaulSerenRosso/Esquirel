@@ -1,4 +1,7 @@
 using System;
+using GameStates;
+using Photon.Pun;
+using RessourceProduction;
 using System.Collections.Generic;
 using Entities;
 using TMPro;
@@ -172,13 +175,18 @@ public class PlayerInterface : MonoBehaviour
     /// </summary>
     /// <param name="cooldownValue"></param>
     /// <param name="maxCooldownValue"></param>
+ 
+   
     public void ChangeRecastCooldown(float cooldownValue, float maxCooldownValue) {
+       
         spell01RecastImage.fillAmount = 1-cooldownValue / maxCooldownValue;
         spell01Cooldown.fillAmount = 0;
         if (cooldownValue == 0) {
             spell01RecastImage.fillAmount = 0;
         }
     }
+    
+   
     
     /// <summary>
     /// Change the value of the recast cooldown
@@ -290,6 +298,7 @@ public class PlayerInterface : MonoBehaviour
     /// <param name="team"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public void UpdateNorthRelaiTeam(Enums.Team team) {
+        Debug.Log(team);
         switch (team) {
             case Enums.Team.Neutral:
                 northRelaiBlue.SetActive(false);
@@ -308,6 +317,8 @@ public class PlayerInterface : MonoBehaviour
         }
     }
     public void UpdateSouthRelaiTeam(Enums.Team team) {
+        
+        Debug.Log(team);
         switch (team) {
             case Enums.Team.Neutral:
                 southRelaiBlue.SetActive(false);
@@ -335,7 +346,13 @@ public class PlayerInterface : MonoBehaviour
     /// <param name="team"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public void UpdateVictoryGenerator(float value, float startValue , float target, Enums.Team team) {
+        
+        Debug.Log(target);
+        Debug.Log(value);
+        Debug.Log(startValue);
         float currentResolution = Mathf.Abs(target - value) / Mathf.Abs(target - startValue);
+        if (currentResolution < 0.1f)
+            currentResolution = 0;
         switch (team) {
             case Enums.Team.Neutral: break;
             

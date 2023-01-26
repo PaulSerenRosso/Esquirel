@@ -1,6 +1,7 @@
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using System.Threading.Tasks;
+using Photon.Pun;
 using Unity.Services.RemoteConfig;
 using UnityEngine;
 
@@ -52,6 +53,7 @@ namespace RemoteConfig {
             SetChampion02Variables();
             SetGeneratorVariables();
             SetRelaiVariables();
+            PhotonNetwork.ConnectUsingSettings();
         }
 
         /// <summary>
