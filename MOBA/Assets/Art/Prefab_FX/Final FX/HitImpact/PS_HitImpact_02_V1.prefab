@@ -14625,7 +14625,7 @@ GameObject:
   - component: {fileID: 262288061260310888}
   - component: {fileID: 262288061260310889}
   m_Layer: 0
-  m_Name: PS_HitImpact_02
+  m_Name: PS_HitImpact_02_V1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

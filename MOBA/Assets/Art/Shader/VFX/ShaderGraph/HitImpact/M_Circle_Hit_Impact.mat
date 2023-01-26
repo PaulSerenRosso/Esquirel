@@ -45,4 +45,5 @@ Material:
     - Vector4_1: {r: 0, g: 1, b: 0, a: 1}
     - Vector4_79fe1bf70e434eea8a213649cbe97bb8: {r: 0, g: 0, b: 0, a: 0}
     - Vector4_90fa0447a30a46d08d4b1d23e5920eb6: {r: 0, g: 1, b: 0, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
