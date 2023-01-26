@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TerrainMask_VertexPaint:
-        m_Texture: {fileID: 2800000, guid: b4627c65302b2c3458118e49f4427b4b, type: 3}
+        m_Texture: {fileID: 2800000, guid: c58ac4b6295bebd488030e025aee8b11, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 1, y: 1}
     m_Floats:
@@ -78,5 +78,7 @@ Material:
     - _T4_Tilling1: 10
     - _VertexPaintDebug: 0
     m_Colors:
+    - _BlackColor: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MapContourColor: {r: 0.191, g: 0.13472322, b: 0.08697321, a: 0}
   m_BuildTextureStacks: []

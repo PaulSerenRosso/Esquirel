@@ -13,7 +13,9 @@ Shader "ChampionsEffects"
 		_Fresnel_Normal_Tex_Power("Fresnel_Normal_Tex_Power", Float) = 0
 		_Fresnel_Power("Fresnel_Power", Range( 0 , 10)) = 3
 		[HDR]_Fresnel_Color("Fresnel_Color", Color) = (1,0,0,0)
-		[ASEEnd]_Fresnel_Value("Fresnel_Value", Range( 0 , 1)) = 0
+		_Fresnel_Value("Fresnel_Value", Range( 0 , 1)) = 0
+		[ASEEnd]_TextureSample1("Texture Sample 1", 2D) = "white" {}
+		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -209,6 +211,7 @@ Shader "ChampionsEffects"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
+			float4 _TextureSample1_ST;
 			float4 _Fresnel_Color;
 			float _Fresnel_Normal_Tex_UTiling;
 			float _Fresnel_Normal_Tex_VTiling;
@@ -226,6 +229,7 @@ Shader "ChampionsEffects"
 			#endif
 			CBUFFER_END
 
+			sampler2D _TextureSample1;
 			sampler2D _TextureSample0;
 
 
@@ -394,6 +398,7 @@ Shader "ChampionsEffects"
 					#endif
 				#endif
 
+				float2 uv_TextureSample1 = IN.ase_texcoord3.xy * _TextureSample1_ST.xy + _TextureSample1_ST.zw;
 				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
 				ase_worldViewDir = normalize(ase_worldViewDir);
 				float2 texCoord1_g1 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
@@ -414,7 +419,7 @@ Shader "ChampionsEffects"
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( ( temp_output_22_0_g1 * _Fresnel_Color ) * temp_output_34_0_g1 ).rgb;
+				float3 Color = ( tex2D( _TextureSample1, uv_TextureSample1 ) + ( ( temp_output_22_0_g1 * _Fresnel_Color ) * temp_output_34_0_g1 ) ).rgb;
 				float Alpha = 1;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
@@ -491,6 +496,7 @@ Shader "ChampionsEffects"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
+			float4 _TextureSample1_ST;
 			float4 _Fresnel_Color;
 			float _Fresnel_Normal_Tex_UTiling;
 			float _Fresnel_Normal_Tex_VTiling;
@@ -755,6 +761,7 @@ Shader "ChampionsEffects"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
+			float4 _TextureSample1_ST;
 			float4 _Fresnel_Color;
 			float _Fresnel_Normal_Tex_UTiling;
 			float _Fresnel_Normal_Tex_VTiling;
@@ -946,7 +953,11 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;0,0;Float;False;True;-1;2
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;3;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.FunctionNode;5;-896,128;Inherit;False;ASF_HitEffect;0;;1;d7e3d041d7c76dd408b372bc5533e0dc;0;7;34;FLOAT;0;False;13;FLOAT;0;False;19;FLOAT;0;False;21;FLOAT;0;False;24;COLOR;0,0,0,0;False;4;FLOAT;0;False;5;FLOAT;0;False;2;COLOR;0;FLOAT;28
-WireConnection;1;2;5;0
+Node;AmplifyShaderEditor.FunctionNode;5;-880,112;Inherit;False;ASF_HitEffect;0;;1;d7e3d041d7c76dd408b372bc5533e0dc;0;7;34;FLOAT;0;False;13;FLOAT;0;False;19;FLOAT;0;False;21;FLOAT;0;False;24;COLOR;0,0,0,0;False;4;FLOAT;0;False;5;FLOAT;0;False;2;COLOR;0;FLOAT;28
+Node;AmplifyShaderEditor.SamplerNode;7;-656,-128;Inherit;True;Property;_TextureSample1;Texture Sample 1;9;0;Create;True;0;0;0;False;0;False;-1;None;dd19c4ef9b5816c488b5dff4fc36d992;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleAddOpNode;9;-223,-49.5;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+WireConnection;1;2;9;0
+WireConnection;9;0;7;0
+WireConnection;9;1;5;0
 ASEEND*/
-//CHKSM=D993A885593734F56DB8DEF3E7686D34032BE46A
+//CHKSM=D613B609DBADF942B99317A5170630FEF89DB53E
