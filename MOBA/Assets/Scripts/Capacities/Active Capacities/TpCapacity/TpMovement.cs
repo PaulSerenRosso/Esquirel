@@ -13,6 +13,8 @@ namespace Entities.Capacities
 public class TpMovement : ChampionCapacityCurveMovement
 {
     [SerializeField] private TpObject tpObject;
+
+    [SerializeField] private SacDeFarineRotate _sacDeFarineRotate;
     private TpCapacitySO tpCapacitySo;
     private void Start()
     {
@@ -48,6 +50,7 @@ public class TpMovement : ChampionCapacityCurveMovement
     {
         if(!tpObject.GetIsActive()) return;
         base.OnUpdate();
+        _sacDeFarineRotate.OnUpdate();
     }
     
 

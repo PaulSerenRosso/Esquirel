@@ -29,24 +29,12 @@ namespace CapturePoint
 
         private void InitPopUpCapturePointState(Enums.Team team)
         {
-            for (int i = 0; i < VictoryCapturePoints.Length; i++)
-            {
-                string pointName = VictoryCapturePoints[i].pointName;
-
-                InitPopUpVictoryCapturePointState(i,
-                    GetAllTeamPopUpEvent(pointName, team));
-            }
+           
 
             VictoryCapturePoints[0].capturePointValueUpdatedFeedback +=
                 (float ressource) => UpdateRockMaterial(VictoryCapturePoints[0]);
 
-            for (int i = 0; i < GoldCapturePoints.Length; i++)
-            {
-                string pointName = GoldCapturePoints[i].pointName;
-                InitPopUpGoldCapturePointState(i, GetAllTeamPopUpEvent(pointName, team));
-                Debug.Log(i);
-                Debug.Log(GoldCapturePoints.Length);
-            }
+           
 
             GoldCapturePoints[0].capturePointValueUpdatedFeedback +=
                 (float ressource) => UpdateRockMaterial(GoldCapturePoints[0]);
@@ -175,63 +163,6 @@ namespace CapturePoint
                     break;
                 }
             }
-        }
-
-
-        private GlobalDelegates.NoParameterDelegate[] GetAllTeamPopUpEvent(string pointName, Enums.Team team)
-        {
-            GlobalDelegates.NoParameterDelegate[] allEvents = new GlobalDelegates.NoParameterDelegate[] { };
-            switch (team)
-            {
-                case Enums.Team.Team1:
-                {
-                    allEvents = new GlobalDelegates.NoParameterDelegate[]
-                    {
-                        () => popUpManager.SendAllyCapturePointMessage(pointName),
-                        () => popUpManager.SendAllyLosePointMessage(pointName),
-                        () => popUpManager.SendEnemyCapturePointMessage(pointName),
-                        () => popUpManager.SendEnemyLosePointMessage(pointName)
-                    };
-                    break;
-                }
-                case Enums.Team.Team2:
-                {
-                    allEvents = new GlobalDelegates.NoParameterDelegate[]
-                    {
-                        () => popUpManager.SendEnemyCapturePointMessage(pointName),
-                        () => popUpManager.SendEnemyLosePointMessage(pointName),
-                        () => popUpManager.SendAllyCapturePointMessage(pointName),
-                        () => popUpManager.SendAllyLosePointMessage(pointName)
-                    };
-                    break;
-                }
-            }
-
-            return allEvents;
-        }
-
-        private void InitPopUpGoldCapturePointState(int i,
-            GlobalDelegates.NoParameterDelegate[] allEvents)
-        {
-            GoldCapturePoints[i].firstTeamState.enterStateEventFeedback +=
-                allEvents[0];
-            GoldCapturePoints[i].firstTeamState.exitStateEventFeedback += allEvents[1];
-            GoldCapturePoints[i].secondTeamState.enterStateEventFeedback +=
-                allEvents[2];
-            GoldCapturePoints[i].secondTeamState.exitStateEventFeedback +=
-                allEvents[3];
-        }
-
-        private void InitPopUpVictoryCapturePointState(int i,
-            GlobalDelegates.NoParameterDelegate[] allEvents)
-        {
-            VictoryCapturePoints[i].firstTeamState.enterStateEventFeedback +=
-                allEvents[0];
-            VictoryCapturePoints[i].firstTeamState.exitStateEventFeedback += allEvents[1];
-            VictoryCapturePoints[i].secondTeamState.enterStateEventFeedback +=
-                allEvents[2];
-            VictoryCapturePoints[i].secondTeamState.exitStateEventFeedback +=
-                allEvents[3];
         }
     }
 }

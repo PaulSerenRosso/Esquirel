@@ -24,7 +24,6 @@ namespace Entities.Capacities
             {
                 activeCapacityAnimationLauncher.InitiateAnimationTimer();
                 startPosition = caster.transform.position;
-                activeCapacityAnimationLauncher.InitiateAnimationTimer();
                 endPosition = caster.transform.position + previsualisableCurveMovementObjectForward * range;
                 SearchEndPositionAvailable();
                 return true;

@@ -19,19 +19,19 @@ MonoBehaviour:
   cooldown: 6
   types: 
   fxPrefab: {fileID: 2386609691527878384, guid: 6f3c70890eb87a24d9004899d920940e, type: 3}
-  fxTime: 0.5
+  fxTime: 0.55
   indexInCollection: 4
   activeCapacityAnimationLauncherInfo:
-    animationTime: 1.128
+    animationTime: 0.65
     animatorParameterName: Comp2
-  damage: 200
+  damage: 5
   offsetAttack: 0.3
-  damageBeginTime: 1
+  damageBeginTime: 0.5
   impactFxTime: 0.5
   damageTime: 0.005
   attackTime: 1.128
   attackCapacityImpactFx: {fileID: 8110421565520617150, guid: e9492d85934383045af08345034315d9, type: 3}
   damagePrefab: {fileID: 3401829973968718546, guid: 90429151b8fce0a48bb13b4563b71bc5, type: 3}
-  previsualisablePrefab: {fileID: 5303382286382824983, guid: 7c8abd24b45bf6541a5ec3d5715ff982, type: 3}
-  height: 5
-  width: 2
+  previsualisablePrefab: {fileID: 5303382286382824983, guid: 8a4ffc1ce9fcfa341821e43cb74b06d4, type: 3}
+  height: 8
+  width: 2.5

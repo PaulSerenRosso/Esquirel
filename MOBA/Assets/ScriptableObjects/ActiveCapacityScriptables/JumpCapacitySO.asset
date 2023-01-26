@@ -16,7 +16,7 @@ MonoBehaviour:
   descriptionName: 
   icon: {fileID: 21300000, guid: aed6393858493e647832e7cc3209fbf9, type: 3}
   description: 
-  cooldown: 2
+  cooldown: 4
   types: 
   fxPrefab: {fileID: 0}
   fxTime: 0
@@ -96,11 +96,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  curveMovementMaxYPosition: 5
-  curveMovementTime: 0.6
-  referenceRange: 6
+  curveMovementMaxYPosition: 4
+  curveMovementTime: 0.4
+  referenceRange: 7
   activeCapacityAnimationLauncherInfo:
-    animationTime: 1.467
+    animationTime: 0.383
     animatorParameterName: Comp1
   firstDetectionSo: {fileID: 11400000, guid: 02469eb0e3f69de4fbc666a38c64d6c4, type: 2}
   secondDetectionSo: {fileID: 11400000, guid: 81e76e5d8d4f0d84ab64d32b6d79163a, type: 2}
