@@ -9,6 +9,7 @@ namespace Entities.Champion
         [Header("Visual")]
         public GameObject championMeshPrefab;
         public int canvasIndex;
+        public int championID;
         public Sprite championIcon;
         
         [Header("Stats")]
