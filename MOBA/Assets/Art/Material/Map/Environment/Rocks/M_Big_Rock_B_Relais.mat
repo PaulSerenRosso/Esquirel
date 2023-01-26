@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2770565980880032630
+--- !u!114 &-73696724211291288
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Mid_Rock_A
+  m_Name: M_Big_Rock_B_Relais
   m_Shader: {fileID: -6465566751694194690, guid: a5087b5d4312eae4383567f9002c9ad7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -33,15 +33,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_37541286d9cc495a8ff9a47b55255e3b:
-        m_Texture: {fileID: 2800000, guid: 287eb3f3799977f4f89061b4a7ab4728, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1e828852270854f4d8794e2e3e2cc29c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 287eb3f3799977f4f89061b4a7ab4728, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1e828852270854f4d8794e2e3e2cc29c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a54676f59b78d0c4daf0ba2c1f230232, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -69,7 +69,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 287eb3f3799977f4f89061b4a7ab4728, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1e828852270854f4d8794e2e3e2cc29c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -105,8 +105,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_26d3dcce603d48d5b81a23739ca9e405: -0.22
-    - Vector1_a3737b07b4dd448cbdc1f1750bd2a6fe: 0.71
+    - Vector1_26d3dcce603d48d5b81a23739ca9e405: -0.01
+    - Vector1_a3737b07b4dd448cbdc1f1750bd2a6fe: 1.54
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -136,7 +136,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_60111646ef16485aa061c1f68f17f278: {r: 0.990566, g: 0.990566, b: 0.990566, a: 0}
+    - Color_60111646ef16485aa061c1f68f17f278: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
