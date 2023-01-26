@@ -84,8 +84,8 @@ namespace Entities.Capacities
             else
             {
                 curveObject.endCurveEvent += TpChampion;
-                champion.SyncCancelRecacstCooldownRPC();
             }
+                champion.SyncCancelRecacstCooldownRPC();
         }
         void TpChampion()
         {

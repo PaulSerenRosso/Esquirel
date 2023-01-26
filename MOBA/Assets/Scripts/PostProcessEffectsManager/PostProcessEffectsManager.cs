@@ -38,12 +38,14 @@ public class PostProcessEffectsManager : MonoBehaviour
     {
         postProcessEffectMaterial.SetFloat("_OpacityBloodEffect", 1);
         isActiveLowHpEffect = true;
+        Debug.Log("tesfdsqfqds ");
     }
 
-    void DeactivateLowHpEffect()
+    public void DeactivateLowHpEffect()
     {
         postProcessEffectMaterial.SetFloat("_OpacityBloodEffect", 0);
         isActiveLowHpEffect = false;
+        Debug.Log("tes ");
     }
 
     private void ResetDamageEffect()

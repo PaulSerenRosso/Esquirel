@@ -298,6 +298,7 @@ public class PlayerInterface : MonoBehaviour
     /// <param name="team"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public void UpdateNorthRelaiTeam(Enums.Team team) {
+        Debug.Log(team);
         switch (team) {
             case Enums.Team.Neutral:
                 northRelaiBlue.SetActive(false);
@@ -316,6 +317,8 @@ public class PlayerInterface : MonoBehaviour
         }
     }
     public void UpdateSouthRelaiTeam(Enums.Team team) {
+        
+        Debug.Log(team);
         switch (team) {
             case Enums.Team.Neutral:
                 southRelaiBlue.SetActive(false);
@@ -343,7 +346,13 @@ public class PlayerInterface : MonoBehaviour
     /// <param name="team"></param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public void UpdateVictoryGenerator(float value, float startValue , float target, Enums.Team team) {
+        
+        Debug.Log(target);
+        Debug.Log(value);
+        Debug.Log(startValue);
         float currentResolution = Mathf.Abs(target - value) / Mathf.Abs(target - startValue);
+        if (currentResolution < 0.1f)
+            currentResolution = 0;
         switch (team) {
             case Enums.Team.Neutral: break;
             

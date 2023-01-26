@@ -10,6 +10,7 @@ using Entities.Inventory;
 using Photon.Pun;
 using GameStates.States;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
@@ -47,6 +48,7 @@ namespace GameStates
         public event GlobalDelegates.OneParameterDelegate<double> OnTickFeedback;
         public GlobalDelegates.NoParameterDelegate OnUpdate;
         public Enums.Team winner = Enums.Team.Neutral;
+        public bool winBySurrender = false;
         public List<int> allPlayersIDs = new List<int>();
 
         /// <summary>
@@ -79,6 +81,7 @@ namespace GameStates
             public bool playerReady;
             public int championPhotonViewId;
             public Champion champion;
+            public bool isWantedSurrender;
         }
 
         public string currentStateDebugString;
@@ -405,11 +408,30 @@ namespace GameStates
 
             var team1Count = 0;
             var team2Count = 0;
+            int team1FirstChampionSOIndex = -1;
+            int team2FirstChampionSOIndex = -1;
             foreach (var kvp in playersReadyDict)
             {
                 if (!kvp.Value.playerReady) return false;
-                if (kvp.Value.team == Enums.Team.Team1) team1Count++;
-                if (kvp.Value.team == Enums.Team.Team2) team2Count++;
+                if (kvp.Value.team == Enums.Team.Team1)
+                {
+                    team1Count++;
+                    if ( team1FirstChampionSOIndex == -1)
+                    {
+                        team1FirstChampionSOIndex = kvp.Value.championSOIndex;
+                    }
+                    else if (kvp.Value.championSOIndex == team1FirstChampionSOIndex) return false; 
+                }
+
+                if (kvp.Value.team == Enums.Team.Team2)
+                {
+                    team2Count++;
+                    if (team2FirstChampionSOIndex == -1)
+                    {
+                        team2FirstChampionSOIndex = kvp.Value.championSOIndex;
+                    }
+                    else if (kvp.Value.championSOIndex == team2FirstChampionSOIndex) return false; 
+                }
             }
 
             return team1Count == team2Count && team1Count == 2;
@@ -533,15 +555,122 @@ namespace GameStates
             */
         }
 
-        public void SendWinner(Enums.Team team)
+        public void SendWinner(Enums.Team team, bool isSurrender = false)
         {
-            photonView.RPC("SyncWinnerRPC", RpcTarget.All, (byte)team);
+            photonView.RPC("SyncWinnerRPC", RpcTarget.All, (byte)team, isSurrender);
+        }
+
+        public void RequestActivateSurrender(InputAction.CallbackContext obj)
+        {
+            if (!playersReadyDict[PhotonNetwork.LocalPlayer.ActorNumber].isWantedSurrender)
+                photonView.RPC("ActivateSurrenderRPC", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
+        }
+
+        public void RequestDeactivateSurrender(InputAction.CallbackContext obj)
+        {
+            if (playersReadyDict[PhotonNetwork.LocalPlayer.ActorNumber].isWantedSurrender)
+                photonView.RPC("DeactivateSurrenderRPC", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
         }
 
         [PunRPC]
-        private void SyncWinnerRPC(byte team)
+        void DeactivateSurrenderRPC(int actorNumber)
+        {
+            if (playersReadyDict[actorNumber].isWantedSurrender)
+            {
+                playersReadyDict[actorNumber].isWantedSurrender = false;
+                photonView.RPC("SyncDeactivateSurrenderRPC", RpcTarget.All, actorNumber);
+            }
+        }
+
+        [PunRPC]
+        void ActivateSurrenderRPC(int actorNumber)
+        {
+            if (!playersReadyDict[actorNumber].isWantedSurrender)
+            {
+                playersReadyDict[actorNumber].isWantedSurrender = true;
+                bool canSurrender = true;
+                foreach (var player in playersReadyDict)
+                {
+                    if (player.Value != playersReadyDict[actorNumber])
+                    {
+                        if (player.Value.team == playersReadyDict[actorNumber].team)
+                        {
+                            if (!player.Value.isWantedSurrender)
+                            {
+                                canSurrender = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (canSurrender)
+                {
+                    winBySurrender = true;
+                    SendWinner(
+                        playersReadyDict[actorNumber].team != Enums.Team.Team1 ? Enums.Team.Team1 : Enums.Team.Team2,
+                        true);
+                }
+
+                photonView.RPC("SyncActivateSurrenderRPC", RpcTarget.All, actorNumber);
+            }
+        }
+
+        [PunRPC]
+        void SyncActivateSurrenderRPC(int actorNumber)
+        {
+            playersReadyDict[actorNumber].isWantedSurrender = true;
+            if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumber)
+            {
+                MessagePopUpManager.Instance.SendYouWantSurrender();
+            }
+            else
+            {
+                IEnumerable<KeyValuePair<int, PlayerData>> playerOfSameTeam = playersReadyDict.Where(((pair, i) =>
+                {
+                    if (pair.Value.team == playersReadyDict[actorNumber].team && pair.Key != actorNumber &&
+                        pair.Key == PhotonNetwork.LocalPlayer.ActorNumber) return true;
+                    return false;
+                }));
+                if (playerOfSameTeam.Count() == 1)
+                {
+                    MessagePopUpManager.Instance.SendAllyWantSurrender();
+                }
+            }
+        }
+
+        [PunRPC]
+        void SyncDeactivateSurrenderRPC(int actorNumber)
+        {
+            playersReadyDict[actorNumber].isWantedSurrender = false;
+            if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumber)
+            {
+                MessagePopUpManager.Instance.SendYouCancelSurrender();
+            }
+            else
+            {
+                IEnumerable<KeyValuePair<int, PlayerData>> playerOfSameTeam = playersReadyDict.Where(((pair, i) =>
+
+                {
+                    if (pair.Value.team == playersReadyDict[actorNumber].team && pair.Key != actorNumber &&
+                        pair.Key == PhotonNetwork.LocalPlayer.ActorNumber) return true;
+                    return false;
+                }));
+                if (playerOfSameTeam.Count() == 1)
+                {
+                    MessagePopUpManager.Instance.SendAllyCancelSurrender();
+                }
+            }
+        }
+
+        [PunRPC]
+        private void SyncWinnerRPC(byte team, bool isSurrender)
         {
             winner = (Enums.Team)team;
+            winBySurrender = isSurrender;
+            GetPlayerChampion().inputController.Unlink();
+            UnityEngine.Debug.Log("test");
+            SyncSwitchStateRPC(3);
         }
 
         public Color GetTeamColor(Enums.Team team)
@@ -568,7 +697,7 @@ namespace GameStates
 
                 return false;
             }));
-            if (otherChampion.Count() == 0) return null; 
+            if (otherChampion.Count() == 0) return null;
             return otherChampion.First().Value.champion;
         }
 

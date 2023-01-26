@@ -18,8 +18,11 @@ public partial class UIManager
     {
         if (champion.photonView.IsMine)
         {
-            GameStateMachine.Instance.OnTickFeedback -= UpdateRecacstCooldown;
-        playerInterface.CancelRecacstCooldown();
+            if (PhotonNetwork.IsMasterClient)
+                GameStateMachine.Instance.OnTick -= UpdateRecacstCooldown;
+            else
+                GameStateMachine.Instance.OnTickFeedback -= UpdateRecacstCooldownFeedBack;
+            playerInterface.CancelRecacstCooldown();
         }
     }
 
@@ -27,17 +30,29 @@ public partial class UIManager
     private float recastCooldown;
     public void LaunchRecastCooldown(Champion champion, float cooldown)
     {
-        recastTimer = (double) cooldown;
+        recastCooldown = cooldown;
+        recastTimer = 0; 
         if (champion.photonView.IsMine)
-        {
-            GameStateMachine.Instance.OnTickFeedback += UpdateRecacstCooldown;
+        { 
+            if(PhotonNetwork.IsMasterClient)
+                GameStateMachine.Instance.OnTick+= UpdateRecacstCooldown;
+            else
+                GameStateMachine.Instance.OnTickFeedback += UpdateRecacstCooldownFeedBack;
         }
     }
-        void UpdateRecacstCooldown(double timerDiff)
-        {   
-            recastTimer -= timerDiff;
-            playerInterface.ChangeRecastCooldown((float) recastTimer,recastCooldown);
-        }
+    void UpdateRecacstCooldownFeedBack(double timerDiff)
+    {   
+        Debug.Log("bonsoir àt ous");
+        recastTimer += timerDiff;
+        playerInterface.ChangeRecastCooldown((float) recastTimer,recastCooldown);
+    }
+        
+    void UpdateRecacstCooldown()
+    {   
+        Debug.Log("bonsoir àt ous");
+        recastTimer += 1/GameStateMachine.Instance.tickRate;
+        playerInterface.ChangeRecastCooldown((float) recastTimer,recastCooldown);
+    }
         
         
 }

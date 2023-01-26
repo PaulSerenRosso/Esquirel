@@ -20,7 +20,7 @@ namespace CapturePoint
         private CapturePointState stateToStabilize;
         public string pointName;
         private CapturePointTeamState destinationState;
-        private int capturePointDirection;
+        public int capturePointDirection;
         public CapturePointSO capturePointSO;
         public CapturePointState neutralState;
         public CapturePointTeamState secondTeamState;
@@ -35,14 +35,16 @@ namespace CapturePoint
         protected Enums.CapturePointResolveType capturePointResolve;
         private float capturePointNewValue;
 
-
+        public event GlobalDelegates.OneParameterDelegate<float> capturePointValueUpdatedFeedback;
         public float CapturePointValue
         {
+            get => capturePointValue;
             set
             {
                 capturePointValue = value;
                 capturePointValue = value;
                 capturePointValueText.text = value.ToString();
+                capturePointValueUpdatedFeedback?.Invoke(capturePointValue);
             }
         }
 
@@ -419,10 +421,12 @@ namespace CapturePoint
             if (stream.IsWriting)
             {
                 stream.SendNext(capturePointValue);
+                stream.SendNext(capturePointDirection);
             }
             else
             {
                 CapturePointValue = (float)stream.ReceiveNext();
+                capturePointDirection = (int)stream.ReceiveNext();
             }
         }
 

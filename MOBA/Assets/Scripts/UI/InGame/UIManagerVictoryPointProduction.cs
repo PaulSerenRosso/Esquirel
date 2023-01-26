@@ -19,4 +19,10 @@ public partial class UIManager
         }
 
     }
+
+    public void UpdateGeneratorCapturePointValue(float value, float startValue, float target, Enums.Team team)
+    {
+        Debug.Log("generator point ");
+        playerInterface.UpdateVictoryGenerator(value, startValue, target, team);
+    }
 }

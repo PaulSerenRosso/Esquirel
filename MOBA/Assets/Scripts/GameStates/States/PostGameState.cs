@@ -9,7 +9,11 @@ namespace GameStates.States
 
         public override void StartState()
         {
-            PostGameUIManager.Instance.DisplayPostGame(sm.winner);
+            Time.timeScale = 0;
+  
+            Debug.Log(sm.winBySurrender);
+            PostGameUIManager.Instance.DisplayPostGame(sm.winner, sm.winBySurrender);
+        
         }
 
         public override void UpdateState() { }

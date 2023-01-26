@@ -6,6 +6,7 @@ using Entities;
 using Entities.Capacities;
 using Entities.Champion;
 using Entities.FogOfWar;
+using GameStates;
 using UnityEngine.AI;
 
 namespace Controllers.Inputs
@@ -414,6 +415,8 @@ namespace Controllers.Inputs
             inputs.MoveMouse.ActiveButton.started += context => isActivebuttonPress = true;
             inputs.MoveMouse.ActiveButton.canceled += context => isActivebuttonPress = false;
 
+            inputs.Surrender.ActivateSurrender.performed += GameStateMachine.Instance.RequestActivateSurrender;
+            inputs.Surrender.DeactivateSurrender.performed += GameStateMachine.Instance.RequestDeactivateSurrender;
             inputsAreLinked = true;
 
         //    inputs.Inventory.ActivateItem0.performed += OnActivateItem0;
@@ -423,6 +426,7 @@ namespace Controllers.Inputs
        //     inputs.Inventory.ShowHideInventory.canceled += context => UIManager.Instance.ShowHideInventory(false);
          //   inputs.Inventory.ShowHideShop.performed += OnShowHideShop;
         }
+
 
         public override void Unlink()
         {
@@ -438,6 +442,8 @@ namespace Controllers.Inputs
         //    inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
             inputs.MoveMouse.ActiveButton.performed -= OnMouseRightClick;
             inputs.MoveMouse.CancelButton.performed -= OnMouseLeftClick;
+            inputs.Surrender.ActivateSurrender.performed -= GameStateMachine.Instance.RequestActivateSurrender;
+            inputs.Surrender.DeactivateSurrender.performed -= GameStateMachine.Instance.RequestDeactivateSurrender;
             CameraController.Instance.UnLinkCamera();
         }
     }

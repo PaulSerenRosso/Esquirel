@@ -262,6 +262,11 @@ MonoBehaviour:
   - SyncSetCurrentStreakRPC
   - SyncCancelAutoAutoAttackRPC
   - SyncResetCapacityAimedRPC
+  - SyncCancelRecacstCooldownRPC
+  - ActivateSurrenderRPC
+  - DeactivateSurrenderRPC
+  - SyncActivateSurrenderRPC
+  - SyncDeactivateSurrenderRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -9,9 +9,14 @@ public partial class UIManager
         playerInterface.SetUpAuraSprite(auraValue,  auraUIImage, capacity);
     }
 
-    public void UpdateAuraValue(int auraValue, AuraUIImage auraUIImage)
+    public void UpdateAuraCapacityRank(int auraValue, AuraUIImage auraUIImage)
     {
         playerInterface.UpdateAuraValue(auraValue, auraUIImage);
+    }
+
+    public void UpdateAuraValue(int value)
+    {
+        playerInterface.UpdateNumberOfAuraAvailable(value);
     }
 
     public void ChangeAuraState(bool isActiv) => playerInterface.ChangeAuraState(isActiv);

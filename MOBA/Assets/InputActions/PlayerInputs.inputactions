@@ -460,6 +460,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Surrender",
+            "id": "711853ba-2a98-4089-a2ce-3f58ae2b27a8",
+            "actions": [
+                {
+                    "name": "ActivateSurrender",
+                    "type": "Button",
+                    "id": "d696e6a6-097c-4afd-82be-9e974889d71e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DeactivateSurrender",
+                    "type": "Button",
+                    "id": "5faa2de4-998b-4fe8-b3d9-56c573686ba1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3d27d642-48fa-4645-960d-92bbb03a22cf",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateSurrender",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c177c811-acd1-4cdf-9649-4ea222c6c44a",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DeactivateSurrender",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
