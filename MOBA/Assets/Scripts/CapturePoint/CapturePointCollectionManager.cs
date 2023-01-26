@@ -37,12 +37,69 @@ namespace CapturePoint
                     GetAllTeamPopUpEvent(pointName, team));
             }
 
+            VictoryCapturePoints[0].capturePointValueUpdatedFeedback +=
+                (float ressource) => UpdateRockMaterial(VictoryCapturePoints[0]);
+
             for (int i = 0; i < GoldCapturePoints.Length; i++)
             {
                 string pointName = GoldCapturePoints[i].pointName;
                 InitPopUpGoldCapturePointState(i, GetAllTeamPopUpEvent(pointName, team));
+                Debug.Log(i);
+                Debug.Log(GoldCapturePoints.Length);
             }
 
+            GoldCapturePoints[0].capturePointValueUpdatedFeedback +=
+                (float ressource) => UpdateRockMaterial(GoldCapturePoints[0]);
+            GoldCapturePoints[1].capturePointValueUpdatedFeedback +=
+                (float ressource) => UpdateRockMaterial(GoldCapturePoints[1]);
+
+            AddEventUIForRelay();
+
+            VictoryCapturePoints[0].capturePointValueUpdatedFeedback += OnGeneratorValueUpdatedFeedback;
+        }
+
+        private void UpdateRockMaterial(CapturePoint capturePoint)
+        {
+            var capturePointCurrentValue = capturePoint.CapturePointValue;
+            switch (capturePoint.team)
+            {
+                case Enums.Team.Neutral:
+                {
+                    var substractionOfNeutralStabilityPointByCurrentValue =
+                        capturePoint.neutralState.stabilityPoint - capturePointCurrentValue;
+
+                    if (substractionOfNeutralStabilityPointByCurrentValue > 0)
+                    {
+                        capturePoint.rockMaterial.SetFloat("_SliderColor",
+                            Mathf.Max(-1,-(substractionOfNeutralStabilityPointByCurrentValue)/(capturePoint.neutralState.stabilityPoint-capturePoint.firstTeamState.captureValue)));
+                    }
+                    else if (substractionOfNeutralStabilityPointByCurrentValue <= 0)
+                    {
+                        capturePoint.rockMaterial.SetFloat("_SliderColor",
+                            Mathf.Min(1,capturePointCurrentValue-capturePoint.neutralState.stabilityPoint)/ (capturePoint.secondTeamState.captureValue-capturePoint.neutralState.stabilityPoint));
+                    
+                    }
+
+                    break;
+                }
+                case Enums.Team.Team1:
+                {
+                    capturePoint.rockMaterial.SetFloat("_SliderColor",
+                        -(capturePoint.firstTeamState.captureValue-capturePointCurrentValue)/(capturePoint.firstTeamState.captureValue-capturePoint.firstTeamState.maxValue));
+                    break;
+                }
+                case Enums.Team.Team2:
+                {
+                    
+                    capturePoint.rockMaterial.SetFloat("_SliderColor",
+                        ( capturePointCurrentValue-capturePoint.secondTeamState.captureValue)/ (capturePoint.secondTeamState.maxValue-capturePoint.secondTeamState.captureValue));
+                    break;
+                }
+            }
+        }
+
+        private void AddEventUIForRelay()
+        {
             GoldCapturePoints[1].firstTeamState.enterStateEventFeedback += () =>
                 UIManager.Instance.UpdateNorthRelayCaptureState(Enums.Team.Team1);
             GoldCapturePoints[1].neutralState.enterStateEventFeedback += () =>
@@ -59,34 +116,28 @@ namespace CapturePoint
 
             UIManager.Instance.UpdateSouthRelayCaptureState(Enums.Team.Neutral);
             UIManager.Instance.UpdateNorthRelayCaptureState(Enums.Team.Neutral);
-
-
-            VictoryCapturePoints[0].capturePointValueUpdatedFeedback += OnGeneratorValueUpdatedFeedback;
         }
 
         private void OnGeneratorValueUpdatedFeedback(float parameter)
         {
-            Debug.Log("generator pointfdqsfsdqfqsdfqsdfqsdf ");
             var generator = VictoryCapturePoints[0];
             var capturePointCurrentValue = generator.CapturePointValue;
-            Debug.Log(generator.team);
-            Debug.Log(generator.capturePointDirection);
-            Debug.Log(generator.CapturePointValue);
-                    var captureDirection = generator.capturePointDirection;
+            var captureDirection = generator.capturePointDirection;
             switch (generator.team)
             {
                 case Enums.Team.Neutral:
                 {
-                    var oldCaptureDirection = generator.neutralState.stabilityPoint - capturePointCurrentValue;
+                    var substractionOfNeutralStabilityPointByCurrentValue =
+                        generator.neutralState.stabilityPoint - capturePointCurrentValue;
                     if (captureDirection == 1)
                     {
-                        if (oldCaptureDirection > 0)
+                        if (substractionOfNeutralStabilityPointByCurrentValue > 0)
                         {
                             UIManager.Instance.UpdateGeneratorCapturePointValue(capturePointCurrentValue,
                                 generator.firstTeamState.captureValue, generator.neutralState.stabilityPoint,
                                 Enums.Team.Team1);
                         }
-                        else if (oldCaptureDirection <= 0)
+                        else if (substractionOfNeutralStabilityPointByCurrentValue <= 0)
                         {
                             UIManager.Instance.UpdateGeneratorCapturePointValue(capturePointCurrentValue,
                                 generator.secondTeamState.captureValue, generator.neutralState.stabilityPoint,
@@ -95,13 +146,13 @@ namespace CapturePoint
                     }
                     else if (captureDirection == -1)
                     {
-                        if (oldCaptureDirection >= 0)
+                        if (substractionOfNeutralStabilityPointByCurrentValue >= 0)
                         {
                             UIManager.Instance.UpdateGeneratorCapturePointValue(capturePointCurrentValue,
                                 generator.firstTeamState.captureValue, generator.neutralState.stabilityPoint,
                                 Enums.Team.Team1);
                         }
-                        else if (oldCaptureDirection < 0)
+                        else if (substractionOfNeutralStabilityPointByCurrentValue < 0)
                         {
                             UIManager.Instance.UpdateGeneratorCapturePointValue(capturePointCurrentValue,
                                 generator.secondTeamState.captureValue, generator.neutralState.stabilityPoint,

@@ -206,11 +206,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1127989889882929516, guid: 8a45d416126d04345b212147c1f25350, type: 3}
   m_PrefabInstance: {fileID: 9099685377794206928}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &3787624538933388541 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5393284651723786285, guid: 8a45d416126d04345b212147c1f25350, type: 3}
-  m_PrefabInstance: {fileID: 9099685377794206928}
-  m_PrefabAsset: {fileID: 0}
 --- !u!33 &1455600543618278119 stripped
 MeshFilter:
   m_CorrespondingSourceObject: {fileID: 7672945575054462519, guid: 8a45d416126d04345b212147c1f25350, type: 3}
@@ -227,6 +222,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!199 &7496101213572771046 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 1607525539216375862, guid: 8a45d416126d04345b212147c1f25350, type: 3}
+  m_PrefabInstance: {fileID: 9099685377794206928}
+  m_PrefabAsset: {fileID: 0}
+--- !u!199 &7496101213353987103 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 1607525538898616527, guid: 8a45d416126d04345b212147c1f25350, type: 3}
+  m_PrefabInstance: {fileID: 9099685377794206928}
+  m_PrefabAsset: {fileID: 0}
+--- !u!199 &7496101212395837720 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 1607525537700902344, guid: 8a45d416126d04345b212147c1f25350, type: 3}
+  m_PrefabInstance: {fileID: 9099685377794206928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1613128381997418487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +273,6 @@ MonoBehaviour:
   currentPoints: []
   finalPoints: []
   viewObstructedByObstacle: 1
-  renderer: {fileID: 3787624538933388541}
   gradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -294,6 +303,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   pointName: Generator
+  capturePointDirection: 0
   capturePointSO: {fileID: 11400000, guid: 26af1beafd8304f4f95704695e36fa6d, type: 2}
   neutralState:
     stabilityPoint: 0
@@ -307,6 +317,11 @@ MonoBehaviour:
     captureValue: 0
     maxValue: 0
     team: 0
+  rockMaterial: {fileID: 0}
+  allRenderersIndicateWhoControlPoint:
+  - {fileID: 7496101213572771046}
+  - {fileID: 7496101213353987103}
+  - {fileID: 7496101212395837720}
   capturePointValueText: {fileID: 285778229171755573}
   innerRangeSquared: 400
   innerRenderer: {fileID: 4052673084368964269}
