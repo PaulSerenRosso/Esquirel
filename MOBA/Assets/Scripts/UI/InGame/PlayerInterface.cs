@@ -14,6 +14,8 @@ public class PlayerInterface : MonoBehaviour
     [Header("Player Health")]
     [SerializeField] private List<Animator> healthAnimatorList = new List<Animator>();
     [SerializeField] private Image allyHealthBar = null;
+    [SerializeField] private TextMeshProUGUI healthText = null;
+    [SerializeField] private TextMeshProUGUI allyHealthText = null;
 
     [Header("Player Image")] 
     [SerializeField] private Image playerCharacterImage = null;
@@ -74,10 +76,14 @@ public class PlayerInterface : MonoBehaviour
             else healthAnimatorList[i].SetInteger("Life", 0);
             
             healthAnimatorList[i].gameObject.SetActive(!(i >= lifeable.GetMaxHp()));
+            healthText.text = $"<color=green>Life remaining</color> : {(int) lifeable.GetCurrentHp()} / {(int) lifeable.GetMaxHp()}";
         }
     }
 
-    public void UpdateAllyHealth(float currentHealth, float maxHealth) => allyHealthBar.fillAmount = currentHealth / maxHealth;
+    public void UpdateAllyHealth(float currentHealth, float maxHealth) {
+        allyHealthBar.fillAmount = currentHealth / maxHealth;
+        allyHealthText.text = $"<color=green>Ally life remaining</color> : {(int) currentHealth} / {(int) maxHealth}";
+    }
 
     /// <summary>
     /// Update the visual of a player Interface Element
