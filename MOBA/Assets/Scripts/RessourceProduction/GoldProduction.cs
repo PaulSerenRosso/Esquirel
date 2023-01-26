@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -134,16 +135,13 @@ namespace RessourceProduction
                 DecreaseRessource(soStreak);
                 switch (team)
                 {
-                    case Enums.Team.Team1:
-                    {
+                    case Enums.Team.Team1:{
                         VictoryProduction.firstTeamVictoryProduction.IncreaseRessource(so.victoryAmount);
-                        if (uiManager != null) uiManager.Team01Exchange();
-                            break;
+                        break;
                     }
                     case Enums.Team.Team2:
                     {
                         VictoryProduction.secondTeamVictoryProduction.IncreaseRessource(so.victoryAmount);
-                        if (uiManager != null) uiManager.Team02Exchange();
                         break;
                     }
                 }
@@ -203,6 +201,19 @@ namespace RessourceProduction
 
             currentStreakLevel = streakIndex;
             UIManager.Instance.UpdateStreak(currentStreakLevel, so.streaks[currentStreakLevel], team);
+            switch (team) {
+                case Enums.Team.Neutral:
+                    break;
+                case Enums.Team.Team1:
+                    if (uiManager != null) uiManager.Team01Exchange();
+                    break;
+                case Enums.Team.Team2:
+                    if (uiManager != null) uiManager.Team02Exchange();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
         }
 
         void RequestSetCurrentBounty(int bounty, int enemyChampionIndex)
