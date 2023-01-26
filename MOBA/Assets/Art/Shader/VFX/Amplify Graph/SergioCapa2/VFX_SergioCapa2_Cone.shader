@@ -8,7 +8,8 @@ Shader "VFX_SergioCapa1_Cone"
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[ASEBegin]_MainTexCone("MainTex Cone", 2D) = "white" {}
 		_MainIns("MainIns", Float) = 5
-		[ASEEnd]_Color("Color", Color) = (1,1,1,1)
+		_Color("Color", Color) = (1,1,1,1)
+		[ASEEnd]_SpeedNoise("SpeedNoise", Vector) = (0,0,0,0)
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -203,6 +204,7 @@ Shader "VFX_SergioCapa1_Cone"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Color;
+			float2 _SpeedNoise;
 			float _MainIns;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -373,7 +375,8 @@ Shader "VFX_SergioCapa1_Cone"
 				#endif
 
 				float2 texCoord8 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner18 = ( 1.0 * _Time.y * float2( -0.05,-0.2 ) + float2( 0,0 ));
+				float2 appendResult25 = (float2(_SpeedNoise.x , _SpeedNoise.y));
+				float2 panner18 = ( 1.0 * _Time.y * appendResult25 + float2( 0,0 ));
 				float2 texCoord14 = IN.ase_texcoord3.xy * float2( 1,0.5 ) + panner18;
 				float4 temp_output_13_0 = ( pow( texCoord8.y , 1.0 ) * tex2D( _MainTexCone, texCoord14 ) );
 				
@@ -460,6 +463,7 @@ Shader "VFX_SergioCapa1_Cone"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Color;
+			float2 _SpeedNoise;
 			float _MainIns;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -656,7 +660,8 @@ Shader "VFX_SergioCapa1_Cone"
 				#endif
 
 				float2 texCoord8 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner18 = ( 1.0 * _Time.y * float2( -0.05,-0.2 ) + float2( 0,0 ));
+				float2 appendResult25 = (float2(_SpeedNoise.x , _SpeedNoise.y));
+				float2 panner18 = ( 1.0 * _Time.y * appendResult25 + float2( 0,0 ));
 				float2 texCoord14 = IN.ase_texcoord2.xy * float2( 1,0.5 ) + panner18;
 				float4 temp_output_13_0 = ( pow( texCoord8.y , 1.0 ) * tex2D( _MainTexCone, texCoord14 ) );
 				
@@ -735,6 +740,7 @@ Shader "VFX_SergioCapa1_Cone"
 
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Color;
+			float2 _SpeedNoise;
 			float _MainIns;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -899,7 +905,8 @@ Shader "VFX_SergioCapa1_Cone"
 				#endif
 
 				float2 texCoord8 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner18 = ( 1.0 * _Time.y * float2( -0.05,-0.2 ) + float2( 0,0 ));
+				float2 appendResult25 = (float2(_SpeedNoise.x , _SpeedNoise.y));
+				float2 panner18 = ( 1.0 * _Time.y * appendResult25 + float2( 0,0 ));
 				float2 texCoord14 = IN.ase_texcoord2.xy * float2( 1,0.5 ) + panner18;
 				float4 temp_output_13_0 = ( pow( texCoord8.y , 1.0 ) * tex2D( _MainTexCone, texCoord14 ) );
 				
@@ -939,7 +946,7 @@ Node;AmplifyShaderEditor.PannerNode;18;-1808,256;Inherit;False;3;0;FLOAT2;0,0;Fa
 Node;AmplifyShaderEditor.SamplerNode;7;-1296,125;Inherit;True;Property;_MainTexCone;MainTex Cone;0;0;Create;True;0;0;0;False;0;False;-1;91e5a5de1601d7441a12bfbd27ae58ab;f631fa6989759d848bb4c1c5d67a6cc4;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TextureCoordinatesNode;14;-1600,128;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,0.5;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;6;-624,0;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;17;-368,0;Inherit;False;Property;_MainIns;MainIns;1;0;Create;True;0;0;0;False;0;False;5;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;17;-368,0;Inherit;False;Property;_MainIns;MainIns;1;0;Create;True;0;0;0;False;0;False;5;5;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;13;-880,80;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;19;-624,128;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.VertexColorNode;5;-912,-256;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -947,9 +954,12 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;16;-240,-80;Inherit;False;2;2;0;CO
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;21;32,-96;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;23;16,112;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;384,-128;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;13;VFX_SergioCapa1_Cone;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;5;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;638077732750844459;  Blend;0;638087843887102010;Two Sided;0;638077729355040072;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;5;False;True;True;True;False;False;;False;0
-Node;AmplifyShaderEditor.ColorNode;20;-304,-256;Inherit;False;Property;_Color;Color;2;0;Create;True;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;20;-304,-256;Inherit;False;Property;_Color;Color;2;0;Create;True;0;0;0;False;0;False;1,1,1,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector2Node;24;-2224,256;Inherit;False;Property;_SpeedNoise;SpeedNoise;3;0;Create;True;0;0;0;False;0;False;0,0;-0.05,-0.2;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+Node;AmplifyShaderEditor.DynamicAppendNode;25;-2032,288;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
 WireConnection;10;0;8;0
 WireConnection;12;0;10;1
+WireConnection;18;2;25;0
 WireConnection;7;1;14;0
 WireConnection;14;1;18;0
 WireConnection;6;0;5;0
@@ -966,5 +976,7 @@ WireConnection;23;0;20;4
 WireConnection;23;1;19;0
 WireConnection;1;2;21;0
 WireConnection;1;3;23;0
+WireConnection;25;0;24;1
+WireConnection;25;1;24;2
 ASEEND*/
-//CHKSM=96571C24AD08383E0E9D05E411BA23000B645752
+//CHKSM=6906C9536E9268CCB78B882A2933A8C34ADE7523

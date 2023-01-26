@@ -205,49 +205,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2779714049642991589}
     m_Modifications:
-    - target: {fileID: 8600090040247534337, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_Layer
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040247534338, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040247534338, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040247534460, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: InitialModule.size3D
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040247534460, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040247534460, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: InitialModule.startSizeY.scalar
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040247534460, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: InitialModule.startSizeZ.scalar
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 8600090040478285696, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040478285696, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040478285696, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040478285696, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8600090040478285696, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -292,38 +252,6 @@ PrefabInstance:
     - target: {fileID: 8600090040478285701, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
       propertyPath: m_Name
       value: PS_SergioCapa2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040478285701, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_Layer
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040478285702, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090040726372638, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_Layer
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090041858378473, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: InitialModule.startSizeY.scalar
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090041858378474, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: InitialModule.startSizeZ.scalar
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8600090041858378479, guid: 267f91d17a60e41468858829e9f077e2, type: 3}
-      propertyPath: m_Layer
-      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 267f91d17a60e41468858829e9f077e2, type: 3}

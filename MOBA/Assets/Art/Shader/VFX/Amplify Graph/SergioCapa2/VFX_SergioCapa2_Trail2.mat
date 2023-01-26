@@ -45,11 +45,13 @@ Material:
     - _LineIntensity: 50
     - _SmootshepUVMaskingPower: 20
     m_Colors:
-    - _ColorTrail: {r: 0.7490196, g: 0, b: 0, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorTrail: {r: 2.9960785, g: 0.8471985, b: 0, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _LineColor: {r: 1, g: 1, b: 1, a: 1}
     - _LineSizeXY: {r: 1, g: 1.83, b: 0, a: 0}
-    - _NoiseColor: {r: 0.7490196, g: 0, b: 0.07058824, a: 1}
+    - _NoiseColor: {r: 2.9960785, g: 0.8471985, b: 0, a: 1}
+    - _NoiseSpeed: {r: 0, g: -0.5, b: 0, a: 0}
     - _SizeCube: {r: 0.4, g: 0.4, b: 0, a: 0}
     - _SmoothStepUVMaskingLeftRight: {r: 0, g: 1.2, b: 0, a: 1.2}
     - _SmoothStepUVMaskingUpDown: {r: 0, g: 1, b: 0, a: 0}
