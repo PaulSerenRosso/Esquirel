@@ -63,6 +63,7 @@ namespace CapturePoint
             team = Enums.Team.Neutral;
             UIManager.Instance.LookAtCamera(this.capturePointValueText.transform);
             capturePointValueText.enabled = false;
+            neutralState.enterStateEvent += () => CapturePointValue = neutralState.stabilityPoint;
             renderer.material.color = GameStateMachine.Instance.GetTeamColor(team);
             base.OnStart();
         }
