@@ -73,13 +73,13 @@ namespace RessourceProduction
             }
 
             uiManager = UIManager.Instance;
-            uiManager.UpdateGoldText(Ressource, team);
+            uiManager.UpdateGoldText(Ressource, so.streaks[currentStreakLevel], team);
             RequestSetCurrentStreak(0);
         }
 
-// aura fonctionne 
-// le lost se lance pas biens
-// le streak cassé non plus
+        // aura fonctionne 
+        // le lost se lance pas biens
+        // le streak cassé non plus
         public void LinkBounty(Champion enemyChampion)
         {
             if (PhotonNetwork.IsMasterClient)
@@ -137,11 +137,13 @@ namespace RessourceProduction
                     case Enums.Team.Team1:
                     {
                         VictoryProduction.firstTeamVictoryProduction.IncreaseRessource(so.victoryAmount);
-                        break;
+                        if (uiManager != null) uiManager.Team01Exchange();
+                            break;
                     }
                     case Enums.Team.Team2:
                     {
                         VictoryProduction.secondTeamVictoryProduction.IncreaseRessource(so.victoryAmount);
+                        if (uiManager != null) uiManager.Team02Exchange();
                         break;
                     }
                 }
@@ -178,7 +180,7 @@ namespace RessourceProduction
         {
             if (uiManager != null)
             {
-                uiManager.UpdateGoldText(value, team);
+                uiManager.UpdateGoldText(value, so.streaks[currentStreakLevel], team);
             }
         }
 

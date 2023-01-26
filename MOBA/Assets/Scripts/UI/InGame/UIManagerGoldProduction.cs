@@ -10,18 +10,18 @@ using UnityEngine;
 public partial class UIManager
 {
   
-  public void UpdateGoldText(int value, Enums.Team team)
+  public void UpdateGoldText(int value, int goldTarget, Enums.Team team)
   {
     switch (team)
     {
       case Enums.Team.Team1:
       {
-        playerInterface.UpdateGoldTeam01(value);
+        playerInterface.UpdateGoldTeam01(value, goldTarget);
         break; 
       }
       case Enums.Team.Team2:
       {
-        playerInterface.UpdateGoldTeam02(value);
+        playerInterface.UpdateGoldTeam02(value, goldTarget);
         break; 
       }
     }
@@ -55,4 +55,7 @@ public partial class UIManager
       }
     }
   }
+
+  public void Team01Exchange() => playerInterface.Team01Exchange();
+  public void Team02Exchange() => playerInterface.Team02Exchange();
 }

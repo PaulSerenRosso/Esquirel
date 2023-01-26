@@ -66,5 +66,5 @@ MonoBehaviour:
   damageEffectDisappearanceTime: 0.2
   hpInPercentageTriggerLowHpEffect: 0.5
   grayScaleApparitionTime: 2
-  grayScaleDisappearanceTime: 6
+  grayScaleDisappearanceTime: 0.75
   maxGrayScaleOpacity: 0.8
