@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SouthRelayRock
+  m_Shader: {fileID: -6465566751694194690, guid: fd32ab7063419a949a18c792f8effa75, type: 3}
+  m_ShaderKeywords: _NORMALMAP
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_08fa113648e8419b918a55f5a6246f28:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_4b42939f3eaa42b4811e3145322495fd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_997d28c8938b492d8b4664b3cb6a2d1f:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 98daa099856b24845856f9b75c1b581a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: de3cda7102413f746a3a250b3a5c0b56, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissiveMask:
+        m_Texture: {fileID: 2800000, guid: cfed801f94ed0da4d9d99de707bdba96, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_3fa078c73e7e4f0b9b51aaad88c355cc: 1
+    - _Ambiant_Occlusion: 1
+    - _Ambiant_Occlusion_1: 0
+    - _SliderColor: 0
+    - _Smoothness: 0
+    m_Colors:
+    - _CaptureColorNeutre: {r: 11.984314, g: 11.984314, b: 11.984314, a: 0}
+    - _CaptureColorTeam1: {r: 11.984314, g: 0, b: 0, a: 0}
+    - _CaptureColorTeam2: {r: 0, g: 0.1254902, b: 11.984314, a: 0}
+  m_BuildTextureStacks: []

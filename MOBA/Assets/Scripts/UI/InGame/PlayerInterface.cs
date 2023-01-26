@@ -371,9 +371,6 @@ public class PlayerInterface : MonoBehaviour
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public void UpdateVictoryGenerator(float value, float startValue , float target, Enums.Team team) {
         
-        Debug.Log(target);
-        Debug.Log(value);
-        Debug.Log(startValue);
         float currentResolution = Mathf.Abs(target - value) / Mathf.Abs(target - startValue);
         if (currentResolution < 0.1f)
             currentResolution = 0;

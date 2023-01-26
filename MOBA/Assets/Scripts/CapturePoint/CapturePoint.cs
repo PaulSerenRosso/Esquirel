@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Entities;
 using Entities.Champion;
 using Entities.FogOfWar;
+using ExitGames.Client.Photon.StructWrapping;
 using GameStates;
 using Photon.Pun;
 using TMPro;
@@ -13,7 +14,6 @@ namespace CapturePoint
 {
     public class CapturePoint : Entity, IPunObservable
     {
-        [SerializeField] MeshRenderer renderer;
         [SerializeField] Gradient gradient;
         private float capturePointValue;
         private CapturePointTeamState currentTeamState;
@@ -26,7 +26,8 @@ namespace CapturePoint
         public CapturePointTeamState secondTeamState;
         public CapturePointTeamState firstTeamState;
         private float capturePointSpeed;
-        [SerializeField] private Material rockMaterial;
+        [SerializeField] public Material rockMaterial;
+        [SerializeField] Renderer[] allRenderersIndicateWhoControlPoint;
 
         private List<GlobalDelegates.NoParameterDelegate> capturePointDelegates =
             new List<GlobalDelegates.NoParameterDelegate>();
@@ -65,7 +66,7 @@ namespace CapturePoint
             UIManager.Instance.LookAtCamera(this.capturePointValueText.transform);
             capturePointValueText.enabled = false;
             neutralState.enterStateEvent += () => CapturePointValue = neutralState.stabilityPoint;
-            renderer.material.color = GameStateMachine.Instance.GetTeamColor(team);
+           
             base.OnStart();
         }
 
@@ -465,7 +466,7 @@ namespace CapturePoint
             UpdateNewCapturePointState(newTeam);
             team = newTeam;
             
-            renderer.material.color = GameStateMachine.Instance.GetTeamColor(team);
+        
         }
 
         void UpdateNewCapturePointState(Enums.Team newTeam)
@@ -474,16 +475,34 @@ namespace CapturePoint
             {
                 case Enums.Team.Neutral:
                 {
+                    rockMaterial.SetFloat("_SliderColor", -firstTeamState.maxValue/CapturePointValue);
+
+                    for (int i = 0; i < allRenderersIndicateWhoControlPoint.Length; i++)
+                    {
+                        allRenderersIndicateWhoControlPoint[i].gameObject.SetActive(false);
+                    }
                     neutralState.enterStateEventFeedback?.Invoke();
                     break;
                 }
                 case Enums.Team.Team1:
                 {
+                    for (int i = 0; i < allRenderersIndicateWhoControlPoint.Length; i++)
+                    {
+                        allRenderersIndicateWhoControlPoint[i].gameObject.SetActive(true);
+                        allRenderersIndicateWhoControlPoint[i].material.SetColor("_Color",  GameStateMachine.Instance.GetTeamColor(newTeam));
+                           
+                    }
                     firstTeamState.enterStateEventFeedback?.Invoke();
                     break;
                 }
                 case Enums.Team.Team2:
                 {
+                    for (int i = 0; i < allRenderersIndicateWhoControlPoint.Length; i++)
+                    {
+                        allRenderersIndicateWhoControlPoint[i].gameObject.SetActive(true);
+                        allRenderersIndicateWhoControlPoint[i].material
+                            .SetColor("_Color", GameStateMachine.Instance.GetTeamColor(newTeam));
+                    }
                     secondTeamState.enterStateEventFeedback?.Invoke();
                     break;
                 }
