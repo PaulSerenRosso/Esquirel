@@ -25,6 +25,8 @@ public class PlayerInterface : MonoBehaviour
     [SerializeField] private Image spell01Image = null;
     [SerializeField] private Image spell01RecastImage = null;
     [SerializeField] private Image spell01Cooldown = null;
+    [SerializeField] private GameObject spell01SergioMouseHover = null;
+    [SerializeField] private GameObject spell01PoumfMouseHover = null;
     [SerializeField] private TextMeshProUGUI spell01CooldownTxt = null;
     [SerializeField] private Image spell02Image = null;
     [SerializeField] private Image spell02Cooldown = null;
@@ -388,6 +390,15 @@ public class PlayerInterface : MonoBehaviour
             
             default: throw new ArgumentOutOfRangeException(nameof(team), team, null);
         }
+    }
+
+    /// <summary>
+    /// Set the right ability for the champion
+    /// </summary>
+    /// <param name="isSergio"></param>
+    public void SetJumpAbility(bool isSergio) {
+        spell01SergioMouseHover.SetActive(isSergio);
+        spell01PoumfMouseHover.SetActive(!isSergio);
     }
 }
 

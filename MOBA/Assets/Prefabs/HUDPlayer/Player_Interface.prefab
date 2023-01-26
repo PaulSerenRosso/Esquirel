@@ -2730,6 +2730,8 @@ MonoBehaviour:
   spell01Image: {fileID: 1213383649377408226}
   spell01RecastImage: {fileID: 7394213242323426770}
   spell01Cooldown: {fileID: 1213383649546914841}
+  spell01SergioMouseHover: {fileID: 4028190935015508312}
+  spell01PoumfMouseHover: {fileID: 841935350508768944}
   spell01CooldownTxt: {fileID: 1213383649224858002}
   spell02Image: {fileID: 6197864061044215119}
   spell02Cooldown: {fileID: 6654989604645490377}

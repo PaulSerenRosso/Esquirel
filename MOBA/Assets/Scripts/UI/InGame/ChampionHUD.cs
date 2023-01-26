@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Entities;
 using Entities.Capacities;
 using Entities.Champion;
@@ -108,10 +109,11 @@ public class ChampionHUD : MonoBehaviour
     {
         champion = newChampion;
         lifeable = champion.GetComponent<IActiveLifeable>();
-       otherChampion = GameStateMachine.Instance.GetOtherChampionOfSameTeam(champion);
+        otherChampion = GameStateMachine.Instance.GetOtherChampionOfSameTeam(champion);
         resourceable = champion.GetComponent<IResourceable>();
         this.playerInterface = playerInterface;
         playerInterface.UpdateHealth(lifeable);
+        playerInterface.SetJumpAbility(champion.championSo.championID == 0);
         LinkToEvents();
         UpdateIcons(champion);
     }
