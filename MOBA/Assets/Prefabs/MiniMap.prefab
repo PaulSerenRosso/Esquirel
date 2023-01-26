@@ -284,7 +284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 2b3e4933810a1414080184e826cf133e, type: 3}
+  m_Texture: {fileID: 2800000, guid: 56c058efde030ea4b97a84c0a9d657c6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -749,8 +749,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 835, y: -415}
-  m_SizeDelta: {x: -1670, y: -830}
+  m_AnchoredPosition: {x: 810, y: -395}
+  m_SizeDelta: {x: -1680, y: -840}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8347761881465002565
 CanvasRenderer:
@@ -807,12 +807,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldMapCenter: {x: 0, y: 0, z: 0}
   worldMapSize: {x: 165.7, y: 165.7}
-  screenMapSize: 250
-  screenMapCenter: {x: 835, y: -415}
+  screenMapSize: 240
+  screenMapCenter: {x: 810, y: -395}
   mapObject: {fileID: 8347761881465002567}
   iconPrefab: {fileID: 1529495135643827006, guid: 23e1d148486b965428314d0b1132df16, type: 3}
   minWorldMapPosition: {x: -82.85, y: -82.85}
-  miniMapSize: {x: 250, y: 250}
+  miniMapSize: {x: 240, y: 240}
   substractionBetweenMaxAndMinWorldPos: {x: 165.7, y: 165.7}
   maxWorldMapPosition: {x: 82.85, y: 82.85}
   ratioXY: 1

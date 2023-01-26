@@ -39,10 +39,10 @@ Material:
     - _FrequenceBloodImpact: 0.5
     - _FrequenceBloodSpeed: 8
     - _Opacity: 1
-    - _OpacityBloodEffect: 0
+    - _OpacityBloodEffect: 1
     - _OpacityGrayscaleEffect: 0
     - _OpacityImpactEffect: 0
-    - _SizeBloodEffect: 2
+    - _SizeBloodEffect: 5.5
     - _SizeEffect: 3.25
     - _SizeEffect_1: 2.5
     - _SizeImpactEffect: 3

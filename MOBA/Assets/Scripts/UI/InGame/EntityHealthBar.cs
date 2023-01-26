@@ -11,6 +11,8 @@ namespace UIComponents
         [SerializeField] private DamagePopUp playerPopUp = null;
         [SerializeField] private Image healthBar;
         [SerializeField] private List<Image> healthImageList = new List<Image>();
+        [SerializeField] private List<Animator> healthAnimatorList = new List<Animator>();
+        
         private IActiveLifeable lifeable;
         private Entity currentEntity;
 
@@ -39,7 +41,7 @@ namespace UIComponents
         private void UpdateFillPercentByPercent(float value) {
             for (int i = 0; i < healthImageList.Count; i++) {
                 healthImageList[i].fillAmount = i < lifeable.GetCurrentHp() ? 1 : 0;
-                healthImageList[i].gameObject.SetActive(!(i >= lifeable.GetMaxHp()));
+                healthAnimatorList[i].gameObject.SetActive(!(i >= lifeable.GetMaxHp()));
                 
             }
             //healthBar.fillAmount = lifeable.GetCurrentHp()/lifeable.GetMaxHp();
@@ -50,9 +52,11 @@ namespace UIComponents
             int lastHp = 0;
             for (int i = 0; i < healthImageList.Count; i++) {
                 lastHp += (healthImageList[i].fillAmount != 0 ? 1 : 0);
+                if(i >= lifeable.GetCurrentHp() && healthImageList[i].fillAmount != 0) healthAnimatorList[i].SetTrigger("RemoveLife");
                 healthImageList[i].fillAmount = i < lifeable.GetCurrentHp() ? 1 : 0;
-                healthImageList[i].gameObject.SetActive(!(i >= lifeable.GetMaxHp()));
+                healthAnimatorList[i].gameObject.SetActive(!(i >= lifeable.GetMaxHp()));
             }
+            
             if(lifeable.GetCurrentHp() - lastHp < 0) currentEntity.gameObject.GetComponent<DamagePopUp>().CreateDamagePopUp((int)lifeable.GetCurrentHp() - lastHp, lifeable.GetCurrentHp() <= 0);
             //healthBar.fillAmount = lifeable.GetCurrentHp()/lifeable.GetMaxHp();
         }

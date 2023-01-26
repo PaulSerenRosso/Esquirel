@@ -9,8 +9,7 @@ using UnityEngine.Events;
 public class PlayerInterface : MonoBehaviour
 {
     [Header("Player Health")]
-    [SerializeField] private List<Image> healthImageList = new List<Image>();
-
+    [SerializeField] private List<Animator> healthAnimatorList = new List<Animator>();
     [SerializeField] private Image allyHealthBar = null;
 
     [Header("Player Image")] 
@@ -31,9 +30,15 @@ public class PlayerInterface : MonoBehaviour
 
     [Header("Gold")] 
     [SerializeField] private TextMeshProUGUI team01GoldValue = null;
-    [SerializeField] private TextMeshProUGUI team02GoldValue = null;
+    [SerializeField] private Image team01GoldImgValue = null;
     [SerializeField] private TextMeshProUGUI team01GoldStreak = null;
+    [SerializeField] private Animator team01GoldExchangeAnim = null;
+        
+    [SerializeField] private TextMeshProUGUI team02GoldValue = null;
+    [SerializeField] private Image team02GoldImgValue = null;
     [SerializeField] private TextMeshProUGUI team02GoldStreak = null;
+    [SerializeField] private Animator team02GoldExchangeAnim = null;
+    
     [SerializeField] private GameObject northRelaiRed = null;
     [SerializeField] private GameObject northRelaiBlue = null;
     [SerializeField] private GameObject southRelaiRed = null;
@@ -61,9 +66,11 @@ public class PlayerInterface : MonoBehaviour
     /// <param name="currentHealth"></param>
     /// <param name="maxHealth"></param>
     public void UpdateHealth(IActiveLifeable lifeable) {
-        for (int i = 0; i < healthImageList.Count; i++) {
-            healthImageList[i].fillAmount = i < lifeable.GetCurrentHp() ? 1 : 0;
-            healthImageList[i].gameObject.SetActive(!(i >= lifeable.GetMaxHp()));
+        for (int i = 0; i < healthAnimatorList.Count; i++) {
+            if (i < lifeable.GetCurrentHp()) healthAnimatorList[i].SetInteger("Life", 1);
+            else healthAnimatorList[i].SetInteger("Life", 0);
+            
+            healthAnimatorList[i].gameObject.SetActive(!(i >= lifeable.GetMaxHp()));
         }
     }
 
@@ -205,9 +212,15 @@ public class PlayerInterface : MonoBehaviour
     /// Update the gold value of each team
     /// </summary>
     /// <param name="value"></param>
-    public void UpdateGoldTeam01(int value) => team01GoldValue.text = value.ToString();
+    public void UpdateGoldTeam01(int value, int targetValue) {
+        team01GoldImgValue.fillAmount = (float) value / targetValue;
+        team01GoldValue.text = value.ToString();
+    }
 
-    public void UpdateGoldTeam02(int value) => team02GoldValue.text = value.ToString();
+    public void UpdateGoldTeam02(int value, int targetValue) {
+        team02GoldImgValue.fillAmount = (float) value / targetValue;
+        team02GoldValue.text = value.ToString();
+    }
 
     /// <summary>
     /// Update the Streak of each team
@@ -221,7 +234,10 @@ public class PlayerInterface : MonoBehaviour
     /// </summary>
     /// <param name="value"></param>
     public void UpdateGoldStreakTeam01(int value) => team01GoldStreak.text = value.ToString();
+    public void Team01Exchange() => team01GoldExchangeAnim.SetTrigger("Exchange");
+
     public void UpdateGoldStreakTeam02(int value) => team02GoldStreak.text = value.ToString();
+    public void Team02Exchange() => team02GoldExchangeAnim.SetTrigger("Exchange");
 
     /// <summary>
     /// Update the victory point of each team
