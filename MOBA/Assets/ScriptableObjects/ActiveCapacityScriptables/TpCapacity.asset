@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceName: 
   descriptionName: 
-  icon: {fileID: 21300000, guid: aed6393858493e647832e7cc3209fbf9, type: 3}
+  icon: {fileID: 21300000, guid: 1b6205f92cdf6584fab16f9d4a70c8d3, type: 3}
   description: 
-  cooldown: 2
+  cooldown: 1
   types: 
   fxPrefab: {fileID: 0}
   fxTime: 0
@@ -96,9 +96,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  curveMovementMaxYPosition: 10
-  curveMovementTime: 4
-  referenceRange: 6
+  curveMovementMaxYPosition: 4
+  curveMovementTime: 0.3
+  referenceRange: 7
   activeCapacityAnimationLauncherInfo:
     animationTime: 0.32
     animatorParameterName: Comp1
