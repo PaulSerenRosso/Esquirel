@@ -72,7 +72,7 @@ namespace Entities.Champion
              SyncSetCanCatapultMovementRPC(false);
             entityClicker.EnableCollider = false;
             rotateParent.gameObject.SetActive(false);
-            
+            entityCapacityCollider.enabled = false;
             uiTransform.gameObject.SetActive(false);
             FogOfWarManager.Instance.RemoveFOWViewable(this);
 
@@ -149,6 +149,7 @@ namespace Entities.Champion
             FogOfWarManager.Instance.AddFOWViewable(this);
             rotateParent.gameObject.SetActive(true);
             uiTransform.gameObject.SetActive(true);
+            entityCapacityCollider.enabled = true;
             OnReviveFeedback?.Invoke();
             transformView.enabled = true;
         }

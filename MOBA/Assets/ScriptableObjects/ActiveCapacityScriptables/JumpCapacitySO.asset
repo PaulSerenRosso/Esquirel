@@ -100,7 +100,7 @@ MonoBehaviour:
   curveMovementTime: 0.4
   referenceRange: 7
   activeCapacityAnimationLauncherInfo:
-    animationTime: 1.467
+    animationTime: 0.383
     animatorParameterName: Comp1
   firstDetectionSo: {fileID: 11400000, guid: 02469eb0e3f69de4fbc666a38c64d6c4, type: 2}
   secondDetectionSo: {fileID: 11400000, guid: 81e76e5d8d4f0d84ab64d32b6d79163a, type: 2}

@@ -49,24 +49,7 @@ public class MessagePopUpManager : MonoBehaviour
     public void SendAllyBreakStreak() => CreateMessagePopUp("Your streak broke !", false );
 
     public void SendEnemyBreakStreak() => CreateMessagePopUp("The enemies' streak broke !", true);
-
-    public void SendAllyLosePointMessage(string pointName)
-    {
-        CreateMessagePopUp($"You lost the {pointName}.", false);
-    }
-    public void SendEnemyLosePointMessage(string pointName)
-    {
-        CreateMessagePopUp($"The enemies lost the {pointName}.", true);
-    }
-    public void SendEnemyCapturePointMessage(string pointName)
-    {
-        CreateMessagePopUp($"The enemies captured the {pointName}.", false);
-    }
-
-    public void SendAllyCapturePointMessage(string pointName)
-    {
-        CreateMessagePopUp($"You captured the {pointName}.", true);
-    }
+    
 
     #endregion
 

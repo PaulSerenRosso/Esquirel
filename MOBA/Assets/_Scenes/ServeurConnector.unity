@@ -899,6 +899,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6505229500386670178, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
+      propertyPath: baseCursorSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 29bb8e0fb707269409388932f39651c2, type: 3}
     - target: {fileID: 6505229500386670179, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
       propertyPath: m_Name
       value: CursorManager
@@ -911,6 +915,10 @@ PrefabInstance:
       propertyPath: m_MatchWidthOrHeight
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6505229500793123419, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 29bb8e0fb707269409388932f39651c2, type: 3}
     - target: {fileID: 6505229500793123419, guid: e7e1574b01fd2f94da930d1076f1c0df, type: 3}
       propertyPath: m_Color.b
       value: 1
