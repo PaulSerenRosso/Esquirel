@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TerrainMask_VertexPaint:
-        m_Texture: {fileID: 2800000, guid: b4627c65302b2c3458118e49f4427b4b, type: 3}
+        m_Texture: {fileID: 2800000, guid: b83ab6490ea729844b2ec72ae6d30159, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 1, y: 1}
     m_Floats:
