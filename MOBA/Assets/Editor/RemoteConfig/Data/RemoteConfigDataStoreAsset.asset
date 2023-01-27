@@ -12,600 +12,600 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
   m_Name: RemoteConfigDataStoreAsset
   m_EditorClassIdentifier: 
-  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"ab437f77-d6b4-4567-8a8a-7c9ed600a46e\"\r\n   
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"caccdf0e-ca60-4c8b-bd3b-f7d9e7a54fee\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"GEN_BaseViewRange\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"c91e2431-d497-4207-ab81-755781d9610f\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"6bd8ec06-88d5-4868-8c88-690eb4a32ee3\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"GEN_ViewRange\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"c8e07fd5-6e69-4660-9e3f-bffefbf8ce17\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"ce82ddef-a9a2-43c7-b3c7-31682952a700\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"GEN_CapturePointSpeed\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"8b512a7f-8910-4d6a-931a-cd0221a8d42d\"\r\n   
+    0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"511cebdb-39e1-46a9-bce8-5ae56a43b648\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"GEN_TEAM01_StabilityPoint\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"33c94c88-e86e-44a5-bf51-bd13fcb1eaca\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"4d224739-ee11-4104-ab05-eabcec0a527b\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"GEN_TEAM01_CaptureValue\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 6.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"2d4d6b23-2d5f-4535-8b55-2ddcc3c00430\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7cdeb817-ec45-4537-981d-88552e5f37fd\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"GEN_TEAM01_MaxValue\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"896e34d1-edc0-4b9a-b1e4-56bb9b626f61\"\r\n   
+    4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"ecc4df86-df06-4ed0-8a52-37dba72e826f\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"GEN_TEAM02_StabilityPoint\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"da201314-4dfd-4409-933a-b7f95817d03f\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"c47c710e-a6d0-48fb-85f4-4092e9183568\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"GEN_TEAM02_CaptureValue\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 8.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"8348a4bb-a656-4e78-8ab4-9dde6007609b\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"56d00c61-343b-4d1d-9624-d92b4323929a\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"GEN_TEAM02_MaxValue\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"cb954156-dd05-4a39-9ccb-6935ea6dbff5\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"aa4e0747-981d-4abb-a48d-9c77a62debb0\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"GEN_NEUTRAL_StabilityPoint\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 7.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"eb590e76-e8df-4eec-b77c-946d7c7eb556\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"6859c6f5-fc5d-453c-b5c9-5392921c3243\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"GEN_PROD_ResourceMax\",\r\n      \"type\": \"float\",\r\n      \"value\":
     2000.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"2e30784f-089b-4381-8831-cd4ec4b622bc\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7a7e52cc-cf19-41db-9128-742e92c89f82\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"GEN_PROD_ResourceMin\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"f7d9d709-bb3b-4ed5-b2ac-e7ecbe5c7b0b\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"76128c24-39c5-405f-9eb7-dbf5b39dc1d6\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"GEN_PROD_ResourceInitial\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"072ab48d-bc75-424f-addc-c9c6dc1fdf44\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"997d4dd9-555b-481b-8882-ece3efdacd5a\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"GEN_PROD_TimeBetweenTick\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"01de3406-73d1-4283-b764-4cc3b44e20bf\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"5f5880ed-0a54-4cba-9db5-9e533660c920\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"GEN_PROD_ResourceAmountPerTick\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 3.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"680b093c-77b3-4c02-aaeb-37273d82d676\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"50c5308e-60cb-404a-9c85-68111e1b6ad8\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_BaseViewRange\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"5c639382-d9db-4027-827b-2f253cd3759a\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"319abd22-620c-4b4b-bcdd-c5bac614fe57\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"RELAI_ViewRange\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c27d2e8d-4ee4-42f0-93b5-8bdadb93cf63\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"5192ab49-d252-4bea-9217-8f1a7f8ef5c0\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"RELAI_CapturePointSpeed\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"9af2d8ae-e838-4111-bb91-62987b26971f\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"0b6d25ee-f6ea-4f4c-afdd-45746dc4391e\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_TEAM01_StabilityPoint\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 3.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"f05e5e92-8105-4115-9741-b302c4a90f4c\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"afd62c70-51b2-493d-bb21-f6ec39821e4b\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_TEAM01_CaptureValue\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 6.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"39052713-b250-4234-96c6-35c97f53788a\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"7e38ec4f-b088-4ec8-b8f2-d8ffb673cf22\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_TEAM01_MaxValue\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 3.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"0eac4866-4013-41c5-b807-6f100d0dd981\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"e745664d-39a9-4198-a80b-60b635944e49\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"RELAI_TEAM02_StabilityPoint\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"cf44b8e2-1919-44cd-864d-2c81b5492f1c\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"ff56d9c8-8435-4d19-ab29-4482f7191295\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"RELAI_TEAM02_CaptureValue\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 8.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"a9d69feb-ec2c-43c2-9748-3b612dedc6e6\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"8f2097bb-690f-4077-a71b-580c9b9d3dcc\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"RELAI_TEAM02_MaxValue\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    10.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"8a65f6ce-3915-4249-aac8-be536e47b284\"\r\n   
+    10.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"e8f1b185-a69a-4ba3-8dd8-bed62e921e58\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"RELAI_NEUTRAL_StabilityPoint\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 7.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"bfeaeead-28ff-4ba9-9b76-a6ada804e6a9\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"c640395e-4fdc-4c00-b6fa-ea7e25a25ce6\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_PROD_ResourceMax\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 250.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"38000c33-b829-4e06-8661-9c58a25f30af\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7649c2b0-a863-4a11-8722-18f0b7c02e14\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"RELAI_PROD_ResourceMin\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"61ed2635-1e38-4957-8b7a-98a042fa6272\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c956d814-b247-45d6-9f50-c8de87f81d8f\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"RELAI_PROD_ResourceInitial\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"499c83f1-5a02-4b42-96fa-822e79d7435d\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"d25365fb-cd5b-4eda-b8b6-a4d75b4da675\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"RELAI_PROD_TimeBetweenTick\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"392d49fa-77b1-4cf4-896c-c232a73f4d79\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"7a38faf1-562c-476f-8231-51a899007b64\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_PROD_ResourceAmountPerTick\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 3.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"43faf4e6-c23d-42ad-80ac-78a866e00787\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"bb65f1e1-6c55-4bbe-895f-d1a3ccd98b04\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_BASE_MaxHP\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 12.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"f271b5dd-6067-42ff-b978-62a0fb7a69c4\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"ab0d62bf-6b98-48f9-a5d9-cdb293234904\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_BASE_MaxResources\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"942777d3-c2d6-4aab-8a85-105d599a78e1\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"f20ba35c-5e22-4fbc-8fe4-364f78c11ab9\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_BASE_ViewRange\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    15.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"fa0e9de1-c3ce-49fc-bd76-e7a51d22626f\"\r\n   
+    15.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"cd96b75d-86e6-49d2-8fb0-ec7f7779998e\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_BASE_MoveSpeed\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 4.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"f6b6d3dc-0005-4248-9da7-4ce0e1f6ddf9\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"7c87d29e-4b32-4d42-b0ae-c41b5dfb8fc1\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_AA_Cooldown\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"d82c7bb2-ba02-4f05-bf19-145dc91f40e9\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"5481a14c-d4ff-4c35-ab5e-9085038dba7a\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_AA_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.993\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"a9c0965a-098a-4ec9-837a-cc5bedd12d15\"\r\n   
+    0.993\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c88c9af3-064b-415a-9ca3-6f3277ed56a5\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_AA_DamageBeginTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.05\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"3ab1c1a2-56bc-486c-bba5-73de6f478eb5\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"38849508-9a8d-42b8-9613-3e2d049f6709\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_AA_DamageTime\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.02\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"80330006-f572-46c9-be44-164d85f5dcc6\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"e0f920ce-101c-4eff-b946-f78063674db5\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_AA_Damage\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 2.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"af2ca1be-6d9b-48b8-a54f-1a51e13752f1\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"f5f18f25-0c2e-422f-b85c-ec1089a2565d\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_AA_Width\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"3e4e8920-2cb4-4e02-a91c-f1f4f2be2fd9\"\r\n   
+    1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"6f2e584e-9b34-44cc-a841-f428cddd4dc8\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_AA_Height\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 3.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"096793ba-c995-4542-b9db-0ad95d0432dc\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"99a988ea-029a-4287-bd0b-63ba959d5b0f\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_AA_MaxRange\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 4.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"98b60b0c-c87c-4403-824e-f1e1c4cbbe01\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"5fd00abf-720e-47c1-b7a0-b946c5e177eb\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_AA_Offset\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"f6c33acb-ebf5-4b06-b96d-2289d100be29\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"10f23775-bf37-42a0-b4ec-9f8aa339ef0f\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_Cooldown\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"0de29aac-c8f7-47cd-8d94-7b327f3ffa57\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"08f5e9eb-b2ad-49d8-b127-b1bb3dd40152\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_FxTime\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"04c6be0f-8a7f-48ea-9fc6-20eca4ebd873\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"75e18b81-ea20-4e6a-911d-6cf4b9e90595\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_Duration\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"c5f5171e-7f02-4e83-9715-9488de217ed7\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"34c55988-cbba-41e7-b2a6-ae5cf344dd45\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_ViewRadius\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"f2aa6b3d-cc4d-4820-9f2a-7abb2d3f5c9d\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"5e21ff2d-ec38-49a6-b8bd-668ccd13fce4\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_ViewAngle\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 360.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"04f96bfa-9341-4c68-b94a-3f1c23c431d4\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"de860b46-a5db-40b8-a532-7a582869450f\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_DetectionDistance\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 50.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"af8166fc-e406-4969-a06b-bac2afc52caf\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"e6247d80-0e3a-4284-9999-3cc6069fd767\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA01_Cooldown\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"78232b6a-12de-4c4d-a87f-84489da56897\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7fe45048-508d-427f-bef5-ab5de67a6ede\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_CAPA01_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"d5ac2e89-10d3-4694-bc6b-df1fe83a7576\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"b540801d-55a6-4b91-9133-68ee49460791\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA01_YPosition\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"552a5be3-cd9c-4327-9dd4-2a585a6afff3\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"b9d28579-e195-4f47-b807-3f277792b25c\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA01_TimeLength\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.3\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"668d0fba-fe89-4fa2-9019-45efe44c6080\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"dd61e0fc-5748-49d6-81f5-8f51a141ee43\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA01_ReferenceRange\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 7.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"663172f3-71d4-4c18-8152-e479310e4fd6\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"14d2e241-dc07-4a88-94f9-456c9a751e29\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA01_SmokeDuration\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"161b38df-6847-46f1-892d-e479acb6f225\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"d5c5bce3-3560-477d-b6e7-b66dae098342\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA02_Cooldown\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 6.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"d8e77b29-59bd-4091-a141-77a6a2cb7a3a\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"f5d6cd7b-10c3-47bc-9b85-a0a44057b0ad\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_CAPA02_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.55\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"72e6ec86-cd8b-4fd8-a50f-1e471b0f94dd\"\r\n   
+    0.7\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"21fba951-a07c-4f64-a2a3-626cd3dca2aa\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA02_DamageBeginTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"6f8cf2a5-3839-4b34-96b3-d1ece3aeaeab\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"d61c9950-660f-412f-b449-86d318fc3833\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA02_DamageTime\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.005\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"6e4c3f2e-dd7c-47ac-986f-d4f4f7a8488f\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"3724178f-513e-4c6e-add6-bd1a1f69fcd0\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA02_Damage\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"adba3af3-e0bb-4ff9-aa75-22e2a13c64a5\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7831e684-0784-403a-8beb-b7e69b154d0e\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_CAPA02_OffsetAttack\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 0.3\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"06070af5-ebb2-451c-bd91-4579c6ac5734\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"e61db6f7-bd08-4e79-8363-c0e942fbffc8\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_CAPA02_Height\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    8.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"f548f172-514e-4b0e-9f9c-40e02320c598\"\r\n   
+    8.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"12538aa4-7878-46c4-9153-9514b219b1da\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA02_Width\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 2.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"6d9e2daa-c0db-47fd-953b-df7c3c3d72e0\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"343eb4d0-1724-4fbf-9799-ce08408fec59\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_BASE_MaxHP\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 16.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"7556a58b-203f-4d32-93e4-13a1dc4292fe\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"e13b56d8-51c2-433f-98ca-9b5cef0f11a4\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_BASE_MaxResources\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"09aa3960-eecc-4c9a-a856-0cc3a66b2a79\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"f9db0d3d-435f-4a03-96a8-faf9d6e3c5ea\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_BASE_ViewRange\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    15.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"647979ae-0389-4992-8b51-b1f2d8efff05\"\r\n   
+    15.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"34f1e610-e0cb-4784-9b1c-c255d04dc103\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_BASE_MoveSpeed\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 4.2\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"3f4bbfbf-db1e-4534-8752-17d7e878a8a4\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"ce5e96a6-8ede-42fc-ab6c-8770a1e23f0e\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_TRINKET_Cooldown\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"9fe26b4a-b12a-416b-8b3b-419d68547fd3\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"24409f9a-0090-49dd-8ee0-accdb9f8f32b\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_TRINKET_FxTime\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"3ed1178f-f693-458f-bbb6-83dc45dba509\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"0bb68807-03eb-4678-bc73-7be520e36686\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_TRINKET_Duration\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"eb3e71ef-f861-44a2-8546-6fb9b4660fc2\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"c52fe63c-6e37-4c4c-abce-d329f1704581\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_TRINKET_ViewRadius\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"86a621cf-6743-465b-867b-827c56e0cbe2\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"56019eb4-2157-4d70-b318-be90b8412046\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_TRINKET_ViewAngle\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 360.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"47adb4c5-73e2-4e9d-afb9-1a7ae98cfae5\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"c1dcd0d8-1188-4e5d-982e-4f4fceebf0e9\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_TRINKET_DetectionDistance\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 50.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"aef62c58-62c0-4933-a6ae-271e8f0a51f3\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7e9f1b74-d106-4cf5-9840-370d7b41eb0f\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_AA_Cooldown\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"297b4680-7db3-49ec-b727-a1e1a0f6cc11\"\r\n   
+    1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"14ab1c0f-5fac-4ff3-b36d-38a65e4f2bdc\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_AA_DamageBeginTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.07\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"5fe2ad0b-57b6-49d4-930d-e7eef30edef8\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"3c855425-b3b1-4828-9896-912c573436af\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_AA_DamageTime\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.02\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"dff52166-fcbd-43ae-9d99-a7c56d021bb0\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"5c021d77-6d21-40d8-8720-d6f423bce0b7\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_AA_Damage\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"218751f5-1e62-472a-82d8-efec14f58f1a\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"b1a29dc2-42d2-4f7e-bd66-7396d2138d08\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_AA_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    2.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"34aa2453-0c76-46f7-8ce6-ff4213ac3cb7\"\r\n   
+    0.411\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"49f7c009-f951-4c84-88f5-357a3ff7da55\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_AA_Width\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"c336ebbf-e233-477c-9d45-9cd5cd7152c4\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"7b568a04-667d-4e31-b738-1890b5e72bc6\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_AA_Height\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 3.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"40ff8a11-be1a-47a7-b76d-ce9dccfc8fad\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"65803c8e-280d-41b7-b3e9-2c14ac770d21\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_AA_MaxRange\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    3.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"a9a484a8-e0cc-4c2d-9136-65d09cbef94c\"\r\n   
+    3.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"249848a3-eb49-412e-a989-5ac5e33981d1\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_AA_Offset\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.2\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"7feef1dd-447a-46ed-a69a-1123ca63230f\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"89e1ffed-6f73-47da-99dd-2d9ecc1becf4\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_Cooldown\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"65cecb7b-9ff4-431f-a454-574a28749135\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"59b6c354-5031-4253-b41c-e27fd69b7538\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_CAPA01_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"289ddb31-734e-407e-b818-133bbeccc8ab\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"ab68a855-429f-4307-97b1-7576b200868d\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_YPosition\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"c3141165-a8d8-4e5d-a64f-a1dab22e515b\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"a343a60d-e590-43a7-a5f3-421b13dd08e2\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_TimeLength\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.4\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"0d30a60d-2e44-43c8-8160-da33848ad857\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"f0a5e507-76ba-43b7-8de7-881a0d1f7afe\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_ReferenceRange\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 7.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"68cd7c69-805f-4543-a0c6-3dd95973ac7a\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"f5230203-ae54-4a8d-82cd-96283b815c50\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_Cooldown\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"f998bc0b-bd78-4120-9aad-6ecae9538d34\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"3fe478e1-9e0f-428a-bda0-67dc7dc94464\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_FxTime\",\r\n      \"type\":
-    \"float\",\r\n      \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"3f5c7067-e659-4ba8-bef7-7a1a3fde2103\"\r\n    },\r\n   
+    \"float\",\r\n      \"value\": 2.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"a07d160d-d70f-4121-ac59-c00b4d6c56df\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_DamageBeginTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"4ff6b0ec-7b82-4d4b-a467-1d204291687c\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"b4965067-402b-4bb1-8b2a-e0fb0ebc5eee\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_DamageTime\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.002\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"739010dc-2885-472a-b1c9-46de9f128f13\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"034075af-a247-4a72-81f5-e1c299d2ce8c\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_Damage\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"96a72719-2197-426d-b854-607282233070\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"9965dedd-0c6d-4dad-9f96-b37dc7910cfc\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_Offset\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"6d290074-b5ca-49fe-97a9-957589a465a7\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"1b10c5f5-30e1-45ed-a03b-00ebc2ea5b5e\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_Radius\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"a5f73f71-5f80-4606-a579-de2a966547a3\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"2224a2f2-11cd-4647-94a0-d8d2f222aeed\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_SpeedFactor\",\r\n      \"type\":
     \"float\",\r\n      \"value\": -0.4\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"2a98fcf4-99e1-4aeb-a473-5360b7b1cabd\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"e5cb7147-4ef3-4086-8ee8-d55bca757df2\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_SlowDuration\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 3.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"8864330a-f660-4210-afad-d663c1bc0d7a\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"b1ef8108-4177-4c67-8fa7-ca46c12550fd\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_Cooldown\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"9086c9f9-7985-4f64-bc00-60910e335127\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"d17dbcdf-9a15-408d-bdf3-6fcb3bd7db50\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_CAPA02_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.8\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"b0a612a1-6650-4259-9b43-d08aaa2f7549\"\r\n   
+    1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"0ed1e7bd-6438-4ecf-8e8a-bf04fd7076b3\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_DamageBeginTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.75\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"1c368e74-029b-4f34-b22f-c42d16a9a656\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"c43bd732-2459-4d54-98c3-8ce1d260ee37\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_DamageTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.02\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"e2d30c61-2f02-40db-aea1-45e5562e5153\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"6ee19db2-5b06-4461-b41d-df891a836995\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_Damage\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"4c4486bd-94cb-4ab7-a59c-6db9cad60495\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"72498cf0-dca2-4358-b8d4-d00ca271c5d9\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_OffsetAttack\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"cea483b6-10af-4474-90de-22f98cd4ba03\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"2da9f8d4-7ca0-4604-8d9c-418d33139426\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_Height\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"2159ce7e-ebcb-44f9-9046-00a0f4f0fda4\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"94efd1fd-2620-4bbc-a81b-a95215b512f1\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_CAPA02_Width\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    6.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"0165e163-f8bd-45d9-8695-ce30d41ca3de\"\r\n   
+    6.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c4a16761-70e1-48f1-a8c4-68812c757fa8\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"HEAL_Percentage\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"44a68058-b798-43d6-b722-d66262f7bfea\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"bce4affb-ed5f-4848-a4da-771b7fd6f75e\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"HEAL_TimeAfterDamage\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 5.0\r\n    }\r\n  }\r\n]"
-  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"ab437f77-d6b4-4567-8a8a-7c9ed600a46e\"\r\n   
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"caccdf0e-ca60-4c8b-bd3b-f7d9e7a54fee\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"GEN_BaseViewRange\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"c91e2431-d497-4207-ab81-755781d9610f\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"6bd8ec06-88d5-4868-8c88-690eb4a32ee3\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"GEN_ViewRange\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"c8e07fd5-6e69-4660-9e3f-bffefbf8ce17\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"ce82ddef-a9a2-43c7-b3c7-31682952a700\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"GEN_CapturePointSpeed\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"8b512a7f-8910-4d6a-931a-cd0221a8d42d\"\r\n   
+    0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"511cebdb-39e1-46a9-bce8-5ae56a43b648\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"GEN_TEAM01_StabilityPoint\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"33c94c88-e86e-44a5-bf51-bd13fcb1eaca\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"4d224739-ee11-4104-ab05-eabcec0a527b\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"GEN_TEAM01_CaptureValue\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 6.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"2d4d6b23-2d5f-4535-8b55-2ddcc3c00430\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7cdeb817-ec45-4537-981d-88552e5f37fd\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"GEN_TEAM01_MaxValue\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"896e34d1-edc0-4b9a-b1e4-56bb9b626f61\"\r\n   
+    4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"ecc4df86-df06-4ed0-8a52-37dba72e826f\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"GEN_TEAM02_StabilityPoint\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"da201314-4dfd-4409-933a-b7f95817d03f\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"c47c710e-a6d0-48fb-85f4-4092e9183568\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"GEN_TEAM02_CaptureValue\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 8.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"8348a4bb-a656-4e78-8ab4-9dde6007609b\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"56d00c61-343b-4d1d-9624-d92b4323929a\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"GEN_TEAM02_MaxValue\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"cb954156-dd05-4a39-9ccb-6935ea6dbff5\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"aa4e0747-981d-4abb-a48d-9c77a62debb0\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"GEN_NEUTRAL_StabilityPoint\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 7.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"eb590e76-e8df-4eec-b77c-946d7c7eb556\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"6859c6f5-fc5d-453c-b5c9-5392921c3243\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"GEN_PROD_ResourceMax\",\r\n      \"type\": \"float\",\r\n      \"value\":
     2000.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"2e30784f-089b-4381-8831-cd4ec4b622bc\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7a7e52cc-cf19-41db-9128-742e92c89f82\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"GEN_PROD_ResourceMin\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"f7d9d709-bb3b-4ed5-b2ac-e7ecbe5c7b0b\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"76128c24-39c5-405f-9eb7-dbf5b39dc1d6\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"GEN_PROD_ResourceInitial\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"072ab48d-bc75-424f-addc-c9c6dc1fdf44\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"997d4dd9-555b-481b-8882-ece3efdacd5a\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"GEN_PROD_TimeBetweenTick\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"01de3406-73d1-4283-b764-4cc3b44e20bf\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"5f5880ed-0a54-4cba-9db5-9e533660c920\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"GEN_PROD_ResourceAmountPerTick\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 3.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"680b093c-77b3-4c02-aaeb-37273d82d676\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"50c5308e-60cb-404a-9c85-68111e1b6ad8\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_BaseViewRange\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"5c639382-d9db-4027-827b-2f253cd3759a\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"319abd22-620c-4b4b-bcdd-c5bac614fe57\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"RELAI_ViewRange\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c27d2e8d-4ee4-42f0-93b5-8bdadb93cf63\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"5192ab49-d252-4bea-9217-8f1a7f8ef5c0\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"RELAI_CapturePointSpeed\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"9af2d8ae-e838-4111-bb91-62987b26971f\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"0b6d25ee-f6ea-4f4c-afdd-45746dc4391e\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_TEAM01_StabilityPoint\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 3.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"f05e5e92-8105-4115-9741-b302c4a90f4c\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"afd62c70-51b2-493d-bb21-f6ec39821e4b\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_TEAM01_CaptureValue\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 6.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"39052713-b250-4234-96c6-35c97f53788a\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"7e38ec4f-b088-4ec8-b8f2-d8ffb673cf22\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_TEAM01_MaxValue\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 3.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"0eac4866-4013-41c5-b807-6f100d0dd981\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"e745664d-39a9-4198-a80b-60b635944e49\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"RELAI_TEAM02_StabilityPoint\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"cf44b8e2-1919-44cd-864d-2c81b5492f1c\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"ff56d9c8-8435-4d19-ab29-4482f7191295\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"RELAI_TEAM02_CaptureValue\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 8.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"a9d69feb-ec2c-43c2-9748-3b612dedc6e6\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"8f2097bb-690f-4077-a71b-580c9b9d3dcc\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"RELAI_TEAM02_MaxValue\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    10.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"8a65f6ce-3915-4249-aac8-be536e47b284\"\r\n   
+    10.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"e8f1b185-a69a-4ba3-8dd8-bed62e921e58\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"RELAI_NEUTRAL_StabilityPoint\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 7.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"bfeaeead-28ff-4ba9-9b76-a6ada804e6a9\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"c640395e-4fdc-4c00-b6fa-ea7e25a25ce6\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_PROD_ResourceMax\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 250.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"38000c33-b829-4e06-8661-9c58a25f30af\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7649c2b0-a863-4a11-8722-18f0b7c02e14\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"RELAI_PROD_ResourceMin\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"61ed2635-1e38-4957-8b7a-98a042fa6272\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c956d814-b247-45d6-9f50-c8de87f81d8f\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"RELAI_PROD_ResourceInitial\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"499c83f1-5a02-4b42-96fa-822e79d7435d\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"d25365fb-cd5b-4eda-b8b6-a4d75b4da675\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"RELAI_PROD_TimeBetweenTick\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"392d49fa-77b1-4cf4-896c-c232a73f4d79\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"7a38faf1-562c-476f-8231-51a899007b64\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"RELAI_PROD_ResourceAmountPerTick\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 3.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"43faf4e6-c23d-42ad-80ac-78a866e00787\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"bb65f1e1-6c55-4bbe-895f-d1a3ccd98b04\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_BASE_MaxHP\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 12.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"f271b5dd-6067-42ff-b978-62a0fb7a69c4\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"ab0d62bf-6b98-48f9-a5d9-cdb293234904\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_BASE_MaxResources\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"942777d3-c2d6-4aab-8a85-105d599a78e1\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"f20ba35c-5e22-4fbc-8fe4-364f78c11ab9\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_BASE_ViewRange\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    15.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"fa0e9de1-c3ce-49fc-bd76-e7a51d22626f\"\r\n   
+    15.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"cd96b75d-86e6-49d2-8fb0-ec7f7779998e\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_BASE_MoveSpeed\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 4.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"f6b6d3dc-0005-4248-9da7-4ce0e1f6ddf9\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"7c87d29e-4b32-4d42-b0ae-c41b5dfb8fc1\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_AA_Cooldown\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"d82c7bb2-ba02-4f05-bf19-145dc91f40e9\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"5481a14c-d4ff-4c35-ab5e-9085038dba7a\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_AA_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.993\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"a9c0965a-098a-4ec9-837a-cc5bedd12d15\"\r\n   
+    0.993\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c88c9af3-064b-415a-9ca3-6f3277ed56a5\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_AA_DamageBeginTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.05\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"3ab1c1a2-56bc-486c-bba5-73de6f478eb5\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"38849508-9a8d-42b8-9613-3e2d049f6709\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_AA_DamageTime\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.02\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"80330006-f572-46c9-be44-164d85f5dcc6\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"e0f920ce-101c-4eff-b946-f78063674db5\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_AA_Damage\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 2.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"af2ca1be-6d9b-48b8-a54f-1a51e13752f1\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"f5f18f25-0c2e-422f-b85c-ec1089a2565d\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_AA_Width\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"3e4e8920-2cb4-4e02-a91c-f1f4f2be2fd9\"\r\n   
+    1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"6f2e584e-9b34-44cc-a841-f428cddd4dc8\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_AA_Height\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 3.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"096793ba-c995-4542-b9db-0ad95d0432dc\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"99a988ea-029a-4287-bd0b-63ba959d5b0f\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_AA_MaxRange\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 4.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"98b60b0c-c87c-4403-824e-f1e1c4cbbe01\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"5fd00abf-720e-47c1-b7a0-b946c5e177eb\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_AA_Offset\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"f6c33acb-ebf5-4b06-b96d-2289d100be29\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"10f23775-bf37-42a0-b4ec-9f8aa339ef0f\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_Cooldown\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"0de29aac-c8f7-47cd-8d94-7b327f3ffa57\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"08f5e9eb-b2ad-49d8-b127-b1bb3dd40152\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_FxTime\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"04c6be0f-8a7f-48ea-9fc6-20eca4ebd873\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"75e18b81-ea20-4e6a-911d-6cf4b9e90595\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_Duration\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"c5f5171e-7f02-4e83-9715-9488de217ed7\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"34c55988-cbba-41e7-b2a6-ae5cf344dd45\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_ViewRadius\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"f2aa6b3d-cc4d-4820-9f2a-7abb2d3f5c9d\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"5e21ff2d-ec38-49a6-b8bd-668ccd13fce4\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_ViewAngle\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 360.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"04f96bfa-9341-4c68-b94a-3f1c23c431d4\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"de860b46-a5db-40b8-a532-7a582869450f\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_TRINKET_DetectionDistance\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 50.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"af8166fc-e406-4969-a06b-bac2afc52caf\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"e6247d80-0e3a-4284-9999-3cc6069fd767\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA01_Cooldown\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"78232b6a-12de-4c4d-a87f-84489da56897\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7fe45048-508d-427f-bef5-ab5de67a6ede\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_CAPA01_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"d5ac2e89-10d3-4694-bc6b-df1fe83a7576\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"b540801d-55a6-4b91-9133-68ee49460791\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA01_YPosition\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"552a5be3-cd9c-4327-9dd4-2a585a6afff3\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"b9d28579-e195-4f47-b807-3f277792b25c\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA01_TimeLength\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.3\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"668d0fba-fe89-4fa2-9019-45efe44c6080\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"dd61e0fc-5748-49d6-81f5-8f51a141ee43\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA01_ReferenceRange\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 7.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"663172f3-71d4-4c18-8152-e479310e4fd6\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"14d2e241-dc07-4a88-94f9-456c9a751e29\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA01_SmokeDuration\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"161b38df-6847-46f1-892d-e479acb6f225\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"d5c5bce3-3560-477d-b6e7-b66dae098342\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA02_Cooldown\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 6.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"d8e77b29-59bd-4091-a141-77a6a2cb7a3a\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"f5d6cd7b-10c3-47bc-9b85-a0a44057b0ad\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_CAPA02_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.55\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"72e6ec86-cd8b-4fd8-a50f-1e471b0f94dd\"\r\n   
+    0.7\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"21fba951-a07c-4f64-a2a3-626cd3dca2aa\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA02_DamageBeginTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"6f8cf2a5-3839-4b34-96b3-d1ece3aeaeab\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"d61c9950-660f-412f-b449-86d318fc3833\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA02_DamageTime\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.005\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"6e4c3f2e-dd7c-47ac-986f-d4f4f7a8488f\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"3724178f-513e-4c6e-add6-bd1a1f69fcd0\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA02_Damage\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"adba3af3-e0bb-4ff9-aa75-22e2a13c64a5\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7831e684-0784-403a-8beb-b7e69b154d0e\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_CAPA02_OffsetAttack\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 0.3\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"06070af5-ebb2-451c-bd91-4579c6ac5734\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"e61db6f7-bd08-4e79-8363-c0e942fbffc8\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP01_CAPA02_Height\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    8.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"f548f172-514e-4b0e-9f9c-40e02320c598\"\r\n   
+    8.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"12538aa4-7878-46c4-9153-9514b219b1da\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP01_CAPA02_Width\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 2.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"6d9e2daa-c0db-47fd-953b-df7c3c3d72e0\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"343eb4d0-1724-4fbf-9799-ce08408fec59\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_BASE_MaxHP\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 16.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"7556a58b-203f-4d32-93e4-13a1dc4292fe\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"e13b56d8-51c2-433f-98ca-9b5cef0f11a4\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_BASE_MaxResources\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"09aa3960-eecc-4c9a-a856-0cc3a66b2a79\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"f9db0d3d-435f-4a03-96a8-faf9d6e3c5ea\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_BASE_ViewRange\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    15.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"647979ae-0389-4992-8b51-b1f2d8efff05\"\r\n   
+    15.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"34f1e610-e0cb-4784-9b1c-c255d04dc103\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_BASE_MoveSpeed\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 4.2\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"3f4bbfbf-db1e-4534-8752-17d7e878a8a4\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"ce5e96a6-8ede-42fc-ab6c-8770a1e23f0e\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_TRINKET_Cooldown\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"9fe26b4a-b12a-416b-8b3b-419d68547fd3\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"24409f9a-0090-49dd-8ee0-accdb9f8f32b\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_TRINKET_FxTime\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"3ed1178f-f693-458f-bbb6-83dc45dba509\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"0bb68807-03eb-4678-bc73-7be520e36686\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_TRINKET_Duration\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"eb3e71ef-f861-44a2-8546-6fb9b4660fc2\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"c52fe63c-6e37-4c4c-abce-d329f1704581\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_TRINKET_ViewRadius\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"86a621cf-6743-465b-867b-827c56e0cbe2\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"56019eb4-2157-4d70-b318-be90b8412046\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_TRINKET_ViewAngle\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 360.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"47adb4c5-73e2-4e9d-afb9-1a7ae98cfae5\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"c1dcd0d8-1188-4e5d-982e-4f4fceebf0e9\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_TRINKET_DetectionDistance\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 50.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"aef62c58-62c0-4933-a6ae-271e8f0a51f3\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"7e9f1b74-d106-4cf5-9840-370d7b41eb0f\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_AA_Cooldown\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"297b4680-7db3-49ec-b727-a1e1a0f6cc11\"\r\n   
+    1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"14ab1c0f-5fac-4ff3-b36d-38a65e4f2bdc\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_AA_DamageBeginTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.07\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"5fe2ad0b-57b6-49d4-930d-e7eef30edef8\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"3c855425-b3b1-4828-9896-912c573436af\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_AA_DamageTime\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.02\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"dff52166-fcbd-43ae-9d99-a7c56d021bb0\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"5c021d77-6d21-40d8-8720-d6f423bce0b7\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_AA_Damage\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"218751f5-1e62-472a-82d8-efec14f58f1a\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"b1a29dc2-42d2-4f7e-bd66-7396d2138d08\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_AA_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    2.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"34aa2453-0c76-46f7-8ce6-ff4213ac3cb7\"\r\n   
+    0.411\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"49f7c009-f951-4c84-88f5-357a3ff7da55\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_AA_Width\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"c336ebbf-e233-477c-9d45-9cd5cd7152c4\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"7b568a04-667d-4e31-b738-1890b5e72bc6\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_AA_Height\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 3.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"40ff8a11-be1a-47a7-b76d-ce9dccfc8fad\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"65803c8e-280d-41b7-b3e9-2c14ac770d21\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_AA_MaxRange\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    3.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"a9a484a8-e0cc-4c2d-9136-65d09cbef94c\"\r\n   
+    3.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"249848a3-eb49-412e-a989-5ac5e33981d1\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_AA_Offset\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.2\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"7feef1dd-447a-46ed-a69a-1123ca63230f\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"89e1ffed-6f73-47da-99dd-2d9ecc1becf4\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_Cooldown\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"65cecb7b-9ff4-431f-a454-574a28749135\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"59b6c354-5031-4253-b41c-e27fd69b7538\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_CAPA01_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"289ddb31-734e-407e-b818-133bbeccc8ab\"\r\n   
+    0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"ab68a855-429f-4307-97b1-7576b200868d\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_YPosition\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 4.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"c3141165-a8d8-4e5d-a64f-a1dab22e515b\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"a343a60d-e590-43a7-a5f3-421b13dd08e2\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_TimeLength\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.4\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"0d30a60d-2e44-43c8-8160-da33848ad857\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"f0a5e507-76ba-43b7-8de7-881a0d1f7afe\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_ReferenceRange\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 7.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"68cd7c69-805f-4543-a0c6-3dd95973ac7a\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"f5230203-ae54-4a8d-82cd-96283b815c50\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_Cooldown\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"f998bc0b-bd78-4120-9aad-6ecae9538d34\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"3fe478e1-9e0f-428a-bda0-67dc7dc94464\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_FxTime\",\r\n      \"type\":
-    \"float\",\r\n      \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"3f5c7067-e659-4ba8-bef7-7a1a3fde2103\"\r\n    },\r\n   
+    \"float\",\r\n      \"value\": 2.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"a07d160d-d70f-4121-ac59-c00b4d6c56df\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_DamageBeginTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"4ff6b0ec-7b82-4d4b-a467-1d204291687c\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"b4965067-402b-4bb1-8b2a-e0fb0ebc5eee\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_DamageTime\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.002\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"739010dc-2885-472a-b1c9-46de9f128f13\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"034075af-a247-4a72-81f5-e1c299d2ce8c\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_Damage\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"96a72719-2197-426d-b854-607282233070\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"9965dedd-0c6d-4dad-9f96-b37dc7910cfc\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_Offset\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"6d290074-b5ca-49fe-97a9-957589a465a7\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"1b10c5f5-30e1-45ed-a03b-00ebc2ea5b5e\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_Radius\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"a5f73f71-5f80-4606-a579-de2a966547a3\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"2224a2f2-11cd-4647-94a0-d8d2f222aeed\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_SpeedFactor\",\r\n      \"type\":
     \"float\",\r\n      \"value\": -0.4\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"2a98fcf4-99e1-4aeb-a473-5360b7b1cabd\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"e5cb7147-4ef3-4086-8ee8-d55bca757df2\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA01_SLOW_SlowDuration\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 3.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"8864330a-f660-4210-afad-d663c1bc0d7a\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"b1ef8108-4177-4c67-8fa7-ca46c12550fd\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_Cooldown\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 10.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"9086c9f9-7985-4f64-bc00-60910e335127\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"d17dbcdf-9a15-408d-bdf3-6fcb3bd7db50\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_CAPA02_FxTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    0.8\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"b0a612a1-6650-4259-9b43-d08aaa2f7549\"\r\n   
+    1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"0ed1e7bd-6438-4ecf-8e8a-bf04fd7076b3\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_DamageBeginTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.75\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"1c368e74-029b-4f34-b22f-c42d16a9a656\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"c43bd732-2459-4d54-98c3-8ce1d260ee37\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_DamageTime\",\r\n     
     \"type\": \"float\",\r\n      \"value\": 0.02\r\n    }\r\n  },\r\n  {\r\n   
-    \"metadata\": {\r\n      \"entityId\": \"e2d30c61-2f02-40db-aea1-45e5562e5153\"\r\n   
+    \"metadata\": {\r\n      \"entityId\": \"6ee19db2-5b06-4461-b41d-df891a836995\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_Damage\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"4c4486bd-94cb-4ab7-a59c-6db9cad60495\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"72498cf0-dca2-4358-b8d4-d00ca271c5d9\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_OffsetAttack\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"cea483b6-10af-4474-90de-22f98cd4ba03\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"2da9f8d4-7ca0-4604-8d9c-418d33139426\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"CHAMP02_CAPA02_Height\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 5.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
-    \"2159ce7e-ebcb-44f9-9046-00a0f4f0fda4\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"94efd1fd-2620-4bbc-a81b-a95215b512f1\"\r\n    },\r\n    \"rs\": {\r\n     
     \"key\": \"CHAMP02_CAPA02_Width\",\r\n      \"type\": \"float\",\r\n      \"value\":
-    6.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"0165e163-f8bd-45d9-8695-ce30d41ca3de\"\r\n   
+    6.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"c4a16761-70e1-48f1-a8c4-68812c757fa8\"\r\n   
     },\r\n    \"rs\": {\r\n      \"key\": \"HEAL_Percentage\",\r\n      \"type\":
     \"float\",\r\n      \"value\": 0.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
-    {\r\n      \"entityId\": \"44a68058-b798-43d6-b722-d66262f7bfea\"\r\n    },\r\n   
+    {\r\n      \"entityId\": \"bce4affb-ed5f-4848-a4da-771b7fd6f75e\"\r\n    },\r\n   
     \"rs\": {\r\n      \"key\": \"HEAL_TimeAfterDamage\",\r\n      \"type\": \"float\",\r\n     
     \"value\": 5.0\r\n    }\r\n  }\r\n]"
   _environments: "[\r\n  {\r\n    \"projectId\": \"ce7c0b72-7cf7-417b-88ce-2f30c10247ec\",\r\n   

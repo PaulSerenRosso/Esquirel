@@ -230,6 +230,22 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 3707799070844068396, guid: 725d2df4e7af97049b5b88fe4028fc52, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3707799070844068396, guid: 725d2df4e7af97049b5b88fe4028fc52, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4687432449142041468, guid: 725d2df4e7af97049b5b88fe4028fc52, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6612506282334537999, guid: 725d2df4e7af97049b5b88fe4028fc52, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 7749606973881428689, guid: 725d2df4e7af97049b5b88fe4028fc52, type: 3}
       propertyPath: m_Name
       value: PS_PoumfCapa2
