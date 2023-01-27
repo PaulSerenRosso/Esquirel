@@ -39,11 +39,11 @@ public class MessagePopUpManager : MonoBehaviour
         CreateMessagePopUp($"An enemy died. You stole {bountyAmount} golds from enemies.", true);
 
     public void SendEnemyIncreaseStreak(int victoryPointAmount, int goldCost) => CreateMessagePopUp(
-        $"The enemies make a streak ! They won victory points against {goldCost} golds.",
+        $"Enemy team won victory points against {goldCost} golds.",
         false);
 
     public void SendAllyIncreaseStreak(int victoryPointAmount, int goldCost) => CreateMessagePopUp(
-        $"You make a streak ! You won victory points against {goldCost} golds.",
+        $"You won victory points against {goldCost} golds.",
         true );
 
     public void SendAllyBreakStreak() => CreateMessagePopUp("Your streak broke !", false );

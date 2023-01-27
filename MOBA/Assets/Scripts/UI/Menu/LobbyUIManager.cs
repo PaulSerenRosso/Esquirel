@@ -31,8 +31,10 @@ public class LobbyUIManager : MonoBehaviourPun
     [SerializeField] private Sprite selectedChampion02 = null;
     [SerializeField] private Color firstTeamColor;
     [SerializeField] private Color secondTeamColor;
-    [SerializeField] private Image teamColorImage;
-    [SerializeField] private TextMeshProUGUI teamColorText;
+    [SerializeField] private Image buttonTeamImg = null;
+    [SerializeField] private TextMeshProUGUI buttonTeamTxt = null;
+    [SerializeField] private Sprite blueTeamSprite = null;
+    [SerializeField] private Sprite redTeamSprite = null;
     private bool isFirstTeam = true;
 
     [Header("Network")] [SerializeField] private ClientInformation[] allClientsInformation;
@@ -99,7 +101,7 @@ public class LobbyUIManager : MonoBehaviourPun
 
         // We change GUI
         connectionPart.SetActive(isReady);
-        readyButtonText.text = isReady ? "Cancel" : "Validate";
+        readyButtonText.text = isReady ? "Cancel" : "Ready ?";
 
         // We send request to Master
         sm.SendSetToggleReady(isReady);
@@ -150,9 +152,8 @@ public class LobbyUIManager : MonoBehaviourPun
         currentTeam = (Enums.Team)index;
 
         // We change GUI
-        teamColorImage.color = isFirstTeam ? firstTeamColor : secondTeamColor;
-        teamColorText.color = isFirstTeam ? firstTeamColor : secondTeamColor;
-        teamColorText.text = isFirstTeam ? "Team 1" : "Team 2";
+        buttonTeamImg.sprite = isFirstTeam ? blueTeamSprite : redTeamSprite;
+        buttonTeamTxt.text = isFirstTeam ? "Blue team" : "Red team";
 
         // We send request to Master
         sm.RequestSetTeam((byte)currentTeam);
@@ -199,8 +200,8 @@ public class LobbyUIManager : MonoBehaviourPun
         allClientsInformation[photonID - 1].obj.SetActive(true);
         allClientsInformation[photonID - 1].clientChampionNameText.text = champion switch
         {
-            0 => "Champion 1",
-            1 => "Champion 2",
+            0 => "Sergio",
+            1 => "Poumf",
             2 => "Waiting...",
             _ => "No valid!"
         };
