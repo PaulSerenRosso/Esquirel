@@ -558,7 +558,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  iconSize: {x: 0.1, y: 0.1}
+  iconSize: {x: 0.05, y: 0.05}
+  image: {fileID: 0}
 --- !u!114 &5815231235936308330
 MonoBehaviour:
   m_ObjectHideFlags: 0

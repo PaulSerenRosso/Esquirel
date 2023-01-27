@@ -189,6 +189,7 @@ namespace RessourceProduction
         void SyncSetCurrentStreakRPC(int streakIndex, bool start)
         {
             if (!start) {
+                triggerStreakEvent?.Invoke((int)so.victoryAmount, so.streaks[currentStreakLevel]);
                 switch (team) {
                     case Enums.Team.Neutral:
                         break;
@@ -204,11 +205,10 @@ namespace RessourceProduction
             
             if (currentStreakLevel > 0 && streakIndex == 0)
                 breakStreakEvent?.Invoke();
-            else if (currentStreakLevel < streakIndex)
-            {
-                triggerStreakEvent?.Invoke((int)so.victoryAmount, so.streaks[currentStreakLevel]);
-                ;
-            }
+           
+           
+                
+            
 
             currentStreakLevel = streakIndex;
             UIManager.Instance.UpdateStreak(currentStreakLevel, so.streaks[currentStreakLevel], team);

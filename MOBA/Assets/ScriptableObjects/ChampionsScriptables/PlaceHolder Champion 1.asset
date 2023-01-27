@@ -14,11 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   championMeshPrefab: {fileID: 939176126738527526, guid: 503c9d1bd63ea8645a625d4738cf5e70, type: 3}
   canvasIndex: 0
-  championIcon: {fileID: 21300000, guid: d08e198ef389c4e4e810d1dc0138cbd2, type: 3}
-  maxHp: 10
+  championID: 0
+  championIcon: {fileID: 21300000, guid: b4b4e793a4b2469459d61b056a650da8, type: 3}
+  championIconInGame: {fileID: 21300000, guid: a12b752fa178eed43a46130ad6f92478, type: 3}
+  firstTeamChampionIconMiniMap: {fileID: 21300000, guid: 897d7a71933dba64194e2eac3abe500a, type: 3}
+  secondTeamChampionIconMiniMap: {fileID: 21300000, guid: 85353d1a69742be4688f69f78fcc7512, type: 3}
+  maxHp: 12
   maxRessource: 10
-  viewRange: 10
-  referenceMoveSpeed: 7
+  viewRange: 15
+  referenceMoveSpeed: 4.5
   attackAbility: {fileID: 11400000, guid: e339005550fb5fc42bcd3dad960bae2e, type: 2}
   attackAbilityIndex: 2
   attackDamage: 0
@@ -29,6 +33,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 558a7149786ab434c8b4a989c808974e, type: 2}
   - {fileID: 11400000, guid: 58376b91df0d9a94490ed2d720806b7f, type: 2}
   - {fileID: 11400000, guid: d8c88b8470a74d24a91599c34efbccfb, type: 2}
-  activeCapacitiesIndexes: 060104
-  ultimateAbility: {fileID: 0}
+  activeCapacitiesIndexes: 010406
   ultimateAbilityIndex: 3

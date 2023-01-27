@@ -144,7 +144,7 @@ public class ChampionHUD : MonoBehaviour
         playerInterface.SetUpImageVisual(PlayerUIImage.Spell02, so.activeCapacities[1].icon);
         playerInterface.SetUpImageVisual(PlayerUIImage.Ward, so.activeCapacities[2].icon);
         playerInterface.SetUpImageVisual(PlayerUIImage.AutoAttack, so.attackAbility.icon);
-        playerInterface.SetUpImageVisual(PlayerUIImage.PlayerCharacter, so.championIcon);
+        playerInterface.SetUpImageVisual(PlayerUIImage.PlayerCharacter, so.championIconInGame);
     }
 
     private void UpdateCooldown(byte capacityIndex, bool inCooldown)

@@ -562,7 +562,7 @@ Camera:
   m_Depth: -0.21
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1073741824
+    m_Bits: 33554432
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: b4a08ac9af07713468dffaccfe5e6973, type: 2}
   m_TargetDisplay: 0
@@ -830,7 +830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miniMapMasks:
-  - color: {r: 0.3882353, g: 0, b: 0.015766913, a: 1}
+  - color: {r: 0, g: 0.3882353, b: 0.07044386, a: 1}
     inputTexture: {fileID: 8400000, guid: a287906cebcd65c43b78280162b87251, type: 2}
     outputTexture: {fileID: 8400000, guid: d98471f4a30004047b27ce03ca700833, type: 2}
     camera: {fileID: 8347761880195390569}
