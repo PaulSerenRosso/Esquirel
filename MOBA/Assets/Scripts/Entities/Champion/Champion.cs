@@ -104,15 +104,14 @@ namespace Entities.Champion
             var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position,
                 Quaternion.identity, rotateParent);
             championMesh.transform.localEulerAngles = Vector3.zero;
-            MiniMapIcon icon = GetComponent<MiniMapIcon>();
-            icon.InitializeIcon(championSo.championIcon);
             team = newTeam;
-
+            MiniMapIcon icon = GetComponent<MiniMapIcon>();
             Transform pos = transform;
             switch (team)
             {
                 case Enums.Team.Team1:
                 {
+                    icon.InitializeIcon(championSo.firstTeamChampionIconMiniMap);
                     for (int i = 0; i < MapLoaderManager.Instance.firstTeamBasePoint.Length; i++)
                     {
                         if (MapLoaderManager.Instance.firstTeamBasePoint[i].champion == null)
@@ -127,6 +126,7 @@ namespace Entities.Champion
                 }
                 case Enums.Team.Team2:
                 {
+                    icon.InitializeIcon(championSo.secondTeamChampionIconMiniMap);
                     for (int i = 0; i < MapLoaderManager.Instance.secondTeamBasePoint.Length; i++)
                     {
                         if (MapLoaderManager.Instance.secondTeamBasePoint[i].champion == null)

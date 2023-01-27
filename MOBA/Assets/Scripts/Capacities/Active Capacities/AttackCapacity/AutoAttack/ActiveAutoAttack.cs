@@ -27,13 +27,12 @@ public class ActiveAutoAttack : ActiveAttackCapacity, IAimable
         if (base.TryCast(targetsEntityIndexes, targetPositions))
         {
             InitiateCooldown();
-            damageTimer.InitiateTimerEvent -= TryMakeDamageToTargetEntity;
             targetEntity = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
             if (targetEntity is IActiveLifeable lifeable)
             {
                 lifeableTarget = lifeable;
                 targetEntityIsLifeable = true;
-                damageTimer.InitiateTimerEvent += TryMakeDamageToTargetEntity;
+                TryMakeDamageToTargetEntity();
             }
             else
             {

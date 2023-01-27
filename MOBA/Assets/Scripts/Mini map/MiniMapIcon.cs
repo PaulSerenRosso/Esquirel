@@ -12,7 +12,7 @@ namespace MiniMap
     {
         [SerializeField] private Sprite sprite;
         [SerializeField] private Vector2 iconSize;
-         private Image image;
+        public Image image;
         
         private MiniMapManager miniMapManager;
 

@@ -30,20 +30,20 @@ public class MessagePopUpManager : MonoBehaviour
     public void SendAllyReachStep() => CreateMessagePopUp("You reached a step ! You won an aura point !", true);
 
     public void SendPlayerDie(int bountyAmount) =>
-        CreateMessagePopUp($"You are died. The enemies stole from you {bountyAmount} golds.", false);
+        CreateMessagePopUp($"You died. The enemies stole {bountyAmount} golds from you.", false);
 
     public void SendAllyPlayerDie(int bountyAmount) =>
-        CreateMessagePopUp($"Your ally died. The enemies stole from you {bountyAmount} golds.", false);
+        CreateMessagePopUp($"Your ally died. The enemies stole {bountyAmount} golds from you .", false);
 
     public void SendEnemyPlayerDie(int bountyAmount) =>
-        CreateMessagePopUp($"An enemy died. You stole from enemies {bountyAmount} golds.", true);
+        CreateMessagePopUp($"An enemy died. You stole {bountyAmount} golds from enemies.", true);
 
     public void SendEnemyIncreaseStreak(int victoryPointAmount, int goldCost) => CreateMessagePopUp(
-        $"The enemies make a streak ! They won {victoryPointAmount} victories point against {goldCost} golds.",
+        $"Enemy team won victory points against {goldCost} golds.",
         false);
 
     public void SendAllyIncreaseStreak(int victoryPointAmount, int goldCost) => CreateMessagePopUp(
-        $"You make a streak ! You won {victoryPointAmount} victories point against {goldCost} golds.",
+        $"You won victory points against {goldCost} golds.",
         true );
 
     public void SendAllyBreakStreak() => CreateMessagePopUp("Your streak broke !", false );

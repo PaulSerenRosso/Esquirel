@@ -11,7 +11,10 @@ namespace Entities.Champion
         public int canvasIndex;
         public int championID;
         public Sprite championIcon;
-        
+        public Sprite championIconInGame;
+        public Sprite firstTeamChampionIconMiniMap;
+        public Sprite secondTeamChampionIconMiniMap;
+
         [Header("Stats")]
         public float maxHp;
         public float maxRessource;

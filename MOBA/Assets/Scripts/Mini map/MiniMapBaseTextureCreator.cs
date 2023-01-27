@@ -37,10 +37,7 @@ namespace MiniMap
         {
 
             EnabledMaskCameras();
-            for (int i = 0; i < miniMapMasks.Count; i++)
-            {
-                BakeTextureWithColor(i);
-            }
+        
             MergeFirstIteration();
            MergeMasks();
            RenderTexture.active = baseMapTexture;
@@ -64,7 +61,7 @@ namespace MiniMap
         {
             for (int i = 2; i < miniMapMasks.Count; i++)
             {
-                mergerMaskMaterial.SetTexture("_SecondTex", miniMapMasks[i].outputTexture);
+                mergerMaskMaterial.SetTexture("_SecondTex", miniMapMasks[i].inputTexture);
                 mergerMaskMaterial.SetFloat("_ToleranceStep", 0);
                 mergerMaskMaterial.SetPass(0);
                 Graphics.Blit(baseMapTexture, baseMapTexture, mergerMaskMaterial, 0);
@@ -75,22 +72,15 @@ namespace MiniMap
 
         private void MergeFirstIteration()
         {
-            mergerMaskMaterial.SetTexture("_SecondTex", miniMapMasks[1].outputTexture);
+            mergerMaskMaterial.SetTexture("_SecondTex", miniMapMasks[1].inputTexture);
             mergerMaskMaterial.SetFloat("_ToleranceStep", 0);
             mergerMaskMaterial.SetPass(0);
-            Graphics.Blit(miniMapMasks[0].outputTexture, baseMapTexture, mergerMaskMaterial, 0);
+            Graphics.Blit(miniMapMasks[0].inputTexture, baseMapTexture, mergerMaskMaterial, 0);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
 
-        void BakeTextureWithColor(int index)
-        {
-            applierMaskColorMaterial.SetColor("_MainColor", miniMapMasks[index].color);
-            mergerMaskMaterial.SetPass(0);
-            Graphics.Blit(miniMapMasks[index].inputTexture, miniMapMasks[index].outputTexture, applierMaskColorMaterial, 0);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
+    
         
 #endif
     }
