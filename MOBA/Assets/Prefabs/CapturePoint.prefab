@@ -174,9 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c806bd4a1296ad47bc86de79a90757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neutralStateSprite: {fileID: 21300000, guid: a4cbf539e6caed945b7de9fc3e594786, type: 3}
-  firstTeamStateSprite: {fileID: 21300000, guid: 696b64edf23a13246bf79636093ca6c4, type: 3}
-  secondTeamStateSprite: {fileID: 21300000, guid: 48bd8af93fe93e3458b07054b98942f7, type: 3}
+  neutralStateSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!114 &6349999555079414504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,8 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3ee8183a5b03944c9a207b055af0b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: a4cbf539e6caed945b7de9fc3e594786, type: 3}
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   iconSize: {x: 0, y: 0}
+  image: {fileID: 0}
 --- !u!1 &1127989891035819215
 GameObject:
   m_ObjectHideFlags: 0

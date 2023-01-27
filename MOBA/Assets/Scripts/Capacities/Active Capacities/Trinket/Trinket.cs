@@ -62,10 +62,7 @@ public class Trinket : Entity
        SyncSetViewAngleRPC(trinketCapacity.so.trinketViewAngle);
        if(FogOfWarManager.Instance)
            FogOfWarManager.Instance.AddFOWViewable(this);
-       transform.forward = Random.insideUnitSphere;
-       var transformForward = transform.forward;
-       transformForward.y = 0;
-       transform.forward = transformForward;
+       transform.forward = Vector3.back;
    }
 
    public void TickDespawnTimer()

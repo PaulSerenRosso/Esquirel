@@ -16,6 +16,7 @@ public class DebugManager : MonoBehaviour
     {
         var id = PhotonNetwork.LocalPlayer.ActorNumber;
         clientDataText.text = $"Client {id} / {GameStateMachine.Instance.GetPlayerTeam()}";
+        ChangeStateOfDebug();
     }
 
     public void OnStartInGameState()
@@ -54,10 +55,15 @@ public class DebugManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F3))
             {
-                debguButtons.SetActive(!debguButtons.activeSelf);
-                debguPing.SetActive(!debguPing.activeSelf);
-                debguMaster.SetActive(!debguMaster.activeSelf);
-                debguTick.SetActive(!debguTick.activeSelf);
+                ChangeStateOfDebug();
             }
         }
-    }
+
+        private void ChangeStateOfDebug()
+        {
+            debguButtons.SetActive(!debguButtons.activeSelf);
+            debguPing.SetActive(!debguPing.activeSelf);
+            debguMaster.SetActive(!debguMaster.activeSelf);
+            debguTick.SetActive(!debguTick.activeSelf);
+        }
+}
