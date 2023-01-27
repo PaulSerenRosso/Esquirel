@@ -15,8 +15,6 @@ namespace MiniMap
         public Image image;
         
         private MiniMapManager miniMapManager;
-
-
         private bool isInit = false;
         protected virtual void Start()
         {
@@ -34,7 +32,6 @@ namespace MiniMap
             if(isInit) return;
             miniMapManager = MiniMapManager.instance;
             image = Instantiate(miniMapManager.iconPrefab, miniMapManager.mapObject).GetComponent<Image>();
-
             image.sprite = sprite;
             SetPositionInMiniMap();
             SetSizeInMiniMap();
