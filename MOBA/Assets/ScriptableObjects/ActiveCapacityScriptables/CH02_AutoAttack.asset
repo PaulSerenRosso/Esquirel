@@ -19,7 +19,7 @@ MonoBehaviour:
   cooldown: 1
   types: 
   fxPrefab: {fileID: 8402012246838916218, guid: 49152db17b359cc43ada8e2de81c1a15, type: 3}
-  fxTime: 2
+  fxTime: 0.833
   indexInCollection: 0
   activeCapacityAnimationLauncherInfo:
     animationTime: 0.483

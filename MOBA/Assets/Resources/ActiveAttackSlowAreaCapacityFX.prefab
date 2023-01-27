@@ -259,6 +259,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: PS_PoumfCapa1
       objectReference: {fileID: 0}
+    - target: {fileID: 3976308896227526637, guid: bd6e39053a7012d4eb65dabe6b6b20b8, type: 3}
+      propertyPath: lengthInSec
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976308896227526637, guid: bd6e39053a7012d4eb65dabe6b6b20b8, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976308896879243180, guid: bd6e39053a7012d4eb65dabe6b6b20b8, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976308897463265295, guid: bd6e39053a7012d4eb65dabe6b6b20b8, type: 3}
+      propertyPath: lengthInSec
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976308897463265295, guid: bd6e39053a7012d4eb65dabe6b6b20b8, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134824857127555942, guid: bd6e39053a7012d4eb65dabe6b6b20b8, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd6e39053a7012d4eb65dabe6b6b20b8, type: 3}
 --- !u!4 &4661986854073227407 stripped
