@@ -19,4 +19,9 @@ public class ServerLobbyMenuUI : MonoBehaviour
         if(NetworkManager.Instance == null) Debug.LogError("no NetworkManager");
         NetworkManager.Instance?.JoinRoom(joinRoomTMPInputField.text);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
