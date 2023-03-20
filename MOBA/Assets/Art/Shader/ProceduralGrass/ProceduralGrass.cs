@@ -60,8 +60,7 @@ public class ProceduralGrass : MonoBehaviour
     private uint threadGroupSize;
     private int terrainTriangleCount = 0;
 
-    private void Start()
-    {
+    private void StartVoid() {
         kernel = computeShader.FindKernel("CalculateBladePositions");
 
         terrainMesh = GetComponent<MeshFilter>().sharedMesh;
@@ -110,6 +109,10 @@ public class ProceduralGrass : MonoBehaviour
 
         RunComputeShader();
     }
+    
+    private void Start() {
+        StartVoid();
+    }
 
     private void RunComputeShader()
     {
@@ -129,8 +132,7 @@ public class ProceduralGrass : MonoBehaviour
     }
 
     // Run a single draw call to render all the grass blade meshes each frame.
-    private void Update()
-    {
+    private void Update() {
         /*
         RenderParams rp = new RenderParams(material);
         rp.worldBounds = bounds;

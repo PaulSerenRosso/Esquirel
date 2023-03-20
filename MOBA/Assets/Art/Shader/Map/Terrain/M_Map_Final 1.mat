@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Map_Final 1
+  m_Shader: {fileID: 4800000, guid: 5e1dcfbe47865964cab9fff5cae1f258, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _T1_Terrain:
+        m_Texture: {fileID: 2800000, guid: 74c0f22b9612a7843b6df2db8a7499de, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T1_TerrainNAOH:
+        m_Texture: {fileID: 2800000, guid: 7d5aacd9a1cc3684d844764682929ab6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T2_Terrain:
+        m_Texture: {fileID: 2800000, guid: f4602775b0259074fb73ea432930b326, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T2_TerrainNAOH:
+        m_Texture: {fileID: 2800000, guid: 62dd9caeca8b41f43ad6062f3ce4c6f5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T3_Terrain:
+        m_Texture: {fileID: 2800000, guid: f21bdb6686d6c7b40a57852da3257e96, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T3_TerrainNAOH:
+        m_Texture: {fileID: 2800000, guid: 2ab94f1a48e06794fbb0e7821f782089, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T4_Terrain:
+        m_Texture: {fileID: 2800000, guid: 47c18da720477f444a965ad6fd34f638, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T4_TerrainNAOH:
+        m_Texture: {fileID: 2800000, guid: 2ab94f1a48e06794fbb0e7821f782089, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TerrainMask_VertexPaint:
+        m_Texture: {fileID: 2800000, guid: 5a9639bdbe111a347a180b36d64cee5e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 1, y: 1}
+    m_Floats:
+    - _AddVertexPaintingToMask: 0
+    - _AlphaCutoff: 0.5
+    - _EnvironmentReflections: 1
+    - _FlipSymetryVertexPaint: 0
+    - _GrayscaleDebug: 0
+    - _IntensityColorMap: 0
+    - _NormalDebug: 0
+    - _ReceiveShadows: 1
+    - _RotateVertexPaintMask: 0
+    - _Smoothness: 0
+    - _SpecularHighlights: 1
+    - _SymetryVertexPaint: 0
+    - _T1_ProceduralTiling1: 1
+    - _T1_Tiling1: 17.2
+    - _T2_ProceduralTiling1: 0
+    - _T2_Tilling1: 10
+    - _T3_ProceduralTiling1: 0
+    - _T3_Tilling1: 10
+    - _T4_ProceduralTiling1: 0
+    - _T4_Tilling1: 10
+    - _VertexPaintDebug: 0
+    m_Colors:
+    - _BlackColor: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MapContourColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
