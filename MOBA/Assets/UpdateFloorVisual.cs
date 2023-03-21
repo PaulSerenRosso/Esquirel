@@ -17,5 +17,8 @@ public class UpdateFloorVisual : MonoBehaviour {
         mat.SetFloat("_SliderColor", value);
     }
 
-    public void StartCapture() => capture = true;
+    public void StartCapture(){
+        value = 0;
+	   capture = true;
+    }
 }
