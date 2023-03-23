@@ -5,20 +5,27 @@ using UnityEngine;
 
 public class UpdateFloorVisual : MonoBehaviour {
     [SerializeField] private Material mat = null;
-    [SerializeField] private float value = 0;
+    [SerializeField] private float startValue = 0;
     [SerializeField] private float speedValue = 1;
+    [SerializeField] private float minValue = -1;
+    [SerializeField] private float maxValue = 1;
+    private float value = 0;
     private bool capture = false;
-    private void Start() => mat.SetFloat("_SliderColor", value);
+
+    private void Start() {
+        value = startValue;
+        mat.SetFloat("_SliderColor", value);
+    }
 
     private void Update() {
         if(!capture) return;
         value -= Time.deltaTime * speedValue;
-        value = Mathf.Clamp(value, -1, 1);
+        value = Mathf.Clamp(value, minValue, maxValue);
         mat.SetFloat("_SliderColor", value);
     }
 
     public void StartCapture(){
-        value = 0;
-	   capture = true;
+        value = startValue;
+	    capture = true;
     }
 }
