@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.465, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8387171027106737079}
   - {fileID: 1218873930872204356}
@@ -53,6 +54,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -113,6 +115,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7787077126835712635}
   m_Father: {fileID: 0}
@@ -287,9 +290,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d185e180e33fb348bfe914f9483f76d, type: 3}
---- !u!1 &1991048214185211646 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6d185e180e33fb348bfe914f9483f76d, type: 3}
+--- !u!23 &45427136655316779 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 6d185e180e33fb348bfe914f9483f76d, type: 3}
   m_PrefabInstance: {fileID: 1684616863526570927}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1218873930872204356 stripped
@@ -297,9 +300,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6d185e180e33fb348bfe914f9483f76d, type: 3}
   m_PrefabInstance: {fileID: 1684616863526570927}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &45427136655316779 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 6d185e180e33fb348bfe914f9483f76d, type: 3}
+--- !u!1 &1991048214185211646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6d185e180e33fb348bfe914f9483f76d, type: 3}
   m_PrefabInstance: {fileID: 1684616863526570927}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &7879226298013264253
@@ -372,13 +375,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e802a7c4b6fc804381b4ed5f9838d1c, type: 3}
---- !u!4 &8387171027106737079 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3099483618533597733, guid: 3e802a7c4b6fc804381b4ed5f9838d1c, type: 3}
-  m_PrefabInstance: {fileID: 6874362687689804178}
-  m_PrefabAsset: {fileID: 0}
 --- !u!96 &2387758167308349078 stripped
 TrailRenderer:
   m_CorrespondingSourceObject: {fileID: 9098855745331455748, guid: 3e802a7c4b6fc804381b4ed5f9838d1c, type: 3}
+  m_PrefabInstance: {fileID: 6874362687689804178}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8387171027106737079 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3099483618533597733, guid: 3e802a7c4b6fc804381b4ed5f9838d1c, type: 3}
   m_PrefabInstance: {fileID: 6874362687689804178}
   m_PrefabAsset: {fileID: 0}
