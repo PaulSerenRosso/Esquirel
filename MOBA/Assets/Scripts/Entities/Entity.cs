@@ -149,6 +149,11 @@ namespace Entities
                 bush.entitiesInside.Add(this);
                 bushes.Add(bush);
             }
+
+            if (other.tag == "Elevation")
+            {
+                isElevated = true;
+            }
         }
 
         public virtual void TriggerExit(Collider other)
@@ -158,6 +163,11 @@ namespace Entities
                 Bush bush = other.GetComponent<Bush>();
                 bush.entitiesInside.Remove(this);
                 bushes.Remove(bush);
+            }
+            
+            if (other.tag == "Elevation")
+            {
+                isElevated = false;
             }
         }
 

@@ -135,8 +135,10 @@ MonoBehaviour:
   bushes: []
   canChangeTeam: 0
   team: 0
+  isElevated: 0
   baseViewRange: 0
   viewRange: 0
+  elevatedViewRange: 0
   viewAngle: 0
   canView: 0
   meshFilterFoV: {fileID: 0}

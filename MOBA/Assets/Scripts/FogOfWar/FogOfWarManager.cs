@@ -10,6 +10,7 @@ namespace Entities.FogOfWar
     {
         //Instance => talk to the group to see if that possible
         private static FogOfWarManager _instance;
+        private float distance;
 
         [SerializeField] private float lerpFactor;
 
@@ -250,9 +251,18 @@ namespace Entities.FogOfWar
         ViewCastInfo ViewCastEntity(float globalAngle, Entity entity)
         {
             Vector3 dir = DirFromAngle(globalAngle, true, entity);
+            switch (entity.isElevated)
+            {
+                case true :
+                    distance = entity.elevatedViewRange;
+                    break;
+                case false :
+                    distance = entity.viewRange;
+                    break;
+            }
             RaycastHit[] hits = Physics.RaycastAll(
-                new Vector3(entity.transform.position.x, startYPositionRay, entity.transform.position.z), dir,
-                entity.viewRange,
+                new Vector3(entity.transform.position.x, startYPositionRay, entity.transform.position.z), dir, 
+                distance,
                 layerTargetFogOfWar);
 
             
@@ -275,7 +285,16 @@ namespace Entities.FogOfWar
                         }
                         else
                         {
-                            if (!entity.GetViewObstructedByObstacle()) continue;
+                            switch (entity.isElevated)
+                            {
+                                case true :
+                                    if(!entity.CompareTag("LowWall")) continue;
+                                    if (!entity.GetViewObstructedByObstacle()) continue;
+                                    break;
+                                case false :
+                                    if (!entity.GetViewObstructedByObstacle()) continue;
+                                    break;
+                            }
                         }
 
                         fieldOfViewObstacles.Add(hits[i]);

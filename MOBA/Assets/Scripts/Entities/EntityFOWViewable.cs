@@ -13,8 +13,10 @@ namespace Entities
         [Header("FOW Viewable")] public bool canChangeTeam;
         public Enums.Team team;
 
+        public bool isElevated;
         public float baseViewRange;
         public float viewRange;
+        public float elevatedViewRange;
         [Range(0, 360)] public float viewAngle;
         public bool canView;
         public List<IFOWShowable> seenShowables = new List<IFOWShowable>();
