@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 3828075211293443013}
   - component: {fileID: 1197326481600193533}
   m_Layer: 0
-  m_Name: RessourceProductions
+  m_Name: FirstTeamRessourceProductions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,6 +316,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8293423625793494617}
     m_Modifications:
+    - target: {fileID: 406496230661703898, guid: add9d7216c4a4214fbde4237c0554a88, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1761715319
+      objectReference: {fileID: 0}
+    - target: {fileID: 406496231513901028, guid: add9d7216c4a4214fbde4237c0554a88, type: 3}
+      propertyPath: offset.y
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 406496231513901028, guid: add9d7216c4a4214fbde4237c0554a88, type: 3}
+      propertyPath: offset.z
+      value: -6.5
+      objectReference: {fileID: 0}
     - target: {fileID: 406496231513901029, guid: add9d7216c4a4214fbde4237c0554a88, type: 3}
       propertyPath: m_Name
       value: CameraController
@@ -383,12 +395,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 8293423625793494617}
     m_Modifications:
     - target: {fileID: 197878431274279404, guid: 9f8a0eda42c6814499dced6cf0700d65, type: 3}
-      propertyPath: firstTeamBasePoint.Array.size
-      value: 2
+      propertyPath: secondTeamBasePoint.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 197878431274279404, guid: 9f8a0eda42c6814499dced6cf0700d65, type: 3}
-      propertyPath: secondTeamBasePoint.Array.size
-      value: 2
+      propertyPath: firstTeamBasePoint.Array.data[0].position
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 197878431274279404, guid: 9f8a0eda42c6814499dced6cf0700d65, type: 3}
+      propertyPath: firstTeamBasePoint.Array.data[1].position
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 197878431274279404, guid: 9f8a0eda42c6814499dced6cf0700d65, type: 3}
+      propertyPath: firstTeamBasePoint.Array.data[2].position
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 197878431274279405, guid: 9f8a0eda42c6814499dced6cf0700d65, type: 3}
       propertyPath: m_RootOrder

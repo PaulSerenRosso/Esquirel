@@ -102,6 +102,7 @@ namespace GameStates
         {
             if (Instance != null && Instance != this)
             {
+                Debug.Log("je suis une pute");
                 DestroyImmediate(this);
                 return;
             }

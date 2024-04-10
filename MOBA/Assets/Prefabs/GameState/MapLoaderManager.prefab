@@ -43,3 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60182a05fe67674dbdb2c9a47a835be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstTeamBasePoint:
+  - position: {fileID: 0}
+    champion: {fileID: 0}
+  - position: {fileID: 0}
+    champion: {fileID: 0}
+  - position: {fileID: 0}
+    champion: {fileID: 0}
+  secondTeamBasePoint: []
