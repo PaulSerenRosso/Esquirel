@@ -154,6 +154,11 @@ namespace Entities
             {
                 isElevated = true;
             }
+
+            if (other.tag == "HealPack")
+            {
+                other.GetComponent<EntityHealPack>().championsToHeal.Add(this);
+            }
         }
 
         public virtual void TriggerExit(Collider other)
@@ -168,6 +173,11 @@ namespace Entities
             if (other.tag == "Elevation")
             {
                 isElevated = false;
+            }
+            
+            if (other.tag == "HealPack")
+            {
+                other.GetComponent<EntityHealPack>().championsToHeal.Remove(this);
             }
         }
 
