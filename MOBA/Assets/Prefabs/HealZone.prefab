@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3067490137786715934}
   - component: {fileID: 3067490137786715921}
   - component: {fileID: 3067490137786715920}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: HealZone
   m_TagString: HealPack
   m_Icon: {fileID: 0}

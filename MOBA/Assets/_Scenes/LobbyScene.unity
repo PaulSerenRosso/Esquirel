@@ -529,8 +529,12 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 166142745878382477, guid: 1fb64722b0d48bf43bdb68223d31f9ad, type: 3}
+      propertyPath: expectedPlayerCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 166142745878382477, guid: 1fb64722b0d48bf43bdb68223d31f9ad, type: 3}
       propertyPath: debugList.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 166142745878382477, guid: 1fb64722b0d48bf43bdb68223d31f9ad, type: 3}
       propertyPath: allTeams.Array.data[1]
