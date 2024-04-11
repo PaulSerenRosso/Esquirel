@@ -59,7 +59,7 @@ Material:
     - Vector1_3fa078c73e7e4f0b9b51aaad88c355cc: 1
     - _Ambiant_Occlusion: 1
     - _Ambiant_Occlusion_1: 0
-    - _SliderColor: 0
+    - _SliderColor: 1
     - _Smoothness: 0
     m_Colors:
     - _CaptureColorNeutre: {r: 11.984314, g: 11.984314, b: 11.984314, a: 0}
